@@ -1,0 +1,13 @@
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+node_modules/*
+
+### VisualStudioCode ###
+.vscode/**/*
+!.vscode/settings.json.suggested
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
