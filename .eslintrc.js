@@ -38,7 +38,6 @@ module.exports = {
     'no-unused-vars': 'warn',
     'react/prop-types': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
-    'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
     'jsx-a11y/anchor-is-valid': [
       'error',
@@ -46,6 +45,22 @@ module.exports = {
         components: ['Link'],
         specialLink: ['hrefLeft', 'hrefRight'],
         aspects: ['invalidHref', 'preferButton'],
+      },
+    ],
+    'simple-import-sort/imports': [
+      'error',
+      {
+        groups: [
+          // Packages. `react` related packages come first.
+          // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
+          ['^react', '^@?\\w'],
+          // absolute imports
+          ['^~'],
+          // components
+          ['^(@)(atoms|molecules|organisms|templates)(/.*|$)'],
+          // Relative imports and assets
+          ['^\\.'],
+        ],
       },
     ],
   },

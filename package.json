@@ -11,13 +11,19 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@cosmjs/launchpad": "^0.27.1",
+    "@cosmjs/proto-signing": "^0.28.10",
+    "@cosmjs/stargate": "^0.28.10",
+    "@cosmjs/tendermint-rpc": "^0.28.10",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
+    "@keplr-wallet/stores": "^0.10.9",
     "@mui/material": "^5.8.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@keplr-wallet/types": "^0.10.9",
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
     "@typescript-eslint/eslint-plugin": "^5.30.0",
@@ -33,8 +39,10 @@
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "pre-commit": "^1.2.2",
     "prettier": "^2.7.1",
+    "ts-proto": "^1.116.1",
     "typescript": "^4.7.4",
-    "vite": "^2.9.12"
+    "vite": "^2.9.12",
+    "vite-plugin-checker": "^0.4.7"
   },
   "pre-commit": "lint",
   "license": "MIT",
