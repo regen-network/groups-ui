@@ -17,14 +17,10 @@
     "jsx": "react-jsx",
     "baseUrl": "./src",
     "paths": {
-      "~util/*": ["util/*"],
-      "@atoms/*": ["components/atoms/*"],
-      "@molecules/*": ["components/molecules/*"],
-      "@organisms/*": ["components/organisms/*"],
-      "@templates/*": ["components/templates/*"],
-      "@pages/*": ["pages/*"]
+      "@/*": ["components/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

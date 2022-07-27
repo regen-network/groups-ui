@@ -1,16 +1,17 @@
 import { CssBaseline } from '@mui/material'
 
-import { Center } from '@atoms/Flex'
-import { Text } from '@atoms/Text'
+import { Box, Button, Center } from '@/atoms'
+import { Navbar } from '@/organisms'
 
 function App() {
   return (
-    <>
+    <Box>
       <CssBaseline />
+      <Navbar />
       <Center>
-        <Text variant="h1">Hello</Text>
+        <Button variant="contained">Ping</Button>
       </Center>
-    </>
+    </Box>
   )
 }
 

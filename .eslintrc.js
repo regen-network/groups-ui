@@ -26,12 +26,13 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:jsx-a11y/recommended',
     'plugin:storybook/recommended',
     'plugin:prettier/recommended', // this should always be the last element in the array
   ],
-  plugins: ['simple-import-sort', 'prettier'],
+  plugins: ['@typescript-eslint', 'simple-import-sort', 'prettier'],
   rules: {
     'prettier/prettier': [
       'error',
@@ -42,15 +43,15 @@ module.exports = {
     ],
     'react/react-in-jsx-scope': 'off',
     'jsx-a11y/accessible-emoji': 'off',
-    'no-unused-vars': 'warn',
-    'react/prop-types': 'off',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn'],
     '@typescript-eslint/explicit-function-return-type': 'off',
     'simple-import-sort/exports': 'error',
     'jsx-a11y/anchor-is-valid': [
       'error',
       {
         components: ['Link'],
-        specialLink: ['hrefLeft', 'hrefRight'],
+        // specialLink: ['hrefLeft', 'hrefRight'],
         aspects: ['invalidHref', 'preferButton'],
       },
     ],
@@ -62,10 +63,10 @@ module.exports = {
           // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
           ['^react', '^@?\\w'],
           // absolute imports
-          ['^~'],
+          ['^(util|stubs)(/.*|$)', '^(types)(/.*|$)', '^(pages)(/.*|$)'],
           // components
-          ['^(@)(atoms|molecules|organisms|templates)(/.*|$)'],
-          // Relative imports and assets
+          ['^(@)(/.*|$)'],
+          // Relative imports
           ['^\\.'],
         ],
       },
