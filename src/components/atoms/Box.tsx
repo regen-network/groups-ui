@@ -9,6 +9,13 @@ export const Flex = styled(Box)({
   height: '100%',
 })
 
+export const FlexCol = styled(Box)({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+  height: '100%',
+})
+
 export const Center = styled(Box)({
   display: 'flex',
   justifyContent: 'center',

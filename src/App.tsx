@@ -1,17 +1,34 @@
-import { CssBaseline } from '@mui/material'
-
-import { Box, Button, Center } from '@/atoms'
-import { Navbar } from '@/organisms'
+import { useMemo } from 'react'
+import {
+  createTheme,
+  CssBaseline,
+  responsiveFontSizes,
+  ThemeProvider,
+  useMediaQuery,
+} from '@mui/material'
+import { Routes } from 'Routes'
 
 function App() {
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+
+  const theme = useMemo(
+    () =>
+      responsiveFontSizes(
+        createTheme({
+          palette: {
+            // mode: prefersDarkMode ? 'dark' : 'light',
+            mode: 'light',
+          },
+        }),
+      ),
+    [prefersDarkMode],
+  )
+
   return (
-    <Box>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Navbar />
-      <Center>
-        <Button variant="contained">Ping</Button>
-      </Center>
-    </Box>
+      <Routes />
+    </ThemeProvider>
   )
 }
 
