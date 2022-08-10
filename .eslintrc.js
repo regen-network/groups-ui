@@ -28,6 +28,8 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:valtio/recommended',
     'plugin:jsx-a11y/recommended',
     'plugin:storybook/recommended',
     'plugin:prettier/recommended', // this should always be the last element in the array
@@ -63,7 +65,7 @@ module.exports = {
           // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
           ['^react', '^@?\\w'],
           // absolute imports
-          ['^(util|stubs)(/.*|$)', '^(types)(/.*|$)', '^(pages)(/.*|$)'],
+          ['^(util|stubs)(/.*|$)', '^(types)(/.*|$)', '^(pages|hooks|store)(/.*|$)'],
           // components
           ['^(@)(/.*|$)'],
           // Relative imports

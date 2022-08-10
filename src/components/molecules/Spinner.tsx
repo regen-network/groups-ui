@@ -1,6 +1,4 @@
-import { CircularProgress } from '@mui/material'
-
-import { Center } from '@/atoms'
+import { Center, CircularProgress } from '@/atoms'
 
 export const Spinner = () => {
   return (

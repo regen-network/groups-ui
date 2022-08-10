@@ -23,11 +23,12 @@
     "@mui/material": "^5.9.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "^6.3.0",
+    "valtio": "^1.6.3"
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",
-    "@keplr-wallet/types": "^0.10.13",
+    "@keplr-wallet/types": "^0.10.16",
     "@storybook/addon-actions": "^6.5.10",
     "@storybook/addon-essentials": "^6.5.10",
     "@storybook/addon-interactions": "^6.5.10",
@@ -49,8 +50,10 @@
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-storybook": "^0.6.3",
+    "eslint-plugin-valtio": "^0.5.1",
     "pre-commit": "^1.2.2",
     "prettier": "^2.7.1",
     "storybook-addon-react-router-v6": "^0.1.13",

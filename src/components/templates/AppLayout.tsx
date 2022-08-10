@@ -2,7 +2,7 @@ import { Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
 
 import { Box, Container, FlexCol } from '@/atoms'
-import { Spinner } from '@/molecules/Spinner'
+import { Spinner } from '@/molecules'
 import { Navbar } from '@/organisms'
 
 export const AppLayout = () => {

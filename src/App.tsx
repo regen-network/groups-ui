@@ -1,35 +1,38 @@
-import { useMemo } from 'react'
-import {
-  createTheme,
-  CssBaseline,
-  responsiveFontSizes,
-  ThemeProvider,
-  useMediaQuery,
-} from '@mui/material'
+import { CssBaseline, ThemeProvider } from '@mui/material'
 import { Routes } from 'Routes'
+import { useSnapshot } from 'valtio'
 
-function App() {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+import { useAppTheme } from 'hooks'
+import { InstallKeplr } from 'pages/InstallKeplr'
+import { enableKeplr, walletStore } from 'store'
 
-  const theme = useMemo(
-    () =>
-      responsiveFontSizes(
-        createTheme({
-          palette: {
-            // mode: prefersDarkMode ? 'dark' : 'light',
-            mode: 'light',
-          },
-        }),
-      ),
-    [prefersDarkMode],
-  )
+import { Spinner } from '@/molecules'
+
+function AppContent() {
+  const snap = useSnapshot(walletStore)
+
+  switch (snap.keplrStatus) {
+    case 'loading':
+      return <Spinner />
+    case 'ready':
+      return <Routes />
+    case 'uninstalled':
+    default:
+      return <InstallKeplr />
+  }
+}
+
+export default function App() {
+  const theme = useAppTheme()
+
+  window.onload = () => {
+    enableKeplr()
+  }
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Routes />
+      <AppContent />
     </ThemeProvider>
   )
 }
-
-export default App

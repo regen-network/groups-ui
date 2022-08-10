@@ -1,5 +1,5 @@
 import { Link as RouteLink } from 'react-router-dom'
-import MuiLink, { LinkProps as MuiLinkProps } from '@mui/material/Link'
+import MuiLink, { type LinkProps as MuiLinkProps } from '@mui/material/Link'
 
 interface LinkProps extends MuiLinkProps {
   to: string
@@ -11,10 +11,12 @@ export const Link = ({ to, ...props }: LinkProps) => {
   return (
     <MuiLink
       {...props}
-      to={!isExternalLink ? to : undefined}
+      to={!isExternalLink ? to : ''}
       href={isExternalLink ? to : undefined}
       target={props.target || isExternalLink ? '_blank' : '_self'}
       component={isExternalLink ? 'a' : RouteLink}
     />
   )
 }
+Link.muiName = 'Link'
+Link.displayName = 'Link'

@@ -1,19 +1,44 @@
-import { useState } from 'react'
-import { AppBar, Toolbar } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import { useSnapshot } from 'valtio'
 
 import { CHAIN_LIST } from 'stubs/chains'
+// import { setActiveChain, walletStore } from 'store'
+import { setActiveChain } from 'store'
+import { walletStore } from 'store/wallet.store'
 
-import { Box, Container, GroupsIcon, IconButton, Link, Text } from '@/atoms'
-import { ChainMenu } from '@/molecules'
+import {
+  AppBar,
+  Box,
+  Container,
+  GroupsIcon,
+  IconButton,
+  Link,
+  Text,
+  Toolbar,
+} from '@/atoms'
+import { SelectDropdown } from '@/molecules'
+
+const CHAIN_ITEMS = CHAIN_LIST.map((chain) => ({
+  value: chain.id,
+  name: chain.name,
+}))
 
 export const Navbar = () => {
-  const [chain, setChain] = useState(CHAIN_LIST[0])
+  // see: https://github.com/pmndrs/eslint-plugin-valtio/issues/32
+  // could change to `export function` to fix, but should be able to update soon
+  // eslint-disable-next-line
+  const snap = useSnapshot(walletStore)
+  const navigate = useNavigate()
+
   return (
     <AppBar
       position="static"
       color="transparent"
       elevation={0}
-      sx={{ borderBottom: 2, borderColor: 'grey.200', bgcolor: 'white' }}
+      sx={{
+        borderBottom: 2,
+        borderColor: 'divider',
+      }}
     >
       <Container>
         <Toolbar sx={{ my: 2 }} disableGutters>
@@ -23,31 +48,39 @@ export const Navbar = () => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-            component={Link}
-            to="/"
+            onClick={() => navigate('/')}
           >
             <GroupsIcon />
           </IconButton>
           <Text variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Groups UI
           </Text>
-          {/* TODO delete this - temp nav */}
-          <Box component="ul" sx={{ display: 'flex', gap: 2, mr: 5, listStyle: 'none' }}>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="groups">Groups</Link>
-            </li>
-            <li>
-              <Link to="groups/new">Create Group</Link>
-            </li>
-          </Box>
+          {/* TODO delete this */}
+          <TempNav />
           <Box sx={{ flexGrow: 1, maxWidth: 300 }}>
-            <ChainMenu chains={CHAIN_LIST} activeChain={chain} setChain={setChain} />
+            <SelectDropdown
+              label="Select a Chain"
+              value={snap.activeChain?.id}
+              onChange={setActiveChain}
+              items={CHAIN_ITEMS}
+            />
           </Box>
         </Toolbar>
       </Container>
     </AppBar>
   )
 }
+
+const TempNav = () => (
+  <Box component="ul" sx={{ display: 'flex', gap: 2, mr: 5, listStyle: 'none' }}>
+    <li>
+      <Link to="/">Home</Link>
+    </li>
+    <li>
+      <Link to="groups">Groups</Link>
+    </li>
+    <li>
+      <Link to="groups/new">Create Group</Link>
+    </li>
+  </Box>
+)

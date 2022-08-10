@@ -2,7 +2,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import { GroupsIcon } from '@/atoms'
 
-import { IconButton } from '../IconButton'
+import { IconButton } from '../MuiReExports'
 
 export default {
   title: 'Atoms/IconButton',
