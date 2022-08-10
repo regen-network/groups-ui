@@ -1,5 +1,9 @@
-module.exports = {
+// @ts-check
+
+/** @type {import('eslint').Linter.Config} */
+const eslintConfig = {
   root: true,
+
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2020,
@@ -75,3 +79,4 @@ module.exports = {
     ],
   },
 }
+module.exports = eslintConfig
