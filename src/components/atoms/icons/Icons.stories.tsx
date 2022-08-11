@@ -15,5 +15,5 @@ export default {
 
 const Template: ComponentStory<typeof GroupsIcon> = () => <GroupsIcon />
 
-export const Base = Template.bind({})
-Base.args = {}
+export const Component = Template.bind({})
+Component.args = {}

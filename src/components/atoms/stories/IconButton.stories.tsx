@@ -25,5 +25,5 @@ const Template: ComponentStory<typeof IconButton> = (args) => (
   </IconButton>
 )
 
-export const Base = Template.bind({})
-Base.args = {}
+export const Component = Template.bind({})
+Component.args = {}

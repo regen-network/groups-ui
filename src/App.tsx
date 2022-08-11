@@ -1,14 +1,19 @@
+import { ErrorBoundary } from 'react-error-boundary'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 import { Routes } from 'Routes'
 import { useSnapshot } from 'valtio'
 
-import { useAppTheme } from 'hooks'
+import { useAppTheme, useKeplr } from 'hooks'
+import { walletStore } from 'store'
+
+import { EnableKeplr } from 'pages/EnableKeplr'
 import { InstallKeplr } from 'pages/InstallKeplr'
-import { enableKeplr, walletStore } from 'store'
 
 import { Spinner } from '@/molecules'
+import { ErrorFallback } from '@/organisms'
 
 function AppContent() {
+  useKeplr()
   const snap = useSnapshot(walletStore)
 
   switch (snap.keplrStatus) {
@@ -17,6 +22,9 @@ function AppContent() {
     case 'ready':
       return <Routes />
     case 'uninstalled':
+      return <InstallKeplr />
+    case 'rejected':
+      return <EnableKeplr />
     default:
       return <InstallKeplr />
   }
@@ -25,14 +33,16 @@ function AppContent() {
 export default function App() {
   const theme = useAppTheme()
 
-  window.onload = () => {
-    enableKeplr()
+  function handleReset() {
+    window.location.reload()
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <AppContent />
-    </ThemeProvider>
+    <ErrorBoundary FallbackComponent={ErrorFallback} onReset={handleReset}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <AppContent />
+      </ThemeProvider>
+    </ErrorBoundary>
   )
 }

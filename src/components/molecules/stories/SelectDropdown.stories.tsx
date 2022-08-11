@@ -16,8 +16,8 @@ const Template: ComponentStory<typeof SelectDropdown> = (args) => {
   return <SelectDropdown {...args} value={value} onChange={(e) => setValue(e)} />
 }
 
-export const Base = Template.bind({})
-Base.args = {
+export const Component = Template.bind({})
+Component.args = {
   label: 'select',
   items: [
     { value: '1', name: 'one' },

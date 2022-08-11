@@ -1234,6 +1234,23 @@
     "@cosmjs/math" "0.28.11"
     "@cosmjs/utils" "0.28.11"
 
+"@cosmjs/cosmwasm-stargate@^0.28.11":
+  version "0.28.11"
+  resolved "https://registry.yarnpkg.com/@cosmjs/cosmwasm-stargate/-/cosmwasm-stargate-0.28.11.tgz#73e30208a0f7668c0550c5a2410e5289ae46cbd2"
+  integrity sha512-sZ04c9ZvwAC7IngNeOhTnHJLBu7PXX3QfWM2vCVGd9puP9f3Hj3nbre75WKjHZ3DDVvxfS3u3JUJ6LjVWeIRuQ==
+  dependencies:
+    "@cosmjs/amino" "0.28.11"
+    "@cosmjs/crypto" "0.28.11"
+    "@cosmjs/encoding" "0.28.11"
+    "@cosmjs/math" "0.28.11"
+    "@cosmjs/proto-signing" "0.28.11"
+    "@cosmjs/stargate" "0.28.11"
+    "@cosmjs/tendermint-rpc" "0.28.11"
+    "@cosmjs/utils" "0.28.11"
+    cosmjs-types "^0.4.0"
+    long "^4.0.0"
+    pako "^2.0.2"
+
 "@cosmjs/crypto@0.27.1":
   version "0.27.1"
   resolved "https://registry.yarnpkg.com/@cosmjs/crypto/-/crypto-0.27.1.tgz#271c853089a3baf3acd6cf0b2122fd49f8815743"
@@ -1428,7 +1445,7 @@
     ws "^6.2.0"
     xstream "^11.14.0"
 
-"@cosmjs/stargate@^0.28.11":
+"@cosmjs/stargate@0.28.11", "@cosmjs/stargate@^0.28.11":
   version "0.28.11"
   resolved "https://registry.yarnpkg.com/@cosmjs/stargate/-/stargate-0.28.11.tgz#ad89a008ead81cea884714570276523310e95822"
   integrity sha512-UyFH/mTNNKTZohVhj+SmjCRv/xopqU/UinGedmWzs4MqEZteX9xs6D3HTmRCgpmBQ03lpbTslE/FhhT9Hkl9KQ==
@@ -2213,10 +2230,39 @@
     long "^4.0.0"
     protobufjs "^6.11.2"
 
+"@keplr-wallet/cosmos@^0.10.13", "@keplr-wallet/cosmos@^0.10.16":
+  version "0.10.16"
+  resolved "https://registry.yarnpkg.com/@keplr-wallet/cosmos/-/cosmos-0.10.16.tgz#0e06f1b7cbbfafd0c57aa025fb1c6aac0ee3a565"
+  integrity sha512-hEA/UgjzrBaf755bBzybtqo5hNAOrHRrQrcnng/cKZM9b6pYCLy0q1a885xYtVEfNeXQp8z3KLE3G/rmPvt9YA==
+  dependencies:
+    "@cosmjs/launchpad" "^0.24.0-alpha.25"
+    "@keplr-wallet/crypto" "0.10.16"
+    "@keplr-wallet/proto-types" "0.10.16"
+    "@keplr-wallet/types" "0.10.16"
+    "@keplr-wallet/unit" "0.10.16"
+    axios "^0.21.4"
+    bech32 "^1.1.4"
+    buffer "^6.0.3"
+    long "^4.0.0"
+    protobufjs "^6.11.2"
+
 "@keplr-wallet/crypto@0.10.13":
   version "0.10.13"
   resolved "https://registry.yarnpkg.com/@keplr-wallet/crypto/-/crypto-0.10.13.tgz#51f9cfaaf528ea3f6f21ac28702e8e557269415e"
   integrity sha512-Uw+R3wR2oOwfi5z7OgQchdfZa0Z7Dnh+se9Ls0+5T3K1AU6R15j2P/qiplvFquDOGjq72/ArU9iU6Mu6VoDcwQ==
+  dependencies:
+    bip32 "^2.0.6"
+    bip39 "^3.0.3"
+    bs58check "^2.1.2"
+    buffer "^6.0.3"
+    crypto-js "^4.0.0"
+    elliptic "^6.5.3"
+    sha.js "^2.4.11"
+
+"@keplr-wallet/crypto@0.10.16":
+  version "0.10.16"
+  resolved "https://registry.yarnpkg.com/@keplr-wallet/crypto/-/crypto-0.10.16.tgz#3ac6bd1d067ea9edf66727a902d952b1411711ed"
+  integrity sha512-djH3buPHo52TFWXz40z7HKTy54ox4diZVK32RM5U4b6lsudnSgcM3+PuQfCtN4Q29+mg9NagbHkMfcVaTbtUBA==
   dependencies:
     bip32 "^2.0.6"
     bip39 "^3.0.3"
@@ -2235,6 +2281,14 @@
   version "0.10.13"
   resolved "https://registry.yarnpkg.com/@keplr-wallet/proto-types/-/proto-types-0.10.13.tgz#9397d1730637226f5a5fc6f96e8c09cbd73b8470"
   integrity sha512-VcWMrBKEYcbPn5BNabqfnxv5xUCt1pYC5puMzoedjVLrDpl/bMRwUo7DLedMFWR7vrI13D4CJWOQXXtLfSU/rg==
+  dependencies:
+    long "^4.0.0"
+    protobufjs "^6.11.2"
+
+"@keplr-wallet/proto-types@0.10.16":
+  version "0.10.16"
+  resolved "https://registry.yarnpkg.com/@keplr-wallet/proto-types/-/proto-types-0.10.16.tgz#db48d63b73ba2422ac83bda8cf576d00d8f6682e"
+  integrity sha512-SpiCsjVH9nO6Hbi3mogw0bjj8MAuhSoPC3JCmm4ooMcCd+/29VeoNbCm/5RQ8GcoX0ZR9dQLK89G+W39MyUyVw==
   dependencies:
     long "^4.0.0"
     protobufjs "^6.11.2"
@@ -2282,7 +2336,7 @@
     long "^4.0.0"
     secretjs "^0.17.0"
 
-"@keplr-wallet/types@^0.10.16":
+"@keplr-wallet/types@0.10.16", "@keplr-wallet/types@^0.10.13", "@keplr-wallet/types@^0.10.16":
   version "0.10.16"
   resolved "https://registry.yarnpkg.com/@keplr-wallet/types/-/types-0.10.16.tgz#22cf1b3241a73ff398fa72ec1028e2d419e7286f"
   integrity sha512-ZI/3ZmZRYorcI8R4FQ2tjz5XUmkHsqhybygBXaeAD9UBR5fgTYxFd5pZKWgmAJJhVVp1IfqcZWPhEmw0I61zLg==
@@ -2299,6 +2353,15 @@
   integrity sha512-bO1uzOGFiPhMJntHvtomvDyYuwqMI2keJi6ydg5yrVK68jJH6Z0nENbRWqzAfdfHoTKf29py/f+ePJTYzadYdg==
   dependencies:
     "@keplr-wallet/types" "0.10.13"
+    big-integer "^1.6.48"
+    utility-types "^3.10.0"
+
+"@keplr-wallet/unit@0.10.16":
+  version "0.10.16"
+  resolved "https://registry.yarnpkg.com/@keplr-wallet/unit/-/unit-0.10.16.tgz#0881647fe1e6716cf23972496e7a8a0da66b48e6"
+  integrity sha512-zX7sGPK2Q7tDlqDfSsjMa/pP4i7XcnjVMVOG0pe5yEohXJ1j7jeRg6ptE+A2FffO0bD+ICc9xRz59lFMAEvHrA==
+  dependencies:
+    "@keplr-wallet/types" "0.10.16"
     big-integer "^1.6.48"
     utility-types "^3.10.0"
 
@@ -3751,6 +3814,20 @@
     deepmerge "^4.2.2"
     prettier "^2.7.1"
 
+"@tanstack/query-core@^4.0.0-beta.1":
+  version "4.0.10"
+  resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-4.0.10.tgz#cae6f818006616dc72c95c863592f5f68b47548a"
+  integrity sha512-9LsABpZXkWZHi4P1ozRETEDXQocLAxVzQaIhganxbNuz/uA3PsCAJxJTiQrknG5htLMzOF5MqM9G10e6DCxV1A==
+
+"@tanstack/react-query@^4.0.10":
+  version "4.0.10"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-query/-/react-query-4.0.10.tgz#92c71a2632c06450d848d4964959bd216cde03c0"
+  integrity sha512-Wn5QhZUE5wvr6rGClV7KeQIUsdTmYR9mgmMZen7DSRWauHW2UTynFg3Kkf6pw+XlxxOLsyLWwz/Q6q1lSpM3TQ==
+  dependencies:
+    "@tanstack/query-core" "^4.0.0-beta.1"
+    "@types/use-sync-external-store" "^0.0.3"
+    use-sync-external-store "^1.2.0"
+
 "@testing-library/dom@^8.3.0":
   version "8.16.0"
   resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-8.16.0.tgz#d6fc50250aed17b1035ca1bd64655e342db3936a"
@@ -4045,6 +4122,11 @@
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/@types/unist/-/unist-2.0.6.tgz#250a7b16c3b91f672a24552ec64678eeb1d3a08d"
   integrity sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==
+
+"@types/use-sync-external-store@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@types/use-sync-external-store/-/use-sync-external-store-0.0.3.tgz#b6725d5f4af24ace33b36fafd295136e75509f43"
+  integrity sha512-EwmlvuaxPNej9+T4v5AuBPJa2x2UOJVdjCtDHgcDqitUeOtjnJKJ+apYjVcAoBEMjKW1VVFGZLUb5+qqa09XFA==
 
 "@types/webpack-env@^1.16.0":
   version "1.17.0"
@@ -7986,6 +8068,19 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.10.tgz#147d3a006da4ca3ce14728c7aefc287c367d7a6c"
   integrity sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==
 
+graz@^0.0.14:
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/graz/-/graz-0.0.14.tgz#21553d91b54c5ffa5bf9cc70a2f5c3c6ba374976"
+  integrity sha512-uwXFj2hEDppM2W0xA6UrdVvT+0aGNo8um6LZw1EdPOKE6m5G88GrSqPaqKiEKghufkS1pvYxix+8XUyJDLECXg==
+  dependencies:
+    "@cosmjs/cosmwasm-stargate" "^0.28.11"
+    "@cosmjs/proto-signing" "^0.28.11"
+    "@cosmjs/stargate" "^0.28.11"
+    "@keplr-wallet/cosmos" "^0.10.13"
+    "@keplr-wallet/types" "^0.10.13"
+    "@tanstack/react-query" "^4.0.10"
+    zustand "^4.0.0"
+
 handlebars@^4.7.7:
   version "4.7.7"
   resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.7.7.tgz#9ce33416aad02dbd6c8fafa8240d5d98004945a1"
@@ -10333,6 +10428,11 @@ pako@1.0.11, pako@~1.0.5:
   resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.11.tgz#6c9599d340d54dfd3946380252a35705a6b992bf"
   integrity sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==
 
+pako@^2.0.2:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/pako/-/pako-2.0.4.tgz#6cebc4bbb0b6c73b0d5b8d7e8476e2b2fbea576d"
+  integrity sha512-v8tweI900AUkZN6heMU/4Uy4cXRc2AYNRggVmTR+dEncawDJgCdLMximOVA2p4qO57WMynangsfGRb5WD6L1Bg==
+
 parallel-transform@^1.1.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/parallel-transform/-/parallel-transform-1.2.0.tgz#9049ca37d6cb2182c3b1d2c720be94d14a5814fc"
@@ -11043,6 +11143,13 @@ react-element-to-jsx-string@^14.3.4:
     "@base2/pretty-print-object" "1.0.1"
     is-plain-object "5.0.0"
     react-is "17.0.2"
+
+react-error-boundary@^3.1.4:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/react-error-boundary/-/react-error-boundary-3.1.4.tgz#255db92b23197108757a888b01e5b729919abde0"
+  integrity sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
 
 react-inspector@^5.1.0, react-inspector@^5.1.1:
   version "5.1.1"
@@ -12917,7 +13024,7 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
-use-sync-external-store@1.2.0:
+use-sync-external-store@1.2.0, use-sync-external-store@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz#7dbefd6ef3fe4e767a0cf5d7287aacfb5846928a"
   integrity sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==
@@ -13508,6 +13615,13 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zustand@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-4.0.0.tgz#739cba69209ffe67b31e7d6741c25b51496114a7"
+  integrity sha512-OrsfQTnRXF1LZ9/vR/IqN9ws5EXUhb149xmPjErZnUrkgxS/gAHGy2dPNIVkVvoxrVe1sIydn4JjF0dYHmGeeQ==
+  dependencies:
+    use-sync-external-store "1.2.0"
 
 zwitch@^1.0.0:
   version "1.0.5"

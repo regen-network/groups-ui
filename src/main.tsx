@@ -7,7 +7,7 @@ import App from './App'
 import './main.css'
 
 const container = document.getElementById('root')
-const root = createRoot(container!) // eslint-disable-line @typescript-eslint/no-non-null-assertion
+const root = createRoot(container as HTMLElement)
 
 root.render(
   <React.StrictMode>

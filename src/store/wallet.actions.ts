@@ -1,9 +1,9 @@
-import { createError, handleError } from 'util/errors'
+import { handleError, throwError } from 'util/errors'
 
 import { LOCALSTORAGE_CHAIN_KEY, walletStore } from './wallet.store'
 
 export function setActiveChain(chainId: string) {
-  const newChain = walletStore.allChains.find((chain) => chain.id === chainId)
+  const newChain = walletStore.allChains.find((chain) => chain.chainId === chainId)
   if (newChain) {
     walletStore.activeChain = newChain
     localStorage.setItem(LOCALSTORAGE_CHAIN_KEY, JSON.stringify(newChain))
@@ -13,9 +13,9 @@ export function setActiveChain(chainId: string) {
 export async function enableKeplr() {
   if (!window.keplr) {
     walletStore.keplrStatus = 'uninstalled'
-    createError('Keplr is not installed')
+    throwError('Keplr is not installed')
   }
-  const chainId = walletStore.activeChain.id
+  const chainId = walletStore.activeChain.chainId
   try {
     await window.keplr.enable(chainId)
     const offlineSigner = window.keplr.getOfflineSigner(chainId)
@@ -23,6 +23,7 @@ export async function enableKeplr() {
     walletStore.account = account
     walletStore.keplrStatus = 'ready'
   } catch (error) {
+    walletStore.keplrStatus = 'rejected'
     handleError(error)
   }
 }

@@ -25,7 +25,7 @@ const Template: ComponentStory<typeof Button> = (args) => (
   <Button {...args}>Button</Button>
 )
 
-export const Base = Template.bind({})
-Base.args = {
+export const Component = Template.bind({})
+Component.args = {
   variant: 'contained',
 }

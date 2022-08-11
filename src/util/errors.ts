@@ -32,6 +32,6 @@ export function handleError(error: unknown): void {
   reportError(toErrorWithMessage(error))
 }
 
-export function createError(error: unknown): never {
+export function throwError(error: unknown): never {
   throw toErrorWithMessage(error)
 }

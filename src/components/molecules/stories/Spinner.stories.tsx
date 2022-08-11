@@ -9,4 +9,4 @@ export default {
 
 const Template: ComponentStory<typeof Spinner> = () => <Spinner />
 
-export const Base = Template.bind({})
+export const Component = Template.bind({})

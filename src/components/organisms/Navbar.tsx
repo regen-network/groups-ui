@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
+// import { allChainsArray } from 'chains'
 import { useSnapshot } from 'valtio'
 
-import { CHAIN_LIST } from 'stubs/chains'
 // import { setActiveChain, walletStore } from 'store'
 import { setActiveChain } from 'store'
 import { walletStore } from 'store/wallet.store'
@@ -17,10 +17,11 @@ import {
   Toolbar,
 } from '@/atoms'
 import { SelectDropdown } from '@/molecules'
+import { CHAIN_LIST } from 'stubs/chains'
 
-const CHAIN_ITEMS = CHAIN_LIST.map((chain) => ({
-  value: chain.id,
-  name: chain.name,
+const CHAIN_ITEMS = CHAIN_LIST.map(({ chainId, chainName }) => ({
+  value: chainId,
+  name: chainName,
 }))
 
 export const Navbar = () => {
@@ -60,7 +61,7 @@ export const Navbar = () => {
           <Box sx={{ flexGrow: 1, maxWidth: 300 }}>
             <SelectDropdown
               label="Select a Chain"
-              value={snap.activeChain?.id}
+              value={snap.activeChain.chainId}
               onChange={setActiveChain}
               items={CHAIN_ITEMS}
             />
