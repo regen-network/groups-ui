@@ -23,6 +23,7 @@ function AppContent() {
       return <Routes />
     case 'uninstalled':
       return <InstallKeplr />
+    case 'initialized':
     case 'rejected':
       return <EnableKeplr />
     default:

@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 // import { allChainsArray } from 'chains'
 import { useSnapshot } from 'valtio'
 
+import { CHAIN_LIST } from 'stubs/chains/chains'
 // import { setActiveChain, walletStore } from 'store'
 import { setActiveChain } from 'store'
 import { walletStore } from 'store/wallet.store'
@@ -17,7 +18,6 @@ import {
   Toolbar,
 } from '@/atoms'
 import { SelectDropdown } from '@/molecules'
-import { CHAIN_LIST } from 'stubs/chains'
 
 const CHAIN_ITEMS = CHAIN_LIST.map(({ chainId, chainName }) => ({
   value: chainId,

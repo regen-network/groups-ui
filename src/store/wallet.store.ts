@@ -2,8 +2,8 @@ import type { AccountData, OfflineSigner } from '@cosmjs/proto-signing'
 import { proxy } from 'valtio'
 import { subscribeKey } from 'valtio/utils'
 
-import { CHAIN_LIST } from 'stubs/chains'
-import { Chain } from 'types/chains'
+import { CHAIN_LIST } from 'stubs/chains/chains'
+import { UiChain } from 'types/chains'
 
 import { enableKeplr } from './wallet.actions'
 
@@ -14,10 +14,8 @@ export type KeplrStatus = 'loading' | 'initialized' | 'rejected' | 'ready' | 'un
 
 type WalletStore = {
   account?: AccountData
-  // activeChain: ChainInfo
-  // allChains: ChainInfo[]
-  activeChain: Chain
-  allChains: Chain[]
+  activeChain: UiChain
+  allChains: UiChain[]
   keplrStatus: KeplrStatus
   offlineSigner?: OfflineSigner
 }
@@ -25,8 +23,6 @@ type WalletStore = {
 export const walletStore = proxy<WalletStore>({
   account: undefined,
   activeChain: savedChain ? JSON.parse(savedChain) : CHAIN_LIST[0],
-  // activeChain: savedChain ? JSON.parse(savedChain) : allChainsArray[0],
-  // allChains: allChainsArray,
   allChains: CHAIN_LIST,
   keplrStatus: 'loading',
   offlineSigner: undefined,

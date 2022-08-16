@@ -15,7 +15,11 @@ export async function enableKeplr() {
     walletStore.keplrStatus = 'uninstalled'
     throwError('Keplr is not installed')
   }
+  if (walletStore.keplrStatus === 'loading') {
+    walletStore.keplrStatus = 'initialized'
+  }
   const chainId = walletStore.activeChain.chainId
+  console.log('enableKeplr')
   try {
     await window.keplr.enable(chainId)
     const offlineSigner = window.keplr.getOfflineSigner(chainId)

@@ -1,25 +1,9 @@
-import type { Chain, ChainData } from 'types/chains'
+import type { UiChain } from 'types/chains'
 
-export const CHAIN_LIST_NEW: ChainData[] = []
+// export const CHAIN_LIST_NEW: ChainData[] = []
 // source https://github.com/cosmos/composer/blob/master/react/src/types/settings.ts
 // fixme: some networks data not correct, osmosis for example
-export const CHAIN_LIST: Chain[] = [
-  {
-    rpc: `http://cosmos-test-2.adoriasoft.link:26657`,
-    rest: `http://cosmos-test-2.adoriasoft.link:1317`,
-    chainId: 'cosmoswithgroups',
-    chainName: 'GROUPS-UI-TEST',
-    coinDenom: 'STAKE',
-    coinMinimalDenom: 'stake',
-  },
-  {
-    rpc: `http://${window.location.hostname}:26657`,
-    rest: `http://${window.location.hostname}:1317`,
-    chainId: 'cosmoswithgroups',
-    chainName: 'GROUPS-UI-TEST-LOCAL',
-    coinDenom: 'STAKE',
-    coinMinimalDenom: 'stake',
-  },
+export const CHAIN_LIST: UiChain[] = [
   {
     rpc: 'https://rpc-juno.itastakers.com',
     rest: 'https://lcd-juno.itastakers.com',
@@ -35,6 +19,22 @@ export const CHAIN_LIST: Chain[] = [
     chainName: 'Cosmos',
     coinDenom: 'atom',
     coinMinimalDenom: 'uatom',
+  },
+  {
+    rpc: `http://cosmos-test-2.adoriasoft.link:26657`,
+    rest: `http://cosmos-test-2.adoriasoft.link:1317`,
+    chainId: 'cosmoswithgroups',
+    chainName: 'GROUPS-UI-TEST',
+    coinDenom: 'STAKE',
+    coinMinimalDenom: 'stake',
+  },
+  {
+    rpc: `http://${window.location.hostname}:26657`,
+    rest: `http://${window.location.hostname}:1317`,
+    chainId: 'cosmoswithgroups',
+    chainName: 'GROUPS-UI-TEST-LOCAL',
+    coinDenom: 'STAKE',
+    coinMinimalDenom: 'stake',
   },
   {
     rpc: 'https://vega-rpc.interchain.io',

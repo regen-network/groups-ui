@@ -1,2 +1,2 @@
-export * from './Navbar'
 export * from './ErrorFallback'
+export * from './Navbar'
