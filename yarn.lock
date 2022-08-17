@@ -2203,6 +2203,19 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
+"@haveanicedavid/groups-ui-telescope@haveanicedavid/groups-ui-telescope#main":
+  version "0.0.1"
+  resolved "https://codeload.github.com/haveanicedavid/groups-ui-telescope/tar.gz/9d269133c6a8aefcb92747311c97d01f24f048b5"
+  dependencies:
+    "@babel/runtime" "^7.18.9"
+    "@cosmjs/amino" "0.28.11"
+    "@cosmjs/proto-signing" "0.28.11"
+    "@cosmjs/stargate" "0.28.11"
+    "@cosmjs/tendermint-rpc" "^0.28.11"
+    "@osmonauts/helpers" "^0.4.1"
+    "@osmonauts/lcd" "^0.3.11"
+    protobufjs "^6.11.2"
+
 "@humanwhocodes/config-array@^0.9.2":
   version "0.9.5"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.9.5.tgz#2cbaf9a89460da24b5ca6531b8bbfc23e1df50c7"

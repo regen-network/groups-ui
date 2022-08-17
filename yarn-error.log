@@ -1,5 +1,5 @@
 Arguments: 
-  /Users/ddaniel/.nvm/versions/node/v16.15.1/bin/node /Users/ddaniel/.nvm/versions/node/v16.15.1/bin/yarn add @osmosis/telescope -D
+  /Users/ddaniel/.nvm/versions/node/v16.15.1/bin/node /Users/ddaniel/.nvm/versions/node/v16.15.1/bin/yarn add @haveanicedavid/groups-ui-telescope
 
 PATH: 
   /opt/homebrew/bin:/opt/homebrew/sbin:/Users/ddaniel/go/bin:/usr/local/opt/go/libexec/bin:/Users/ddaniel/.nvm/versions/node/v16.15.1/bin:/Users/ddaniel/.local/bin:/Users/ddaniel/.fig/bin:/usr/local/go/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/kitty.app/Contents/MacOS:/Users/ddaniel/.fig/bin:/Users/ddaniel/.local/bin:/Users/ddaniel/.fig/bin:/Users/ddaniel/.local/bin:/Users/ddaniel/.fig/bin:/Users/ddaniel/.local/bin:/opt/homebrew/opt/go/libexec/bin:/Users/ddaniel/go/bin
@@ -14,7 +14,7 @@ Platform:
   darwin arm64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@osmosis%2ftelescope: Not found
+  Error: https://registry.yarnpkg.com/@haveanicedavid%2fgroups-ui-telescope: Not found
       at Request.params.callback [as _callback] (/Users/ddaniel/.nvm/versions/node/v16.15.1/lib/node_modules/yarn/lib/cli.js:66145:18)
       at Request.self.callback (/Users/ddaniel/.nvm/versions/node/v16.15.1/lib/node_modules/yarn/lib/cli.js:140890:22)
       at Request.emit (node:events:527:28)
@@ -37,7 +37,6 @@ npm manifest:
       "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --quiet --fix --ignore-path ./.gitignore",
       "lint:format": "prettier  --loglevel warn --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" ",
       "lint": "yarn lint:format && yarn lint:fix ",
-      "proto-gen": "node scripts/gen-proto.js",
       "type-check": "tsc",
       "storybook": "start-storybook -p 6006",
       "build-storybook": "build-storybook"
