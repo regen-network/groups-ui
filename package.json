@@ -13,6 +13,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@cosmjs/amino": "^0.28.11",
     "@cosmjs/launchpad": "^0.27.1",
     "@cosmjs/proto-signing": "^0.28.11",
     "@cosmjs/stargate": "^0.28.11",
@@ -22,6 +23,8 @@
     "@keplr-wallet/cosmos": "^0.10.16",
     "@keplr-wallet/stores": "^0.10.13",
     "@mui/material": "^5.9.1",
+    "@osmonauts/helpers": "^0.4.1",
+    "@osmonauts/lcd": "^0.3.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^3.1.4",
@@ -31,6 +34,7 @@
   "devDependencies": {
     "@babel/core": "^7.18.9",
     "@keplr-wallet/types": "^0.10.16",
+    "@osmonauts/telescope": "^0.11.9",
     "@storybook/addon-actions": "^6.5.10",
     "@storybook/addon-essentials": "^6.5.10",
     "@storybook/addon-interactions": "^6.5.10",
@@ -45,6 +49,7 @@
     "@typescript-eslint/parser": "^5.30.7",
     "@vitejs/plugin-react": "^2.0.0",
     "babel-loader": "^8.2.5",
+    "cross-env": "^7.0.3",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "^8.20.0",
     "eslint-config-prettier": "^8.5.0",

@@ -38,6 +38,7 @@ const eslintConfig = {
     'plugin:storybook/recommended',
     'plugin:prettier/recommended', // this should always be the last element in the array
   ],
+  ignorePatterns: ['src/proto/**/*'],
   plugins: ['@typescript-eslint', 'simple-import-sort', 'prettier'],
   rules: {
     'prettier/prettier': [
