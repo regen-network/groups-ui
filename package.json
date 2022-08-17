@@ -24,8 +24,6 @@
     "@keplr-wallet/cosmos": "^0.10.16",
     "@keplr-wallet/stores": "^0.10.13",
     "@mui/material": "^5.9.1",
-    "@osmonauts/helpers": "^0.4.1",
-    "@osmonauts/lcd": "^0.3.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^3.1.4",
@@ -35,7 +33,6 @@
   "devDependencies": {
     "@babel/core": "^7.18.9",
     "@keplr-wallet/types": "^0.10.16",
-    "@osmonauts/telescope": "^0.11.9",
     "@storybook/addon-actions": "^6.5.10",
     "@storybook/addon-essentials": "^6.5.10",
     "@storybook/addon-interactions": "^6.5.10",
