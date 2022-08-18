@@ -1,8 +1,9 @@
+# Most of this file is copied from the prior groups work - probably room to clean some of this up
 MONIKER=cosmoswithgroups1
 CHAIN_ID=cosmoswithgroups
 CHAIN_HOME=$(HOME)/.simd
 ALICE=cosmos1kdzkazludrnmnzchcxgs6znsjph5ugx4rhljrh
-BOB=cosmos106ljn6kds9vegaux0w4jnend97fdm50yec59vq
+USER2=cosmos106ljn6kds9vegaux0w4jnend97fdm50yec59vq
 COSMOS_SDK_VERSION=v0.46.x
 
 NOW=$(shell date +%s%3)
@@ -31,7 +32,6 @@ ifeq ($(UNAME), Darwin) # macOS
 	@echo "git clone https://github.com/cosmos/cosmos-sdk -> git checkout $(COSMOS_SDK_VERSION) -> make build -> echo $GOPATH/bin sudo mv build/simd /usr/local/go/bin/ -> ln -s /usr/local/go/bin/simd /usr/local/bin/simd"
 endif
 
-
 .PHONY: local-clean
 local-clean:
 	rm -rf $(CHAIN_HOME) && rm -rf $(HOME)/.simapp
@@ -41,7 +41,7 @@ local-keys:
 	simd keys show alice --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME) > /dev/null 2>&1 || (sleep 1; echo "earn noble employ useful space craft staff blast exact pluck siren physical biology short suit oval open legend humble pill series devote wealth hungry") | simd keys add alice --recover --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)
 	simd keys show bob --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME) > /dev/null 2>&1 || (sleep 1; echo "lawn pigeon use festival elder trust wish rose law family about web fiber jealous daughter vote history grant quarter fetch soft poem aware truly") | simd keys add bob --recover --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)
 	simd keys show user1 --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME) > /dev/null 2>&1 || (sleep 1; echo "hello turn increase august raw toss hurdle craft baby arrow aware shield maple net six math chase debris chase wet benefit rent segment beauty") | simd keys add user1 --recover --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)
-	simd keys show bob --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME) > /dev/null 2>&1 || (sleep 1; echo "high return silly coyote skin trumpet stock bicycle enjoy common exact sure") | simd keys add bob --recover --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)
+	simd keys show user2 --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME) > /dev/null 2>&1 || (sleep 1; echo "high return silly coyote skin trumpet stock bicycle enjoy common exact sure") | simd keys add user2 --recover --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)
 
 .PHONY: local-init
 local-init: local-clean local-keys
@@ -66,7 +66,7 @@ local-start:
 .PHONY: query-balance
 query-balance:
 	simd q bank balances $(ALICE) --chain-id $(CHAIN_ID) --home $(CHAIN_HOME)
-	simd q bank balances $(BOB) --chain-id $(CHAIN_ID) --home $(CHAIN_HOME)
+	simd q bank balances $(USER2) --chain-id $(CHAIN_ID) --home $(CHAIN_HOME)
 
 .PHONY: keys-list
 keys-list:
@@ -74,17 +74,17 @@ keys-list:
 
 .PHONY: bank-send
 bank-send:
-	simd tx bank send $(ALICE) $(BOB) 1000000000000000stake --chain-id $(CHAIN_ID) --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)
+	simd tx bank send $(ALICE) $(USER2) 1000000000000000stake --chain-id $(CHAIN_ID) --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)
 
 .PHONY: create-group
 create-group:
-	simd tx group create-group $(BOB) $$(echo '{"name": "bla1", "description": "blabbl", "created": $(NOW), "lastEdited": $(NOW), "linkToForum": "", "other": "blabla"}' | $(base64)) \
+	simd tx group create-group $(USER2) $$(echo '{"name": "bla1", "description": "blabbl", "created": $(NOW), "lastEdited": $(NOW), "linkToForum": "", "other": "blabla"}' | $(base64)) \
 		./testdata/members.json --chain-id $(CHAIN_ID) --keyring-backend test --keyring-dir $(CHAIN_HOME)
 
 .PHONY: create-group-with-policy
 create-group-with-policy:
-	# BOB should have some coins to pay fee
-	simd tx group create-group-with-policy $(BOB) \
+	# USER2 should have some coins to pay fee
+	simd tx group create-group-with-policy $(USER2) \
  		$$(echo '{"name": "bla1", "description": "blabbl", "created": $(NOW), "lastEdited": $(NOW), "linkToForum": "", "other": "blabla"}' | $(base64)) \
 		'' ./testdata/members.json \
 		'{"@type":"/cosmos.group.v1.PercentageDecisionPolicy", "percentage":"1", "windows": {"voting_period": "120h"}}' \
@@ -93,7 +93,7 @@ create-group-with-policy:
 .PHONY: create-group-policy
 create-group-policy:
 	@read -p "Group ID:" groupId; \
-	simd tx group create-group-policy $(BOB) $$groupId '' --chain-id $(CHAIN_ID) \
+	simd tx group create-group-policy $(USER2) $$groupId '' --chain-id $(CHAIN_ID) \
     	'{"@type":"/cosmos.group.v1.ThresholdDecisionPolicy", "threshold":"1", "windows": {"voting_period": "120h"}}'
 
 .PHONY: query-group-proposals-by-group-policy
@@ -121,11 +121,11 @@ submit-text-proposal:
 
 .PHONY: update-group-metadata
 update-group-metadata:
-	simd tx group update-group-metadata $(BOB) 2 $$(echo '{"name": "bla1", "description": "blabbl", "created": $(NOW), "lastEdited": $(NOW), "linkToForum": "", "other": "blabla"}' | base64 -w 0) --home $(CHAIN_HOME) --chain-id $(CHAIN_ID) --keyring-backend test --keyring-dir $(CHAIN_HOME)
+	simd tx group update-group-metadata $(USER2) 2 $$(echo '{"name": "bla1", "description": "blabbl", "created": $(NOW), "lastEdited": $(NOW), "linkToForum": "", "other": "blabla"}' | base64 -w 0) --home $(CHAIN_HOME) --chain-id $(CHAIN_ID) --keyring-backend test --keyring-dir $(CHAIN_HOME)
 
 .PHONY: query-groups
 query-groups:
-	simd q group groups-by-admin $(BOB)
+	simd q group groups-by-admin $(USER2)
 
 .PHONY: vote
 vote:

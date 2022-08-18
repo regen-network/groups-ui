@@ -1,6 +1,7 @@
 import { handleError, throwError } from 'util/errors'
 
-import { LOCALSTORAGE_CHAIN_KEY, walletStore } from './wallet.store'
+import { LOCALSTORAGE_CHAIN_KEY } from './wallet.constants'
+import { walletStore } from './wallet.store'
 
 export function setActiveChain(chainId: string) {
   const newChain = walletStore.allChains.find((chain) => chain.chainId === chainId)
@@ -19,8 +20,8 @@ export async function enableKeplr() {
     walletStore.keplrStatus = 'initialized'
   }
   const chainId = walletStore.activeChain.chainId
-  console.log('enableKeplr')
   try {
+    await window.keplr.experimentalSuggestChain(walletStore.activeChain)
     await window.keplr.enable(chainId)
     const offlineSigner = window.keplr.getOfflineSigner(chainId)
     const [account] = await offlineSigner.getAccounts()

@@ -31,7 +31,13 @@ UI for Cosmos groups module
 
 ## Keplr
 
-You'll need to import generated wallet info into Keplr in order to test features, using one of the 12 word mnemonic phrases (see the `makefile`)
+You'll need to import generated wallet info into Keplr in order to test features:
+
+(from `USER2` in the makefile)
+
+```
+high return silly coyote skin trumpet stock bicycle enjoy common exact sure
+```
 
 ## Configure Keplr
 

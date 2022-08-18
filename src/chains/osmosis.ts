@@ -1,5 +1,6 @@
-import { Bech32Address } from '@keplr-wallet/cosmos'
 import type { AppCurrency, ChainInfo } from '@keplr-wallet/types'
+
+import { Bech32Address } from 'util/bech32'
 
 const OSMO: AppCurrency = {
   coinDenom: 'osmo',

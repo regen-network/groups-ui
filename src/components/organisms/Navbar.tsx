@@ -1,11 +1,4 @@
 import { useNavigate } from 'react-router-dom'
-// import { allChainsArray } from 'chains'
-import { useSnapshot } from 'valtio'
-
-import { CHAIN_LIST } from 'stubs/chains/chains'
-// import { setActiveChain, walletStore } from 'store'
-import { setActiveChain } from 'store'
-import { walletStore } from 'store/wallet.store'
 
 import {
   AppBar,
@@ -17,18 +10,10 @@ import {
   Text,
   Toolbar,
 } from '@/atoms'
-import { SelectDropdown } from '@/molecules'
 
-const CHAIN_ITEMS = CHAIN_LIST.map(({ chainId, chainName }) => ({
-  value: chainId,
-  name: chainName,
-}))
+import { ChainSelect } from './ChainSelect'
 
 export const Navbar = () => {
-  // see: https://github.com/pmndrs/eslint-plugin-valtio/issues/32
-  // could change to `export function` to fix, but should be able to update soon
-  // eslint-disable-next-line
-  const snap = useSnapshot(walletStore)
   const navigate = useNavigate()
 
   return (
@@ -59,12 +44,7 @@ export const Navbar = () => {
           {/* TODO delete this */}
           <TempNav />
           <Box sx={{ flexGrow: 1, maxWidth: 300 }}>
-            <SelectDropdown
-              label="Select a Chain"
-              value={snap.activeChain.chainId}
-              onChange={setActiveChain}
-              items={CHAIN_ITEMS}
-            />
+            <ChainSelect />
           </Box>
         </Toolbar>
       </Container>
