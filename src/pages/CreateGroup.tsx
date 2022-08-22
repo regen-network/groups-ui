@@ -1,10 +1,13 @@
-import { Center, Text } from '@/atoms'
+import { StepperTemplate } from '@/templates'
 
 const CreateGroup = () => {
   return (
-    <Center>
-      <Text variant="h1">Create Group Page</Text>
-    </Center>
+    <StepperTemplate
+      activeStep={0}
+      steps={['Create Group', 'Create Group Policy', 'Finished']}
+    >
+      content
+    </StepperTemplate>
   )
 }
 

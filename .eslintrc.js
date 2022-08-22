@@ -70,7 +70,11 @@ const eslintConfig = {
           // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
           ['^react', '^@?\\w'],
           // absolute imports
-          ['^(util|chains|stubs)(/.*|$)', '^(types)(/.*|$)', '^(hooks|store)(/.*|$)'],
+          [
+            '^(util|chains|stubs)(/.*|$)',
+            '^(types)(/.*|$)',
+            '^(hooks|store|constants)(/.*|$)',
+          ],
           // Pages
           ['^(pages)(/.*|$)'],
           // components

@@ -13,7 +13,6 @@ import { Spinner } from '@/molecules'
 import { ErrorFallback } from '@/organisms'
 
 function AppContent() {
-  useKeplr()
   const snap = useSnapshot(walletStore)
 
   switch (snap.keplrStatus) {
@@ -32,6 +31,7 @@ function AppContent() {
 }
 
 export default function App() {
+  useKeplr()
   const theme = useAppTheme()
 
   function handleReset() {

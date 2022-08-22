@@ -60,8 +60,5 @@ const TempNav = () => (
     <li>
       <Link to="groups">Groups</Link>
     </li>
-    <li>
-      <Link to="groups/new">Create Group</Link>
-    </li>
   </Box>
 )

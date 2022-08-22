@@ -8,8 +8,8 @@ export function useAppTheme() {
       responsiveFontSizes(
         createTheme({
           palette: {
-            mode: prefersDarkMode ? 'dark' : 'light',
-            // mode: 'light',
+            // mode: prefersDarkMode ? 'dark' : 'light',
+            mode: 'light',
           },
         }),
       ),

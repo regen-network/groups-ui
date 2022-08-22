@@ -11,6 +11,9 @@ import MuiIconButton from '@mui/material/IconButton'
 import MuiInputLabel from '@mui/material/InputLabel'
 import MuiMenuItem from '@mui/material/MenuItem'
 import MuiPaper from '@mui/material/Paper'
+import MuiStep from '@mui/material/Step'
+import MuiStepLabel from '@mui/material/StepLabel'
+import MuiStepper from '@mui/material/Stepper'
 import MuiTextField from '@mui/material/TextField'
 import MuiToolbar from '@mui/material/Toolbar'
 import MuiTypography from '@mui/material/Typography'
@@ -33,6 +36,9 @@ export const IconButton = MuiIconButton
 export const InputLabel = MuiInputLabel
 export const MenuItem = MuiMenuItem
 export const Paper = MuiPaper
+export const Stepper = MuiStepper
+export const Step = MuiStep
+export const StepLabel = MuiStepLabel
 export const TextField = MuiTextField
 export const Toolbar = MuiToolbar
 

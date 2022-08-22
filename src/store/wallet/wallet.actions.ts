@@ -11,6 +11,7 @@ export function setActiveChain(chainId: string) {
   }
 }
 
+// TODO: reload on keplr account change
 export async function enableKeplr() {
   if (!window.keplr) {
     walletStore.keplrStatus = 'uninstalled'

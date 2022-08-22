@@ -1,2 +1,4 @@
 export * from './AlertTemplate'
-export * from './AppLayout'
+export * from './AppTemplate'
+export * from './PageTemplate'
+export * from './StepperTemplate'

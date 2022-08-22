@@ -1,20 +1,18 @@
 import { Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
 
-import { Box, Container, FlexCol } from '@/atoms'
+import { Box, FlexCol } from '@/atoms'
 import { Spinner } from '@/molecules'
 import { Navbar } from '@/organisms'
 
-export const AppLayout = () => {
+export const AppTemplate = () => {
   return (
     <FlexCol sx={{ maxHeight: '100vh', height: '100%', overflowY: 'auto' }}>
       <Navbar />
       <Box component="main" sx={{ height: '100%' }}>
-        <Container>
-          <Suspense fallback={<Spinner />}>
-            <Outlet />
-          </Suspense>
-        </Container>
+        <Suspense fallback={<Spinner />}>
+          <Outlet />
+        </Suspense>
       </Box>
     </FlexCol>
   )

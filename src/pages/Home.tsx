@@ -1,10 +1,11 @@
-import { Center, Text } from '@/atoms'
+import { Text } from '@/atoms'
+import { PageTemplate } from '@/templates'
 
 const Home = () => {
   return (
-    <Center>
-      <Text variant="h1">Home Page</Text>
-    </Center>
+    <PageTemplate>
+      <Text variant="h3">Home Page</Text>
+    </PageTemplate>
   )
 }
 
