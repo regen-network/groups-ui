@@ -21,10 +21,11 @@ export const Navbar = () => {
       position="static"
       color="transparent"
       elevation={0}
-      sx={{
+      sx={(theme) => ({
         borderBottom: 2,
         borderColor: 'divider',
-      }}
+        bgcolor: theme.palette.mode === 'dark' ? 'action.hover' : undefined,
+      })}
     >
       <Container>
         <Toolbar sx={{ my: 2 }} disableGutters>

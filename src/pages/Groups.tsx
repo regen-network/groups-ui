@@ -1,17 +1,17 @@
-import { Button, Flex, RouteLink, Text } from '@/atoms'
+import { Button, FlexBetween, RouteLink, Text } from '@/atoms'
 import { PageTemplate } from '@/templates'
 
 const Groups = () => {
   return (
     <PageTemplate>
-      <Flex justifyContent="space-between">
+      <FlexBetween>
         <Text variant="h4">Groups</Text>
         <div>
           <Button size="large" variant="contained" component={RouteLink} to="/groups/new">
             Create Group
           </Button>
         </div>
-      </Flex>
+      </FlexBetween>
     </PageTemplate>
   )
 }

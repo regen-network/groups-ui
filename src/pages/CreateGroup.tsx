@@ -1,3 +1,4 @@
+import { CreateGroupForm } from '@/organisms'
 import { StepperTemplate } from '@/templates'
 
 const CreateGroup = () => {
@@ -6,7 +7,7 @@ const CreateGroup = () => {
       activeStep={0}
       steps={['Create Group', 'Create Group Policy', 'Finished']}
     >
-      content
+      <CreateGroupForm />
     </StepperTemplate>
   )
 }
