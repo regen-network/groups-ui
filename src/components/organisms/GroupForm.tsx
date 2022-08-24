@@ -133,7 +133,7 @@ export const GroupForm = ({
               </Button>
             </div>
           </Flex>
-          {/* TODO: move this */}
+          {/* TODO: move this? */}
           {memberFields.length > 0 && (
             <TableContainer component={Paper}>
               <Table>

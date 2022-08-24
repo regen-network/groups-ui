@@ -4,7 +4,7 @@ import { PageTemplate } from '@/templates'
 const Groups = () => {
   return (
     <PageTemplate>
-      <FlexBetween>
+      <FlexBetween wFull>
         <Text variant="h4">Groups</Text>
         <div>
           <Button size="large" variant="contained" component={Link} to="/groups/new">

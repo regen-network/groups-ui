@@ -1,15 +1,16 @@
 import { ErrorBoundary } from 'react-error-boundary'
-import { CssBaseline, ThemeProvider } from '@mui/material'
 import { Routes } from 'Routes'
 import { useSnapshot } from 'valtio'
 
-import { useAppTheme, useKeplr } from 'hooks'
+import { useKeplr } from 'hooks'
 import { walletStore } from 'store'
 
 import { EnableKeplr } from 'pages/EnableKeplr'
 import { InstallKeplr } from 'pages/InstallKeplr'
 import { Spinner } from '@/molecules'
 import { ErrorFallback } from '@/organisms'
+
+import { Theme } from './Theme'
 
 function AppContent() {
   const snap = useSnapshot(walletStore)
@@ -31,18 +32,16 @@ function AppContent() {
 
 export default function App() {
   useKeplr()
-  const theme = useAppTheme()
 
   function handleReset() {
     window.location.reload()
   }
 
   return (
-    <ErrorBoundary FallbackComponent={ErrorFallback} onReset={handleReset}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+    <Theme>
+      <ErrorBoundary FallbackComponent={ErrorFallback} onReset={handleReset}>
         <AppContent />
-      </ThemeProvider>
-    </ErrorBoundary>
+      </ErrorBoundary>
+    </Theme>
   )
 }

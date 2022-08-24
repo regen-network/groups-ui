@@ -8,6 +8,7 @@ const CreateGroup = () => {
     <StepperTemplate
       activeStep={0}
       steps={['Create Group', 'Create Group Policy', 'Finished']}
+      nextBtn={{ text: 'Next', onClick: () => void null }}
     >
       <GroupForm onSubmit={console.log} defaultValues={defaultGroupFormValues} />
     </StepperTemplate>

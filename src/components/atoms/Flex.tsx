@@ -1,34 +1,44 @@
 import type { CSSProperties } from 'react'
 import { styled } from '@mui/material'
-import Box from '@mui/material/Box'
+import Box, { type BoxProps } from '@mui/material/Box'
 
-const base: CSSProperties = {
-  display: 'flex',
-  width: '100%',
-  height: '100%',
+interface FlexProps extends BoxProps {
+  hFull?: boolean
+  wFull?: boolean
+  col?: boolean
 }
 
-export const Flex = styled(Box)({
-  ...base,
+const baseProps = ({ hFull, wFull, col }: FlexProps): CSSProperties => ({
+  display: 'flex',
+  ...(hFull && { height: '100%' }),
+  ...(wFull && { width: '100%' }),
+  ...(col && { flexDirection: 'column' }),
 })
 
-export const FlexEnd = styled(Box)({
-  ...base,
+export const Flex = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'fill' && prop !== 'col',
+})<FlexProps>((props) => ({
+  ...baseProps(props),
+}))
+
+export const FlexEnd = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'fill' && prop !== 'col',
+})<FlexProps>((props) => ({
+  ...baseProps(props),
   justifyContent: 'flex-end',
-})
+}))
 
-export const FlexBetween = styled(Box)({
-  ...base,
+export const FlexBetween = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'fill' && prop !== 'col',
+})<FlexProps>((props) => ({
+  ...baseProps(props),
   justifyContent: 'space-between',
-})
+}))
 
-export const FlexCol = styled(Box)({
-  ...base,
-  flexDirection: 'column',
-})
-
-export const Center = styled(Box)({
-  ...base,
+export const Center = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'fill' && prop !== 'col',
+})<FlexProps>((props) => ({
+  ...baseProps(props),
   justifyContent: 'center',
   alignItems: 'center',
-})
+}))

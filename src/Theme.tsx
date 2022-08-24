@@ -1,5 +1,11 @@
-import { useMemo } from 'react'
-import { createTheme, responsiveFontSizes, useMediaQuery } from '@mui/material'
+import { type ReactNode, useMemo } from 'react'
+import {
+  createTheme,
+  CssBaseline,
+  responsiveFontSizes,
+  ThemeProvider,
+  useMediaQuery,
+} from '@mui/material'
 import blue from '@mui/material/colors/blue'
 import indigo from '@mui/material/colors/indigo'
 import lightGreen from '@mui/material/colors/lightGreen'
@@ -13,7 +19,7 @@ const headerDefaults = {
   letterSpacing: 1,
 }
 
-export function useAppTheme() {
+export const Theme = (props: { children: ReactNode }) => {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
   const theme = useMemo(
     () =>
@@ -68,5 +74,10 @@ export function useAppTheme() {
       ),
     [prefersDarkMode], // eslint-disable-line
   )
-  return theme
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      {props.children}
+    </ThemeProvider>
+  )
 }

@@ -1,25 +1,29 @@
 import { ReactNode } from 'react'
 
-import { FlexCol, Text } from '@/atoms'
-import { PageStepper } from '@/molecules'
+import { Flex, Text } from '@/atoms'
+import { PageStepper, StickyFooter } from '@/molecules'
 
 import { PageTemplate } from './PageTemplate'
 
-export const StepperTemplate = (props: {
+export const StepperTemplate = (p: {
   children: ReactNode
   activeStep: number
   steps: string[]
+  nextBtn?: {
+    text: string
+    onClick: () => void
+  }
 }) => {
-  const { activeStep, children, steps } = props
   return (
-    <FlexCol>
-      <PageStepper activeStep={activeStep} steps={steps} />
+    <Flex col>
+      <PageStepper activeStep={p.activeStep} steps={p.steps} />
       <PageTemplate>
         <Text variant="h2" align="center" mb={4}>
-          {steps[activeStep]}
+          {p.steps[p.activeStep]}
         </Text>
-        {children}
+        {p.children}
+        {!!p.nextBtn && <StickyFooter btnText={p.nextBtn.text} />}
       </PageTemplate>
-    </FlexCol>
+    </Flex>
   )
 }

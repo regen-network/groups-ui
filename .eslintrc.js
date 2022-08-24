@@ -39,7 +39,12 @@ const eslintConfig = {
     'plugin:prettier/recommended', // this should always be the last element in the array
   ],
   ignorePatterns: ['src/proto/**/*'],
-  plugins: ['@typescript-eslint', 'simple-import-sort', 'prettier'],
+  plugins: [
+    '@typescript-eslint',
+    'eslint-plugin-import',
+    'simple-import-sort',
+    'prettier',
+  ],
   rules: {
     'prettier/prettier': [
       'error',
@@ -51,6 +56,7 @@ const eslintConfig = {
     'react/react-in-jsx-scope': 'off',
     'jsx-a11y/accessible-emoji': 'off',
     'no-unused-vars': 'off',
+    'import/no-duplicates': 'error',
     '@typescript-eslint/no-unused-vars': ['warn'],
     '@typescript-eslint/explicit-function-return-type': 'off',
     'simple-import-sort/exports': 'error',

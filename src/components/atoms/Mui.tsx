@@ -29,4 +29,5 @@ export {
   TableHead as THead,
   Toolbar,
   TableRow as TR,
+  useTheme,
 } from '@mui/material'

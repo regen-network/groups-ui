@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import { defineConfig, splitVendorChunkPlugin } from 'vite'
 import checker from 'vite-plugin-checker'
 import { VitePluginFonts } from 'vite-plugin-fonts'
 import svgr from 'vite-plugin-svgr'
@@ -19,6 +19,7 @@ export default defineConfig({
       },
     }),
     checker({ typescript: true }),
+    splitVendorChunkPlugin(),
     tsconfigPaths(),
   ],
 })

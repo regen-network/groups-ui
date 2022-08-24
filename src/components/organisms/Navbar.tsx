@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 
-import { AppBar, Box, Container, IconButton, Link, Toolbar } from '@/atoms'
+import { AppBar, Box, Container, IconButton, Link, Toolbar, useTheme } from '@/atoms'
 
 import { ChainSelect } from './ChainSelect'
 
@@ -8,17 +8,13 @@ import { GroupsIcon } from 'assets/tsx'
 
 export const Navbar = () => {
   const navigate = useNavigate()
+  const theme = useTheme()
 
   return (
     <AppBar
-      enableColorOnDark
       position="static"
-      color="transparent"
-      elevation={0}
-      sx={{
-        borderBottom: 2,
-        borderColor: 'divider',
-      }}
+      color={theme.palette.mode === 'light' ? 'transparent' : undefined}
+      elevation={2}
     >
       <Container>
         <Toolbar sx={{ my: 2 }} disableGutters>
