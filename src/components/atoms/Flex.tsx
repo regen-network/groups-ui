@@ -8,6 +8,9 @@ interface FlexProps extends BoxProps {
   col?: boolean
 }
 
+const propFilter = (prop: PropertyKey) =>
+  prop !== 'hFull' && prop !== 'wFull' && prop !== 'col' && prop !== 'fill'
+
 const baseProps = ({ hFull, wFull, col }: FlexProps): CSSProperties => ({
   display: 'flex',
   ...(hFull && { height: '100%' }),
@@ -16,27 +19,27 @@ const baseProps = ({ hFull, wFull, col }: FlexProps): CSSProperties => ({
 })
 
 export const Flex = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'fill' && prop !== 'col',
+  shouldForwardProp: propFilter,
 })<FlexProps>((props) => ({
   ...baseProps(props),
 }))
 
 export const FlexEnd = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'fill' && prop !== 'col',
+  shouldForwardProp: propFilter,
 })<FlexProps>((props) => ({
   ...baseProps(props),
   justifyContent: 'flex-end',
 }))
 
 export const FlexBetween = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'fill' && prop !== 'col',
+  shouldForwardProp: propFilter,
 })<FlexProps>((props) => ({
   ...baseProps(props),
   justifyContent: 'space-between',
 }))
 
 export const Center = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'fill' && prop !== 'col',
+  shouldForwardProp: propFilter,
 })<FlexProps>((props) => ({
   ...baseProps(props),
   justifyContent: 'center',
