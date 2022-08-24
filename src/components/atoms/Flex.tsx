@@ -8,6 +8,15 @@ const base: CSSProperties = {
   height: '100%',
 }
 
+export const Flex = styled(Box)({
+  ...base,
+})
+
+export const FlexEnd = styled(Box)({
+  ...base,
+  justifyContent: 'flex-end',
+})
+
 export const FlexBetween = styled(Box)({
   ...base,
   justifyContent: 'space-between',

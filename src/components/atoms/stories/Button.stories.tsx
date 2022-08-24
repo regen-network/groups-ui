@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { Button } from '../MuiReExports'
+import { Button } from '../Mui'
 
 export default {
   title: 'Atoms/Button',
@@ -26,6 +26,4 @@ const Template: ComponentStory<typeof Button> = (args) => (
 )
 
 export const Component = Template.bind({})
-Component.args = {
-  variant: 'contained',
-}
+Component.args = {}

@@ -1,4 +1,4 @@
 export * from './ChainSelect'
-export * from './CreateGroupForm'
 export * from './ErrorFallback'
+export * from './GroupForm'
 export * from './Navbar'

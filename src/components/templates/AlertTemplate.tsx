@@ -1,7 +1,9 @@
 import { ReactNode } from 'react'
 
 import type { AlertProps } from '@/atoms'
-import { Alert, AlertTitle, Button, Center, GroupsIcon, Paper } from '@/atoms'
+import { Alert, AlertTitle, Button, Center, Paper } from '@/atoms'
+
+import { GroupsIcon } from 'assets/tsx'
 
 export const AlertTemplate = ({
   btnText,

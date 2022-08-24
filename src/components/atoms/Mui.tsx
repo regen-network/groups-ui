@@ -20,7 +20,13 @@ export {
   StepLabel,
   Stepper,
   styled,
+  Table,
+  TableContainer,
+  TableBody as TBody,
+  TableCell as TD,
   Typography as Text,
   TextField,
+  TableHead as THead,
   Toolbar,
+  TableRow as TR,
 } from '@mui/material'

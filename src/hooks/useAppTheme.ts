@@ -1,10 +1,8 @@
 import { useMemo } from 'react'
-import {
-  type ThemeOptions,
-  createTheme,
-  responsiveFontSizes,
-  useMediaQuery,
-} from '@mui/material'
+import { createTheme, responsiveFontSizes, useMediaQuery } from '@mui/material'
+import blue from '@mui/material/colors/blue'
+import indigo from '@mui/material/colors/indigo'
+import lightGreen from '@mui/material/colors/lightGreen'
 
 const defaultFontFamily = ['"Lato"', '-apple-system', 'sans-serif'].join(',')
 const headerFontFamily = ['"Muli"', '-apple-system', 'sans-serif'].join(',')
@@ -15,32 +13,6 @@ const headerDefaults = {
   letterSpacing: 1,
 }
 
-const baseTheme: ThemeOptions = {
-  typography: {
-    fontFamily: defaultFontFamily,
-    h1: {
-      ...headerDefaults,
-      fontSize: 48,
-    },
-    h2: {
-      ...headerDefaults,
-      fontSize: 38,
-    },
-    h3: {
-      ...headerDefaults,
-      fontSize: 32,
-    },
-    h4: {
-      ...headerDefaults,
-      fontSize: 24,
-    },
-    h5: {
-      ...headerDefaults,
-      fontSize: 21,
-    },
-  },
-}
-
 export function useAppTheme() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
   const theme = useMemo(
@@ -49,6 +21,8 @@ export function useAppTheme() {
         createTheme({
           palette: {
             mode: prefersDarkMode ? 'dark' : 'light',
+            primary: prefersDarkMode ? lightGreen : indigo,
+            secondary: blue,
           },
           typography: {
             fontFamily: defaultFontFamily,
@@ -71,6 +45,23 @@ export function useAppTheme() {
             h5: {
               ...headerDefaults,
               fontSize: 21,
+            },
+            h6: {
+              ...headerDefaults,
+              fontWeight: 800,
+              fontSize: 18,
+            },
+          },
+          components: {
+            MuiButton: {
+              defaultProps: {
+                variant: 'contained',
+              },
+            },
+            MuiLink: {
+              defaultProps: {
+                underline: 'hover',
+              },
             },
           },
         }),

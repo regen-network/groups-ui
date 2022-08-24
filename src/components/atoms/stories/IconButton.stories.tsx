@@ -1,8 +1,8 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { GroupsIcon } from '@/atoms'
+import { IconButton } from '../Mui'
 
-import { IconButton } from '../MuiReExports'
+import { GroupsIcon } from 'assets/tsx'
 
 export default {
   title: 'Atoms/IconButton',

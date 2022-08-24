@@ -21,9 +21,10 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@haveanicedavid/groups-ui-telescope": "haveanicedavid/groups-ui-telescope#main",
+    "@hookform/resolvers": "^2.9.7",
     "@keplr-wallet/cosmos": "^0.10.18",
     "@keplr-wallet/stores": "^0.10.18",
-    "@mui/icons-material": "^5.8.4",
+    "@mui/icons-material": "^5.10.2",
     "@mui/material": "^5.10.1",
     "@mui/x-date-pickers": "^5.0.0-beta.6",
     "react": "^18.2.0",
@@ -32,7 +33,8 @@
     "react-hook-form": "^7.34.2",
     "react-hook-form-mui": "^5.5.1",
     "react-router-dom": "^6.3.0",
-    "valtio": "^1.6.4"
+    "valtio": "^1.6.4",
+    "zod": "^3.18.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.13",

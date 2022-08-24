@@ -6,6 +6,7 @@ export const Container = styled(MuiContainer)({
   display: 'flex',
   flexDirection: 'column',
 })
+
 Container.defaultProps = {
   maxWidth: 'xl',
 }

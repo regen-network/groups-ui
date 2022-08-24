@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { FlexCol, Title } from '@/atoms'
+import { FlexCol, Text } from '@/atoms'
 import { PageStepper } from '@/molecules'
 
 import { PageTemplate } from './PageTemplate'
@@ -15,9 +15,9 @@ export const StepperTemplate = (props: {
     <FlexCol>
       <PageStepper activeStep={activeStep} steps={steps} />
       <PageTemplate>
-        <Title align="center" mb={4}>
+        <Text variant="h2" align="center" mb={4}>
           {steps[activeStep]}
-        </Title>
+        </Text>
         {children}
       </PageTemplate>
     </FlexCol>

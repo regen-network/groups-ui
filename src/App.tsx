@@ -8,7 +8,6 @@ import { walletStore } from 'store'
 
 import { EnableKeplr } from 'pages/EnableKeplr'
 import { InstallKeplr } from 'pages/InstallKeplr'
-
 import { Spinner } from '@/molecules'
 import { ErrorFallback } from '@/organisms'
 
