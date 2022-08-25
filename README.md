@@ -53,9 +53,9 @@ TODO
 
 ## Library Resources
 
-[MUI](https://mui.com/) - UI Components
-[Valtio](https://valtio.pmnd.rs/) - global state
-[Zod](https://github.com/colinhacks/zod) - form validation
+- [MUI](https://mui.com/) - UI Components
+- [Valtio](https://valtio.pmnd.rs/) - global state
+- [Zod](https://github.com/colinhacks/zod) - form validation
 
 ## Linting
 
