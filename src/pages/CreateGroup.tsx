@@ -1,9 +1,6 @@
 // import { MsgClientImpl } from '@haveanicedavid/groups-ui-telescope/types/proto/cosmos/group/v1/tx.rpc.msg'
 
-import { MsgClientImpl } from '@haveanicedavid/groups-ui-telescope/types/proto/cosmos/group/v1/tx.rpc.msg'
-
-import { defaultGroupFormValues, MsgCreateGroup } from 'models'
-import { walletStore } from 'store'
+import { defaultGroupFormValues /* , type MsgCreateGroup */ } from 'models'
 
 import { GroupForm } from '@/organisms'
 import { StepperTemplate } from '@/templates'
@@ -11,9 +8,6 @@ import { StepperTemplate } from '@/templates'
 // const t = new MsgClientImpl({request(service, method, data)})
 
 const CreateGroup = () => {
-  // const transformValues
-  // walletStore.client?.
-
   return (
     <StepperTemplate
       activeStep={0}
