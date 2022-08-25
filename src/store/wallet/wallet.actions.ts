@@ -1,3 +1,5 @@
+import { getSigningCosmosClient } from '@haveanicedavid/groups-ui-telescope'
+
 import { handleError, throwError } from 'util/errors'
 
 import { LOCALSTORAGE_CHAIN_KEY } from './wallet.constants'
@@ -26,7 +28,13 @@ export async function enableKeplr() {
     await window.keplr.enable(chainId)
     const offlineSigner = window.keplr.getOfflineSigner(chainId)
     const [account] = await offlineSigner.getAccounts()
+    const client = await getSigningCosmosClient({
+      rpcEndpoint: walletStore.activeChain.rpc,
+      signer: offlineSigner,
+    })
+
     walletStore.account = account
+    walletStore.client = client
     walletStore.keplrStatus = 'ready'
   } catch (error) {
     walletStore.keplrStatus = 'rejected'

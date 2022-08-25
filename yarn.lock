@@ -2131,9 +2131,10 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@haveanicedavid/groups-ui-telescope@haveanicedavid/groups-ui-telescope#main":
+"@haveanicedavid/groups-ui-telescope@^0.0.1":
   version "0.0.1"
-  resolved "https://codeload.github.com/haveanicedavid/groups-ui-telescope/tar.gz/9d269133c6a8aefcb92747311c97d01f24f048b5"
+  resolved "https://registry.yarnpkg.com/@haveanicedavid/groups-ui-telescope/-/groups-ui-telescope-0.0.1.tgz#f418fd4305323060275ec6dc9e4cab5047152c1e"
+  integrity sha512-4Z3VL5MrO8HJr/BHF67teGp9bXNBhCOauZAx0yluGuy01IISKTL0KKyvYqDAT/6odAg+sO5vX+bXIhCOz7xgaA==
   dependencies:
     "@babel/runtime" "^7.18.9"
     "@cosmjs/amino" "0.28.11"

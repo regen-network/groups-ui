@@ -1,4 +1,7 @@
-import type { AccountData, OfflineSigner } from '@cosmjs/proto-signing'
+import { OfflineSigner } from '@cosmjs/launchpad'
+import type { AccountData } from '@cosmjs/proto-signing'
+import { getSigningCosmosClient } from '@haveanicedavid/groups-ui-telescope'
+// import { SigningStargateClient } from '@cosmjs/stargate'
 import type { ChainInfo } from '@keplr-wallet/types'
 import { proxy } from 'valtio'
 import { subscribeKey } from 'valtio/utils'
@@ -12,12 +15,18 @@ const savedChain = localStorage.getItem(LOCALSTORAGE_CHAIN_KEY)
 
 export type KeplrStatus = 'loading' | 'initialized' | 'rejected' | 'ready' | 'uninstalled'
 
+const dummyClient = getSigningCosmosClient({
+  signer: {} as OfflineSigner,
+  rpcEndpoint: '',
+})
+
 type WalletStore = {
   account?: AccountData
   activeChain: ChainInfo
   allChains: ChainInfo[]
   keplrStatus: KeplrStatus
-  offlineSigner?: OfflineSigner
+  client?: Awaited<typeof dummyClient>
+  // offlineSigner?: OfflineSigner
 }
 
 export const walletStore = proxy<WalletStore>({
@@ -25,7 +34,8 @@ export const walletStore = proxy<WalletStore>({
   allChains: allChainsArray,
   activeChain: savedChain ? JSON.parse(savedChain) : allChainsArray[0],
   keplrStatus: 'loading',
-  offlineSigner: undefined,
+  client: undefined,
+  // offlineSigner: undefined,
 })
 
 subscribeKey(walletStore, 'activeChain', () => {

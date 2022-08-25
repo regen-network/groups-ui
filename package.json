@@ -20,7 +20,7 @@
     "@cosmjs/tendermint-rpc": "^0.28.13",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
-    "@haveanicedavid/groups-ui-telescope": "haveanicedavid/groups-ui-telescope#main",
+    "@haveanicedavid/groups-ui-telescope": "^0.0.1",
     "@hookform/resolvers": "^2.9.7",
     "@keplr-wallet/cosmos": "^0.10.18",
     "@keplr-wallet/stores": "^0.10.18",
