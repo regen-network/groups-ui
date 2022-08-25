@@ -7,7 +7,7 @@ node_modules/*
 
 ### VisualStudioCode ###
 .vscode/**/*
-!.vscode/settings.json.suggested
+!.vscode/settings.suggested.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json

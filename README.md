@@ -39,8 +39,24 @@ You'll need to import generated wallet info into Keplr in order to test features
 high return silly coyote skin trumpet stock bicycle enjoy common exact sure
 ```
 
-## Configure Keplr
+## IDE
+
+If you're using VSCode, it's recommended you install the eslint + prettier extensions and copy over the suggested workspace settings:
+
+```sh
+cp .vscode/settings.suggested.json .vscode/settings.json
+```
 
 # Architecture
 
 TODO
+
+## Library Resources
+
+[MUI](https://mui.com/) - UI Components
+[Valtio](https://valtio.pmnd.rs/) - global state
+[Zod](https://github.com/colinhacks/zod) - form validation
+
+## Linting
+
+`yarn lint` - format with Prettier, fix linting errors
