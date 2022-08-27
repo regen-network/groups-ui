@@ -1,7 +1,7 @@
 import { Button, Center, FlexBetween, Link, Paper, Stack, Text } from '@/atoms'
 import { PageTemplate } from '@/templates'
 
-const Groups = () => {
+export default function Groups() {
   return (
     <PageTemplate>
       <Stack width="100%" spacing={4}>
@@ -22,5 +22,3 @@ const Groups = () => {
     </PageTemplate>
   )
 }
-
-export default Groups

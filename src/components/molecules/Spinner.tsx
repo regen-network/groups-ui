@@ -2,7 +2,7 @@ import { Center, CircularProgress } from '@/atoms'
 
 export const Spinner = () => {
   return (
-    <Center>
+    <Center hFull>
       <CircularProgress color="primary" />
     </Center>
   )

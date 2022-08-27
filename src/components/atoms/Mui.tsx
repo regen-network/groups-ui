@@ -2,6 +2,8 @@
 export {
   type AlertProps,
   type SelectChangeEvent,
+  type SxProps,
+  type Theme,
   Alert,
   AlertTitle,
   AppBar,

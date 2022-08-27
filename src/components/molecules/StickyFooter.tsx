@@ -1,11 +1,24 @@
-import { Button, Container, FlexEnd, Paper } from '@/atoms'
+import { type SxProps, type Theme, Button, Container, FlexEnd, Paper } from '@/atoms'
 
-export const StickyFooter = (p: { btnText: string }) => {
+export const StickyFooter = ({
+  btnText,
+  onBtnClick,
+  sx = [],
+}: {
+  btnText: string
+  onBtnClick: () => void
+  sx?: SxProps<Theme>
+}) => {
   return (
-    <Paper elevation={16} sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, py: 4 }}>
+    <Paper
+      elevation={16}
+      sx={[{ position: 'sticky', bottom: 0, py: 3 }, ...(Array.isArray(sx) ? sx : [sx])]}
+    >
       <Container>
         <FlexEnd>
-          <Button size="large">{p.btnText}</Button>
+          <Button onClick={onBtnClick} size="large">
+            {btnText}
+          </Button>
         </FlexEnd>
       </Container>
     </Paper>
