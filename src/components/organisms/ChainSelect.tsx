@@ -1,7 +1,7 @@
 import { useSnapshot } from 'valtio'
 
 import { allChainsArray } from 'chains'
-import { setActiveChain, Wallet } from 'store'
+import { Chain, setActiveChain } from 'store'
 
 import { SelectDropdown } from '@/molecules'
 
@@ -11,11 +11,11 @@ const CHAIN_ITEMS = allChainsArray.map(({ chainId, chainName }) => ({
 }))
 
 export const ChainSelect = () => {
-  const snap = useSnapshot(Wallet)
+  const { active } = useSnapshot(Chain)
   return (
     <SelectDropdown
-      label={snap.activeChain.chainId ? '' : 'Select a Chain'}
-      value={snap.activeChain.chainId}
+      label={active.chainId ? '' : 'Select a Chain'}
+      value={active.chainId}
       onChange={setActiveChain}
       items={CHAIN_ITEMS}
     />
