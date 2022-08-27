@@ -1,8 +1,12 @@
 import type { DeliverTxResponse } from '@cosmjs/stargate'
-import { cosmos } from '@haveanicedavid/groups-ui-telescope'
+// import { Tendermint34Client } from '@cosmjs/tendermint-rpc'
+import { cosmos /* , tendermint */ } from '@haveanicedavid/groups-ui-telescope'
+import type { PageRequest as IPageRequest } from '@haveanicedavid/groups-ui-telescope/types/proto/cosmos/base/query/v1beta1/pagination'
 
+// import { PageRequest } from '@haveanicedavid/groups-ui-telescope/types/proto/cosmos/base/query/v1beta1/pagination'
+// import { PageRequest } from '@haveanicedavid/groups-ui-telescope/types/proto/cosmos/base/query/v1beta1/pagination'
 import { type GroupFormValues } from 'models'
-import { Wallet } from 'store'
+import { Group, Wallet } from 'store'
 import { throwError } from 'util/errors'
 
 export async function createGroup(values: GroupFormValues): Promise<DeliverTxResponse> {
@@ -18,11 +22,20 @@ export async function createGroup(values: GroupFormValues): Promise<DeliverTxRes
 }
 
 export async function fetchGroups(): Promise<any[]> {
-  const { signingClient } = Wallet
-  if (!signingClient) throwError('Wallet not initialized')
+  if (!Group.queryService || !Wallet.account) throwError('Wallet not initialized')
+  // const pagination: Partial<IPageRequest> = {}
   try {
+    // const data = await Group.queryService.groupsByMember({
+    //   address: Wallet.account.address,
+    //   pagination,
+    //   // pagination: PageRequest.fromPartial({
+    //   //   offset: 0,
+    //   //   limit: 100,
+    //   // }),
+    // })
+    // const client = Tendermint34Client
     // const data = await cosmos.group.v1.q
-    cosmos.ClientFactory.createRPCQueryClient
+    // cosmos.ClientFactory.createRPCQueryClient({ rpc: { request('', method, data)}})
     // return data
     return []
   } catch (error) {

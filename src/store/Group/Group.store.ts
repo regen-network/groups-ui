@@ -1,9 +1,8 @@
+import { QueryClientImpl } from '@haveanicedavid/groups-ui-telescope/types/proto/cosmos/group/v1/query.rpc.query'
 import { proxy } from 'valtio'
 
 type GroupsStore = {
-  all: any[]
+  queryService?: QueryClientImpl
 }
 
-export const wallet = proxy<GroupsStore>({
-  all: [],
-})
+export const Group = proxy<GroupsStore>({})
