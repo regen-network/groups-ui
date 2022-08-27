@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import { defaultMemberFormValues, GroupFormValues, MemberFormValues } from 'models'
-import { wallet } from 'store'
+import { Wallet } from 'store'
 import { truncate } from 'util/helpers'
 import { valid } from 'util/zod'
 
@@ -46,7 +46,7 @@ export const GroupForm = ({
   defaultValues: GroupFormValues
   onSubmit: (data: GroupFormValues) => void
 }) => {
-  const { account } = wallet
+  const { account } = Wallet
   const [memberAddr, setMemberAddr] = useState('')
   const form = useForm<GroupFormValues>({ defaultValues, resolver })
   const {

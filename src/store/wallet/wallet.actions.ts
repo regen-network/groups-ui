@@ -3,13 +3,13 @@ import { getSigningCosmosClient } from '@haveanicedavid/groups-ui-telescope'
 
 import { handleError, throwError } from 'util/errors'
 
-import { LOCALSTORAGE_CHAIN_KEY } from './wallet.constants'
-import { wallet } from './wallet.store'
+import { LOCALSTORAGE_CHAIN_KEY } from './Wallet.constants'
+import { Wallet } from './Wallet.store'
 
 export function setActiveChain(chainId: string) {
-  const newChain = wallet.allChains.find((chain) => chain.chainId === chainId)
+  const newChain = Wallet.allChains.find((chain) => chain.chainId === chainId)
   if (newChain) {
-    wallet.activeChain = newChain
+    Wallet.activeChain = newChain
     localStorage.setItem(LOCALSTORAGE_CHAIN_KEY, JSON.stringify(newChain))
     enableKeplr()
   }
@@ -19,31 +19,31 @@ export function setActiveChain(chainId: string) {
 export async function enableKeplr() {
   const { keplr } = window
   if (!keplr) {
-    wallet.keplrStatus = 'uninstalled'
+    Wallet.keplrStatus = 'uninstalled'
     throwError('Keplr is not installed')
   }
-  if (wallet.keplrStatus === 'loading') {
-    wallet.keplrStatus = 'initialized'
+  if (Wallet.keplrStatus === 'loading') {
+    Wallet.keplrStatus = 'initialized'
   }
-  const chainId = wallet.activeChain.chainId
+  const chainId = Wallet.activeChain.chainId
   try {
-    await keplr.experimentalSuggestChain(wallet.activeChain)
+    await keplr.experimentalSuggestChain(Wallet.activeChain)
     await keplr.enable(chainId)
     const offlineSigner = keplr.getOfflineSigner(chainId)
     const [account] = await offlineSigner.getAccounts()
     const client = await getSigningCosmosClient({
-      rpcEndpoint: wallet.activeChain.rpc,
+      rpcEndpoint: Wallet.activeChain.rpc,
       signer: offlineSigner,
     })
-    wallet.account = account
-    wallet.signingClient = client
-    wallet.fee = {
-      amount: coins(0, wallet.activeChain.feeCurrencies[0].coinDenom),
+    Wallet.account = account
+    Wallet.signingClient = client
+    Wallet.fee = {
+      amount: coins(0, Wallet.activeChain.feeCurrencies[0].coinDenom),
       gas: '2000000', // TODO how do I calculate this?
     }
-    wallet.keplrStatus = 'ready'
+    Wallet.keplrStatus = 'ready'
   } catch (error) {
-    wallet.keplrStatus = 'rejected'
+    Wallet.keplrStatus = 'rejected'
     handleError(error)
   }
 }

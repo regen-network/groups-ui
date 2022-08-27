@@ -5,7 +5,7 @@ import { proxy } from 'valtio'
 
 import { allChainsArray } from 'chains'
 
-import { LOCALSTORAGE_CHAIN_KEY } from './wallet.constants'
+import { LOCALSTORAGE_CHAIN_KEY } from './Wallet.constants'
 
 const savedChain = localStorage.getItem(LOCALSTORAGE_CHAIN_KEY)
 
@@ -20,7 +20,7 @@ type WalletStore = {
   signingClient?: SigningStargateClient
 }
 
-export const wallet = proxy<WalletStore>({
+export const Wallet = proxy<WalletStore>({
   activeChain: savedChain ? JSON.parse(savedChain) : allChainsArray[0],
   allChains: allChainsArray,
   keplrStatus: 'loading',

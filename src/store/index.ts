@@ -1,2 +1,2 @@
-export * from './wallet/wallet.actions'
-export * from './wallet/wallet.store'
+export * from './Group'
+export * from './Wallet'

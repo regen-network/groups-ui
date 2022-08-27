@@ -3,7 +3,7 @@ import { Routes } from 'Routes'
 import { useSnapshot } from 'valtio'
 
 import { useKeplr } from 'hooks'
-import { wallet } from 'store'
+import { Wallet } from 'store'
 
 import { EnableKeplr } from 'pages/EnableKeplr'
 import { InstallKeplr } from 'pages/InstallKeplr'
@@ -13,7 +13,7 @@ import { ErrorFallback } from '@/organisms'
 import { Theme } from './Theme'
 
 function AppContent() {
-  const snap = useSnapshot(wallet)
+  const snap = useSnapshot(Wallet)
 
   switch (snap.keplrStatus) {
     case 'loading':
