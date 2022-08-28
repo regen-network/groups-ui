@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import { defaultMemberFormValues, GroupFormValues, MemberFormValues } from 'models'
-import { Wallet } from 'store'
+import { Wallet } from 'store/Wallet'
 import { truncate } from 'util/helpers'
 import { valid } from 'util/zod'
 

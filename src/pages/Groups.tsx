@@ -1,5 +1,5 @@
 import { Button, Center, FlexBetween, Link, Paper, Stack, Text } from '@/atoms'
-import { PageTemplate } from '@/templates'
+import { PageTemplate } from '@/templates/PageTemplate'
 
 export default function Groups() {
   return (

@@ -49,12 +49,30 @@ cp .vscode/settings.suggested.json .vscode/settings.json
 
 # Architecture
 
-TODO
+This project is organized by [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/) principals:
+
+```
+📦src
+ ┣ 📂components
+ ┃ ┣ 📂atoms
+ ┃ ┃ ┗ 📜index.ts
+ ┃ ┣ 📂molecules
+ ┃ ┃ ┗ 📜index.ts
+ ┃ ┣ 📂organisms
+ ┃ ┗ 📂templates
+ ┗ 📂pages
+```
+
+Some relevant notes / Highlights:
+
+- Outer padding and margin should be set by parents components - ie, an `Atom` should not have `margin` set on the outer element - instead, it would be set by its parent component
+- `Atoms` and `Molecules` have `index.ts` barrel files for convenience (ie `import { Box, Button } from '@/atoms'`), but `Organisms`, `Templates`, and `Pages` do not. This is to avoid circular imports which can impact code splitting
 
 ## Library Resources
 
 - [MUI](https://mui.com/) - UI Components
 - [Valtio](https://valtio.pmnd.rs/) - global state
+- [React Query](https://tanstack.com/query/v4) - Query caching
 - [Zod](https://github.com/colinhacks/zod) - form validation
 
 ## Linting

@@ -3,13 +3,13 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Routes } from 'Routes'
 import { useSnapshot } from 'valtio'
 
-import { useKeplr } from 'hooks'
-import { Wallet } from 'store'
+import { useKeplr } from 'hooks/useKeplr'
+import { Wallet } from 'store/Wallet'
 
 import { EnableKeplr } from 'pages/EnableKeplr'
 import { InstallKeplr } from 'pages/InstallKeplr'
-import { Spinner } from '@/molecules'
-import { ErrorFallback } from '@/organisms'
+import { Spinner } from '@/molecules/Spinner'
+import { ErrorFallback } from '@/organisms/ErrorFallback'
 
 import { Theme } from './Theme'
 

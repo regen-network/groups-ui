@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 
 import { Box, Stack } from '@/atoms'
 import { Spinner } from '@/molecules'
-import { Navbar } from '@/organisms'
+import { Navbar } from '@/organisms/Navbar'
 
 export const AppTemplate = () => {
   return (

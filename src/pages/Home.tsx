@@ -1,5 +1,5 @@
 import { Text } from '@/atoms'
-import { PageTemplate } from '@/templates'
+import { PageTemplate } from '@/templates/PageTemplate'
 
 export default function Home() {
   return (

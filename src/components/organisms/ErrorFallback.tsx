@@ -1,5 +1,5 @@
 import { Card, CardContent } from '@/atoms'
-import { AlertTemplate } from '@/templates'
+import { AlertTemplate } from '@/templates/AlertTemplate'
 
 export const ErrorFallback = ({
   error,

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { fetchGroupsByAdmin, fetchGroupsByMember, Wallet } from 'store'
+import { fetchGroupsByAdmin, fetchGroupsByMember } from 'store/Group'
+import { Wallet } from 'store/Wallet'
 
 export const useMemberGroups = () => {
   useQuery(['groups', { type: 'member' }], () => {

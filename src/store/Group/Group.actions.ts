@@ -2,7 +2,8 @@ import type { DeliverTxResponse } from '@cosmjs/stargate'
 import { cosmos } from '@haveanicedavid/cosmos-groups-ts'
 
 import { type GroupFormValues } from 'models'
-import { Group, Wallet } from 'store'
+import { Group } from 'store/Group'
+import { Wallet } from 'store/Wallet'
 import { throwError } from 'util/errors'
 
 export async function createGroup(values: GroupFormValues): Promise<DeliverTxResponse> {

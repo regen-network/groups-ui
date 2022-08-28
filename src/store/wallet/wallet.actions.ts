@@ -1,7 +1,8 @@
 import { coins } from '@cosmjs/amino'
 import { cosmos, getSigningCosmosClient } from '@haveanicedavid/cosmos-groups-ts'
 
-import { Chain, Group } from 'store'
+import { Chain } from 'store/Chain'
+import { Group } from 'store/Group'
 import { handleError, throwError } from 'util/errors'
 
 import { Wallet } from './Wallet.store'

@@ -1,6 +1,6 @@
 import { openExternalLink } from 'util/helpers'
 
-import { AlertTemplate } from '@/templates'
+import { AlertTemplate } from '@/templates/AlertTemplate'
 
 export const InstallKeplr = () => {
   return (

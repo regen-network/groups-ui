@@ -1,7 +1,7 @@
-import { enableKeplr } from 'store'
+import { enableKeplr } from 'store/Wallet'
 
-import { ChainSelect } from '@/organisms'
-import { AlertTemplate } from '@/templates'
+import { ChainSelect } from '@/organisms/ChainSelect'
+import { AlertTemplate } from '@/templates/AlertTemplate'
 
 export const EnableKeplr = () => {
   return (
