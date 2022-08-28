@@ -18,8 +18,8 @@ export async function createGroup(values: GroupFormValues): Promise<DeliverTxRes
   }
 }
 
-export async function fetchGroupsByMember(address: string) {
-  if (!Group.query) throwError('Wallet not initialized')
+export async function fetchGroupsByMember(address?: string) {
+  if (!Group.query || !address) throwError('Wallet not initialized')
   try {
     const { groups } = await Group.query.groupsByMember({
       address,
@@ -30,8 +30,8 @@ export async function fetchGroupsByMember(address: string) {
   }
 }
 
-export async function fetchGroupsByAdmin(admin: string) {
-  if (!Group.query || !Wallet.account) throwError('Wallet not initialized')
+export async function fetchGroupsByAdmin(admin?: string) {
+  if (!Group.query || !admin) throwError('Wallet not initialized')
   try {
     const { groups } = await Group.query.groupsByAdmin({
       admin,

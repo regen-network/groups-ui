@@ -1,4 +1,5 @@
 import { ErrorBoundary } from 'react-error-boundary'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Routes } from 'Routes'
 import { useSnapshot } from 'valtio'
 
@@ -12,17 +13,20 @@ import { ErrorFallback } from '@/organisms'
 
 import { Theme } from './Theme'
 
+const queryClient = new QueryClient()
+
 function AppContent() {
   const snap = useSnapshot(Wallet)
 
   switch (snap.keplrStatus) {
     case 'loading':
+    case 'initialized':
       return <Spinner />
     case 'ready':
       return <Routes />
     case 'uninstalled':
       return <InstallKeplr />
-    case 'initialized':
+    // case 'initialized':
     case 'rejected':
       return <EnableKeplr />
     default:
@@ -38,10 +42,12 @@ export default function App() {
   }
 
   return (
-    <Theme>
-      <ErrorBoundary FallbackComponent={ErrorFallback} onReset={handleReset}>
-        <AppContent />
-      </ErrorBoundary>
-    </Theme>
+    <QueryClientProvider client={queryClient}>
+      <Theme>
+        <ErrorBoundary FallbackComponent={ErrorFallback} onReset={handleReset}>
+          <AppContent />
+        </ErrorBoundary>
+      </Theme>
+    </QueryClientProvider>
   )
 }
