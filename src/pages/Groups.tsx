@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useSnapshot } from 'valtio'
 
 import { fetchGroupsByAdmin, Wallet } from 'store'
 
@@ -6,11 +7,12 @@ import { Button, Center, FlexBetween, Link, Paper, Stack, Text } from '@/atoms'
 import { PageTemplate } from '@/templates'
 
 export default function Groups() {
+  const { account } = Wallet
   useEffect(() => {
-    if (Wallet.account?.address) {
-      fetchGroupsByAdmin(Wallet.account.address)
+    if (account?.address) {
+      fetchGroupsByAdmin(account.address)
     }
-  }, [Wallet.account])
+  }, [account])
 
   return (
     <PageTemplate>
