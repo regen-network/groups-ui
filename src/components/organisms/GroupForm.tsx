@@ -19,10 +19,10 @@ import {
   Table,
   TableContainer,
   TBody,
-  TD,
+  Td,
   TextField,
   THead,
-  TR,
+  Tr,
 } from '@/atoms'
 import { FormCard } from '@/molecules'
 
@@ -138,23 +138,23 @@ export const GroupForm = ({
             <TableContainer component={Paper}>
               <Table>
                 <THead>
-                  <TR sx={{ '& > th': { fontWeight: 'bold' } }}>
-                    <TD>Accounts added</TD>
-                    <TD>Weight</TD>
-                    <TD />
-                  </TR>
+                  <Tr sx={{ '& > th': { fontWeight: 'bold' } }}>
+                    <Td>Accounts added</Td>
+                    <Td>Weight</Td>
+                    <Td />
+                  </Tr>
                 </THead>
                 <TBody>
                   {memberFields.map((member, i) => (
-                    <TR key={i + member.address}>
-                      <TD>{member.address}</TD>
-                      <TD>{member.weight}</TD>
-                      <TD>
+                    <Tr key={i + member.address}>
+                      <Td>{member.address}</Td>
+                      <Td>{member.weight}</Td>
+                      <Td>
                         <IconButton onClick={() => remove(i)}>
                           <DeleteForever />
                         </IconButton>
-                      </TD>
-                    </TR>
+                      </Td>
+                    </Tr>
                   ))}
                 </TBody>
               </Table>

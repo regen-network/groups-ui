@@ -25,11 +25,11 @@ export {
   Table,
   TableContainer,
   TableBody as TBody,
-  TableCell as TD,
+  TableCell as Td,
   Typography as Text,
   TextField,
   TableHead as THead,
   Toolbar,
-  TableRow as TR,
+  TableRow as Tr,
   useTheme,
 } from '@mui/material'

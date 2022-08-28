@@ -1,7 +1,16 @@
+import { useAdminGroups, useMemberGroups } from 'hooks/useGroups'
+
 import { Button, Center, FlexBetween, Link, Paper, Stack, Text } from '@/atoms'
+import { MyGroupsTable } from '@/organisms/MyGroupsTable'
 import { PageTemplate } from '@/templates/PageTemplate'
 
 export default function Groups() {
+  const { data: memberGroups } = useMemberGroups()
+  const { data: adminGroups } = useAdminGroups()
+
+  console.log('memberGroups :>> ', memberGroups)
+  console.log('adminGroups :>> ', adminGroups)
+
   return (
     <PageTemplate>
       <Stack width="100%" spacing={4}>
@@ -13,11 +22,7 @@ export default function Groups() {
             </Button>
           </div>
         </FlexBetween>
-        <Paper sx={{ height: 350 }}>
-          <Center hFull>
-            <Text variant="h3">No groups</Text>
-          </Center>
-        </Paper>
+        <MyGroupsTable memberGroups={memberGroups} adminGroups={adminGroups} />
       </Stack>
     </PageTemplate>
   )
