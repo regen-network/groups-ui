@@ -1,6 +1,6 @@
 import type { MemberFormValues } from './Member.model'
 
-/** @see @haveanicedavid/groups-ui-telescope/types/proto/cosmos/group/v1/types */
+/** @see @haveanicedavid/cosmos-groups-ts/types/proto/cosmos/group/v1/types */
 export type GroupFormValues = {
   admin: string
   description?: string

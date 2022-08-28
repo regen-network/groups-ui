@@ -1,10 +1,6 @@
 import type { DeliverTxResponse } from '@cosmjs/stargate'
-// import { Tendermint34Client } from '@cosmjs/tendermint-rpc'
-import { cosmos /* , tendermint */ } from '@haveanicedavid/groups-ui-telescope'
-import type { PageRequest as IPageRequest } from '@haveanicedavid/groups-ui-telescope/types/proto/cosmos/base/query/v1beta1/pagination'
+import { cosmos } from '@haveanicedavid/cosmos-groups-ts'
 
-// import { PageRequest } from '@haveanicedavid/groups-ui-telescope/types/proto/cosmos/base/query/v1beta1/pagination'
-// import { PageRequest } from '@haveanicedavid/groups-ui-telescope/types/proto/cosmos/base/query/v1beta1/pagination'
 import { type GroupFormValues } from 'models'
 import { Group, Wallet } from 'store'
 import { throwError } from 'util/errors'
@@ -15,29 +11,32 @@ export async function createGroup(values: GroupFormValues): Promise<DeliverTxRes
   try {
     const msg = _createGroupMsg(values)
     const data = await signingClient.signAndBroadcast(account.address, [msg], fee)
+    console.log('data in createGroup:>> ', data)
     return data
   } catch (error) {
     throwError(error)
   }
 }
 
-export async function fetchGroups(): Promise<any[]> {
-  if (!Group.queryService || !Wallet.account) throwError('Wallet not initialized')
-  // const pagination: Partial<IPageRequest> = {}
+export async function fetchGroupsByMember(address: string) {
+  if (!Group.query) throwError('Wallet not initialized')
   try {
-    // const data = await Group.queryService.groupsByMember({
-    //   address: Wallet.account.address,
-    //   pagination,
-    //   // pagination: PageRequest.fromPartial({
-    //   //   offset: 0,
-    //   //   limit: 100,
-    //   // }),
-    // })
-    // const client = Tendermint34Client
-    // const data = await cosmos.group.v1.q
-    // cosmos.ClientFactory.createRPCQueryClient({ rpc: { request('', method, data)}})
-    // return data
-    return []
+    const { groups } = await Group.query.groupsByMember({
+      address,
+    })
+    return groups
+  } catch (error) {
+    throwError(error)
+  }
+}
+
+export async function fetchGroupsByAdmin(admin: string) {
+  if (!Group.query || !Wallet.account) throwError('Wallet not initialized')
+  try {
+    const { groups } = await Group.query.groupsByAdmin({
+      admin,
+    })
+    return groups
   } catch (error) {
     throwError(error)
   }

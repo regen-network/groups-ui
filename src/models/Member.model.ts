@@ -1,4 +1,4 @@
-export type { MemberRequest } from '@haveanicedavid/groups-ui-telescope/types/proto/cosmos/group/v1/types'
+export type { MemberRequest } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/types'
 
 export type MemberFormValues = {
   address: string

@@ -1,7 +1,5 @@
 import { coins } from '@cosmjs/amino'
-import { createProtobufRpcClient, QueryClient } from '@cosmjs/stargate'
-import { Tendermint34Client } from '@cosmjs/tendermint-rpc'
-import { cosmos, getSigningCosmosClient } from '@haveanicedavid/groups-ui-telescope'
+import { cosmos, getSigningCosmosClient } from '@haveanicedavid/cosmos-groups-ts'
 
 import { Chain, Group } from 'store'
 import { handleError, throwError } from 'util/errors'
@@ -28,12 +26,11 @@ export async function enableKeplr() {
       rpcEndpoint: Chain.active.rpc,
       signer: offlineSigner,
     })
-    const tmClient = await Tendermint34Client.connect(Chain.active.rpc)
-    const QueryClientImpl = cosmos.group.v1.QueryClientImpl
-    const client = new QueryClient(tmClient)
-    const rpc = createProtobufRpcClient(client)
-    const queryService = new QueryClientImpl(rpc)
-    Group.queryService = queryService
+    const lcdClient = await cosmos.ClientFactory.createLCDClient({
+      restEndpoint: Chain.active.rest,
+    })
+
+    Group.query = lcdClient.cosmos.group.v1
     Wallet.account = account
     Wallet.signingClient = signingClient
     Wallet.fee = {

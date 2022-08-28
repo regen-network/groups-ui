@@ -1,8 +1,9 @@
-import { QueryClientImpl } from '@haveanicedavid/groups-ui-telescope/types/proto/cosmos/group/v1/query.rpc.query'
+import { LCDQueryClient } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/query.lcd'
+// import { QueryClientImpl } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/query.rpc.query'
 import { proxy } from 'valtio'
 
 type GroupsStore = {
-  queryService?: QueryClientImpl
+  query?: LCDQueryClient
 }
 
 export const Group = proxy<GroupsStore>({})

@@ -1230,7 +1230,7 @@
     "@cosmjs/math" "0.27.1"
     "@cosmjs/utils" "0.27.1"
 
-"@cosmjs/amino@0.28.13", "@cosmjs/amino@^0.28.13":
+"@cosmjs/amino@0.28.13":
   version "0.28.13"
   resolved "https://registry.yarnpkg.com/@cosmjs/amino/-/amino-0.28.13.tgz#b51417a23c1ff8ef8b85a6862eba8492c6c44f38"
   integrity sha512-IHnH2zGwaY69qT4mVAavr/pfzx6YE+ud1NHJbvVePlbGiz68CXTi5LHR+K0lrKB5mQ7E+ZErWz2mw5U/x+V1wQ==
@@ -1392,7 +1392,7 @@
   dependencies:
     bn.js "^4.11.8"
 
-"@cosmjs/proto-signing@0.28.13", "@cosmjs/proto-signing@^0.28.13":
+"@cosmjs/proto-signing@0.28.13":
   version "0.28.13"
   resolved "https://registry.yarnpkg.com/@cosmjs/proto-signing/-/proto-signing-0.28.13.tgz#95ac12f0da0f0814f348f5ae996c3e96d015df61"
   integrity sha512-nSl/2ZLsUJYz3Ad0RY3ihZUgRHIow2OnYqKsESMu+3RA/jTi9bDYhiBu8mNMHI0xrEJry918B2CyI56pOUHdPQ==
@@ -1434,7 +1434,7 @@
     ws "^6.2.0"
     xstream "^11.14.0"
 
-"@cosmjs/stargate@0.28.13", "@cosmjs/stargate@^0.28.13":
+"@cosmjs/stargate@0.28.13":
   version "0.28.13"
   resolved "https://registry.yarnpkg.com/@cosmjs/stargate/-/stargate-0.28.13.tgz#a73d837a46ee8944e6eafe162f2ff6943c14350e"
   integrity sha512-dVBMazDz8/eActHsRcZjDHHptOBMqvibj5CFgEtZBp22gP6ASzoAUXTlkSVk5FBf4sfuUHoff6st134/+PGMAg==
@@ -1466,7 +1466,7 @@
   dependencies:
     xstream "^11.14.0"
 
-"@cosmjs/tendermint-rpc@0.28.13", "@cosmjs/tendermint-rpc@^0.28.11", "@cosmjs/tendermint-rpc@^0.28.13":
+"@cosmjs/tendermint-rpc@0.28.13", "@cosmjs/tendermint-rpc@^0.28.11":
   version "0.28.13"
   resolved "https://registry.yarnpkg.com/@cosmjs/tendermint-rpc/-/tendermint-rpc-0.28.13.tgz#0bf587ae66fa3f88319edbd258492d28e73f9f29"
   integrity sha512-GB+ZmfuJIGQm0hsRtLYjeR3lOxF7Z6XyCBR0cX5AAYOZzSEBJjevPgUHD6tLn8zIhvzxaW3/VKnMB+WmlxdH4w==
@@ -2018,10 +2018,10 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@haveanicedavid/groups-ui-telescope@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@haveanicedavid/groups-ui-telescope/-/groups-ui-telescope-0.0.3.tgz#c04d89b68bef094ea5d641c493eabd5a7ff3bdc0"
-  integrity sha512-MGEAPu07Ca37H3xKwFxabEj4mUBlZnBp6ThZdZz3tVBCAKtKBEyE1VmIDTzKpUkUAyt9TCFbDzKUWBR/sz+NsA==
+"@haveanicedavid/cosmos-groups-ts@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@haveanicedavid/cosmos-groups-ts/-/cosmos-groups-ts-0.0.5.tgz#8f89c62dba4bc47311c3023def38ab4796f445b4"
+  integrity sha512-o+eUOJ2FcKVHbb7wrsOwmF7mLeW1pqBqyengFUCSLQTfTkZEN+IGIV0DSMhhNtfXN2Us8An+AO2c5v51h/orUw==
   dependencies:
     "@babel/runtime" "^7.18.9"
     "@cosmjs/amino" "0.28.13"
