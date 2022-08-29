@@ -1,8 +1,7 @@
 import { ReactNode } from 'react'
 import { Step, Steps } from 'chakra-ui-steps'
 
-import { Box, Container, Flex, Heading, Text, useColorModeValue } from '@/atoms'
-import { PageStepper /* , StickyFooter */ } from '@/molecules'
+import { Box, Container, Flex, Heading, useColorModeValue } from '@/atoms'
 
 import { PageTemplate } from './PageTemplate'
 

@@ -1,6 +1,6 @@
 import { useAdminGroups, useMemberGroups } from 'hooks/useGroups'
 
-import { Button, Flex, Link, RouteLink, Stack, Text } from '@/atoms'
+import { Button, Flex, Heading, Link, RouteLink, Stack, Text } from '@/atoms'
 import { MyGroupsTable } from '@/organisms/MyGroupsTable'
 import { PageTemplate } from '@/templates/PageTemplate'
 
@@ -13,18 +13,15 @@ export default function Groups() {
 
   return (
     <PageTemplate>
-      <Stack w="100%" spacing={4}>
+      <Flex flexDir="column" w="100%" gap={3}>
         <Flex justify="space-between">
-          <Text variant="h4">Groups</Text>
-          <div>
-            <Button size="large" variant="outline" as={RouteLink} to="/groups/new">
-              {/* <Button size="large" variant="solid"> */}
-              Create Group
-            </Button>
-          </div>
+          <Heading>Groups</Heading>
+          <Button size="large" px={4} as={RouteLink} to="/groups/new">
+            Create Group
+          </Button>
         </Flex>
         <MyGroupsTable memberGroups={memberGroups} adminGroups={adminGroups} />
-      </Stack>
+      </Flex>
     </PageTemplate>
   )
 }

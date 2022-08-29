@@ -10,6 +10,7 @@ import {
   Radio,
   RadioGroup,
   Textarea,
+  useColorModeValue,
   VStack,
 } from '@/atoms'
 
@@ -22,15 +23,15 @@ export const FieldControl = ({
   required,
 }: FieldProps & { children: ReactNode }) => {
   const { getFieldState, formState } = useFormContext()
-  const { error, isTouched } = getFieldState(name, formState)
+  const { error } = getFieldState(name, formState)
   return (
-    <FormControl isInvalid={!!getFieldState(name).error}>
+    <FormControl isInvalid={!!error && !!required}>
       <FormLabel htmlFor={name}>
         {label}
         {!required && ' (optional)'}
       </FormLabel>
       {children}
-      <FormErrorMessage>{isTouched && error && error.message}</FormErrorMessage>
+      <FormErrorMessage>{error && error.message}</FormErrorMessage>
     </FormControl>
   )
 }
@@ -59,8 +60,9 @@ export const FormRadioGroup = ({
   options,
   ...fieldProps
 }: FieldProps & { options: { value: string; label: string }[] }) => {
-  const { register } = useFormContext()
+  const { register, getValues } = useFormContext()
   const { name } = fieldProps
+  const activeValue: string = getValues(name)
   return (
     <FieldControl {...fieldProps}>
       {/* <RadioGroup onChange={(nextVal) => setValue(name, nextVal)} id={name}> */}

@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form'
-// import { FormContainer, RadioButtonGroup, TextFieldElement } from 'react-hook-form-mui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -46,9 +45,6 @@ export const GroupForm = ({
   const { account } = Wallet
   const [memberAddr, setMemberAddr] = useState('')
   const form = useForm<GroupFormValues>({ defaultValues, resolver })
-  // const {
-  //   formState: { errors },
-  // } = form
   const {
     fields: memberFields,
     append,
@@ -84,7 +80,7 @@ export const GroupForm = ({
     <FormCard>
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <Stack spacing={2}>
+          <Stack spacing={7}>
             <FormRadioGroup
               required
               name="admin"
@@ -99,7 +95,7 @@ export const GroupForm = ({
             />
             <FormInput required name="name" label="Group name" />
             <FormTextarea name="description" label="Description" />
-            <FormTextarea name="forumLink" label="Link to forum" />
+            <FormInput name="forumLink" label="Link to forum" />
             <FormTextarea name="otherMetadata" label="Other metadata" />
             {/* <Flex>
               <TextField
