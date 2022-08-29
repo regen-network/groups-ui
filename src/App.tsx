@@ -11,8 +11,6 @@ import { InstallKeplr } from 'pages/InstallKeplr'
 import { Spinner } from '@/molecules/Spinner'
 import { ErrorFallback } from '@/organisms/ErrorFallback'
 
-import { Theme } from './Theme'
-
 const queryClient = new QueryClient()
 
 function AppContent() {
@@ -43,11 +41,11 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Theme>
-        <ErrorBoundary FallbackComponent={ErrorFallback} onReset={handleReset}>
-          <AppContent />
-        </ErrorBoundary>
-      </Theme>
+      {/* <Theme> */}
+      <ErrorBoundary FallbackComponent={ErrorFallback} onReset={handleReset}>
+        <AppContent />
+      </ErrorBoundary>
+      {/* </Theme> */}
     </QueryClientProvider>
   )
 }

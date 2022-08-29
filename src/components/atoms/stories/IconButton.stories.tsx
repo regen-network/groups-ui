@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { IconButton } from '../Mui'
+import { IconButton } from '..'
 
 import { GroupsIcon } from 'assets/tsx'
 

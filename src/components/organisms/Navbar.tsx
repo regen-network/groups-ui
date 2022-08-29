@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 
-import { AppBar, Box, Container, IconButton, Link, Toolbar, useTheme } from '@/atoms'
+import { Box, Container, HStack, IconButton, Link, useColorModeValue } from '@/atoms'
 
 import { ChainSelect } from './ChainSelect'
 
@@ -8,19 +8,15 @@ import { GroupsIcon } from 'assets/tsx'
 
 export const Navbar = () => {
   const navigate = useNavigate()
-  const theme = useTheme()
+  // const theme = useTheme()
 
   return (
-    <AppBar
-      position="static"
-      color={theme.palette.mode === 'light' ? 'transparent' : undefined}
-      elevation={2}
-    >
-      <Container>
-        <Toolbar sx={{ my: 2 }} disableGutters>
+    <Box bg={useColorModeValue('white', 'gray.800')} borderBottomWidth="2px" py={4}>
+      <Container maxW="container.xl">
+        <HStack sx={{ my: 2 }}>
           <IconButton
             size="large"
-            edge="start"
+            // edge="start"
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
@@ -33,17 +29,14 @@ export const Navbar = () => {
           <Box sx={{ flexGrow: 1, maxWidth: [200, 300] }}>
             <ChainSelect />
           </Box>
-        </Toolbar>
+        </HStack>
       </Container>
-    </AppBar>
+    </Box>
   )
 }
 
 const TempNav = () => (
-  <Box
-    component="ul"
-    sx={{ flexGrow: 1, display: 'flex', gap: 2, mr: 5, listStyle: 'none' }}
-  >
+  <Box as="ul" sx={{ flexGrow: 1, display: 'flex', gap: 2, mr: 5, listStyle: 'none' }}>
     <li>
       <Link to="/">Home</Link>
     </li>

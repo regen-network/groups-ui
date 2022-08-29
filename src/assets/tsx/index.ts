@@ -1,2 +1,2 @@
+export * from './ChakraIcons'
 export * from './GroupsIcon'
-export * from './MuiIcons'

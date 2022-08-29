@@ -1,26 +1,23 @@
-import { type SxProps, type Theme, Button, Container, FlexEnd, Paper } from '@/atoms'
+import { type ChakraProps, Box, Button, Container, Flex } from '@/atoms'
 
 export const StickyFooter = ({
   btnText,
   onBtnClick,
-  sx = [],
+  sx,
 }: {
   btnText: string
   onBtnClick: () => void
-  sx?: SxProps<Theme>
+  sx?: ChakraProps['sx']
 }) => {
   return (
-    <Paper
-      elevation={16}
-      sx={[{ position: 'sticky', bottom: 0, py: 3 }, ...(Array.isArray(sx) ? sx : [sx])]}
-    >
+    <Box sx={{ position: 'sticky', bottom: 0, py: 3, ...sx }}>
       <Container>
-        <FlexEnd>
+        <Flex justify="end">
           <Button onClick={onBtnClick} size="large">
             {btnText}
           </Button>
-        </FlexEnd>
+        </Flex>
       </Container>
-    </Paper>
+    </Box>
   )
 }
