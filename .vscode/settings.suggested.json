@@ -4,6 +4,8 @@
   "editor.formatOnSave": true,
   "editor.formatOnPaste": false,
   "editor.codeActionsOnSave": ["source.formatDocument", "source.fixAll.eslint"],
-  "typescript.preferences.autoImportFileExcludePatterns": ["node_modules/@mui/**/*.ts"],
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    "node_modules/@chakra-ui/**/*"
+  ],
   "typescript.tsdk": "node_modules/typescript/lib"
 }

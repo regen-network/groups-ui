@@ -25,9 +25,11 @@ export {
   Menu,
   MenuButton,
   MenuItem,
+  Select as NativeSelect, // `Select` being used by `chakra-react-select`
   Radio,
   RadioGroup,
-  Select,
+  Spacer,
+  Spinner,
   Stack,
   styled,
   Table,

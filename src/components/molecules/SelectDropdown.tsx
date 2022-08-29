@@ -1,39 +1,27 @@
-import { FormControl, MenuItem, Select } from '@/atoms'
+import { ActionMeta, Select, SingleValue } from 'chakra-react-select'
 
-export const SelectDropdown = (props: {
-  value?: string
-  onChange: (value: string) => void
+export type SelectItem = {
+  value: string
   label: string
-  items: { value: string; name: string }[]
-}) => {
-  const { items, label, value, onChange } = props
-  return (
-    <Select value={value} onChange={(e) => onChange(e.target.value)}>
-      {items.map((item, i) => (
-        <option key={`selectdrop-${label}-${i}`} value={item.value}>
-          {item.name}
-        </option>
-        // <MenuItem key={`selectdrop-${label}-${i}`} value={item.value}>
-        //   {item.name}
-        // </MenuItem>
-      ))}
-    </Select>
-  )
+}
 
-  // return (
-  //   <FormControl fullWidth>
-  //     <TextField
-  //       label={label}
-  //       value={value || ''}
-  //       onChange={(e) => onChange(e.target.value)}
-  //       select
-  //     >
-  //       {items.map((item, i) => (
-  //         <MenuItem key={`selectdrop-${label}-${i}`} value={item.value}>
-  //           {item.name}
-  //         </MenuItem>
-  //       ))}
-  //     </TextField>
-  //   </FormControl>
-  // )
+export type OnSelectChange = (
+  newValue: SingleValue<SelectItem>,
+  actionMeta: ActionMeta<SelectItem>,
+) => void
+
+export const SelectDropdown = (p: {
+  selected?: SelectItem
+  onChange: OnSelectChange
+  label: string
+  items: SelectItem[]
+}) => {
+  return (
+    <Select
+      placeholder={p.label}
+      value={p.selected}
+      options={p.items}
+      onChange={p.onChange}
+    />
+  )
 }

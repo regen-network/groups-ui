@@ -1,4 +1,4 @@
-import { Step, Steps, useSteps } from 'chakra-ui-steps'
+import { Step, Steps } from 'chakra-ui-steps'
 
 import { Box, Text } from '@/atoms'
 
