@@ -38,6 +38,6 @@ export type UIGroupMetadata = {
 
 export const defaultGroupFormValues: GroupFormValues = {
   admin: '',
-  name: '',
+  name: 'whell hello',
   members: [],
 }

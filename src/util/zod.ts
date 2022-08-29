@@ -28,10 +28,14 @@ const validMember = z.object({
 })
 
 export const valid = {
-  name: z.string().min(2).max(30, 'Must be between 2 and 30 characters'),
+  name: z.string().min(2).max(30, 'Name is required'),
   string: z.string().min(2),
   address: validAddress,
-  groupOrAddress: z.union([validAddress, z.literal('group')]),
+  groupOrAddress: z.union([
+    z.string().min(1, 'Must select a value'),
+    validAddress,
+    z.literal('group'),
+  ]),
   member: validMember,
   json: validJson,
   url: z.string().url(),

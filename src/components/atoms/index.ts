@@ -1,4 +1,5 @@
 export * from './Chakra'
 export * from './Chakra-select'
 export * from './Link'
+export * from './RadioBox'
 export * from './RouteLink'

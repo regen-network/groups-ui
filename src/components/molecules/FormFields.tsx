@@ -1,34 +1,48 @@
 import type { ReactNode } from 'react'
-import { useFormContext } from 'react-hook-form'
+import { type FieldError, useController, useFormContext } from 'react-hook-form'
 
 import {
-  Box,
   FormControl,
   FormErrorMessage,
   FormLabel,
   Input,
   Radio,
+  RadioBox,
   RadioGroup,
+  Text,
   Textarea,
-  useColorModeValue,
   VStack,
 } from '@/atoms'
 
-type FieldProps = { name: string; label: string; required?: boolean }
+type FieldProps = {
+  name: string
+  label: string
+  required?: boolean
+  defaultValue?: string
+}
 
 export const FieldControl = ({
   name,
   label,
   children,
+  error,
   required,
-}: FieldProps & { children: ReactNode }) => {
-  const { getFieldState, formState } = useFormContext()
-  const { error } = getFieldState(name, formState)
+}: {
+  children: ReactNode
+  name: string
+  label: string
+  error?: FieldError
+  required?: boolean
+}) => {
   return (
     <FormControl isInvalid={!!error && !!required}>
       <FormLabel htmlFor={name}>
         {label}
-        {!required && ' (optional)'}
+        {!required && (
+          <Text fontSize="sm" color="gray" display="inline">
+            {' (optional)'}
+          </Text>
+        )}
       </FormLabel>
       {children}
       <FormErrorMessage>{error && error.message}</FormErrorMessage>
@@ -36,44 +50,79 @@ export const FieldControl = ({
   )
 }
 
-export const FormInput = (fieldProps: FieldProps) => {
-  const { register } = useFormContext()
-  const { name } = fieldProps
+export const InputField = ({ name, label, required, defaultValue }: FieldProps) => {
+  const { control } = useFormContext()
+  const {
+    fieldState: { error },
+    field,
+  } = useController({
+    name,
+    control,
+    defaultValue,
+    rules: { required },
+  })
   return (
-    <FieldControl {...fieldProps}>
-      <Input id={name} {...register(name)} />
+    <FieldControl name={field.name} error={error} label={label} required={required}>
+      <Input id={name} {...field} />
     </FieldControl>
   )
 }
 
-export const FormTextarea = (fieldProps: FieldProps) => {
-  const { register } = useFormContext()
-  const { name } = fieldProps
+export const TextareaField = ({
+  name,
+  label,
+  defaultValue,
+  required = false,
+}: FieldProps) => {
+  const { control } = useFormContext()
+  const {
+    fieldState: { error },
+    field,
+  } = useController({
+    name,
+    control,
+    defaultValue,
+    rules: { required },
+  })
   return (
-    <FieldControl {...fieldProps}>
-      <Textarea {...register(name)} id={name} resize="vertical" />
+    <FieldControl name={field.name} label={label} required={required} error={error}>
+      <Textarea {...field} id={name} resize="vertical" />
     </FieldControl>
   )
 }
 
-export const FormRadioGroup = ({
+export const RadioGroupField = ({
   options,
-  ...fieldProps
+  name,
+  label,
+  defaultValue,
+  required,
 }: FieldProps & { options: { value: string; label: string }[] }) => {
-  const { register, getValues } = useFormContext()
-  const { name } = fieldProps
-  const activeValue: string = getValues(name)
+  const { control } = useFormContext()
+  const {
+    fieldState: { error },
+    field,
+  } = useController({
+    name,
+    control,
+    defaultValue,
+    rules: { required },
+  })
   return (
-    <FieldControl {...fieldProps}>
-      {/* <RadioGroup onChange={(nextVal) => setValue(name, nextVal)} id={name}> */}
-      <RadioGroup id={name}>
+    <FieldControl name={field.name} label={label} error={error} required={required}>
+      <RadioGroup
+        id={name}
+        onChange={field.onChange}
+        onBlur={field.onBlur}
+        ref={field.ref}
+      >
         <VStack align="start">
           {options.map(({ value, label }, i) => (
-            <Box key={value + i} borderWidth={1} w="full" borderRadius="md" py={2} px={3}>
-              <Radio size="md" {...register(name)} value={value} w="full">
+            <RadioBox key={label + i} selected={field.value === value}>
+              <Radio size="md" value={value} w="full">
                 {label}
               </Radio>
-            </Box>
+            </RadioBox>
           ))}
         </VStack>
       </RadioGroup>

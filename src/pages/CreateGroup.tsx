@@ -11,7 +11,7 @@ export default function CreateGroup() {
       steps={['Create Group', 'Create Group Policy', 'Finished']}
       // nextBtn={{ text: 'Next', onClick: () => void null }}
     >
-      <GroupForm onSubmit={createGroup} defaultValues={defaultGroupFormValues} />
+      <GroupForm onSubmit={console.log} defaultValues={defaultGroupFormValues} />
     </StepperTemplate>
   )
 }

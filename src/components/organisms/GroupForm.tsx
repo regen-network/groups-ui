@@ -20,7 +20,7 @@ import {
   Thead,
   Tr,
 } from '@/atoms'
-import { FormCard, FormInput, FormRadioGroup, FormTextarea } from '@/molecules'
+import { FormCard, InputField, RadioGroupField, TextareaField } from '@/molecules'
 
 import { DeleteIcon } from 'assets/tsx'
 
@@ -81,7 +81,7 @@ export const GroupForm = ({
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <Stack spacing={7}>
-            <FormRadioGroup
+            <RadioGroupField
               required
               name="admin"
               label="Group admin"
@@ -93,10 +93,10 @@ export const GroupForm = ({
                 },
               ]}
             />
-            <FormInput required name="name" label="Group name" />
-            <FormTextarea name="description" label="Description" />
-            <FormInput name="forumLink" label="Link to forum" />
-            <FormTextarea name="otherMetadata" label="Other metadata" />
+            <InputField required name="name" label="Group name" />
+            <TextareaField name="description" label="Description" />
+            <InputField name="forumLink" label="Link to forum" />
+            <TextareaField name="otherMetadata" label="Other metadata" />
             {/* <Flex>
               <TextField
                 label="Add member accounts"

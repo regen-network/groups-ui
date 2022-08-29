@@ -1,7 +1,9 @@
 export {
   type AlertProps,
   type ChakraProps,
+  type EffectProps,
   type IconProps,
+  type RadioProps,
   type Theme,
   Alert,
   AlertDescription,

@@ -1,6 +1,6 @@
 import { useAdminGroups, useMemberGroups } from 'hooks/useGroups'
 
-import { Button, Flex, Heading, Link, RouteLink, Stack, Text } from '@/atoms'
+import { Button, Flex, Heading, RouteLink } from '@/atoms'
 import { MyGroupsTable } from '@/organisms/MyGroupsTable'
 import { PageTemplate } from '@/templates/PageTemplate'
 
