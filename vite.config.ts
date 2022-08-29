@@ -4,6 +4,7 @@ import checker from 'vite-plugin-checker'
 import { VitePluginFonts } from 'vite-plugin-fonts'
 import svgr from 'vite-plugin-svgr'
 import tsconfigPaths from 'vite-tsconfig-paths'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -23,6 +24,7 @@ export default defineConfig({
         ],
       },
     }),
+    visualizer(),
     checker({ typescript: true }),
     // splitVendorChunkPlugin(),
     tsconfigPaths(),
