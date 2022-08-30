@@ -26,7 +26,7 @@ export const StepperTemplate = (p: {
         </Container>
       </Box>
       <PageTemplate>
-        <Heading textAlign="center" mb={4}>
+        <Heading textAlign="center" mb={8}>
           {p.steps[p.activeStep]}
         </Heading>
         {p.children}

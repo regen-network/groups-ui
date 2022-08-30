@@ -1,9 +1,13 @@
 import { useState } from 'react'
-import { FormProvider, useFieldArray, useForm } from 'react-hook-form'
+import { type FieldError, FormProvider, useFieldArray, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { defaultMemberFormValues, GroupFormValues, MemberFormValues } from 'models'
+import {
+  type GroupFormValues,
+  type MemberFormValues,
+  defaultMemberFormValues,
+} from 'models'
 import { Wallet } from 'store/Wallet'
 import { truncate } from 'util/helpers'
 import { valid } from 'util/zod'
@@ -11,27 +15,41 @@ import { valid } from 'util/zod'
 import {
   Button,
   Flex,
+  FormControl,
   IconButton,
+  Input,
   Stack,
   Table,
   TableContainer,
   Tbody,
   Td,
+  Th,
   Thead,
   Tr,
 } from '@/atoms'
-import { FormCard, InputField, RadioGroupField, TextareaField } from '@/molecules'
+import {
+  FieldControl,
+  FormCard,
+  InputField,
+  InputWithButton,
+  RadioGroupField,
+  TextareaField,
+} from '@/molecules'
 
 import { DeleteIcon } from 'assets/tsx'
 
 const resolver = zodResolver(
   z.object({
-    admin: valid.groupOrAddress,
+    admin: z.union([
+      z.string().min(1, 'Must select a value'),
+      valid.bech32,
+      z.literal('group'),
+    ]),
     name: valid.name,
     description: valid.string.optional(),
     forumLink: valid.url.optional(),
     otherMetadata: valid.json.optional(),
-    members: valid.member.array().nonempty('Must include at least one member'),
+    members: valid.member.array().min(1, 'Must include at least one member'),
   }),
 )
 
@@ -50,11 +68,22 @@ export const GroupForm = ({
     append,
     remove,
   } = useFieldArray({ control: form.control, name: 'members' })
+  const {
+    formState: { errors },
+  } = form
+
+  const watchFieldArray = form.watch('members')
+  const controlledMemberFields = memberFields.map((field, index) => {
+    return {
+      ...field,
+      ...watchFieldArray[index],
+    }
+  })
 
   // TODO: could potentially live in its own file in /validators
   function validateAddress(addr: string): boolean {
     try {
-      valid.address.parse(addr)
+      valid.bech32.parse(addr)
       return true
     } catch (err) {
       if (err instanceof z.ZodError) {
@@ -64,8 +93,6 @@ export const GroupForm = ({
     }
   }
 
-  /** the layout of this UI makes using the hook-form helpers impractical.
-   * Manually handing logic here */
   function addMember(): void {
     if (!validateAddress(memberAddr)) {
       return
@@ -97,40 +124,53 @@ export const GroupForm = ({
             <TextareaField name="description" label="Description" />
             <InputField name="forumLink" label="Link to forum" />
             <TextareaField name="otherMetadata" label="Other metadata" />
-            {/* <Flex>
-              <TextField
+            <Flex>
+              {/* Because of how the form is structured, we need a controlled
+              value which is associated with the `members` array, but doesn't
+              directly add to it */}
+              <FieldControl
+                required
+                error={errors.members as FieldError} // TODO fix type cast
+                name="memberAddr"
                 label="Add member accounts"
-                value={memberAddr}
-                onChange={(e) => setMemberAddr(e.target.value)}
-                error={!!errors.members}
-                helperText={
-                  errors.members?.message ||
-                  'Input the addresses of the members of this group.'
-                }
-                sx={{ flexGrow: 1, mr: 1 }}
-              />
-              <div>
-                <Button variant="outlined" onClick={addMember} sx={{ py: 1.85 }}>
-                  + Add
-                </Button>
-              </div>
-            </Flex> */}
-            {/* TODO: move this? Currently it's only used here */}
-            {memberFields.length > 0 && (
+                helperText="Input the addresses of the members of this group."
+              >
+                <InputWithButton
+                  name="memberAddr"
+                  value={memberAddr}
+                  onChange={(e) => setMemberAddr(e.target.value)}
+                  onBtnClick={addMember}
+                >
+                  {'+ Add'}
+                </InputWithButton>
+              </FieldControl>
+            </Flex>
+            {/* TODO: move this? Currently it's only used here, but probably
+            still good to pull out */}
+            {controlledMemberFields.length > 0 && (
               <TableContainer>
                 <Table>
                   <Thead>
-                    <Tr sx={{ '& > th': { fontWeight: 'bold' } }}>
-                      <Td>Accounts added</Td>
-                      <Td>Weight</Td>
-                      <Td />
+                    <Tr>
+                      <Th>Accounts added</Th>
+                      <Th>Weight</Th>
+                      <Th />
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {memberFields.map((member, i) => (
+                    {controlledMemberFields.map((member, i) => (
                       <Tr key={i + member.address}>
                         <Td>{member.address}</Td>
-                        <Td>{member.weight}</Td>
+                        <Td>
+                          <FormControl isInvalid={!!errors.members?.[i]?.weight}>
+                            <Input
+                              type="number"
+                              {...form.register(`members.${i}.weight`, {
+                                valueAsNumber: true,
+                              })}
+                            />
+                          </FormControl>
+                        </Td>
                         <Td>
                           <IconButton aria-label="Delete" onClick={() => remove(i)}>
                             <DeleteIcon />

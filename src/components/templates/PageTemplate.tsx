@@ -4,7 +4,7 @@ import { Container } from '@/atoms'
 
 export const PageTemplate = ({ children }: { children: ReactNode }) => {
   return (
-    <Container centerContent maxW="container.xl" pt={4} pb={8} h="full">
+    <Container centerContent maxW="container.xl" pt={8} pb={16} h="full">
       {children}
     </Container>
   )

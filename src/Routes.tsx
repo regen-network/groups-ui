@@ -3,18 +3,16 @@ import { Route, Routes as RRouterRoutes } from 'react-router-dom'
 
 import { AppTemplate } from '@/templates/AppTemplate'
 
-const Home = lazy(() => import('./pages/Home'))
 const Groups = lazy(() => import('./pages/Groups'))
-const CreateGroup = lazy(() => import('./pages/CreateGroup'))
+const GroupCreate = lazy(() => import('./pages/GroupCreate'))
+const NotFound = lazy(() => import('./pages/NotFound'))
 
 export const Routes = () => (
   <RRouterRoutes>
     <Route path="/" element={<AppTemplate />}>
-      <Route index element={<Home />} />
-      <Route path="groups">
-        <Route index element={<Groups />} />
-        <Route path="new" element={<CreateGroup />} />
-      </Route>
+      <Route index element={<Groups />} />
+      <Route path="new" element={<GroupCreate />} />
+      <Route path="*" element={<NotFound />} />
     </Route>
   </RRouterRoutes>
 )

@@ -13,7 +13,6 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@chakra-ui/icons": "^2.0.9",
     "@chakra-ui/react": "^2.2.9",
     "@cosmjs/amino": "0.28.13",
     "@cosmjs/launchpad": "^0.27.1",
@@ -35,6 +34,7 @@
     "react-dom": "^18.2.0",
     "react-error-boundary": "^3.1.4",
     "react-hook-form": "^7.34.2",
+    "react-icons": "^4.4.0",
     "react-router-dom": "^6.3.0",
     "valtio": "^1.6.4",
     "zod": "^3.18.0"

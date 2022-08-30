@@ -1,5 +1,6 @@
 export * from './FormCard'
 export * from './FormFields'
+export * from './InputWithButton'
 export * from './Loading'
 export * from './Notify'
 export * from './PageStepper'

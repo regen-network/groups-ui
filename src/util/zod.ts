@@ -20,20 +20,26 @@ const validJson: z.ZodType<Json> = z.lazy(() =>
   z.union([literalSchema, z.array(validJson), z.record(validJson)]),
 )
 
-const validAddress = z.string().refine(isBech32Address, 'Must be a valid Bech32 address')
+const validBech32Address = z
+  .string()
+  .refine(isBech32Address, 'Must be a valid Bech32 address')
+
 const validMember = z.object({
-  address: validAddress,
+  address: validBech32Address,
   weight: z.number().min(0, 'Must be 0 or a positive number'),
   // metadata: z.string().optional() // TODO: ?
 })
 
 export const valid = {
-  name: z.string().min(2).max(30, 'Name is required'),
+  name: z
+    .string()
+    .min(1, 'Name is required')
+    .max(50, 'Name must be less than 50 characters'),
   string: z.string().min(2),
-  address: validAddress,
+  bech32: validBech32Address,
   groupOrAddress: z.union([
     z.string().min(1, 'Must select a value'),
-    validAddress,
+    validBech32Address,
     z.literal('group'),
   ]),
   member: validMember,

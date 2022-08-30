@@ -4,9 +4,9 @@ import { type FieldError, useController, useFormContext } from 'react-hook-form'
 import {
   FormControl,
   FormErrorMessage,
+  FormHelperText,
   FormLabel,
   Input,
-  Radio,
   RadioBox,
   RadioGroup,
   Text,
@@ -19,23 +19,27 @@ type FieldProps = {
   label: string
   required?: boolean
   defaultValue?: string
+  helperText?: string
 }
 
+/** Wrapper for form elements which adds label + error handling */
 export const FieldControl = ({
-  name,
-  label,
   children,
   error,
+  helperText,
+  label,
+  name,
   required,
 }: {
   children: ReactNode
-  name: string
-  label: string
   error?: FieldError
+  helperText?: string
+  label: string
+  name: string
   required?: boolean
 }) => {
   return (
-    <FormControl isInvalid={!!error && !!required}>
+    <FormControl isInvalid={!!error}>
       <FormLabel htmlFor={name}>
         {label}
         {!required && (
@@ -45,11 +49,16 @@ export const FieldControl = ({
         )}
       </FormLabel>
       {children}
-      <FormErrorMessage>{error && error.message}</FormErrorMessage>
+      {!error ? (
+        <FormHelperText>{helperText}</FormHelperText>
+      ) : (
+        <FormErrorMessage>{error && error.message}</FormErrorMessage>
+      )}
     </FormControl>
   )
 }
 
+/** `Input` with controls for react-hook-form */
 export const InputField = ({ name, label, required, defaultValue }: FieldProps) => {
   const { control } = useFormContext()
   const {
@@ -68,6 +77,7 @@ export const InputField = ({ name, label, required, defaultValue }: FieldProps) 
   )
 }
 
+/** `Input` with controls for react-hook-form */
 export const TextareaField = ({
   name,
   label,
@@ -118,10 +128,8 @@ export const RadioGroupField = ({
       >
         <VStack align="start">
           {options.map(({ value, label }, i) => (
-            <RadioBox key={label + i} selected={field.value === value}>
-              <Radio size="md" value={value} w="full">
-                {label}
-              </Radio>
+            <RadioBox key={label + i} selected={field.value === value} value={value}>
+              {label}
             </RadioBox>
           ))}
         </VStack>

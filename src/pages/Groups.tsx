@@ -16,7 +16,7 @@ export default function Groups() {
       <Flex flexDir="column" w="100%" gap={3}>
         <Flex justify="space-between">
           <Heading>Groups</Heading>
-          <Button size="large" px={4} as={RouteLink} to="/groups/new">
+          <Button size="large" px={4} as={RouteLink} to="/new">
             Create Group
           </Button>
         </Flex>

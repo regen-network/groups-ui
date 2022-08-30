@@ -4,14 +4,14 @@ import { createGroup } from 'store/Group'
 import { GroupForm } from '@/organisms/GroupForm'
 import { StepperTemplate } from '@/templates/StepperTemplate'
 
-export default function CreateGroup() {
+export default function GroupCreate() {
   return (
     <StepperTemplate
       activeStep={0}
       steps={['Create Group', 'Create Group Policy', 'Finished']}
       // nextBtn={{ text: 'Next', onClick: () => void null }}
     >
-      <GroupForm onSubmit={console.log} defaultValues={defaultGroupFormValues} />
+      <GroupForm onSubmit={createGroup} defaultValues={defaultGroupFormValues} />
     </StepperTemplate>
   )
 }
