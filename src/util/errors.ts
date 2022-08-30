@@ -16,7 +16,7 @@ function reportError({ message }: { message: string }): void {
   console.error(message)
 }
 
-function toErrorWithMessage(maybeError: unknown): ErrorWithMessage {
+export function toErrorWithMessage(maybeError: unknown): ErrorWithMessage {
   if (isErrorWithMessage(maybeError)) return maybeError
 
   try {

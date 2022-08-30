@@ -56,9 +56,11 @@ const resolver = zodResolver(
 export const GroupForm = ({
   defaultValues,
   onSubmit,
+  submitting,
 }: {
   defaultValues: GroupFormValues
   onSubmit: (data: GroupFormValues) => void
+  submitting?: boolean
 }) => {
   const { account } = Wallet
   const [memberAddr, setMemberAddr] = useState('')
@@ -192,7 +194,9 @@ export const GroupForm = ({
               </TableContainer>
             )}
             <Flex justify="end">
-              <Button type="submit">Submit</Button>
+              <Button type="submit" isLoading={submitting} loadingText="Submitting">
+                Submit
+              </Button>
             </Flex>
           </Stack>
         </form>

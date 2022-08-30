@@ -7,6 +7,7 @@ export {
   type InputProps,
   type RadioProps,
   type Theme,
+  type UseToastOptions,
   Alert,
   AlertDescription,
   AlertIcon,
@@ -50,5 +51,6 @@ export {
   useColorMode,
   useColorModeValue,
   useTheme,
+  useToast,
   VStack,
 } from '@chakra-ui/react'

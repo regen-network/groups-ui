@@ -1,7 +1,7 @@
 import type { UIGroupWithMembers } from 'models'
 import { formatDate } from 'util/date'
 
-import { Center, Table, TableContainer, Tbody, Td, Text, Thead, Tr } from '@/atoms'
+import { Center, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@/atoms'
 
 export interface GroupTableItem {
   name: string
@@ -44,15 +44,15 @@ export const MyGroupsTable = ({
   }
 
   return (
-    <TableContainer>
-      <Table>
+    <TableContainer borderRadius="lg" borderWidth={2} shadow="md">
+      <Table variant="striped" size="lg">
         <Thead>
           <Tr sx={{ '& > th': { fontWeight: 'bold' } }}>
-            <Td>Name</Td>
-            <Td>Created</Td>
-            <Td>Last Edited</Td>
-            <Td>Number of Members</Td>
-            <Td>Membership Type</Td>
+            <Th>Name</Th>
+            <Th>Created</Th>
+            <Th>Last Edited</Th>
+            <Th>Number of Members</Th>
+            <Th>Membership Type</Th>
           </Tr>
         </Thead>
         <Tbody>

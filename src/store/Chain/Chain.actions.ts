@@ -1,6 +1,6 @@
 import { enableKeplr } from 'store/Wallet'
+import { LOCALSTORAGE_CHAIN_KEY } from 'util/constants'
 
-import { LOCALSTORAGE_CHAIN_KEY } from './Chain.constants'
 import { Chain } from './Chain.store'
 
 export function setActiveChain(chainId: string) {
