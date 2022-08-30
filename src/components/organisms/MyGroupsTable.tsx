@@ -1,7 +1,18 @@
 import type { UIGroupWithMembers } from 'models'
 import { formatDate } from 'util/date'
 
-import { Center, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@/atoms'
+import {
+  Center,
+  Heading,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+} from '@/atoms'
 
 export interface GroupTableItem {
   name: string
@@ -37,8 +48,10 @@ export const MyGroupsTable = ({
 
   if (tableData.length === 0) {
     return (
-      <Center h="full" w="full">
-        <Text variant="h3">No groups</Text>
+      <Center h={250} w="full" borderWidth={1} borderRadius="lg">
+        <Heading as="h3" size="lg">
+          No groups
+        </Heading>
       </Center>
     )
   }

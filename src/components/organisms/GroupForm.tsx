@@ -153,8 +153,6 @@ export const GroupForm = ({
                 </InputWithButton>
               </FieldControl>
             </Flex>
-            {/* TODO: move this? Currently it's only used here, but probably
-            still good to pull out */}
             {controlledMemberFields.length > 0 && (
               <TableContainer>
                 <Table size="sm">
