@@ -10,7 +10,7 @@ import {
 } from 'models'
 import { Wallet } from 'store/Wallet'
 import { truncate } from 'util/helpers'
-import { valid } from 'util/zod'
+import { valid } from 'util/validation/zod'
 
 import {
   Button,
@@ -46,10 +46,10 @@ const resolver = zodResolver(
       z.literal('group'),
     ]),
     name: valid.name,
-    description: valid.string.optional(),
+    description: valid.description.optional(),
     forumLink: valid.url.optional(),
     otherMetadata: valid.json.optional(),
-    members: valid.member.array().min(1, 'Must include at least one member'),
+    members: valid.members,
   }),
 )
 
@@ -80,8 +80,11 @@ export const GroupForm = ({
     }
   })
 
-  // TODO: could potentially live in its own file in /validators
   function validateAddress(addr: string): boolean {
+    if (memberFields.find((m) => m.address === addr)) {
+      form.setError('members', { type: 'invalid', message: 'Address already added' })
+      return false
+    }
     try {
       valid.bech32.parse(addr)
       return true
@@ -94,9 +97,7 @@ export const GroupForm = ({
   }
 
   function addMember(): void {
-    if (!validateAddress(memberAddr)) {
-      return
-    }
+    if (!validateAddress(memberAddr)) return
     const member: MemberFormValues = { ...defaultMemberFormValues, address: memberAddr }
     append(member)
     setMemberAddr('')
@@ -138,7 +139,12 @@ export const GroupForm = ({
                 <InputWithButton
                   name="memberAddr"
                   value={memberAddr}
-                  onChange={(e) => setMemberAddr(e.target.value)}
+                  onChange={(e) => {
+                    if (errors.members) {
+                      form.clearErrors('members')
+                    }
+                    setMemberAddr(e.target.value)
+                  }}
                   onBtnClick={addMember}
                 >
                   {'+ Add'}
@@ -149,33 +155,42 @@ export const GroupForm = ({
             still good to pull out */}
             {controlledMemberFields.length > 0 && (
               <TableContainer>
-                <Table>
+                <Table size="sm">
                   <Thead>
                     <Tr>
                       <Th>Accounts added</Th>
                       <Th>Weight</Th>
-                      <Th />
+                      {/* <Th /> */}
                     </Tr>
                   </Thead>
                   <Tbody>
                     {controlledMemberFields.map((member, i) => (
                       <Tr key={i + member.address}>
                         <Td>{member.address}</Td>
-                        <Td>
-                          <FormControl isInvalid={!!errors.members?.[i]?.weight}>
-                            <Input
-                              type="number"
-                              {...form.register(`members.${i}.weight`, {
-                                valueAsNumber: true,
-                              })}
-                            />
-                          </FormControl>
+                        <Td pr={0}>
+                          <Flex>
+                            <FormControl isInvalid={!!errors.members?.[i]?.weight}>
+                              <Input
+                                type="number"
+                                {...form.register(`members.${i}.weight`, {
+                                  valueAsNumber: true,
+                                })}
+                              />
+                            </FormControl>
+                            <IconButton
+                              ml={2}
+                              aria-label="Delete"
+                              onClick={() => remove(i)}
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          </Flex>
                         </Td>
-                        <Td>
+                        {/* <Td px={0} ml={0}>
                           <IconButton aria-label="Delete" onClick={() => remove(i)}>
                             <DeleteIcon />
                           </IconButton>
-                        </Td>
+                        </Td> */}
                       </Tr>
                     ))}
                   </Tbody>

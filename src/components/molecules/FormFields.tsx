@@ -71,19 +71,14 @@ export const InputField = ({ name, label, required, defaultValue }: FieldProps) 
     rules: { required },
   })
   return (
-    <FieldControl name={field.name} error={error} label={label} required={required}>
-      <Input id={name} {...field} />
+    <FieldControl name={field.name} label={label} required={required} error={error}>
+      <Input {...field} id={name} />
     </FieldControl>
   )
 }
 
 /** `Input` with controls for react-hook-form */
-export const TextareaField = ({
-  name,
-  label,
-  defaultValue,
-  required = false,
-}: FieldProps) => {
+export const TextareaField = ({ name, label, required, defaultValue }: FieldProps) => {
   const { control } = useFormContext()
   const {
     fieldState: { error },
