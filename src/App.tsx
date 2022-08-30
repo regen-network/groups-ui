@@ -8,10 +8,8 @@ import { Wallet } from 'store/Wallet'
 
 import { EnableKeplr } from 'pages/EnableKeplr'
 import { InstallKeplr } from 'pages/InstallKeplr'
-import { Spinner } from '@/molecules/Spinner'
+import { Loading } from '@/molecules/Loading'
 import { ErrorFallback } from '@/organisms/ErrorFallback'
-
-import { Theme } from './Theme'
 
 const queryClient = new QueryClient()
 
@@ -21,7 +19,7 @@ function AppContent() {
   switch (snap.keplrStatus) {
     case 'loading':
     case 'initialized':
-      return <Spinner />
+      return <Loading />
     case 'ready':
       return <Routes />
     case 'uninstalled':
@@ -43,11 +41,11 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Theme>
-        <ErrorBoundary FallbackComponent={ErrorFallback} onReset={handleReset}>
-          <AppContent />
-        </ErrorBoundary>
-      </Theme>
+      {/* <Theme> */}
+      <ErrorBoundary FallbackComponent={ErrorFallback} onReset={handleReset}>
+        <AppContent />
+      </ErrorBoundary>
+      {/* </Theme> */}
     </QueryClientProvider>
   )
 }

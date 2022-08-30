@@ -1,10 +1,13 @@
 import { useState } from 'react'
-import { useFieldArray, useForm } from 'react-hook-form'
-import { FormContainer, RadioButtonGroup, TextFieldElement } from 'react-hook-form-mui'
+import { type FieldError, FormProvider, useFieldArray, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { defaultMemberFormValues, GroupFormValues, MemberFormValues } from 'models'
+import {
+  type GroupFormValues,
+  type MemberFormValues,
+  defaultMemberFormValues,
+} from 'models'
 import { Wallet } from 'store/Wallet'
 import { truncate } from 'util/helpers'
 import { valid } from 'util/zod'
@@ -12,30 +15,41 @@ import { valid } from 'util/zod'
 import {
   Button,
   Flex,
-  FlexEnd,
+  FormControl,
   IconButton,
-  Paper,
+  Input,
   Stack,
   Table,
   TableContainer,
-  TBody,
+  Tbody,
   Td,
-  TextField,
-  THead,
+  Th,
+  Thead,
   Tr,
 } from '@/atoms'
-import { FormCard } from '@/molecules'
+import {
+  FieldControl,
+  FormCard,
+  InputField,
+  InputWithButton,
+  RadioGroupField,
+  TextareaField,
+} from '@/molecules'
 
-import { DeleteForever } from 'assets/tsx'
+import { DeleteIcon } from 'assets/tsx'
 
 const resolver = zodResolver(
   z.object({
-    admin: valid.groupOrAddress,
+    admin: z.union([
+      z.string().min(1, 'Must select a value'),
+      valid.bech32,
+      z.literal('group'),
+    ]),
     name: valid.name,
     description: valid.string.optional(),
     forumLink: valid.url.optional(),
     otherMetadata: valid.json.optional(),
-    members: valid.member.array().nonempty('Must include at least one member'),
+    members: valid.member.array().min(1, 'Must include at least one member'),
   }),
 )
 
@@ -50,18 +64,26 @@ export const GroupForm = ({
   const [memberAddr, setMemberAddr] = useState('')
   const form = useForm<GroupFormValues>({ defaultValues, resolver })
   const {
-    formState: { errors },
-  } = form
-  const {
     fields: memberFields,
     append,
     remove,
   } = useFieldArray({ control: form.control, name: 'members' })
+  const {
+    formState: { errors },
+  } = form
+
+  const watchFieldArray = form.watch('members')
+  const controlledMemberFields = memberFields.map((field, index) => {
+    return {
+      ...field,
+      ...watchFieldArray[index],
+    }
+  })
 
   // TODO: could potentially live in its own file in /validators
   function validateAddress(addr: string): boolean {
     try {
-      valid.address.parse(addr)
+      valid.bech32.parse(addr)
       return true
     } catch (err) {
       if (err instanceof z.ZodError) {
@@ -71,8 +93,6 @@ export const GroupForm = ({
     }
   }
 
-  /** the layout of this UI makes using the hook-form helpers impractical.
-   * Manually handing logic here */
   function addMember(): void {
     if (!validateAddress(memberAddr)) {
       return
@@ -85,86 +105,89 @@ export const GroupForm = ({
   if (!account) return null
   return (
     <FormCard>
-      <FormContainer formContext={form} handleSubmit={form.handleSubmit(onSubmit)}>
-        <Stack spacing={2}>
-          <RadioButtonGroup
-            required
-            name="admin"
-            label="Group admin"
-            options={[
-              { id: 'group', label: 'Group policy' },
-              {
-                id: account.address,
-                label: `You (${truncate(account.address)})`,
-              },
-            ]}
-          />
-          <TextFieldElement required name="name" label="Group name" />
-          <TextFieldElement
-            multiline
-            name="description"
-            label="Description"
-            minRows={4}
-            maxRows={8}
-          />
-          <TextFieldElement name="forumLink" label="Link to forum" />
-          <TextFieldElement
-            multiline
-            name="otherMetadata"
-            label="Other metadata"
-            minRows={4}
-            maxRows={8}
-          />
-          <Flex>
-            <TextField
-              label="Add member accounts"
-              value={memberAddr}
-              onChange={(e) => setMemberAddr(e.target.value)}
-              error={!!errors.members}
-              helperText={
-                errors.members?.message ||
-                'Input the addresses of the members of this group.'
-              }
-              sx={{ flexGrow: 1, mr: 1 }}
+      <FormProvider {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <Stack spacing={7}>
+            <RadioGroupField
+              required
+              name="admin"
+              label="Group admin"
+              options={[
+                { value: 'group', label: 'Group policy' },
+                {
+                  value: account.address,
+                  label: `You (${truncate(account.address)})`,
+                },
+              ]}
             />
-            <div>
-              <Button variant="outlined" onClick={addMember} sx={{ py: 1.85 }}>
-                + Add
-              </Button>
-            </div>
-          </Flex>
-          {/* TODO: move this? Currently it's only used here */}
-          {memberFields.length > 0 && (
-            <TableContainer component={Paper}>
-              <Table>
-                <THead>
-                  <Tr sx={{ '& > th': { fontWeight: 'bold' } }}>
-                    <Td>Accounts added</Td>
-                    <Td>Weight</Td>
-                    <Td />
-                  </Tr>
-                </THead>
-                <TBody>
-                  {memberFields.map((member, i) => (
-                    <Tr key={i + member.address}>
-                      <Td>{member.address}</Td>
-                      <Td>{member.weight}</Td>
-                      <Td>
-                        <IconButton onClick={() => remove(i)}>
-                          <DeleteForever />
-                        </IconButton>
-                      </Td>
+            <InputField required name="name" label="Group name" />
+            <TextareaField name="description" label="Description" />
+            <InputField name="forumLink" label="Link to forum" />
+            <TextareaField name="otherMetadata" label="Other metadata" />
+            <Flex>
+              {/* Because of how the form is structured, we need a controlled
+              value which is associated with the `members` array, but doesn't
+              directly add to it */}
+              <FieldControl
+                required
+                error={errors.members as FieldError} // TODO fix type cast
+                name="memberAddr"
+                label="Add member accounts"
+                helperText="Input the addresses of the members of this group."
+              >
+                <InputWithButton
+                  name="memberAddr"
+                  value={memberAddr}
+                  onChange={(e) => setMemberAddr(e.target.value)}
+                  onBtnClick={addMember}
+                >
+                  {'+ Add'}
+                </InputWithButton>
+              </FieldControl>
+            </Flex>
+            {/* TODO: move this? Currently it's only used here, but probably
+            still good to pull out */}
+            {controlledMemberFields.length > 0 && (
+              <TableContainer>
+                <Table>
+                  <Thead>
+                    <Tr>
+                      <Th>Accounts added</Th>
+                      <Th>Weight</Th>
+                      <Th />
                     </Tr>
-                  ))}
-                </TBody>
-              </Table>
-            </TableContainer>
-          )}
-          <FlexEnd>
-            <Button type="submit">Submit</Button>
-          </FlexEnd>
-        </Stack>
-      </FormContainer>
+                  </Thead>
+                  <Tbody>
+                    {controlledMemberFields.map((member, i) => (
+                      <Tr key={i + member.address}>
+                        <Td>{member.address}</Td>
+                        <Td>
+                          <FormControl isInvalid={!!errors.members?.[i]?.weight}>
+                            <Input
+                              type="number"
+                              {...form.register(`members.${i}.weight`, {
+                                valueAsNumber: true,
+                              })}
+                            />
+                          </FormControl>
+                        </Td>
+                        <Td>
+                          <IconButton aria-label="Delete" onClick={() => remove(i)}>
+                            <DeleteIcon />
+                          </IconButton>
+                        </Td>
+                      </Tr>
+                    ))}
+                  </Tbody>
+                </Table>
+              </TableContainer>
+            )}
+            <Flex justify="end">
+              <Button type="submit">Submit</Button>
+            </Flex>
+          </Stack>
+        </form>
+      </FormProvider>
     </FormCard>
   )
 }

@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 
-import { Alert, AlertProps, AlertTitle, Button, Center, Container, Paper } from '@/atoms'
+import { AlertProps, Box, Button, Container, VStack } from '@/atoms'
+import { Notify } from '@/molecules'
 
 import { GroupsIcon } from 'assets/tsx'
 
@@ -8,37 +9,32 @@ export const AlertTemplate = ({
   btnText,
   children,
   onBtnClick,
-  severity = 'error',
+  status = 'error',
   text,
   title = 'Whoops!',
 }: {
   btnText: string
   children?: ReactNode
   onBtnClick: () => void
-  severity?: AlertProps['severity']
+  status?: AlertProps['status']
   text: string
   title?: string
 }) => {
   return (
     <Container maxWidth="md">
-      <Paper variant="outlined" sx={{ mt: 5, py: 2, px: 4 }}>
-        <Center>
+      <Box borderWidth={1} borderRadius="lg" py={6} px={4} mt={5}>
+        <VStack spacing={4}>
           <GroupsIcon sx={{ height: 50, width: 50 }} />
-        </Center>
-        <Alert
-          sx={{ my: 2 }}
-          severity={severity}
-          action={
-            <Button size="small" color="inherit" onClick={onBtnClick}>
-              {btnText}
-            </Button>
-          }
-        >
-          <AlertTitle sx={{ fontWeight: 'bold' }}>{title}</AlertTitle>
-          {text}
-        </Alert>
-        {children}
-      </Paper>
+
+          <Notify title={title} status={status}>
+            {text}
+          </Notify>
+          {children}
+          <Button onClick={onBtnClick} mt={4} alignSelf="end">
+            {btnText}
+          </Button>
+        </VStack>
+      </Box>
     </Container>
   )
 }

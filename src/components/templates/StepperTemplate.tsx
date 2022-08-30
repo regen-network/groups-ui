@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
+import { Step, Steps } from 'chakra-ui-steps'
 
-import { Flex, Text } from '@/atoms'
-import { PageStepper /* , StickyFooter */ } from '@/molecules'
+import { Box, Container, Flex, Heading, useColorModeValue } from '@/atoms'
 
 import { PageTemplate } from './PageTemplate'
 
@@ -15,12 +15,20 @@ export const StepperTemplate = (p: {
   // }
 }) => {
   return (
-    <Flex col>
-      <PageStepper activeStep={p.activeStep} steps={p.steps} />
+    <Flex flexDir="column">
+      <Box py={5} bg={useColorModeValue('gray.100', 'gray.900')}>
+        <Container maxW="container.xl">
+          <Steps activeStep={p.activeStep}>
+            {p.steps.map((step, i) => (
+              <Step key={`${step}-${i}`} label={step} />
+            ))}
+          </Steps>
+        </Container>
+      </Box>
       <PageTemplate>
-        <Text variant="h2" align="center" mb={4}>
+        <Heading textAlign="center" mb={8}>
           {p.steps[p.activeStep]}
-        </Text>
+        </Heading>
         {p.children}
       </PageTemplate>
       {/* {!!p.nextBtn && (

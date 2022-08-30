@@ -1,7 +1,14 @@
-import { Card, CardContent } from '@/atoms'
+import { Box, useColorModeValue } from '@/atoms'
 
 export const FormCard = (p: { children: React.ReactNode }) => (
-  <Card sx={{ width: ['100%', 560] }} elevation={2}>
-    <CardContent>{p.children}</CardContent>
-  </Card>
+  <Box
+    w={['100%', 560]}
+    px={4}
+    py={8}
+    borderWidth="1px"
+    borderRadius="lg"
+    bg={useColorModeValue('white', 'gray.800')}
+  >
+    {p.children}
+  </Box>
 )

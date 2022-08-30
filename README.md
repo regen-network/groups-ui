@@ -70,7 +70,7 @@ Some relevant notes / Highlights:
 
 ## Library Resources
 
-- [MUI](https://mui.com/) - UI Components
+- [Chakra](https://chakra-ui.com/) - UI Components
 - [Valtio](https://valtio.pmnd.rs/) - global state
 - [React Query](https://tanstack.com/query/v4) - Query caching
 - [Zod](https://github.com/colinhacks/zod) - form validation
@@ -78,3 +78,11 @@ Some relevant notes / Highlights:
 ## Linting
 
 `yarn lint` - format with Prettier, fix linting errors
+
+## Storybook
+
+Storybook is installed for this project (not all components are inside it yet), but there's currently a bug with vite - to get working, you might have to clear cache after installing local deps:
+
+```
+rm -rf node_modules/.cache/storybook/
+```

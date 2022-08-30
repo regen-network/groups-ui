@@ -1,4 +1,4 @@
-import { useState } from 'react'
+// import { useState } from 'react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import { SelectDropdown } from '../SelectDropdown'
@@ -12,16 +12,16 @@ export default {
 } as ComponentMeta<typeof SelectDropdown>
 
 const Template: ComponentStory<typeof SelectDropdown> = (args) => {
-  const [value, setValue] = useState<string>()
-  return <SelectDropdown {...args} value={value} onChange={(e) => setValue(e)} />
+  // const [value, setValue] = useState<string>()
+  return <SelectDropdown {...args} />
 }
 
 export const Component = Template.bind({})
 Component.args = {
   label: 'select',
   items: [
-    { value: '1', name: 'one' },
-    { value: '2', name: 'two' },
-    { value: '3', name: 'three' },
+    { value: '1', label: 'one' },
+    { value: '2', label: 'two' },
+    { value: '3', label: 'three' },
   ],
 }

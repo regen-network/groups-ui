@@ -4,7 +4,7 @@ import { createGroup } from 'store/Group'
 import { GroupForm } from '@/organisms/GroupForm'
 import { StepperTemplate } from '@/templates/StepperTemplate'
 
-export default function CreateGroup() {
+export default function GroupCreate() {
   return (
     <StepperTemplate
       activeStep={0}

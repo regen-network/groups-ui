@@ -7,16 +7,19 @@ import { SelectDropdown } from '@/molecules'
 
 const CHAIN_ITEMS = allChainsArray.map(({ chainId, chainName }) => ({
   value: chainId,
-  name: chainName,
+  label: chainName,
 }))
 
 export const ChainSelect = () => {
   const { active } = useSnapshot(Chain)
+
   return (
     <SelectDropdown
       label={active.chainId ? '' : 'Select a Chain'}
-      value={active.chainId}
-      onChange={setActiveChain}
+      selected={CHAIN_ITEMS.find((item) => item.value === active.chainId)}
+      onChange={(newChain) => {
+        if (newChain?.value) setActiveChain(newChain.value)
+      }}
       items={CHAIN_ITEMS}
     />
   )
