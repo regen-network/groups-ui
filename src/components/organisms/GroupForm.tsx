@@ -160,7 +160,6 @@ export const GroupForm = ({
                     <Tr>
                       <Th>Accounts added</Th>
                       <Th>Weight</Th>
-                      {/* <Th /> */}
                     </Tr>
                   </Thead>
                   <Tbody>
@@ -186,11 +185,6 @@ export const GroupForm = ({
                             </IconButton>
                           </Flex>
                         </Td>
-                        {/* <Td px={0} ml={0}>
-                          <IconButton aria-label="Delete" onClick={() => remove(i)}>
-                            <DeleteIcon />
-                          </IconButton>
-                        </Td> */}
                       </Tr>
                     ))}
                   </Tbody>
