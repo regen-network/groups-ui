@@ -15,7 +15,6 @@ import {
   FormCard,
   FormControl,
   IconButton,
-  Input,
   NumberInput,
   Stack,
   Table,
@@ -26,13 +25,13 @@ import {
   Thead,
   Tr,
 } from '@/atoms'
+import { InputWithButton } from '@/molecules'
 import {
   FieldControl,
   InputField,
-  InputWithButton,
   RadioGroupField,
   TextareaField,
-} from '@/molecules'
+} from '@/molecules/FormFields'
 
 import { DeleteIcon } from 'assets/tsx'
 
@@ -117,7 +116,7 @@ export const GroupForm = ({
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <Stack spacing={SPACING.formStack}>
             <RadioGroupField
-              isRequired
+              required
               name="admin"
               label="Group admin"
               options={[
@@ -128,7 +127,7 @@ export const GroupForm = ({
                 },
               ]}
             />
-            <InputField isRequired name="name" label="Group name" />
+            <InputField required name="name" label="Group name" />
             <TextareaField name="description" label="Description" />
             <InputField name="forumLink" label="Link to forum" />
             <TextareaField name="otherMetadata" label="Other metadata" />
@@ -137,7 +136,7 @@ export const GroupForm = ({
               value which is associated with the `members` array, but doesn't
               directly add to it */}
               <FieldControl
-                isRequired
+                required
                 error={errors.members as FieldError} // TODO fix type cast
                 name="memberAddr"
                 label="Add member accounts"
@@ -180,12 +179,14 @@ export const GroupForm = ({
                               <FormControl isInvalid={!!errors.members?.[i]?.weight}>
                                 <NumberInput
                                   type="number"
+                                  min={0}
                                   ref={form.register(`members.${i}.weight`, {
                                     valueAsNumber: true,
                                   })}
                                   onChange={(_, val) =>
                                     form.setValue(`members.${i}.weight`, val)
                                   }
+                                  value={member.weight}
                                   // {...form.register(`members.${i}.weight`, {
                                   //   valueAsNumber: true,
                                   // })}

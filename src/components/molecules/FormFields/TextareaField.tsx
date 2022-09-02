@@ -1,29 +1,25 @@
 import { useController, useFormContext } from 'react-hook-form'
 
-import { type TextareaProps, Textarea } from '@/atoms'
+import { Textarea } from '@/atoms'
 
 import { type FieldProps, FieldControl } from './FieldControl'
 
 /** `Textarea` with controls for react-hook-form */
-export const TextareaField = ({
-  name,
-  label,
-  ...textareaProps
-}: TextareaProps & FieldProps) => {
-  const { defaultValue, isRequired } = textareaProps
-  const { control } = useFormContext()
+export const TextareaField = (fieldProps: FieldProps) => {
+  const { name, required } = fieldProps
+  const { control, getValues } = useFormContext()
   const {
     fieldState: { error },
     field,
   } = useController({
     name,
     control,
-    defaultValue,
-    rules: { required: isRequired },
+    defaultValue: getValues(name),
+    rules: { required: required },
   })
   return (
-    <FieldControl name={name} label={label} isRequired={isRequired} error={error}>
-      <Textarea {...field} {...textareaProps} id={name} />
+    <FieldControl {...fieldProps} error={error}>
+      <Textarea {...field} id={name} />
     </FieldControl>
   )
 }

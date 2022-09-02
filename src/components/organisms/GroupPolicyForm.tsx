@@ -7,7 +7,7 @@ import { SPACING } from 'util/constants'
 import { valid } from 'util/validation/zod'
 
 import { Button, Flex, FormCard, IconButton, Stack, Text } from '@/atoms'
-import { NumberField } from '@/molecules'
+import { NumberField } from '@/molecules/FormFields'
 
 import { BackIcon } from 'assets/tsx'
 
@@ -38,21 +38,35 @@ export const GroupPolicyForm = ({
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <Stack spacing={SPACING.formStack}>
-            <NumberField isRequired name="votingWindow" label="Voting Window">
+            <NumberField
+              required
+              name="votingWindow"
+              label="Voting Window"
+              numberInputProps={{ min: 0 }}
+            >
               <Flex align="center" minW="50%">
                 <Text ml={5} fontWeight="bold">
                   {'maximum days'}
                 </Text>
               </Flex>
             </NumberField>
-            <NumberField isRequired name="threshold" label="Set a threshold">
+            <NumberField
+              required
+              name="threshold"
+              label="Set a threshold"
+              numberInputProps={{ min: 0 }}
+            >
               <Flex align="center" minW="50%">
                 <Text ml={5} fontWeight="bold">
                   {'yes votes of 100 (51%)'}
                 </Text>
               </Flex>
             </NumberField>
-            <NumberField name="quorum" label="Define a quorum">
+            <NumberField
+              name="quorum"
+              label="Define a quorum"
+              numberInputProps={{ min: 0, flex: 1 }}
+            >
               <Flex align="center" minW="50%">
                 <Text ml={5} fontWeight="bold">
                   {'% of total voting power'}

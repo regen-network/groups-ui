@@ -1,6 +1,6 @@
 import { useController, useFormContext } from 'react-hook-form'
 
-import { type RadioGroupProps, RadioBox, RadioGroup, VStack } from '@/atoms'
+import { RadioBox, RadioGroup, VStack } from '@/atoms'
 
 import { type FieldProps, FieldControl } from './FieldControl'
 
@@ -9,32 +9,24 @@ type Option = {
   value: string
 }
 
-type Props = Omit<RadioGroupProps, 'children'> &
-  FieldProps & {
-    options: Option[]
-    isRequired?: boolean
-  }
+type Props = FieldProps & {
+  options: Option[]
+}
 
 /** custom radio group field for react hook form */
-export const RadioGroupField = ({
-  options,
-  label,
-  isRequired,
-  ...radioGroupProps
-}: Props) => {
-  const { name, defaultValue } = radioGroupProps
-  const { control } = useFormContext()
+export const RadioGroupField = ({ options, label, required, name }: Props) => {
+  const { control, getValues } = useFormContext()
   const {
     fieldState: { error },
     field,
   } = useController({
     name,
     control,
-    defaultValue,
-    rules: { required: isRequired },
+    defaultValue: getValues(name),
+    rules: { required },
   })
   return (
-    <FieldControl name={field.name} label={label} error={error} isRequired={isRequired}>
+    <FieldControl name={field.name} label={label} error={error} required={required}>
       <RadioGroup
         id={name}
         onChange={field.onChange}

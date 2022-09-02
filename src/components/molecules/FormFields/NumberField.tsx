@@ -8,26 +8,29 @@ import { type FieldProps, FieldControl } from './FieldControl'
 /** `NumberInput` with controls for react-hook-form */
 /** optionally accepts `children` which will be rendered beside the input */
 export const NumberField = ({
-  name,
-  label,
   children,
-  ...numberProps
-}: NumberInputProps & FieldProps & { children?: ReactNode }) => {
-  const { defaultValue, isRequired } = numberProps
-  const { control } = useFormContext()
+  numberInputProps,
+  ...fieldProps
+}: FieldProps & { numberInputProps?: NumberInputProps; children?: ReactNode }) => {
+  const { name, required } = fieldProps
+  const { control, getValues } = useFormContext()
   const {
     fieldState: { error },
-    field,
+    field: { onChange, ...field },
   } = useController({
     name,
     control,
-    defaultValue: defaultValue,
-    rules: { required: isRequired },
+    defaultValue: getValues(name),
+    rules: { required },
   })
   return (
-    <FieldControl name={field.name} label={label} isRequired={isRequired} error={error}>
+    <FieldControl {...fieldProps} error={error}>
       <Flex>
-        <NumberInput {...field} id={name} name={name} />
+        <NumberInput
+          {...field}
+          {...numberInputProps}
+          onChange={(_, val) => onChange(val)}
+        />
         {children}
       </Flex>
     </FieldControl>

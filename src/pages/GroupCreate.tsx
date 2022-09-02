@@ -21,7 +21,7 @@ const steps = ['Create Group', 'Create Group Policy', 'Finished']
 
 export default function GroupCreate() {
   const { activeStep, nextStep, prevStep /* reset, setStep */ } = useSteps({
-    initialStep: 1,
+    initialStep: 0,
   })
   const [groupValues, setGroupValues] = useState<GroupFormValues>(defaultGroupFormValues)
   const toast = useToast()
@@ -50,10 +50,12 @@ export default function GroupCreate() {
       })
       setTimeout(() => navigate('/'), time + 500)
     } catch (err) {
+      const msg = toErrorWithMessage(err).message
+      console.error(err)
       toast({
         ...TOAST_DEFAULTS,
         title: 'Group creation failed',
-        description: toErrorWithMessage(err).message,
+        description: msg,
         status: 'error',
         duration: 9000,
       })

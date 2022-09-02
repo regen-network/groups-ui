@@ -6,6 +6,8 @@ import { FormControl, FormErrorMessage, FormHelperText, FormLabel, Text } from '
 export type FieldProps = {
   name: string
   label?: string
+  helperText?: string
+  required?: boolean
 }
 
 /** Wrapper for form elements which adds label + error handling */
@@ -13,21 +15,19 @@ export const FieldControl = ({
   children,
   error,
   helperText,
-  isRequired,
+  required,
   label,
   name,
 }: FieldProps & {
   children: ReactNode
   error?: FieldError
-  helperText?: string
-  isRequired?: boolean
 }) => {
   return (
     <FormControl isInvalid={!!error}>
       {!!label && (
         <FormLabel htmlFor={name}>
           {label}
-          {!isRequired && (
+          {!required && (
             <Text fontSize="sm" color="gray" display="inline">
               {' (optional)'}
             </Text>
