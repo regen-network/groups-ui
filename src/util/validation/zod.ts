@@ -32,13 +32,29 @@ const validDescription = z
   .min(4, 'Description is too short')
   .max(320, 'Description is too long') // TODO is this too short?
 
+const validAdmin = z.union([
+  z.string().min(1, 'Must select a value'),
+  validBech32Address,
+  z.literal('group'),
+])
+
+const validPercent = z
+  .number()
+  .min(1, 'Must be greater than zero')
+  .max(100, 'Must be less than 100')
+
+const validPositiveNumber = z.number().min(1, 'Must be a positive number')
+
 export const valid = {
+  admin: validAdmin,
+  bech32: validBech32Address,
   name: validName,
   description: validDescription,
-  bech32: validBech32Address,
   groupOrAddress: validGroupOrAddress,
-  member: validMember,
   members: validMembers,
   json: validJSON,
   url: z.string().url(),
+  votingWindow: validPositiveNumber,
+  threshold: validPercent,
+  quorum: validPercent,
 }

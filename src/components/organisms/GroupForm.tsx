@@ -3,21 +3,20 @@ import { type FieldError, FormProvider, useFieldArray, useForm } from 'react-hoo
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import {
-  type GroupFormValues,
-  type MemberFormValues,
-  defaultMemberFormValues,
-} from 'models'
+import { type MemberFormValues, defaultMemberFormValues } from 'models'
 import { Wallet } from 'store/Wallet'
+import { SPACING } from 'util/constants'
 import { truncate } from 'util/helpers'
 import { valid } from 'util/validation/zod'
 
 import {
   Button,
   Flex,
+  FormCard,
   FormControl,
   IconButton,
   Input,
+  NumberInput,
   Stack,
   Table,
   TableContainer,
@@ -29,7 +28,6 @@ import {
 } from '@/atoms'
 import {
   FieldControl,
-  FormCard,
   InputField,
   InputWithButton,
   RadioGroupField,
@@ -38,13 +36,20 @@ import {
 
 import { DeleteIcon } from 'assets/tsx'
 
+/** @see @haveanicedavid/cosmos-groups-ts/types/proto/cosmos/group/v1/types */
+export type GroupFormValues = {
+  admin: string
+  policyType: 'account' | 'group'
+  description?: string
+  forumLink?: string
+  members: MemberFormValues[]
+  name: string
+  otherMetadata?: string
+}
+
 const resolver = zodResolver(
   z.object({
-    admin: z.union([
-      z.string().min(1, 'Must select a value'),
-      valid.bech32,
-      z.literal('group'),
-    ]),
+    admin: valid.admin,
     name: valid.name,
     description: valid.description.optional(),
     forumLink: valid.url.optional(),
@@ -54,13 +59,13 @@ const resolver = zodResolver(
 )
 
 export const GroupForm = ({
+  btnText = 'Submit',
   defaultValues,
   onSubmit,
-  submitting,
 }: {
+  btnText?: string
   defaultValues: GroupFormValues
   onSubmit: (data: GroupFormValues) => void
-  submitting?: boolean
 }) => {
   const { account } = Wallet
   const [memberAddr, setMemberAddr] = useState('')
@@ -110,20 +115,20 @@ export const GroupForm = ({
     <FormCard>
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <Stack spacing={7}>
+          <Stack spacing={SPACING.formStack}>
             <RadioGroupField
-              required
+              isRequired
               name="admin"
               label="Group admin"
               options={[
-                { value: 'group', label: 'Group policy' },
+                { value: 'policy', label: 'Group policy' },
                 {
                   value: account.address,
                   label: `You (${truncate(account.address)})`,
                 },
               ]}
             />
-            <InputField required name="name" label="Group name" />
+            <InputField isRequired name="name" label="Group name" />
             <TextareaField name="description" label="Description" />
             <InputField name="forumLink" label="Link to forum" />
             <TextareaField name="otherMetadata" label="Other metadata" />
@@ -132,7 +137,7 @@ export const GroupForm = ({
               value which is associated with the `members` array, but doesn't
               directly add to it */}
               <FieldControl
-                required
+                isRequired
                 error={errors.members as FieldError} // TODO fix type cast
                 name="memberAddr"
                 label="Add member accounts"
@@ -163,38 +168,54 @@ export const GroupForm = ({
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {controlledMemberFields.map((member, i) => (
-                      <Tr key={i + member.address}>
-                        <Td>{member.address}</Td>
-                        <Td pr={0}>
-                          <Flex>
-                            <FormControl isInvalid={!!errors.members?.[i]?.weight}>
-                              <Input
+                    {controlledMemberFields.map((member, i) => {
+                      const t = form.register(`members.${i}.weight`, {
+                        valueAsNumber: true,
+                      })
+                      return (
+                        <Tr key={i + member.address}>
+                          <Td>{member.address}</Td>
+                          <Td pr={0}>
+                            <Flex>
+                              <FormControl isInvalid={!!errors.members?.[i]?.weight}>
+                                <NumberInput
+                                  type="number"
+                                  ref={form.register(`members.${i}.weight`, {
+                                    valueAsNumber: true,
+                                  })}
+                                  onChange={(_, val) =>
+                                    form.setValue(`members.${i}.weight`, val)
+                                  }
+                                  // {...form.register(`members.${i}.weight`, {
+                                  //   valueAsNumber: true,
+                                  // })}
+                                />
+                                {/* <Input
                                 type="number"
+                                min={0}
                                 {...form.register(`members.${i}.weight`, {
                                   valueAsNumber: true,
                                 })}
-                              />
-                            </FormControl>
-                            <IconButton
-                              ml={2}
-                              aria-label="Delete"
-                              onClick={() => remove(i)}
-                            >
-                              <DeleteIcon />
-                            </IconButton>
-                          </Flex>
-                        </Td>
-                      </Tr>
-                    ))}
+                              /> */}
+                              </FormControl>
+                              <IconButton
+                                ml={2}
+                                aria-label="Delete"
+                                onClick={() => remove(i)}
+                              >
+                                <DeleteIcon />
+                              </IconButton>
+                            </Flex>
+                          </Td>
+                        </Tr>
+                      )
+                    })}
                   </Tbody>
                 </Table>
               </TableContainer>
             )}
             <Flex justify="end">
-              <Button type="submit" isLoading={submitting} loadingText="Submitting">
-                Submit
-              </Button>
+              <Button type="submit">{btnText}</Button>
             </Flex>
           </Stack>
         </form>

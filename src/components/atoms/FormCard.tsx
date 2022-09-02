@@ -1,6 +1,8 @@
-import { Box, useColorModeValue } from '@/atoms'
+import { ReactNode } from 'react'
 
-export const FormCard = (p: { children: React.ReactNode }) => (
+import { Box, useColorModeValue } from './Chakra'
+
+export const FormCard = (p: { children: ReactNode }) => (
   <Box
     w={['100%', 560]}
     px={4}

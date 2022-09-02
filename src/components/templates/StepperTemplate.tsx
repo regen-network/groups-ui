@@ -9,10 +9,6 @@ export const StepperTemplate = (p: {
   children: ReactNode
   activeStep: number
   steps: string[]
-  // nextBtn?: {
-  //   text: string
-  //   onClick: () => void
-  // }
 }) => {
   return (
     <Flex flexDir="column">
@@ -31,13 +27,6 @@ export const StepperTemplate = (p: {
         </Heading>
         {p.children}
       </PageTemplate>
-      {/* {!!p.nextBtn && (
-        <StickyFooter
-          sx={{ mt: 8 }}
-          btnText={p.nextBtn.text}
-          onBtnClick={p.nextBtn.onClick}
-        />
-      )} */}
     </Flex>
   )
 }

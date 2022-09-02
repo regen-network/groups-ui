@@ -1,5 +1,7 @@
 export * from './Chakra'
 export * from './Chakra-select'
+export * from './FormCard'
 export * from './Link'
+export * from './NumberInput'
 export * from './RadioBox'
 export * from './RouteLink'

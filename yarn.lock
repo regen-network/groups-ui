@@ -3319,7 +3319,7 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@osmonauts/helpers@^0.4.1":
+"@osmonauts/helpers@^0.4.1", "@osmonauts/helpers@^0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@osmonauts/helpers/-/helpers-0.4.3.tgz#f73cce20c2d05cc4ab056efdd1f16bb1e9eef76e"
   integrity sha512-Dd6CXSKoAP4kLptE8Fx2vsEqc0Ai4kF07l4zPsfOYop9SH5ayOKkRTfAkrBjBr84FsMPyu5TEhJeqj1i//Q/jg==

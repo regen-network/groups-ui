@@ -10,3 +10,7 @@ export const truncate = (str: string, maxLength = 12) => {
   }
   return str
 }
+
+export const intToPercent = (int: number) => {
+  return int / 100
+}

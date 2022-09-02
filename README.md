@@ -83,6 +83,8 @@ Some relevant notes / Highlights:
 
 Storybook is installed for this project (not all components are inside it yet), but there's currently a bug with vite - to get working, you might have to clear cache after installing local deps:
 
+[This issue](https://github.com/chakra-ui/chakra-ui/issues/6338) seems relevant
+
 ```
 rm -rf node_modules/.cache/storybook/
 ```

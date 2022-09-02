@@ -1,3 +1,4 @@
+import { cosmos } from '@haveanicedavid/cosmos-groups-ts'
 import type {
   GroupInfo,
   GroupMember,
@@ -6,14 +7,25 @@ import type {
 import type { MemberFormValues } from './Member.model'
 export { GroupInfo, GroupMember }
 
+export const cosmosgroups = cosmos.group.v1
+
+export type GroupWithPolicyFormValues = GroupFormValues & GroupPolicyFormValues
+
 /** @see @haveanicedavid/cosmos-groups-ts/types/proto/cosmos/group/v1/types */
 export type GroupFormValues = {
   admin: string
+  policyType: 'account' | 'group'
   description?: string
   forumLink?: string
   members: MemberFormValues[]
   name: string
   otherMetadata?: string
+}
+
+export type GroupPolicyFormValues = {
+  votingWindow: number
+  threshold: number
+  quorum?: number
 }
 
 export type GroupWithMembers = GroupInfo & {
@@ -39,5 +51,11 @@ export type UIGroupMetadata = {
 export const defaultGroupFormValues: GroupFormValues = {
   admin: '',
   name: '',
+  policyType: 'group',
   members: [],
+}
+
+export const defaultGroupPolicyFormValues: GroupPolicyFormValues = {
+  votingWindow: 0,
+  threshold: 0,
 }
