@@ -1,6 +1,6 @@
 import { useController, useFormContext } from 'react-hook-form'
 
-import { type InputProps, Flex, Input } from '@/atoms'
+import { type InputProps, Input } from '@/atoms'
 
 import { type FieldProps, FieldControl } from './FieldControl'
 

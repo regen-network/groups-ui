@@ -7,6 +7,11 @@ import { handleError, throwError } from 'util/errors'
 
 import { Wallet } from './Wallet.store'
 
+export async function resetKeplr() {
+  Wallet.keplrStatus = 'initialized'
+  enableKeplr()
+}
+
 // TODO: reload on keplr account change
 export async function enableKeplr() {
   const { keplr } = window

@@ -12,7 +12,8 @@ import { createGroupWithPolicy } from 'store/Group'
 import { TOAST_DEFAULTS } from 'util/constants'
 import { toErrorWithMessage } from 'util/errors'
 
-import { Button, Heading, RouteLink, Stack, Text, useToast } from '@/atoms'
+import { AnimatePresence, Button, RouteLink, Stack, Text, useToast } from '@/atoms'
+import { HorizontalSlide } from '@/molecules/animations/HoritzontalSlide'
 import { GroupForm } from '@/organisms/GroupForm'
 import { GroupPolicyForm } from '@/organisms/GroupPolicyForm'
 import { StepperTemplate } from '@/templates/StepperTemplate'
@@ -20,13 +21,24 @@ import { StepperTemplate } from '@/templates/StepperTemplate'
 const steps = ['Create Group', 'Create Group Policy', 'Finished']
 
 export default function GroupCreate() {
+  const toast = useToast()
+  const navigate = useNavigate()
   const { activeStep, nextStep, prevStep /* reset, setStep */ } = useSteps({
     initialStep: 0,
   })
   const [groupValues, setGroupValues] = useState<GroupFormValues>(defaultGroupFormValues)
-  const toast = useToast()
-  const navigate = useNavigate()
   const [submitting, setSubmitting] = useState(false)
+  const [priorStep, setPriorStep] = useState(0)
+
+  function handleNext() {
+    setPriorStep(activeStep)
+    nextStep()
+  }
+
+  function handlePrev() {
+    setPriorStep(activeStep)
+    prevStep()
+  }
 
   function handleGroupSubmit(values: GroupFormValues) {
     setGroupValues(values)
@@ -48,6 +60,7 @@ export default function GroupCreate() {
         status: 'success',
         duration: time,
       })
+      handleNext()
       setTimeout(() => navigate('/'), time + 500)
     } catch (err) {
       const msg = toErrorWithMessage(err).message
@@ -68,23 +81,31 @@ export default function GroupCreate() {
     switch (activeStep) {
       case 0:
         return (
-          <GroupForm
-            onSubmit={handleGroupSubmit}
-            defaultValues={groupValues}
-            btnText="Next"
-          />
+          <HorizontalSlide key="step-0" fromLeft={priorStep === 0}>
+            <GroupForm
+              onSubmit={handleGroupSubmit}
+              defaultValues={groupValues}
+              btnText="Next"
+            />
+          </HorizontalSlide>
         )
       case 1:
         return (
-          <GroupPolicyForm
-            submitting={submitting}
-            onSubmit={handleCreate}
-            defaultValues={defaultGroupPolicyFormValues}
-            goBack={prevStep}
-          />
+          <HorizontalSlide key="step-1">
+            <GroupPolicyForm
+              submitting={submitting}
+              onSubmit={handleCreate}
+              defaultValues={defaultGroupPolicyFormValues}
+              goBack={handlePrev}
+            />
+          </HorizontalSlide>
         )
       case 2:
-        return <Finished />
+        return (
+          <HorizontalSlide key="step-2">
+            <Finished />
+          </HorizontalSlide>
+        )
       default:
         return null
     }
@@ -92,14 +113,13 @@ export default function GroupCreate() {
 
   return (
     <StepperTemplate activeStep={activeStep} steps={steps}>
-      {renderStep()}
+      <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
     </StepperTemplate>
   )
 }
 
 const Finished = () => (
   <Stack spacing={8}>
-    <Heading>Finished</Heading>
     <Text>You have successfully set up your group and group policy.</Text>
     <Button as={RouteLink} to="/">
       View your group page

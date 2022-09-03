@@ -1,18 +1,7 @@
 import type { UIGroupWithMembers } from 'models'
 import { formatDate } from 'util/date'
 
-import {
-  Center,
-  Heading,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Text,
-  Th,
-  Thead,
-  Tr,
-} from '@/atoms'
+import { Center, Heading, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@/atoms'
 
 export interface GroupTableItem {
   name: string

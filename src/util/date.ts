@@ -1,4 +1,4 @@
-import { Long, toDuration } from '@osmonauts/helpers'
+import { /* Long, */ toDuration } from '@osmonauts/helpers'
 import dayjs from 'dayjs'
 
 export function formatDate(date: Date | string) {
@@ -10,7 +10,11 @@ export function daysToSeconds(days: number) {
 }
 
 export function secondsToDuration(seconds: number) {
-  return toDuration(seconds.toString())
+  return toDuration(seconds.toString()) // TODO pretty sure this is wrong - check later
+  // return {
+  //   seconds: Long.fromNumber(seconds),
+  //   nanos: 0,
+  // }
 }
 
 export function daysToDuration(days: number) {

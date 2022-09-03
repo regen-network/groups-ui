@@ -14,7 +14,6 @@ export type GroupWithPolicyFormValues = GroupFormValues & GroupPolicyFormValues
 /** @see @haveanicedavid/cosmos-groups-ts/types/proto/cosmos/group/v1/types */
 export type GroupFormValues = {
   admin: string
-  policyType: 'account' | 'group'
   description?: string
   forumLink?: string
   members: MemberFormValues[]
@@ -51,7 +50,6 @@ export type UIGroupMetadata = {
 export const defaultGroupFormValues: GroupFormValues = {
   admin: '',
   name: '',
-  policyType: 'group',
   members: [],
 }
 
