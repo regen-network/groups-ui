@@ -37,8 +37,8 @@ export async function enableKeplr() {
     })
 
     Group.query = lcdClient.cosmos.group.v1
-    Wallet.account = account
     Wallet.signingClient = signingClient
+    Wallet.account = account
     Wallet.fee = {
       amount: coins(0, Chain.active.feeCurrencies[0].coinDenom),
       gas: '2000000', // TODO how do I calculate this?

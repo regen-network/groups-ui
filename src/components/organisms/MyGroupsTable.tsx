@@ -1,41 +1,44 @@
-import type { UIGroupWithMembers } from 'models'
+// import type { UIGroupWithMembers } from 'models'
+import { type UIGroupWithMembers } from 'models'
 import { formatDate } from 'util/date'
 
-import { Center, Heading, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@/atoms'
-
-export interface GroupTableItem {
-  name: string
-  created: string
-  edited: string
-  memberCount: number
-  type: 'admin' | 'member'
-}
-
-function convertGroup(
-  { createdAt, members, metadata: { name, updatedAt } }: UIGroupWithMembers,
-  type: 'admin' | 'member',
-): GroupTableItem {
-  return {
-    name,
-    created: formatDate(createdAt),
-    edited: formatDate(updatedAt),
-    memberCount: members.length,
-    type,
-  }
-}
+import {
+  Badge,
+  Center,
+  Heading,
+  HStack,
+  Link,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from '@/atoms'
 
 export const MyGroupsTable = ({
-  memberGroups,
-  adminGroups,
+  memberGroups = [],
+  adminGroups = [],
 }: {
   memberGroups?: UIGroupWithMembers[]
   adminGroups?: UIGroupWithMembers[]
 }) => {
-  const adminItems = (adminGroups || []).map((m) => convertGroup(m, 'admin'))
-  const memberItems = (memberGroups || []).map((m) => convertGroup(m, 'member'))
-  const tableData: GroupTableItem[] = [...adminItems, ...memberItems]
+  // const groups = useMemo
+  const memberAndAdmin = adminGroups
+    .filter((g) => memberGroups.some((mg) => mg.id === g.id))
+    .map((g) => ({ ...g, type: ['member', 'admin'] }))
 
-  if (tableData.length === 0) {
+  const onlyAdmin = adminGroups
+    .filter((g) => !memberAndAdmin.some((mag) => mag.id === g.id))
+    .map((g) => ({ ...g, type: ['admin'] }))
+
+  const onlyMember = memberGroups
+    .filter((g) => !memberAndAdmin.some((mag) => mag.id === g.id))
+    .map((g) => ({ ...g, type: ['member'] }))
+  const groups = [...memberAndAdmin, ...onlyAdmin, ...onlyMember]
+
+  if (groups.length === 0) {
     return (
       <Center h={250} w="full" borderWidth={1} borderRadius="lg">
         <Heading as="h3" size="lg">
@@ -45,11 +48,13 @@ export const MyGroupsTable = ({
     )
   }
 
+  console.log('groups :>> ', groups)
+
   return (
     <TableContainer borderRadius="lg" borderWidth={2} shadow="md">
       <Table variant="striped" size="lg">
         <Thead>
-          <Tr sx={{ '& > th': { fontWeight: 'bold' } }}>
+          <Tr>
             <Th>Name</Th>
             <Th>Created</Th>
             <Th>Last Edited</Th>
@@ -58,13 +63,21 @@ export const MyGroupsTable = ({
           </Tr>
         </Thead>
         <Tbody>
-          {tableData.map((group, i) => (
-            <Tr key={i + group.name}>
-              <Td>{group.name}</Td>
-              <Td>{group.created}</Td>
-              <Td>{group.edited}</Td>
-              <Td>{group.memberCount}</Td>
-              <Td>{group.type}</Td>
+          {groups.map((group, i) => (
+            <Tr key={i + group.metadata.name}>
+              <Td>
+                <Link to={`/${group.id}/details`}>{group.metadata.name}</Link>
+              </Td>
+              <Td>{formatDate(group.createdAt)}</Td>
+              <Td>{formatDate(group.metadata.updatedAt)}</Td>
+              <Td>{group.members.length}</Td>
+              <Td>
+                <HStack spacing={3}>
+                  {group.type.map((type, i) => (
+                    <Badge key={type + i}>{type}</Badge>
+                  ))}
+                </HStack>
+              </Td>
             </Tr>
           ))}
         </Tbody>

@@ -1,11 +1,11 @@
 import { cosmos } from '@haveanicedavid/cosmos-groups-ts'
 import type {
-  GroupInfo,
+  GroupInfo as ChainGroup,
   GroupMember,
 } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/types'
 
 import type { MemberFormValues } from './Member.model'
-export { GroupInfo, GroupMember }
+export { ChainGroup, GroupMember }
 
 export const cosmosgroups = cosmos.group.v1
 
@@ -13,8 +13,9 @@ export type GroupWithPolicyFormValues = GroupFormValues & GroupPolicyFormValues
 
 /** @see @haveanicedavid/cosmos-groups-ts/types/proto/cosmos/group/v1/types */
 export type GroupFormValues = {
-  admin: string
+  admin: 'policy' | string
   description?: string
+  policyAsAdmin: boolean
   forumLink?: string
   members: MemberFormValues[]
   name: string
@@ -27,11 +28,11 @@ export type GroupPolicyFormValues = {
   quorum?: number
 }
 
-export type GroupWithMembers = GroupInfo & {
+export type GroupWithMembers = ChainGroup & {
   members: GroupMember[]
 }
 
-export type UIGroup = Omit<GroupInfo, 'metadata'> & {
+export type UIGroup = Omit<ChainGroup, 'metadata'> & {
   metadata: UIGroupMetadata
 }
 
@@ -51,9 +52,10 @@ export const defaultGroupFormValues: GroupFormValues = {
   admin: '',
   name: '',
   members: [],
+  policyAsAdmin: true,
 }
 
 export const defaultGroupPolicyFormValues: GroupPolicyFormValues = {
   votingWindow: 0,
-  threshold: 0,
+  threshold: 51,
 }

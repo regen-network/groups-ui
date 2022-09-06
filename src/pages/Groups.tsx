@@ -1,15 +1,13 @@
-import { useAdminGroups, useMemberGroups } from 'hooks/useGroups'
+import { useAdminGroups, useMemberGroups } from 'hooks/useQuery'
+import { Wallet } from 'store/Wallet'
 
 import { Button, Flex, Heading, RouteLink } from '@/atoms'
 import { MyGroupsTable } from '@/organisms/MyGroupsTable'
 import { PageTemplate } from '@/templates/PageTemplate'
 
 export default function Groups() {
-  const { data: memberGroups } = useMemberGroups()
-  const { data: adminGroups } = useAdminGroups()
-
-  console.log('memberGroups :>> ', memberGroups)
-  console.log('adminGroups :>> ', adminGroups)
+  const { data: memberGroups } = useMemberGroups(Wallet.account?.address)
+  const { data: adminGroups } = useAdminGroups(Wallet.account?.address)
 
   return (
     <PageTemplate>

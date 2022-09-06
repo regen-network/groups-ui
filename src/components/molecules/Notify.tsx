@@ -1,4 +1,4 @@
-import { type AlertProps, Alert, AlertIcon, AlertTitle } from '@/atoms'
+import { type AlertProps, Alert, AlertDescription, AlertIcon, AlertTitle } from '@/atoms'
 
 export const Notify = (p: AlertProps) => {
   return (
@@ -9,7 +9,7 @@ export const Notify = (p: AlertProps) => {
     >
       <AlertIcon />
       <AlertTitle sx={{ fontWeight: 'bold' }}>{p.title}</AlertTitle>
-      {p.children}
+      <AlertDescription>{p.children}</AlertDescription>
     </Alert>
   )
 }

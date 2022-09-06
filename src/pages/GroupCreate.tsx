@@ -121,7 +121,7 @@ export default function GroupCreate() {
 const Finished = () => (
   <Stack spacing={8}>
     <Text>You have successfully set up your group and group policy.</Text>
-    <Button as={RouteLink} to="/">
+    <Button as={RouteLink} to="/" alignSelf="center">
       View your group page
     </Button>
   </Stack>

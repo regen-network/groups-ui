@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { AlertProps, Box, Button, Container, VStack } from '@/atoms'
+import { AlertProps, Box, Button, Container, Stack } from '@/atoms'
 import { Notify } from '@/molecules'
 
 import { GroupsIcon } from 'assets/tsx'
@@ -23,17 +23,17 @@ export const AlertTemplate = ({
   return (
     <Container maxWidth="md">
       <Box borderWidth={1} borderRadius="lg" py={6} px={4} mt={5}>
-        <VStack spacing={4}>
+        <Stack spacing={4}>
           <GroupsIcon sx={{ height: 50, width: 50 }} />
 
           <Notify title={title} status={status}>
             {text}
           </Notify>
-          {children}
+          <div>{children}</div>
           <Button onClick={onBtnClick} mt={4} alignSelf="end">
             {btnText}
           </Button>
-        </VStack>
+        </Stack>
       </Box>
     </Container>
   )

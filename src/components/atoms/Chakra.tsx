@@ -14,6 +14,7 @@ export {
   AlertDescription,
   AlertIcon,
   AlertTitle,
+  Badge,
   Box,
   Button,
   Center,

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { type FieldError, FormProvider, useFieldArray, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -47,6 +47,7 @@ const resolver = zodResolver(
     forumLink: valid.url.optional(),
     otherMetadata: valid.json.optional(),
     members: valid.members,
+    policyAsAdmin: z.boolean(),
   }),
 )
 
@@ -68,10 +69,26 @@ export const GroupForm = ({
     remove,
   } = useFieldArray({ control: form.control, name: 'members' })
   const {
+    watch,
+    setValue,
+    getValues,
     formState: { errors },
   } = form
 
-  const watchFieldArray = form.watch('members')
+  const adminValue = watch('admin', 'policy')
+
+  useEffect(() => {
+    // watch admin value - if set to 'policy', set policyAsAdmin to true
+    if (adminValue === 'policy') {
+      setValue('policyAsAdmin', true)
+    } else {
+      if (getValues().policyAsAdmin === true) {
+        setValue('policyAsAdmin', false)
+      }
+    }
+  }, [adminValue, setValue, getValues])
+
+  const watchFieldArray = watch('members')
   const controlledMemberFields = memberFields.map((field, index) => {
     return {
       ...field,
@@ -173,7 +190,7 @@ export const GroupForm = ({
                                   valueAsNumber: true,
                                 })}
                                 onChange={(_, val) =>
-                                  form.setValue(`members.${i}.weight`, val)
+                                  setValue(`members.${i}.weight`, val)
                                 }
                                 value={member.weight}
                               />

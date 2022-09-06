@@ -6,6 +6,7 @@ import { AppTemplate } from '@/templates/AppTemplate'
 
 const Groups = lazy(() => import('./pages/Groups'))
 const GroupCreate = lazy(() => import('./pages/GroupCreate'))
+const GroupDetails = lazy(() => import('./pages/GroupDetails'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 export const Routes = () => {
@@ -16,6 +17,9 @@ export const Routes = () => {
         <Route path="/" element={<AppTemplate />}>
           <Route index element={<Groups />} />
           <Route path="new" element={<GroupCreate />} />
+          <Route path=":groupId">
+            <Route path="details" element={<GroupDetails />} />
+          </Route>
           <Route path="*" element={<NotFound />} />
         </Route>
       </RRouterRoutes>

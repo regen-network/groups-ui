@@ -1,12 +1,14 @@
+import Long from 'long'
+
 import {
+  type GroupWithPolicyFormValues,
+  type UIGroup,
+  type UIGroupWithMembers,
   cosmosgroups,
-  GroupWithPolicyFormValues,
-  UIGroup,
-  UIGroupWithMembers,
 } from 'models'
 import { Group } from 'store/Group'
 import { Wallet } from 'store/Wallet'
-import { daysToDuration, secondsToDuration } from 'util/date'
+import { daysToSeconds } from 'util/date'
 import { throwError } from 'util/errors'
 
 import { groupToUIGroup } from './Group.transforms'
@@ -33,8 +35,22 @@ export async function fetchGroupsWithMembersByAdmin(address?: string) {
   return addMembersToGroups(groups)
 }
 
-async function fetchGroupsByMember(address?: string): Promise<UIGroup[]> {
-  if (!Group.query || !address) throwError('Wallet not initialized')
+export async function fetchGroupById(groupId?: string | Long): Promise<UIGroup> {
+  if (!Group.query) throwError('Wallet not initialized')
+  if (!groupId) throwError('groupId is required')
+  try {
+    const { info } = await Group.query.groupInfo({
+      groupId: groupId instanceof Long ? groupId : Long.fromString(groupId),
+    })
+    return groupToUIGroup(info)
+  } catch (error) {
+    throwError(error)
+  }
+}
+
+export async function fetchGroupsByMember(address?: string): Promise<UIGroup[]> {
+  if (!Group.query) throwError('Wallet not initialized')
+  if (!address) throwError('cannot fetch group members without an address')
   try {
     const { groups } = await Group.query.groupsByMember({
       address,
@@ -45,8 +61,9 @@ async function fetchGroupsByMember(address?: string): Promise<UIGroup[]> {
   }
 }
 
-async function fetchGroupsByAdmin(admin?: string): Promise<UIGroup[]> {
-  if (!Group.query || !admin) throwError('Wallet not initialized')
+export async function fetchGroupsByAdmin(admin?: string): Promise<UIGroup[]> {
+  if (!Group.query) throwError('Wallet not initialized')
+  if (!admin) throwError('No admin ID passed to fetchGroups')
   try {
     const { groups } = await Group.query.groupsByAdmin({
       admin,
@@ -57,22 +74,27 @@ async function fetchGroupsByAdmin(admin?: string): Promise<UIGroup[]> {
   }
 }
 
-async function addMembersToGroups(groups: UIGroup[]): Promise<UIGroupWithMembers[]> {
-  const groupIds = groups.map((g) => g.id)
-  const members = await Promise.all(groupIds.map(fetchGroupMembers))
-  return groups.map((g, i) => {
-    return {
-      ...g,
-      members: members[i],
-    }
-  })
+export async function fetchGroupMembers(groupId?: string | Long) {
+  if (!Group.query) throwError('Wallet not initialized')
+  if (!groupId) throwError('groupId is required')
+  try {
+    const { members } = await Group.query.groupMembers({
+      groupId: groupId instanceof Long ? groupId : Long.fromString(groupId),
+    })
+    return members
+  } catch (error) {
+    throwError(error)
+  }
 }
 
-async function fetchGroupMembers(groupId: UIGroup['id']) {
+export async function fetchGroupPolicies(groupId?: string | Long) {
   if (!Group.query) throwError('Wallet not initialized')
+  if (!groupId) throwError('groupId is required')
   try {
-    const { members } = await Group.query.groupMembers({ groupId })
-    return members
+    const data = await Group.query.groupPoliciesByGroup({
+      groupId: groupId instanceof Long ? groupId : Long.fromString(groupId),
+    })
+    return data
   } catch (error) {
     throwError(error)
   }
@@ -80,42 +102,42 @@ async function fetchGroupMembers(groupId: UIGroup['id']) {
 
 function createGroupWithPolicyMsg({
   admin,
-  members,
-  name,
   description,
   forumLink,
+  members,
+  name,
   otherMetadata,
-  threshold,
-  votingWindow,
+  policyAsAdmin,
   quorum,
+  threshold: _threshold,
+  votingWindow,
 }: GroupWithPolicyFormValues) {
   const groupMembers = members.map((m) => ({
     address: m.address,
     weight: m.weight.toString(),
     metadata: JSON.stringify(m.metadata),
   }))
-  const thresholdStr = `${threshold / 100}`
-  const minExecutionPeriod = secondsToDuration(1)
-  const votingPeriod = daysToDuration(votingWindow)
+  const threshold = `${_threshold / 100}`
   let decisionPolicy
+  const windows = {
+    minExecutionPeriod: '1',
+    votingPeriod: daysToSeconds(votingWindow),
+  } as never // TODO: the `MessageComposer.createGroupWithPolicy` type is wrong
 
   if (quorum) {
     decisionPolicy = {
       typeUrl: '/cosmos.group.v1.PercentageDecisionPolicy',
       value: cosmosgroups.PercentageDecisionPolicy.encode({
         percentage: `${quorum / 100}`,
-        windows: { minExecutionPeriod, votingPeriod },
+        windows,
       }).finish(),
     }
   } else {
     decisionPolicy = {
       typeUrl: '/cosmos.group.v1.ThresholdDecisionPolicy',
       value: cosmosgroups.ThresholdDecisionPolicy.encode({
-        threshold: thresholdStr,
-        windows: {
-          minExecutionPeriod: secondsToDuration(1),
-          votingPeriod: daysToDuration(votingWindow),
-        },
+        threshold,
+        windows,
       }).finish(),
     }
   }
@@ -124,7 +146,7 @@ function createGroupWithPolicyMsg({
     admin,
     decisionPolicy,
     groupPolicyMetadata: '',
-    groupPolicyAsAdmin: admin !== 'policy',
+    groupPolicyAsAdmin: policyAsAdmin,
     groupMetadata: JSON.stringify({
       name,
       description,
@@ -133,5 +155,17 @@ function createGroupWithPolicyMsg({
       other: otherMetadata,
     }),
     members: groupMembers,
+  })
+}
+
+async function addMembersToGroups(groups?: UIGroup[]): Promise<UIGroupWithMembers[]> {
+  const _groups = groups || []
+  const groupIds = _groups.map((g) => g.id)
+  const members = await Promise.all(groupIds.map(fetchGroupMembers))
+  return _groups.map((g, i) => {
+    return {
+      ...g,
+      members: members[i],
+    }
   })
 }
