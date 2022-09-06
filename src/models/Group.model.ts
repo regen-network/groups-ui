@@ -1,11 +1,12 @@
 import { cosmos } from '@haveanicedavid/cosmos-groups-ts'
+import type { GroupInfoRes as ChainGroupRes } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/response.lcd'
 import type {
   GroupInfo as ChainGroup,
   GroupMember,
 } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/types'
 
 import type { MemberFormValues } from './Member.model'
-export { ChainGroup, GroupMember }
+export { ChainGroup, ChainGroupRes, GroupMember }
 
 export const cosmosgroups = cosmos.group.v1
 
@@ -32,8 +33,9 @@ export type GroupWithMembers = ChainGroup & {
   members: GroupMember[]
 }
 
-export type UIGroup = Omit<ChainGroup, 'metadata'> & {
+export type UIGroup = Omit<ChainGroup, 'metadata' | 'createdAt'> & {
   metadata: UIGroupMetadata
+  createdAt: string
 }
 
 export type UIGroupWithMembers = UIGroup & {

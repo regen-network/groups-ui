@@ -1,4 +1,4 @@
-// import { /* Long, */ toDuration } from '@osmonauts/helpers'
+// import { toDuration } from '@osmonauts/helpers'
 import dayjs from 'dayjs'
 import Long from 'long'
 

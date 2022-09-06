@@ -8,7 +8,7 @@ import {
 } from 'models'
 import { Group } from 'store/Group'
 import { Wallet } from 'store/Wallet'
-import { daysToSeconds } from 'util/date'
+import { daysToDuration, daysToSeconds, secondsToDuration } from 'util/date'
 import { throwError } from 'util/errors'
 
 import { groupToUIGroup } from './Group.transforms'
@@ -120,9 +120,9 @@ function createGroupWithPolicyMsg({
   const threshold = `${_threshold / 100}`
   let decisionPolicy
   const windows = {
-    minExecutionPeriod: '1',
-    votingPeriod: daysToSeconds(votingWindow),
-  } as never // TODO: the `MessageComposer.createGroupWithPolicy` type is wrong
+    minExecutionPeriod: secondsToDuration(1),
+    votingPeriod: daysToDuration(votingWindow),
+  }
 
   if (quorum) {
     decisionPolicy = {

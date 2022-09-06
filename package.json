@@ -8,6 +8,7 @@
     "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --fix --ignore-path ./.gitignore",
     "lint:format": "prettier  --loglevel warn --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" ",
     "lint": "yarn lint:format && yarn lint:fix ",
+    "test": "yarn vitest",
     "type-check": "tsc",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
@@ -21,7 +22,7 @@
     "@cosmjs/tendermint-rpc": "^0.28.11",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
-    "@haveanicedavid/cosmos-groups-ts": "^0.0.12",
+    "@haveanicedavid/cosmos-groups-ts": "^0.0.16",
     "@hookform/resolvers": "^2.9.7",
     "@keplr-wallet/cosmos": "^0.10.18",
     "@keplr-wallet/stores": "^0.10.18",
@@ -38,6 +39,7 @@
     "react-hook-form": "^7.34.2",
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.3.0",
+    "remeda": "^1.1.0",
     "valtio": "^1.6.4",
     "zod": "^3.18.0"
   },
@@ -82,7 +84,8 @@
     "vite-plugin-checker": "^0.5.0",
     "vite-plugin-fonts": "^0.6.0",
     "vite-plugin-svgr": "^2.2.1",
-    "vite-tsconfig-paths": "^3.5.0"
+    "vite-tsconfig-paths": "^3.5.0",
+    "vitest": "^0.23.1"
   },
   "pre-commit": "lint",
   "license": "MIT",
