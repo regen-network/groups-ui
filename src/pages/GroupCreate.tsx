@@ -2,20 +2,23 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSteps } from 'chakra-ui-steps'
 
-import {
-  type GroupFormValues,
-  type GroupPolicyFormValues,
-  defaultGroupFormValues,
-  defaultGroupPolicyFormValues,
-} from 'models'
+import { type GroupPolicyFormValues } from 'models'
 import { createGroupWithPolicy } from 'store/Group'
+import { Wallet } from 'store/Wallet'
 import { TOAST_DEFAULTS } from 'util/constants'
 import { toErrorWithMessage } from 'util/errors'
 
 import { AnimatePresence, Button, RouteLink, Stack, Text, useToast } from '@/atoms'
 import { HorizontalSlide } from '@/molecules/animations/HoritzontalSlide'
-import { GroupForm } from '@/organisms/GroupForm'
-import { GroupPolicyForm } from '@/organisms/GroupPolicyForm'
+import {
+  type GroupFormValues,
+  defaultGroupFormValues,
+  GroupForm,
+} from '@/organisms/GroupForm'
+import {
+  defaultGroupPolicyFormValues,
+  GroupPolicyForm,
+} from '@/organisms/GroupPolicyForm'
 import { StepperTemplate } from '@/templates/StepperTemplate'
 
 const steps = ['Create Group', 'Create Group Policy', 'Finished']
@@ -26,7 +29,10 @@ export default function GroupCreate() {
   const { activeStep, nextStep, prevStep /* reset, setStep */ } = useSteps({
     initialStep: 0,
   })
-  const [groupValues, setGroupValues] = useState<GroupFormValues>(defaultGroupFormValues)
+  const [groupValues, setGroupValues] = useState<GroupFormValues>({
+    ...defaultGroupFormValues,
+    admin: Wallet.account?.address ?? '',
+  })
   const [submitting, setSubmitting] = useState(false)
   const [priorStep, setPriorStep] = useState(0)
 

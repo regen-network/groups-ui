@@ -38,6 +38,7 @@ export {
   Select as NativeSelect, // `Select` being used by `chakra-react-select`
   Radio,
   RadioGroup,
+  Skeleton,
   Spacer,
   Spinner,
   Stack,

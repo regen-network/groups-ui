@@ -2,7 +2,7 @@ import Long from 'long'
 import { describe, expect, it } from 'vitest'
 
 import { ChainGroup, ChainGroupRes, UIGroup, UIGroupMetadata } from 'models'
-import { groupToUIGroup } from 'store/Group/Group.transforms'
+import { toUIGroup } from 'store/Group/Group.transforms'
 
 // TODO: move these to reusable stubs
 const date = new Date(2022, 1, 1)
@@ -44,10 +44,10 @@ const stubUIGroup: UIGroup = {
 
 describe('Group Transforms', () => {
   it('transform group res to UI group', () => {
-    expect(groupToUIGroup(stubGroupRes)).toEqual(stubUIGroup)
+    expect(toUIGroup(stubGroupRes)).toEqual(stubUIGroup)
   })
 
   it('works on normal chain group', () => {
-    expect(groupToUIGroup(stubGroup)).toEqual(stubUIGroup)
+    expect(toUIGroup(stubGroup)).toEqual(stubUIGroup)
   })
 })

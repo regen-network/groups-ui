@@ -2,7 +2,7 @@ import { type RadioProps, Box, forwardRef, Radio, useColorModeValue } from './Ch
 
 /** Cusom behavior and styles on a `<Radio /> element */
 export const RadioBox = forwardRef<
-  RadioProps & { selected: boolean; value: string; error?: boolean },
+  RadioProps & { selected: boolean; value: RadioProps['value']; error?: boolean },
   'div'
 >(({ selected, error, children, ...radioProps }, ref) => {
   const bgSelected = useColorModeValue('gray.100', 'gray.700')

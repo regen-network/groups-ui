@@ -1,8 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { defaultGroupFormValues } from 'models'
-
-import { GroupForm } from '../GroupForm'
+import { defaultGroupFormValues, GroupForm } from '../GroupForm'
 
 // TODO: need to mock wallet store for this to render
 export default {

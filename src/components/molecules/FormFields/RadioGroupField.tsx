@@ -1,12 +1,12 @@
 import { useController, useFormContext } from 'react-hook-form'
 
-import { RadioBox, RadioGroup, VStack } from '@/atoms'
+import { type RadioProps, RadioBox, RadioGroup, VStack } from '@/atoms'
 
 import { type FieldProps, FieldControl } from './FieldControl'
 
 type Option = {
   label: string
-  value: string
+  value: RadioProps['value']
 }
 
 type Props = FieldProps & {
@@ -32,6 +32,7 @@ export const RadioGroupField = ({ options, label, required, name }: Props) => {
         onChange={field.onChange}
         onBlur={field.onBlur}
         ref={field.ref}
+        value={field.value}
       >
         <VStack align="start">
           {options.map(({ value, label }, i) => (

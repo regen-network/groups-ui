@@ -5,7 +5,7 @@ function isChainGroupRes(group: ChainGroup | ChainGroupRes): group is ChainGroup
   return 'total_weight' in group
 }
 
-export function groupToUIGroup(group: ChainGroupRes | ChainGroup): UIGroup {
+export function toUIGroup(group: ChainGroupRes | ChainGroup): UIGroup {
   // TODO - add AJV validation and error handling / filtering for invalid metadata
   const baseObj = isChainGroupRes(group) ? toCamelKeys<ChainGroup>(group) : group
   let metadata: UIGroupMetadata

@@ -1,13 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { type FieldError, FormProvider, useFieldArray, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import {
-  type GroupFormValues,
-  type MemberFormValues,
-  defaultMemberFormValues,
-} from 'models'
+import { type MemberFormValues, defaultMemberFormValues } from 'models'
 import { Wallet } from 'store/Wallet'
 import { SPACING } from 'util/constants'
 import { truncate } from 'util/helpers'
@@ -39,6 +35,24 @@ import {
 
 import { DeleteIcon } from 'assets/tsx'
 
+/** @see @haveanicedavid/cosmos-groups-ts/types/proto/cosmos/group/v1/types */
+export type GroupFormValues = {
+  admin: 'policy' | string
+  description?: string
+  policyAsAdmin: 'true' | 'false'
+  forumLink?: string
+  members: MemberFormValues[]
+  name: string
+  otherMetadata?: string
+}
+
+export const defaultGroupFormValues: GroupFormValues = {
+  admin: '',
+  name: '',
+  members: [],
+  policyAsAdmin: 'true',
+}
+
 const resolver = zodResolver(
   z.object({
     admin: valid.admin,
@@ -47,7 +61,6 @@ const resolver = zodResolver(
     forumLink: valid.url.optional(),
     otherMetadata: valid.json.optional(),
     members: valid.members,
-    policyAsAdmin: z.boolean(),
   }),
 )
 
@@ -71,22 +84,9 @@ export const GroupForm = ({
   const {
     watch,
     setValue,
-    getValues,
+    // getValues,
     formState: { errors },
   } = form
-
-  const adminValue = watch('admin', 'policy')
-
-  useEffect(() => {
-    // watch admin value - if set to 'policy', set policyAsAdmin to true
-    if (adminValue === 'policy') {
-      setValue('policyAsAdmin', true)
-    } else {
-      if (getValues().policyAsAdmin === true) {
-        setValue('policyAsAdmin', false)
-      }
-    }
-  }, [adminValue, setValue, getValues])
 
   const watchFieldArray = watch('members')
   const controlledMemberFields = memberFields.map((field, index) => {
@@ -127,12 +127,12 @@ export const GroupForm = ({
           <Stack spacing={SPACING.formStack}>
             <RadioGroupField
               required
-              name="admin"
+              name="policyAsAdmin"
               label="Group admin"
               options={[
-                { value: 'policy', label: 'Group policy' },
+                { value: 'true', label: 'Group policy' },
                 {
-                  value: account.address,
+                  value: 'false',
                   label: `You (${truncate(account.address)})`,
                 },
               ]}

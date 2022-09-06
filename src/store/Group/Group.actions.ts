@@ -8,10 +8,10 @@ import {
 } from 'models'
 import { Group } from 'store/Group'
 import { Wallet } from 'store/Wallet'
-import { daysToDuration, daysToSeconds, secondsToDuration } from 'util/date'
+import { daysToDuration, secondsToDuration } from 'util/date'
 import { throwError } from 'util/errors'
 
-import { groupToUIGroup } from './Group.transforms'
+import { toUIGroup } from './Group.transforms'
 
 export async function createGroupWithPolicy(values: GroupWithPolicyFormValues) {
   const { account, signingClient, fee } = Wallet
@@ -42,7 +42,7 @@ export async function fetchGroupById(groupId?: string | Long): Promise<UIGroup> 
     const { info } = await Group.query.groupInfo({
       groupId: groupId instanceof Long ? groupId : Long.fromString(groupId),
     })
-    return groupToUIGroup(info)
+    return toUIGroup(info)
   } catch (error) {
     throwError(error)
   }
@@ -55,7 +55,7 @@ export async function fetchGroupsByMember(address?: string): Promise<UIGroup[]> 
     const { groups } = await Group.query.groupsByMember({
       address,
     })
-    return groups.map(groupToUIGroup)
+    return groups.map(toUIGroup)
   } catch (error) {
     throwError(error)
   }
@@ -68,7 +68,7 @@ export async function fetchGroupsByAdmin(admin?: string): Promise<UIGroup[]> {
     const { groups } = await Group.query.groupsByAdmin({
       admin,
     })
-    return groups.map(groupToUIGroup)
+    return groups.map(toUIGroup)
   } catch (error) {
     throwError(error)
   }
@@ -146,7 +146,7 @@ function createGroupWithPolicyMsg({
     admin,
     decisionPolicy,
     groupPolicyMetadata: '',
-    groupPolicyAsAdmin: policyAsAdmin,
+    groupPolicyAsAdmin: policyAsAdmin === 'true',
     groupMetadata: JSON.stringify({
       name,
       description,
