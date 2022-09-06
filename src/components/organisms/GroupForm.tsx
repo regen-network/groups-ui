@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import { type MemberFormValues, defaultMemberFormValues } from 'models'
-import { Wallet } from 'store/Wallet'
 import { SPACING } from 'util/constants'
 import { truncate } from 'util/helpers'
 import { valid } from 'util/validation/zod'
@@ -73,7 +72,6 @@ export const GroupForm = ({
   defaultValues: GroupFormValues
   onSubmit: (data: GroupFormValues) => void
 }) => {
-  const { account } = Wallet
   const [memberAddr, setMemberAddr] = useState('')
   const form = useForm<GroupFormValues>({ defaultValues, resolver })
   const {
@@ -84,7 +82,7 @@ export const GroupForm = ({
   const {
     watch,
     setValue,
-    // getValues,
+    getValues,
     formState: { errors },
   } = form
 
@@ -119,7 +117,6 @@ export const GroupForm = ({
     setMemberAddr('')
   }
 
-  if (!account) return null
   return (
     <FormCard>
       <FormProvider {...form}>
@@ -133,7 +130,7 @@ export const GroupForm = ({
                 { value: 'true', label: 'Group policy' },
                 {
                   value: 'false',
-                  label: `You (${truncate(account.address)})`,
+                  label: `You (${truncate(getValues().admin)})`,
                 },
               ]}
             />

@@ -1,4 +1,5 @@
 import { withRouter } from 'storybook-addon-react-router-v6'
+import { theme } from '@chakra-ui/react'
 
 export const decorators = [withRouter]
 
@@ -9,5 +10,8 @@ export const parameters = {
       color: /(background|color)$/i,
       date: /Date$/,
     },
+  },
+  chakra: {
+    theme,
   },
 }
