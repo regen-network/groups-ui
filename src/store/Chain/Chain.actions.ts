@@ -1,5 +1,6 @@
-import { enableKeplr } from 'store/Wallet'
 import { LOCALSTORAGE_CHAIN_KEY } from 'util/constants'
+
+import { enableKeplr } from 'store/Wallet'
 
 import { Chain } from './Chain.store'
 

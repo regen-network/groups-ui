@@ -1,6 +1,7 @@
 import { useSnapshot } from 'valtio'
 
 import { allChainsArray } from 'chains'
+
 import { Chain, setActiveChain } from 'store/Chain'
 
 import { SelectDropdown } from '@/molecules'

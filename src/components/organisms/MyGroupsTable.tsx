@@ -24,7 +24,6 @@ export const MyGroupsTable = ({
   memberGroups?: UIGroupWithMembers[]
   adminGroups?: UIGroupWithMembers[]
 }) => {
-  // const groups = useMemo
   const memberAndAdmin = adminGroups
     .filter((g) => memberGroups.some((mg) => mg.id === g.id))
     .map((g) => ({ ...g, type: ['member', 'admin'] }))
@@ -47,8 +46,6 @@ export const MyGroupsTable = ({
       </Center>
     )
   }
-
-  console.log('groups :>> ', groups)
 
   return (
     <TableContainer borderRadius="lg" borderWidth={2} shadow="md">

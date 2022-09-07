@@ -1,7 +1,9 @@
 import { Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
 
-import { Box, Flex, useColorModeValue } from '@/atoms'
+import { useColorModeValue } from 'hooks/chakra'
+
+import { Box, Flex } from '@/atoms'
 import { Loading } from '@/molecules'
 import { PopFade } from '@/molecules/animations'
 import { Navbar } from '@/organisms/Navbar'

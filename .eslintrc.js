@@ -77,9 +77,10 @@ const eslintConfig = {
           ['^react', '^@?\\w'],
           // absolute imports
           [
-            '^(util|chains|hooks|store|models)', // bug - this handles type imports
-            '^(util|chains|hooks|store|models)(/.*|$)',
+            '^(util|chains|models)', // bug - this handles type imports
+            '^(util|chains|models)(/.*|$)',
           ],
+          ['^(store|hooks)', '^(store|hooks)(/.*|$)'],
           // Pages, components
           ['^(pages)(/.*|$)', '^(@)(/.*|$)'],
           // Parent imports. Put `..` last.

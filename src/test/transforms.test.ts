@@ -2,6 +2,7 @@ import Long from 'long'
 import { describe, expect, it } from 'vitest'
 
 import { ChainGroup, ChainGroupRes, UIGroup, UIGroupMetadata } from 'models'
+
 import { toUIGroup } from 'store/Group/Group.transforms'
 
 // TODO: move these to reusable stubs

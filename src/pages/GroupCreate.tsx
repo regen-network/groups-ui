@@ -1,15 +1,16 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSteps } from 'chakra-ui-steps'
 
 import { type GroupPolicyFormValues } from 'models'
-import { createGroupWithPolicy } from 'store/Group'
-import { Wallet } from 'store/Wallet'
 import { TOAST_DEFAULTS } from 'util/constants'
 import { toErrorWithMessage } from 'util/errors'
 
-import { AnimatePresence, Button, RouteLink, Stack, Text, useToast } from '@/atoms'
-import { HorizontalSlide } from '@/molecules/animations/HoritzontalSlide'
+import { useSteps, useToast } from 'hooks/chakra'
+import { createGroupWithPolicy } from 'store/Group'
+import { Wallet } from 'store/Wallet'
+
+import { AnimatePresence, Button, RouteLink, Stack, Text } from '@/atoms'
+import { HorizontalSlide } from '@/molecules/animations'
 import {
   type GroupFormValues,
   defaultGroupFormValues,

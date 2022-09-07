@@ -10,6 +10,7 @@ import { valid } from 'util/validation/zod'
 
 import {
   Button,
+  DeleteButton,
   Flex,
   FormCard,
   FormControl,
@@ -192,13 +193,7 @@ export const GroupForm = ({
                                 value={member.weight}
                               />
                             </FormControl>
-                            <IconButton
-                              ml={2}
-                              aria-label="Delete"
-                              onClick={() => remove(i)}
-                            >
-                              <DeleteIcon />
-                            </IconButton>
+                            <DeleteButton ml={2} onClick={() => remove(i)} />
                           </Flex>
                         </Td>
                       </Tr>

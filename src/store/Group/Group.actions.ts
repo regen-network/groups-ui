@@ -6,10 +6,11 @@ import {
   type UIGroupWithMembers,
   cosmosgroups,
 } from 'models'
-import { Group } from 'store/Group'
-import { Wallet } from 'store/Wallet'
 import { daysToDuration, secondsToDuration } from 'util/date'
 import { throwError } from 'util/errors'
+
+import { Group } from 'store/Group'
+import { Wallet } from 'store/Wallet'
 
 import { toUIGroup } from './Group.transforms'
 

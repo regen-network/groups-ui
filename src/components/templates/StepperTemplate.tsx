@@ -1,7 +1,9 @@
 import { ReactNode } from 'react'
 import { Step, Steps } from 'chakra-ui-steps'
 
-import { Box, Container, Flex, Heading, useColorModeValue } from '@/atoms'
+import { useColorModeValue } from 'hooks/chakra'
+
+import { Box, Container, Flex, Heading } from '@/atoms'
 
 import { PageTemplate } from './PageTemplate'
 

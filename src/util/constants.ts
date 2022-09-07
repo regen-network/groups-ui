@@ -1,4 +1,4 @@
-import type { UseToastOptions } from '@/atoms'
+import type { UseToastOptions } from 'hooks/chakra'
 
 export const LOCALSTORAGE_CHAIN_KEY = 'active-chain'
 
