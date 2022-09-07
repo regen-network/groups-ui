@@ -20,7 +20,7 @@ export default function GroupDetails() {
     <PageTemplate>
       <Stack w="full" spacing={6}>
         <Flex justify="space-between">
-          <Heading>{group?.metadata.name || 'Loading...'}</Heading>
+          <Heading>{group?.metadata.name}</Heading>
           <Button>Edit Group</Button>
         </Flex>
         <Text>{group?.metadata.description}</Text>

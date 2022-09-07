@@ -1,7 +1,18 @@
 import type { ChainGroupMember } from 'models'
 import { formatDate } from 'util/date'
 
-import { Center, Heading, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@/atoms'
+import {
+  Center,
+  DeleteButton,
+  Heading,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from '@/atoms'
 
 export const GroupMembersTable = ({ members = [] }: { members: ChainGroupMember[] }) => {
   if (members.length === 0) {
@@ -30,7 +41,9 @@ export const GroupMembersTable = ({ members = [] }: { members: ChainGroupMember[
               <Td>{m.member.address}</Td>
               <Td>{m.member.weight}</Td>
               <Td>{formatDate(m.member.addedAt)}</Td>
-              <Td>X</Td>
+              <Td>
+                <DeleteButton />
+              </Td>
             </Tr>
           ))}
         </Tbody>

@@ -5,7 +5,8 @@ UI for Cosmos groups module
 # Local Setup
 
 1. `yarn install`
-2. `yarn dev` to run the repo
+2. copy over the config `cp .env.local.example .env.local`
+3. `yarn dev` to run the repo
 
 ## Install Cosmos-SDK
 
@@ -28,6 +29,7 @@ UI for Cosmos groups module
 1. `make local-clean` - wipe prior local data
 2. `make local-init` - set up local user wallets / accounts, seed funds
 3. `make local-start` - run local node
+4. `make bank-send` - send funds to the wallet address listed below
 
 ## Keplr
 
