@@ -12,7 +12,7 @@ UI for Cosmos groups module
 
 `git clone https://github.com/cosmos/cosmos-sdk` and within that directory:
 
-1. `git checkout release/v0.46.x` (or current 0.46 release branch)
+1. `git checkout v0.46.1` (or current tagged 0.46 release branch)
 2. `make build`
 
 ### For Darwin / MacOS:

@@ -23,7 +23,10 @@ export default function GroupDetails() {
           <Heading>{group?.metadata.name}</Heading>
           <Button>Edit Group</Button>
         </Flex>
-        <Text>{group?.metadata.description}</Text>
+        <Text fontSize="larger">{group?.metadata.description}</Text>
+        <Heading variant="label" size="sm">
+          Group Admin
+        </Heading>
         <GroupMembersTable members={members || []} />
       </Stack>
     </PageTemplate>

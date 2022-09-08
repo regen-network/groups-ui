@@ -5,13 +5,15 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "serve": "vite preview",
+    "gen:theme-typings": "chakra-cli tokens ./src/theme",
     "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --fix --ignore-path ./.gitignore",
     "lint:format": "prettier  --loglevel warn --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" ",
     "lint": "yarn lint:format && yarn lint:fix ",
     "test": "yarn vitest",
     "type-check": "tsc",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "postinstall": "yarn gen:theme-typings"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.3.1",
@@ -45,6 +47,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.19.0",
+    "@chakra-ui/cli": "^2.1.7",
     "@chakra-ui/storybook-addon": "^4.0.10",
     "@keplr-wallet/types": "^0.10.23",
     "@snek-at/storybook-addon-chakra-ui": "^1.1.0",
