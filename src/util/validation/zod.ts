@@ -45,9 +45,14 @@ const validPercent = z
 
 const validPositiveNumber = z.number().min(1, 'Must be a positive number')
 
+const validEmptyStr = z.literal('')
+const validBoolStr = z.union([z.literal('true'), z.literal('false')])
+
 export const valid = {
   admin: validAdmin,
   bech32: validBech32Address,
+  emptyStr: validEmptyStr,
+  boolStr: validBoolStr,
   name: validName,
   description: validDescription,
   groupOrAddress: validGroupOrAddress,

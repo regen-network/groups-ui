@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 
 import { useGroup, useGroupMembers, useGroupPolicies } from 'hooks/useQuery'
 
-import { Button, Flex, Heading, Stack, Text } from '@/atoms'
+import { Button, Flex, Heading, HStack, Stack, Text } from '@/atoms'
 import { GroupMembersTable } from '@/organisms/GroupMembersTable'
 import { PageTemplate } from '@/templates/PageTemplate'
 
@@ -15,6 +15,9 @@ export default function GroupDetails() {
   console.log('group :>> ', group)
   console.log('members :>> ', members)
   console.log('policies :>> ', policies)
+  const [policy] = policies?.group_policies ?? []
+
+  const policyIsAdmin = policy?.admin === policy?.address
 
   return (
     <PageTemplate>
@@ -24,9 +27,12 @@ export default function GroupDetails() {
           <Button>Edit Group</Button>
         </Flex>
         <Text fontSize="larger">{group?.metadata.description}</Text>
-        <Heading variant="label" size="sm">
-          Group Admin
-        </Heading>
+        <HStack spacing={3}>
+          <Heading variant="label" size="xs">
+            Group Admin
+          </Heading>
+          <Text>{policyIsAdmin ? 'Group Policy' : policy?.admin}</Text>
+        </HStack>
         <GroupMembersTable members={members || []} />
       </Stack>
     </PageTemplate>

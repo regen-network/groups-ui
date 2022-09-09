@@ -1,9 +1,9 @@
-import type { ChainGroupMember, ChainGroupPolicyRes } from 'models'
+import type { ChainGroupPolicyInfo } from 'models'
 import { formatDate } from 'util/date'
 
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@/atoms'
 
-export const GroupPolicyTable = ({ policies }: { policies: ChainGroupPolicyRes[] }) => {
+export const GroupPolicyTable = ({ policies }: { policies: ChainGroupPolicyInfo[] }) => {
   return (
     <TableContainer w="full" borderRadius="lg" borderWidth={2} shadow="md">
       <Table variant="striped" size="lg">

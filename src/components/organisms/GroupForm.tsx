@@ -57,9 +57,10 @@ const resolver = zodResolver(
   z.object({
     admin: valid.admin,
     name: valid.name,
-    description: valid.description.optional(),
-    forumLink: valid.url.optional(),
-    otherMetadata: valid.json.optional(),
+    policyAsAdmin: valid.boolStr,
+    description: valid.description.or(valid.emptyStr).optional(),
+    forumLink: valid.url.or(valid.emptyStr).optional(),
+    otherMetadata: valid.json.or(valid.emptyStr).optional(),
     members: valid.members,
   }),
 )
