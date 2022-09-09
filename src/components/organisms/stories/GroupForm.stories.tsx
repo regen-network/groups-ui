@@ -2,7 +2,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import { defaultGroupFormValues, GroupForm } from '../GroupForm'
 
-// TODO: need to mock wallet store for this to render
+// TODO: need to mock Wallet store for this to render
 export default {
   title: 'Organisms/Group Form',
   component: GroupForm,
