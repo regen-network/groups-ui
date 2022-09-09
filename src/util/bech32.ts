@@ -1,7 +1,7 @@
 import type { Bech32Config } from '@keplr-wallet/types'
 import bech32, { fromWords } from 'bech32'
 
-// extracted from @keplr-wallet - importing directly includes the entire library
+// extracted from @keplr-Wallet - importing directly includes the entire library
 // see: https://github.com/chainapsis/keplr-wallet/blob/master/packages/cosmos/src/bech32/index.ts
 // keplr uses an outdated version, so if we ever manually install, might need to set a resolution
 export class Bech32Address {
