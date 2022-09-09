@@ -8,10 +8,10 @@ import { Group } from 'store/Group'
 
 import { Wallet } from './Wallet.store'
 
-export async function resetKeplr() {
-  Wallet.keplrStatus = 'initialized'
-  enableKeplr()
-}
+// export async function resetKeplr() {
+//   Wallet.keplrStatus = 'initialized'
+//   enableKeplr()
+// }
 
 // TODO: reload on keplr account change
 export async function enableKeplr() {

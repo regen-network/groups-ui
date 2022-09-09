@@ -17,10 +17,7 @@ const eslintConfig = {
       version: 'detect',
     },
     'import/resolver': {
-      node: {
-        paths: ['src'],
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      },
+      typescript: {},
     },
   },
   env: {
@@ -29,13 +26,14 @@ const eslintConfig = {
     node: true,
   },
   extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
-    'plugin:valtio/recommended',
-    'plugin:jsx-a11y/recommended',
     'plugin:storybook/recommended',
+    'plugin:jsx-a11y/recommended',
+    'eslint:recommended',
+    'plugin:import/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:valtio/recommended',
+    'plugin:react/recommended',
     'plugin:prettier/recommended', // this should always be the last element in the array
   ],
   ignorePatterns: ['src/proto/**/*'],
@@ -57,6 +55,7 @@ const eslintConfig = {
     'jsx-a11y/accessible-emoji': 'off',
     'no-unused-vars': 'off',
     'import/no-duplicates': 'error',
+    'import/no-unresolved': 'error',
     '@typescript-eslint/no-unused-vars': ['warn'],
     '@typescript-eslint/explicit-function-return-type': 'off',
     'simple-import-sort/exports': 'error',

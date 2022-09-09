@@ -65,7 +65,7 @@ export const MyGroupsTable = ({
               <Td>
                 <Link to={`/${group.id}/details`}>{group.metadata.name}</Link>
               </Td>
-              <Td>{formatDate(group.createdAt)}</Td>
+              <Td>{formatDate(group.created_at)}</Td>
               <Td>{formatDate(group.metadata.updatedAt)}</Td>
               <Td>{group.members.length}</Td>
               <Td>

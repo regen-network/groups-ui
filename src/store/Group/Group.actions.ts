@@ -41,7 +41,7 @@ export async function fetchGroupById(groupId?: string | Long): Promise<UIGroup> 
   if (!groupId) throwError('groupId is required')
   try {
     const { info } = await Group.query.groupInfo({
-      groupId: groupId instanceof Long ? groupId : Long.fromString(groupId),
+      group_id: groupId instanceof Long ? groupId : Long.fromString(groupId),
     })
     return toUIGroup(info)
   } catch (error) {
@@ -55,8 +55,12 @@ export async function fetchGroupsByMember(address?: string): Promise<UIGroup[]> 
   try {
     const { groups } = await Group.query.groupsByMember({
       address,
+      // pagination: PageRequest.encode({key}).finish(),
     })
-    return groups.map(toUIGroup)
+    console.log('groups :>> ', groups)
+    const UIGroups = groups.map(toUIGroup)
+    console.log('UIGroups :>> ', UIGroups)
+    return UIGroups
   } catch (error) {
     throwError(error)
   }
@@ -80,8 +84,9 @@ export async function fetchGroupMembers(groupId?: string | Long) {
   if (!groupId) throwError('groupId is required')
   try {
     const { members } = await Group.query.groupMembers({
-      groupId: groupId instanceof Long ? groupId : Long.fromString(groupId),
+      group_id: groupId instanceof Long ? groupId : Long.fromString(groupId),
     })
+    console.log('members :>> ', members)
     return members
   } catch (error) {
     throwError(error)
@@ -93,7 +98,7 @@ export async function fetchGroupPolicies(groupId?: string | Long) {
   if (!groupId) throwError('groupId is required')
   try {
     const data = await Group.query.groupPoliciesByGroup({
-      groupId: groupId instanceof Long ? groupId : Long.fromString(groupId),
+      group_id: groupId instanceof Long ? groupId : Long.fromString(groupId),
     })
     return data
   } catch (error) {
@@ -119,23 +124,23 @@ function createGroupWithPolicyMsg({
     metadata: JSON.stringify(m.metadata),
   }))
   const threshold = `${_threshold / 100}`
-  let decisionPolicy
+  let decision_policy
   const windows = {
-    minExecutionPeriod: secondsToDuration(1),
-    votingPeriod: daysToDuration(votingWindow),
+    min_execution_period: secondsToDuration(1),
+    voting_period: daysToDuration(votingWindow),
   }
 
   if (quorum) {
-    decisionPolicy = {
-      typeUrl: '/cosmos.group.v1.PercentageDecisionPolicy',
+    decision_policy = {
+      type_url: '/cosmos.group.v1.PercentageDecisionPolicy',
       value: cosmosgroups.PercentageDecisionPolicy.encode({
         percentage: `${quorum / 100}`,
         windows,
       }).finish(),
     }
   } else {
-    decisionPolicy = {
-      typeUrl: '/cosmos.group.v1.ThresholdDecisionPolicy',
+    decision_policy = {
+      type_url: '/cosmos.group.v1.ThresholdDecisionPolicy',
       value: cosmosgroups.ThresholdDecisionPolicy.encode({
         threshold,
         windows,
@@ -145,10 +150,10 @@ function createGroupWithPolicyMsg({
 
   return cosmosgroups.MessageComposer.withTypeUrl.createGroupWithPolicy({
     admin,
-    decisionPolicy,
-    groupPolicyMetadata: '',
-    groupPolicyAsAdmin: policyAsAdmin === 'true',
-    groupMetadata: JSON.stringify({
+    decision_policy,
+    group_policy_metadata: '',
+    group_policy_as_admin: policyAsAdmin === 'true',
+    group_metadata: JSON.stringify({
       name,
       description,
       forumLink,

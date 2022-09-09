@@ -40,7 +40,7 @@ export const GroupMembersTable = ({ members = [] }: { members: ChainGroupMember[
             <Tr key={i + m.member.address}>
               <Td>{m.member.address}</Td>
               <Td>{m.member.weight}</Td>
-              <Td>{formatDate(m.member.addedAt)}</Td>
+              <Td>{formatDate(m.member.added_at)}</Td>
               <Td>
                 <DeleteButton />
               </Td>

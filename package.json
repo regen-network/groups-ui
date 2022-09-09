@@ -5,13 +5,15 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "serve": "vite preview",
+    "gen:theme-typings": "chakra-cli tokens ./src/theme",
     "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --fix --ignore-path ./.gitignore",
     "lint:format": "prettier  --loglevel warn --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" ",
     "lint": "yarn lint:format && yarn lint:fix ",
     "test": "yarn vitest",
     "type-check": "tsc",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "postinstall": "yarn gen:theme-typings"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.3.1",
@@ -22,7 +24,7 @@
     "@cosmjs/tendermint-rpc": "^0.28.11",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
-    "@haveanicedavid/cosmos-groups-ts": "^0.0.16",
+    "@haveanicedavid/cosmos-groups-ts": "^0.0.20",
     "@hookform/resolvers": "^2.9.7",
     "@keplr-wallet/cosmos": "^0.10.23",
     "@keplr-wallet/stores": "^0.10.23",
@@ -45,6 +47,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.19.0",
+    "@chakra-ui/cli": "^2.1.7",
     "@chakra-ui/storybook-addon": "^4.0.10",
     "@keplr-wallet/types": "^0.10.23",
     "@snek-at/storybook-addon-chakra-ui": "^1.1.0",
@@ -65,6 +68,7 @@
     "cz-conventional-changelog": "3.3.0",
     "eslint": "^8.22.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^3.5.1",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-prettier": "^4.2.1",

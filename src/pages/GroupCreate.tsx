@@ -48,6 +48,7 @@ export default function GroupCreate() {
   }
 
   function handleGroupSubmit(values: GroupFormValues) {
+    console.log('values :>> ', values)
     setGroupValues(values)
     nextStep()
   }
