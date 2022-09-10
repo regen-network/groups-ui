@@ -9,10 +9,10 @@ import {
 import { daysToDuration, secondsToDuration } from 'util/date'
 import { throwError } from 'util/errors'
 
-import { Group } from 'store/Group'
-import { Wallet } from 'store/Wallet'
+import { Group } from 'store/group'
+import { Wallet } from 'store/wallet'
 
-import { toUIGroup } from './Group.transforms'
+import { toUIGroup } from './group.transforms'
 
 export async function createGroupWithPolicy(values: GroupWithPolicyFormValues) {
   const { account, signingClient, fee } = Wallet

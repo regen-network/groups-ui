@@ -1,2 +1,2 @@
-export * from './Chain.actions'
-export * from './Chain.store'
+export * from './chain.actions'
+export * from './chain.store'

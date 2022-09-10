@@ -1,2 +1,2 @@
-export * from './Group.actions'
-export * from './Group.store'
+export * from './group.actions'
+export * from './group.store'

@@ -4,7 +4,7 @@ import { Routes } from 'Routes'
 import { useSnapshot } from 'valtio'
 
 import { useKeplr } from 'hooks/useKeplr'
-import { Wallet } from 'store/Wallet'
+import { Wallet } from 'store/wallet'
 
 import { EnableKeplr } from 'pages/EnableKeplr'
 import { InstallKeplr } from 'pages/InstallKeplr'

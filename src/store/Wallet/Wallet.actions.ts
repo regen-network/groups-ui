@@ -3,10 +3,10 @@ import { cosmos, getSigningCosmosClient } from '@haveanicedavid/cosmos-groups-ts
 
 import { handleError, throwError } from 'util/errors'
 
-import { Chain } from 'store/Chain'
-import { Group } from 'store/Group'
+import { Chain } from 'store/chain'
+import { Group } from 'store/group'
 
-import { Wallet } from './Wallet.store'
+import { Wallet } from './wallet.store'
 
 // export async function resetKeplr() {
 //   Wallet.keplrStatus = 'initialized'

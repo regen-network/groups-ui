@@ -1,5 +1,5 @@
 import { useAdminGroups, useMemberGroups } from 'hooks/useQuery'
-import { Wallet } from 'store/Wallet'
+import { Wallet } from 'store/wallet'
 
 import { Button, Flex, Heading, RouteLink } from '@/atoms'
 import { MyGroupsTable } from '@/organisms/MyGroupsTable'

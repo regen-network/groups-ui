@@ -6,7 +6,7 @@ import {
   fetchGroupPolicies,
   fetchGroupsWithMembersByAdmin,
   fetchGroupsWithMembersByMember,
-} from 'store/Group'
+} from 'store/group'
 
 export function useGroup(groupId?: string) {
   return useQuery(

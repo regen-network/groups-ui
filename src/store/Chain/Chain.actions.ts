@@ -1,8 +1,8 @@
 import { LOCALSTORAGE_CHAIN_KEY } from 'util/constants'
 
-import { enableKeplr } from 'store/Wallet'
+import { enableKeplr } from 'store/wallet'
 
-import { Chain } from './Chain.store'
+import { Chain } from './chain.store'
 
 export function setActiveChain(chainId: string) {
   const newChain = Chain.all.find((chain) => chain.chainId === chainId)
