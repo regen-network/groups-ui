@@ -1,8 +1,9 @@
 import type { ChainInfo } from '@keplr-wallet/types'
 import { proxy } from 'valtio'
 
-import { allChainsArray } from 'chains'
 import { LOCALSTORAGE_CHAIN_KEY } from 'util/constants'
+
+import { allChainsArray } from 'api/chains'
 
 import { enableKeplr } from './wallet.store'
 
