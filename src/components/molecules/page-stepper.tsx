@@ -1,18 +1,19 @@
 import { Step, Steps } from 'chakra-ui-steps'
 
-import { Box, Text } from '@/atoms'
+import { useColorModeValue } from 'hooks/chakra'
 
-export const PageStepper = (props: { activeStep: number; steps: string[] }) => {
-  const { activeStep, steps } = props
+import { Box, Container } from '@/atoms'
+
+export const PageStepper = (p: { activeStep: number; steps: string[] }) => {
   return (
-    <Box py={2.5} mt={0} w="full">
-      <Steps mt={0} activeStep={activeStep}>
-        {steps.map((step, i) => (
-          <Step key={`${step}-${i}`} label={step}>
-            <Text key={i}>{step}</Text>
-          </Step>
-        ))}
-      </Steps>
+    <Box py={5} bg={useColorModeValue('gray.100', 'gray.900')}>
+      <Container maxW="container.xl">
+        <Steps activeStep={p.activeStep}>
+          {p.steps.map((step, i) => (
+            <Step key={`${step}-${i}`} label={step} />
+          ))}
+        </Steps>
+      </Container>
     </Box>
   )
 }

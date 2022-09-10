@@ -3,12 +3,12 @@ import { Outlet } from 'react-router-dom'
 
 import { useColorModeValue } from 'hooks/chakra'
 
+import { PopFade } from '@/animations'
 import { Box, Flex } from '@/atoms'
 import { Loading } from '@/molecules'
-import { PopFade } from '@/molecules/animations'
 import { Navbar } from '@/organisms/navbar'
 
-export const AppTemplate = () => {
+export const AppLayout = () => {
   return (
     <PopFade>
       <Flex flexDir="column" maxH="100vh" height="full" overflowY="auto">

@@ -2,9 +2,17 @@ import { useParams } from 'react-router-dom'
 
 import { useGroup, useGroupMembers, useGroupPolicies } from 'hooks/use-query'
 
-import { Button, Flex, Heading, HStack, Stack, Text } from '@/atoms'
+import {
+  Button,
+  Flex,
+  Heading,
+  HStack,
+  PageContainer,
+  RouteLink,
+  Stack,
+  Text,
+} from '@/atoms'
 import { GroupMembersTable } from '@/organisms/group-members-table'
-import { PageTemplate } from '@/templates/page-template'
 
 export default function GroupDetails() {
   const { groupId } = useParams()
@@ -12,19 +20,18 @@ export default function GroupDetails() {
   const { data: members } = useGroupMembers(groupId)
   const { data: policies } = useGroupPolicies(groupId)
 
-  console.log('group :>> ', group)
-  console.log('members :>> ', members)
-  console.log('policies :>> ', policies)
   const [policy] = policies?.group_policies ?? []
 
   const policyIsAdmin = policy?.admin === policy?.address
 
   return (
-    <PageTemplate>
+    <PageContainer>
       <Stack w="full" spacing={6}>
         <Flex justify="space-between">
           <Heading>{group?.metadata.name}</Heading>
-          <Button>Edit Group</Button>
+          <Button as={RouteLink} to={`/${groupId}/edit`}>
+            Edit Group
+          </Button>
         </Flex>
         <Text fontSize="larger">{group?.metadata.description}</Text>
         <HStack spacing={3}>
@@ -35,6 +42,6 @@ export default function GroupDetails() {
         </HStack>
         <GroupMembersTable members={members || []} />
       </Stack>
-    </PageTemplate>
+    </PageContainer>
   )
 }

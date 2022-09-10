@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { motion } from '@/atoms'
+import { motion } from './framer-motion'
 
 export const PopFade = ({ children }: { children: ReactNode }) => {
   return (

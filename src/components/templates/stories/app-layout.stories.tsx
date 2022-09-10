@@ -1,16 +1,16 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { AppTemplate } from '../app-template'
+import { AppLayout } from '../app-layout'
 
 export default {
-  title: 'Templates/Alert',
-  component: AppTemplate,
+  title: 'Templates/App layout',
+  component: AppLayout,
   argTypes: {
     onBtnClick: { action: 'clicked' },
   },
-} as ComponentMeta<typeof AppTemplate>
+} as ComponentMeta<typeof AppLayout>
 
-const Template: ComponentStory<typeof AppTemplate> = () => <AppTemplate />
+const Template: ComponentStory<typeof AppLayout> = () => <AppLayout />
 
 export const Component = Template.bind({})
 Component.args = {}

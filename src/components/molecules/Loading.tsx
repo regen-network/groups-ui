@@ -2,7 +2,7 @@ import { Center, Spinner } from '@/atoms'
 
 export const Loading = () => {
   return (
-    <Center h="full">
+    <Center h="full" w="full">
       <Spinner />
     </Center>
   )
