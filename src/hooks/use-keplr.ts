@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { enableKeplr } from 'store/wallet'
+import { enableKeplr } from 'store'
 
 export function useKeplr() {
   useEffect(() => {

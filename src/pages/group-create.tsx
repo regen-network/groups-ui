@@ -5,9 +5,9 @@ import { type GroupPolicyFormValues } from 'models'
 import { TOAST_DEFAULTS } from 'util/constants'
 import { toErrorWithMessage } from 'util/errors'
 
+import { Wallet } from 'store'
+import { createGroupWithPolicy } from 'api/group.actions'
 import { useSteps, useToast } from 'hooks/chakra'
-import { createGroupWithPolicy } from 'store/group'
-import { Wallet } from 'store/wallet'
 
 import { AnimatePresence, Button, RouteLink, Stack, Text } from '@/atoms'
 import { HorizontalSlide } from '@/molecules/animations'

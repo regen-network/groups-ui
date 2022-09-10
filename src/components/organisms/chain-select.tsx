@@ -2,7 +2,7 @@ import { useSnapshot } from 'valtio'
 
 import { allChainsArray } from 'chains'
 
-import { Chain, setActiveChain } from 'store/chain'
+import { Chain, setActiveChain } from 'store'
 
 import { SelectDropdown } from '@/molecules'
 

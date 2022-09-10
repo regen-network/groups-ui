@@ -1,17 +1,25 @@
-import { coins } from '@cosmjs/amino'
+import { AccountData, coins } from '@cosmjs/proto-signing'
+import { SigningStargateClient, StdFee } from '@cosmjs/stargate'
 import { cosmos, getSigningCosmosClient } from '@haveanicedavid/cosmos-groups-ts'
+import { proxy } from 'valtio'
 
 import { handleError, throwError } from 'util/errors'
 
-import { Chain } from 'store/chain'
-import { Group } from 'store/group'
+import { Chain } from './chain.store'
+import { Group } from './group.store'
 
-import { Wallet } from './wallet.store'
+export type KeplrStatus = 'loading' | 'initialized' | 'rejected' | 'ready' | 'uninstalled'
 
-// export async function resetKeplr() {
-//   Wallet.keplrStatus = 'initialized'
-//   enableKeplr()
-// }
+type WalletStore = {
+  account?: AccountData
+  fee?: StdFee | 'auto' | number
+  keplrStatus: KeplrStatus
+  signingClient?: SigningStargateClient
+}
+
+export const Wallet = proxy<WalletStore>({
+  keplrStatus: 'loading',
+})
 
 // TODO: reload on keplr account change
 export async function enableKeplr() {

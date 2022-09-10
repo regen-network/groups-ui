@@ -2,11 +2,11 @@ import { useQuery } from '@tanstack/react-query'
 
 import {
   fetchGroupById,
-  fetchGroupMembers,
-  fetchGroupPolicies,
   fetchGroupsWithMembersByAdmin,
   fetchGroupsWithMembersByMember,
-} from 'store/group'
+} from 'api/group.actions'
+import { fetchGroupMembers } from 'api/member.actions'
+import { fetchGroupPolicies } from 'api/policy.actions'
 
 export function useGroup(groupId?: string) {
   return useQuery(

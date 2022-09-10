@@ -1,4 +1,4 @@
-import { enableKeplr } from 'store/wallet'
+import { enableKeplr } from 'store'
 
 import { ChainSelect } from '@/organisms/chain-select'
 import { AlertTemplate } from '@/templates/alert-template'

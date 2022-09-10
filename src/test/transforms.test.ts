@@ -1,9 +1,8 @@
+import { toUIGroup } from 'api/group.transforms'
 import Long from 'long'
 import { describe, expect, it } from 'vitest'
 
 import { ChainGroup, UIGroup, UIGroupMetadata } from 'models'
-
-import { toUIGroup } from 'store/group/group.transforms'
 
 // TODO: move these to reusable stubs
 const date = new Date(2022, 1, 1)
