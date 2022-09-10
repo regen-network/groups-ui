@@ -10,10 +10,10 @@ import type {
   Member as ChainMember,
 } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/types'
 
-import type { GroupFormValues } from '@/organisms/GroupForm'
-import type { GroupPolicyFormValues } from '@/organisms/GroupPolicyForm'
+import type { GroupFormValues } from '@/organisms/group-form'
+import type { GroupPolicyFormValues } from '@/organisms/group-policy-form'
 
-import type { MemberFormValues } from './Member.model'
+import type { MemberFormValues } from './member.model'
 
 // Exports
 

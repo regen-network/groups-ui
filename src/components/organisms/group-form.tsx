@@ -30,7 +30,7 @@ import {
   InputField,
   RadioGroupField,
   TextareaField,
-} from '@/molecules/FormFields'
+} from '@/molecules/form-fields'
 
 /** @see @haveanicedavid/cosmos-groups-ts/types/proto/cosmos/group/v1/types */
 export type GroupFormValues = {

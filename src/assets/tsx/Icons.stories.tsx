@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { GroupsIcon } from './GroupsIcon'
+import { GroupsIcon } from './groups-icon'
 
 export default {
   title: 'Icons/Groups Icon',

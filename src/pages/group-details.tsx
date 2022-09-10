@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom'
 
-import { useGroup, useGroupMembers, useGroupPolicies } from 'hooks/useQuery'
+import { useGroup, useGroupMembers, useGroupPolicies } from 'hooks/use-query'
 
 import { Button, Flex, Heading, HStack, Stack, Text } from '@/atoms'
-import { GroupMembersTable } from '@/organisms/GroupMembersTable'
-import { PageTemplate } from '@/templates/PageTemplate'
+import { GroupMembersTable } from '@/organisms/group-members-table'
+import { PageTemplate } from '@/templates/page-template'
 
 export default function GroupDetails() {
   const { groupId } = useParams()

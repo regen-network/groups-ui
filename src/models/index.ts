@@ -1,2 +1,2 @@
-export * from './Group.model'
-export * from './Member.model'
+export * from './group.model'
+export * from './member.model'

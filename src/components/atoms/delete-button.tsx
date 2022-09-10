@@ -1,4 +1,4 @@
-import { type IconButtonProps, IconButton } from './Chakra'
+import { type IconButtonProps, IconButton } from './chakra'
 
 import { DeleteIcon } from 'assets/tsx'
 

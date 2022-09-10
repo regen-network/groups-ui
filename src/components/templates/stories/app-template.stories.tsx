@@ -1,25 +1,19 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { AlertTemplate } from '../AlertTemplate'
+import { AppTemplate } from '../app-template'
 
 export default {
   title: 'Templates/Alert',
-  component: AlertTemplate,
+  component: AppTemplate,
   argTypes: {
     onBtnClick: { action: 'clicked' },
   },
-} as ComponentMeta<typeof AlertTemplate>
+} as ComponentMeta<typeof AppTemplate>
 
-const Template: ComponentStory<typeof AlertTemplate> = (args) => (
-  <AlertTemplate {...args} />
-)
+const Template: ComponentStory<typeof AppTemplate> = () => <AppTemplate />
 
 export const Component = Template.bind({})
-Component.args = {
-  btnText: 'ClickMe',
-  text: 'Alert text',
-  title: 'Alert title',
-}
+Component.args = {}
 
 export const ComponentWithChildren = Template.bind({})
 ComponentWithChildren.args = {

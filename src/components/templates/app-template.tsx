@@ -6,7 +6,7 @@ import { useColorModeValue } from 'hooks/chakra'
 import { Box, Flex } from '@/atoms'
 import { Loading } from '@/molecules'
 import { PopFade } from '@/molecules/animations'
-import { Navbar } from '@/organisms/Navbar'
+import { Navbar } from '@/organisms/navbar'
 
 export const AppTemplate = () => {
   return (

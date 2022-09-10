@@ -1,6 +1,6 @@
 import { useColorModeValue } from 'hooks/chakra'
 
-import { type RadioProps, Box, forwardRef, Radio } from './Chakra'
+import { type RadioProps, Box, forwardRef, Radio } from './chakra'
 
 /** Cusom behavior and styles on a `<Radio /> element */
 export const RadioBox = forwardRef<

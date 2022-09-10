@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { Navbar } from '../Navbar'
+import { Navbar } from '../navbar'
 
 export default {
   title: 'Organisms/Navbar',

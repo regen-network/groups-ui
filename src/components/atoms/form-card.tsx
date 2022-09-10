@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 
 import { useColorModeValue } from 'hooks/chakra'
 
-import { Box } from './Chakra'
+import { Box } from './chakra'
 
 export const FormCard = (p: { children: ReactNode }) => (
   <Box

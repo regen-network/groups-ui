@@ -1,5 +1,5 @@
 import { Center, Code } from '@/atoms'
-import { AlertTemplate } from '@/templates/AlertTemplate'
+import { AlertTemplate } from '@/templates/alert-template'
 
 export const ErrorFallback = ({
   error,

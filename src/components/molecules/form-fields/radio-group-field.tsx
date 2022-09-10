@@ -2,7 +2,7 @@ import { useController, useFormContext } from 'react-hook-form'
 
 import { type RadioProps, RadioBox, RadioGroup, VStack } from '@/atoms'
 
-import { type FieldProps, FieldControl } from './FieldControl'
+import { type FieldProps, FieldControl } from './field-control'
 
 type Option = {
   label: string

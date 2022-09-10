@@ -2,12 +2,12 @@ import { lazy } from 'react'
 import { Route, Routes as RRouterRoutes, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 
-import { AppTemplate } from '@/templates/AppTemplate'
+import { AppTemplate } from '@/templates/app-template'
 
-const Groups = lazy(() => import('./pages/Groups'))
-const GroupCreate = lazy(() => import('./pages/GroupCreate'))
-const GroupDetails = lazy(() => import('./pages/GroupDetails'))
-const NotFound = lazy(() => import('./pages/NotFound'))
+const Groups = lazy(() => import('./pages/groups'))
+const GroupCreate = lazy(() => import('./pages/group-create'))
+const GroupDetails = lazy(() => import('./pages/group-details'))
+const NotFound = lazy(() => import('./pages/not-found'))
 
 export const Routes = () => {
   const location = useLocation()

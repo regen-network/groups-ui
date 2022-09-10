@@ -1,2 +1,2 @@
-export * from './GroupsIcon'
-export * from './ReactIcons'
+export * from './groups-icon'
+export * from './react-icons'

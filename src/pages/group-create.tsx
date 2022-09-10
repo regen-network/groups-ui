@@ -15,12 +15,12 @@ import {
   type GroupFormValues,
   defaultGroupFormValues,
   GroupForm,
-} from '@/organisms/GroupForm'
+} from '@/organisms/group-form'
 import {
   defaultGroupPolicyFormValues,
   GroupPolicyForm,
-} from '@/organisms/GroupPolicyForm'
-import { StepperTemplate } from '@/templates/StepperTemplate'
+} from '@/organisms/group-policy-form'
+import { StepperTemplate } from '@/templates/stepper-template'
 
 const steps = ['Create Group', 'Create Group Policy', 'Finished']
 

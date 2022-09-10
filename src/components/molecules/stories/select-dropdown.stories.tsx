@@ -1,7 +1,7 @@
 // import { useState } from 'react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { SelectDropdown } from '../SelectDropdown'
+import { SelectDropdown } from '../select-dropdown'
 
 export default {
   title: 'Molecules/Select Dropdown',

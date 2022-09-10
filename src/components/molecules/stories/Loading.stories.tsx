@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { Loading } from '../Loading'
+import { Loading } from '../loading'
 
 export default {
   title: 'Molecules/Loading',

@@ -2,7 +2,7 @@ import { useColorMode, useColorModeValue } from 'hooks/chakra'
 
 import { Box, Button, Container, Flex, HStack, IconButton, RouteLink } from '@/atoms'
 
-import { ChainSelect } from './ChainSelect'
+import { ChainSelect } from './chain-select'
 
 import { GroupsIcon, MoonIcon, SunIcon } from 'assets/tsx'
 

@@ -1,2 +1,2 @@
-export * from './HoritzontalSlide'
-export * from './PopFade'
+export * from './horitzontal-slide'
+export * from './pop-fade'

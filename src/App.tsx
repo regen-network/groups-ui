@@ -1,15 +1,15 @@
 import { ErrorBoundary } from 'react-error-boundary'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Routes } from 'Routes'
+import { Routes } from 'routes'
 import { useSnapshot } from 'valtio'
 
-import { useKeplr } from 'hooks/useKeplr'
+import { useKeplr } from 'hooks/use-keplr'
 import { Wallet } from 'store/wallet'
 
-import { EnableKeplr } from 'pages/EnableKeplr'
-import { InstallKeplr } from 'pages/InstallKeplr'
-import { Loading } from '@/molecules/Loading'
-import { ErrorFallback } from '@/organisms/ErrorFallback'
+import { EnableKeplr } from 'pages/enable-keplr'
+import { InstallKeplr } from 'pages/install-keplr'
+import { Loading } from '@/molecules/loading'
+import { ErrorFallback } from '@/organisms/error-fallback'
 
 const queryClient = new QueryClient()
 

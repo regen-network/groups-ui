@@ -54,3 +54,4 @@ export {
   Tr,
   VStack,
 } from '@chakra-ui/react'
+export { type ActionMeta, type SingleValue, Select } from 'chakra-react-select'

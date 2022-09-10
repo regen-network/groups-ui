@@ -6,7 +6,7 @@ import { SPACING } from 'util/constants'
 import { valid } from 'util/validation/zod'
 
 import { Button, Flex, FormCard, IconButton, Stack, Text } from '@/atoms'
-import { NumberField } from '@/molecules/FormFields'
+import { NumberField } from '@/molecules/form-fields'
 
 import { BackIcon } from 'assets/tsx'
 

@@ -3,7 +3,7 @@ import { useController, useFormContext } from 'react-hook-form'
 
 import { type NumberInputProps, Flex, NumberInput } from '@/atoms'
 
-import { type FieldProps, FieldControl } from './FieldControl'
+import { type FieldProps, FieldControl } from './field-control'
 
 /** `NumberInput` with controls for react-hook-form */
 /** optionally accepts `children` which will be rendered beside the input */

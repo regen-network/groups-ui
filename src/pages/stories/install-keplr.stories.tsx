@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { InstallKeplr } from '../InstallKeplr'
+import { InstallKeplr } from '../install-keplr'
 
 export default {
   title: 'Pages/Install Keplr',

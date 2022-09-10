@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { ErrorFallback } from '../ErrorFallback'
+import { ErrorFallback } from '../error-fallback'
 
 export default {
   title: 'Organisms/ErrorFallback',

@@ -5,7 +5,7 @@ import { useColorModeValue } from 'hooks/chakra'
 
 import { Box, Container, Flex, Heading } from '@/atoms'
 
-import { PageTemplate } from './PageTemplate'
+import { PageTemplate } from './page-template'
 
 export const StepperTemplate = (p: {
   children: ReactNode
