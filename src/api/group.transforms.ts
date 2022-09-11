@@ -1,9 +1,9 @@
-import type { ChainGroup, UIGroup, UIGroupMetadata, UIGroupWithMembers } from 'models'
+import type { GroupInfo, UIGroup, UIGroupMetadata, UIGroupWithMembers } from 'types'
 
 import { fetchGroupMembers } from './member.actions'
 
 /** Parses chain-group and returns typed metadata */
-export function toUIGroup(group: ChainGroup): UIGroup {
+export function toUIGroup(group: GroupInfo): UIGroup {
   // TODO - add AJV validation and error handling / filtering for invalid metadata
   let metadata: UIGroupMetadata
   if (group.metadata) {

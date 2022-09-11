@@ -13,6 +13,7 @@ import {
   Text,
 } from '@/atoms'
 import { GroupMembersTable } from '@/organisms/group-members-table'
+import { GroupPolicyTable } from '@/organisms/group-policy-table'
 
 export default function GroupDetails() {
   const { groupId } = useParams()
@@ -21,8 +22,6 @@ export default function GroupDetails() {
   const { data: policies } = useGroupPolicies(groupId)
 
   const [policy] = policies ?? []
-  console.log('policy :>> ', policy)
-
   const policyIsAdmin = policy?.admin === policy?.address
 
   return (
@@ -41,6 +40,7 @@ export default function GroupDetails() {
           </Heading>
           <Text>{policyIsAdmin ? 'Group Policy' : policy?.admin}</Text>
         </HStack>
+        <GroupPolicyTable policies={policies || []} />
         <GroupMembersTable members={members || []} />
       </Stack>
     </PageContainer>

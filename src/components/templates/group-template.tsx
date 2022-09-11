@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
-import { type GroupWithPolicyFormValues, defaultGroupFormValues } from 'models'
+import type { GroupWithPolicyFormValues } from 'types'
+import { defaultGroupFormValues } from 'util/form.constants'
 
 import { Wallet } from 'store'
 import { useSteps } from 'hooks/chakra'
@@ -73,7 +74,7 @@ export default function GroupTemplate({
     switch (activeStep) {
       case 0:
         return (
-          <HorizontalSlide key="step-0" fromLeft={priorStep === 0}>
+          <HorizontalSlide key="step-0" fromRight={priorStep !== 0}>
             <GroupForm
               onSubmit={handleGroupSubmit}
               defaultValues={groupValues}

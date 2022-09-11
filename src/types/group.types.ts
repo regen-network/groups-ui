@@ -1,6 +1,6 @@
 import type {
-  GroupInfo as ChainGroup,
-  GroupMember as ChainGroupMember,
+  GroupInfo,
+  GroupMember,
 } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/types'
 
 import type { GroupFormValues } from '@/organisms/group-form'
@@ -8,20 +8,20 @@ import type { GroupPolicyFormValues } from '@/organisms/group-policy-form'
 
 // Exports
 
-export type { ChainGroup, GroupFormValues }
+export type { GroupFormValues, GroupInfo, GroupPolicyFormValues }
 
 export type GroupWithPolicyFormValues = GroupFormValues & GroupPolicyFormValues
 
-export type GroupWithMembers = ChainGroup & {
-  members: ChainGroupMember[]
+export type GroupWithMembers = GroupInfo & {
+  members: GroupMember[]
 }
 
-export type UIGroup = Omit<ChainGroup, 'metadata'> & {
+export type UIGroup = Omit<GroupInfo, 'metadata'> & {
   metadata: UIGroupMetadata
 }
 
 export type UIGroupWithMembers = UIGroup & {
-  members: ChainGroupMember[]
+  members: GroupMember[]
 }
 
 export type UIGroupMetadata = {
@@ -30,14 +30,4 @@ export type UIGroupMetadata = {
   forumLink?: string
   updatedAt: string
   other?: string
-}
-
-export const defaultGroupFormValues: GroupFormValues = {
-  admin: '',
-  name: '',
-  members: [],
-  policyAsAdmin: 'true',
-  description: '',
-  forumLink: '',
-  otherMetadata: '',
 }

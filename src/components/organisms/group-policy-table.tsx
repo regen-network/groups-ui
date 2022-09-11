@@ -1,9 +1,11 @@
-import type { ChainGroupPolicyInfo } from 'models'
+import type { UIGroupPolicyInfo } from 'types'
 import { formatDate } from 'util/date'
+
+import { getQuorum, getThreshold } from 'api/policy.helpers'
 
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@/atoms'
 
-export const GroupPolicyTable = ({ policies }: { policies: ChainGroupPolicyInfo[] }) => {
+export const GroupPolicyTable = ({ policies }: { policies: UIGroupPolicyInfo[] }) => {
   return (
     <TableContainer w="full" borderRadius="lg" borderWidth={2} shadow="md">
       <Table variant="striped" size="lg">
@@ -20,8 +22,9 @@ export const GroupPolicyTable = ({ policies }: { policies: ChainGroupPolicyInfo[
           {policies.map((p, i) => (
             <Tr key={i + p.address}>
               <Td>{formatDate(p.created_at)}</Td>
-              <Td>{'todo'}</Td>
-              <Td>todo2</Td>
+              <Td>{p.decision_policy.windows.voting_period}</Td>
+              <Td>{getThreshold(p)}</Td>
+              <Td>{getQuorum(p)}</Td>
               <Td>{p.admin}</Td>
             </Tr>
           ))}

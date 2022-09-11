@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom'
 
-import { GroupWithPolicyFormValues, isPercentagePolicy, isThresholdPolicy } from 'models'
-import { TOAST_DEFAULTS } from 'util/constants'
+import type { GroupWithPolicyFormValues } from 'types'
 import { toErrorWithMessage } from 'util/errors'
+import { TOAST_DEFAULTS } from 'util/style.constants'
 
-import { createGroupWithPolicy } from 'api/group.actions'
+import { isPercentagePolicy, isThresholdPolicy } from 'api/policy.helpers'
 import { useToast } from 'hooks/chakra'
 import { useGroup, useGroupMembers, useGroupPolicies } from 'hooks/use-query'
 

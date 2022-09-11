@@ -2,7 +2,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { SPACING } from 'util/constants'
+import { SPACING } from 'util/style.constants'
 import { valid } from 'util/validation/zod'
 
 import { Button, Flex, FormCard, IconButton, Stack, Text } from '@/atoms'
@@ -14,11 +14,6 @@ export type GroupPolicyFormValues = {
   votingWindow: number
   threshold: number
   quorum?: number
-}
-
-export const defaultGroupPolicyFormValues: GroupPolicyFormValues = {
-  votingWindow: 0,
-  threshold: 51,
 }
 
 const resolver = zodResolver(

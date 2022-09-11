@@ -11,7 +11,6 @@ export async function fetchGroupMembers(groupId?: string | Long) {
     const { members } = await Group.query.groupMembers({
       group_id: groupId instanceof Long ? groupId : Long.fromString(groupId),
     })
-    console.log('members :>> ', members)
     return members
   } catch (error) {
     throwError(error)

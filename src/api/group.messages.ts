@@ -1,5 +1,7 @@
-import { cosmosgroups, GroupWithPolicyFormValues } from 'models'
+import type { GroupWithPolicyFormValues } from 'types'
 import { daysToDuration, secondsToDuration } from 'util/date'
+
+import { cosmosgroups } from './cosmosgroups'
 
 export function createGroupWithPolicyMsg({
   admin,

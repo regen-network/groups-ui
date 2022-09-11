@@ -74,12 +74,9 @@ const eslintConfig = {
           // Packages. `react` related packages come first.
           // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
           ['^react', '^@?\\w'],
-          // absolute imports
-          [
-            '^(util|models)', // bug - this handles type imports
-            '^(util|models)(/.*|$)',
-          ],
-          ['^(api|store|hooks)', '^(api|store|hooks)(/.*|$)'],
+          // absolute imports - types/util, then data-related
+          ['^(types)', '^(util)(/.*|$)'],
+          ['^(api|store|hooks)', '^(api|store|hooks)(/.*|$)'], // (repeating is due to a bug importing types)
           // Pages, components
           ['^(pages)(/.*|$)', '^(@)(/.*|$)'],
           // Parent imports. Put `..` last.

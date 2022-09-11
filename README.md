@@ -70,6 +70,10 @@ Some relevant notes / Highlights:
 - Outer padding and margin should be set by parents components - ie, an `Atom` should not have `margin` set on the outer element - instead, it would be set by its parent component
 - `Atoms` and `Molecules` have `index.ts` barrel files for convenience (ie `import { Box, Button } from '@/atoms'`), but `Organisms`, `Templates`, and `Pages` do not. This is to avoid circular imports which can impact code splitting
 
+## Types
+
+TODO: Explain telescope / cosmos package and UI prefix vs non-prefixed
+
 ## Library Resources
 
 - [Chakra](https://chakra-ui.com/) - UI Components

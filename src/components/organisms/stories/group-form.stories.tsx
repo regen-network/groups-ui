@@ -1,6 +1,6 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import type { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { defaultGroupFormValues } from 'models'
+import { defaultGroupFormValues } from 'util/form.constants'
 
 import { GroupForm } from '../group-form'
 

@@ -1,11 +1,11 @@
 import type { ChainInfo } from '@keplr-wallet/types'
 import { proxy } from 'valtio'
 
-import { LOCALSTORAGE_CHAIN_KEY } from 'util/constants'
-
 import { allChainsArray } from 'api/chains'
 
 import { enableKeplr } from './wallet.store'
+
+export const LOCALSTORAGE_CHAIN_KEY = 'active-chain'
 
 const savedChain = localStorage.getItem(LOCALSTORAGE_CHAIN_KEY)
 const defaultChain = allChainsArray.find((c) => c.chainId === 'cosmoswithgroups')

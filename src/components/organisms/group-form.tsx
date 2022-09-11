@@ -3,9 +3,10 @@ import { type FieldError, FormProvider, useFieldArray, useForm } from 'react-hoo
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { type MemberFormValues, defaultMemberFormValues } from 'models'
-import { SPACING } from 'util/constants'
+import type { MemberFormValues } from 'types'
+import { defaultMemberFormValues } from 'util/form.constants'
 import { truncate } from 'util/helpers'
+import { SPACING } from 'util/style.constants'
 import { valid } from 'util/validation/zod'
 
 import {

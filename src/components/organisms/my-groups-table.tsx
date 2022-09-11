@@ -1,5 +1,5 @@
-// import type { UIGroupWithMembers } from 'models'
-import { type UIGroupWithMembers } from 'models'
+// import type { UIGroupWithMembers } from 'types'
+import { type UIGroupWithMembers } from 'types'
 import { formatDate } from 'util/date'
 
 import {

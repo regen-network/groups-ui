@@ -1,7 +1,7 @@
 import Long from 'long'
 import { describe, expect, it } from 'vitest'
 
-import { ChainGroup, UIGroup, UIGroupMetadata } from 'models'
+import { GroupInfo, UIGroup, UIGroupMetadata } from 'types'
 
 import { toUIGroup } from 'api/group.transforms'
 
@@ -16,7 +16,7 @@ const metadata: UIGroupMetadata = {
   forumLink: 'https://forum.com',
 }
 
-const stubGroup: ChainGroup = {
+const stubGroup: GroupInfo = {
   admin: 'cosmos106ljn6kds9vegaux0w4jnend97fdm50yec59vq',
   created_at: date,
   id: Long.fromString('st123r'),

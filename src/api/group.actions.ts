@@ -1,6 +1,6 @@
 import Long from 'long'
 
-import { type GroupWithPolicyFormValues, type UIGroup } from 'models'
+import { type GroupWithPolicyFormValues, type UIGroup } from 'types'
 import { throwError } from 'util/errors'
 
 import { Group, Wallet } from 'store'
@@ -51,9 +51,7 @@ export async function fetchGroupsByMember(address?: string): Promise<UIGroup[]> 
       address,
       // pagination: PageRequest.encode({key}).finish(),
     })
-    console.log('groups :>> ', groups)
     const UIGroups = groups.map(toUIGroup)
-    console.log('UIGroups :>> ', UIGroups)
     return UIGroups
   } catch (error) {
     throwError(error)

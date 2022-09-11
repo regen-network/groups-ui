@@ -4,7 +4,7 @@ import { throwError } from 'util/errors'
 
 import { Group } from 'store'
 
-import { toUIGroupPolicy } from './policy.transforms'
+import { toUIGroupPolicy } from './policy.helpers'
 
 export async function fetchGroupPolicies(groupId?: string | Long) {
   if (!Group.query) throwError('Wallet not initialized')
