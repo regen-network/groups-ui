@@ -1,5 +1,6 @@
 export {
   type UseToastOptions,
+  useBoolean,
   useColorMode,
   useColorModeValue,
   useTheme,

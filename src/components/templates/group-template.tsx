@@ -47,18 +47,7 @@ export default function GroupTemplate({
   const [submitting, setSubmitting] = useState(false)
   const [priorStep, setPriorStep] = useState(0)
 
-  const {
-    admin,
-    members,
-    name,
-    policyAsAdmin,
-    threshold,
-    votingWindow,
-    description,
-    forumLink,
-    otherMetadata,
-    quorum,
-  } = defaultFormValues
+  const { threshold, votingWindow, quorum } = defaultFormValues
 
   function handleGroupSubmit(values: GroupFormValues) {
     setGroupValues(values)
@@ -87,15 +76,7 @@ export default function GroupTemplate({
           <HorizontalSlide key="step-0" fromLeft={priorStep === 0}>
             <GroupForm
               onSubmit={handleGroupSubmit}
-              defaultValues={{
-                admin,
-                members,
-                name,
-                policyAsAdmin,
-                description,
-                forumLink,
-                otherMetadata,
-              }}
+              defaultValues={groupValues}
               btnText="Next"
             />
           </HorizontalSlide>

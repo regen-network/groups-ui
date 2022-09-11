@@ -17,7 +17,7 @@ export default defineConfig({
       google: {
         families: [
           { name: 'Lato', styles: 'wght@100;400;700' },
-          { name: 'Mulish', styles: 'wght@800;900' },
+          { name: 'Mulish', styles: 'wght@700;800;900' },
         ],
       },
     }),
