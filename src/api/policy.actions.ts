@@ -4,14 +4,16 @@ import { throwError } from 'util/errors'
 
 import { Group } from 'store'
 
+import { toUIGroupPolicy } from './policy.transforms'
+
 export async function fetchGroupPolicies(groupId?: string | Long) {
   if (!Group.query) throwError('Wallet not initialized')
   if (!groupId) throwError('groupId is required')
   try {
-    const data = await Group.query.groupPoliciesByGroup({
+    const { group_policies } = await Group.query.groupPoliciesByGroup({
       group_id: groupId instanceof Long ? groupId : Long.fromString(groupId),
     })
-    return data
+    return group_policies.map(toUIGroupPolicy)
   } catch (error) {
     throwError(error)
   }

@@ -1,4 +1,4 @@
-import { GroupWithPolicyFormValues } from 'models'
+import { type GroupWithPolicyFormValues, defaultGroupFormValues } from 'models'
 import { TOAST_DEFAULTS } from 'util/constants'
 import { toErrorWithMessage } from 'util/errors'
 
@@ -6,7 +6,6 @@ import { Wallet } from 'store'
 import { createGroupWithPolicy } from 'api/group.actions'
 import { useToast } from 'hooks/chakra'
 
-import { defaultGroupFormValues } from '@/organisms/group-form'
 import { defaultGroupPolicyFormValues } from '@/organisms/group-policy-form'
 import GroupTemplate from '@/templates/group-template'
 

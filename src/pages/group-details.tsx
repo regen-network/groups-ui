@@ -20,7 +20,8 @@ export default function GroupDetails() {
   const { data: members } = useGroupMembers(groupId)
   const { data: policies } = useGroupPolicies(groupId)
 
-  const [policy] = policies?.group_policies ?? []
+  const [policy] = policies ?? []
+  console.log('policy :>> ', policy)
 
   const policyIsAdmin = policy?.admin === policy?.address
 

@@ -1,35 +1,14 @@
-import { cosmos } from '@haveanicedavid/cosmos-groups-ts'
-// import type {
-//   GroupInfoRes as ChainGroupRes,
-//   GroupPolicyInfoRes as ChainGroupPolicyRes,
-// } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/response.lcd'
 import type {
   GroupInfo as ChainGroup,
   GroupMember as ChainGroupMember,
-  GroupPolicyInfo as ChainGroupPolicyInfo,
-  Member as ChainMember,
 } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/types'
 
 import type { GroupFormValues } from '@/organisms/group-form'
 import type { GroupPolicyFormValues } from '@/organisms/group-policy-form'
 
-import type { MemberFormValues } from './member.model'
-
 // Exports
 
-export const cosmosgroups = cosmos.group.v1
-
-export type {
-  ChainGroup,
-  ChainGroupMember,
-  // ChainGroupPolicyRes,
-  // ChainGroupRes,
-  ChainGroupPolicyInfo,
-  ChainMember,
-  GroupFormValues,
-  GroupPolicyFormValues,
-  MemberFormValues,
-}
+export type { ChainGroup, GroupFormValues }
 
 export type GroupWithPolicyFormValues = GroupFormValues & GroupPolicyFormValues
 
@@ -51,4 +30,14 @@ export type UIGroupMetadata = {
   forumLink?: string
   updatedAt: string
   other?: string
+}
+
+export const defaultGroupFormValues: GroupFormValues = {
+  admin: '',
+  name: '',
+  members: [],
+  policyAsAdmin: 'true',
+  description: '',
+  forumLink: '',
+  otherMetadata: '',
 }

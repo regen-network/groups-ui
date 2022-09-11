@@ -1,4 +1,6 @@
-export type { MemberRequest } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/types'
+import type { GroupMember as ChainGroupMember } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/types'
+
+export type { ChainGroupMember }
 
 export type MemberFormValues = {
   address: string

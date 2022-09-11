@@ -6,7 +6,7 @@ import { Box } from './chakra'
 
 export const FormCard = (p: { children: ReactNode }) => (
   <Box
-    w={['100%', 560]}
+    w={['100%', 570]}
     px={4}
     py={8}
     borderWidth="1px"

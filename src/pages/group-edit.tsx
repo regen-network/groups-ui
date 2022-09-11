@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 
-import { GroupWithPolicyFormValues } from 'models'
+import { GroupWithPolicyFormValues, isPercentagePolicy, isThresholdPolicy } from 'models'
 import { TOAST_DEFAULTS } from 'util/constants'
 import { toErrorWithMessage } from 'util/errors'
 
@@ -18,19 +18,34 @@ export default function GroupEdit() {
   const { data: members } = useGroupMembers(groupId)
   const { data: policies } = useGroupPolicies(groupId)
 
-  const [policy] = policies?.group_policies ?? []
+  const [policy] = policies ?? []
+
+  if (!group || !members || !policy) return <Loading />
+
+  const initialValues: GroupWithPolicyFormValues = {
+    admin: policy.admin,
+    members: members.map(({ member }) => ({
+      address: member.address,
+      weight: +member.weight,
+      metadata: member.metadata,
+    })),
+    name: group.metadata.name,
+    policyAsAdmin: policy.address === group.admin ? 'true' : 'false',
+    threshold: isThresholdPolicy(policy.decision_policy)
+      ? parseInt(policy.decision_policy.threshold)
+      : 0,
+    votingWindow: 2, // TODO
+    description: group.metadata.description,
+    forumLink: group.metadata.forumLink,
+    otherMetadata: group.metadata.other,
+    quorum: isPercentagePolicy(policy.decision_policy)
+      ? parseInt(policy.decision_policy.percentage)
+      : undefined,
+  }
 
   async function handleSave(values: GroupWithPolicyFormValues) {
     try {
-      const { transactionHash } = await createGroupWithPolicy(values)
-      const time = 3000
-      toast({
-        ...TOAST_DEFAULTS,
-        title: 'Group created',
-        description: 'Transaction hash: ' + transactionHash,
-        status: 'success',
-        duration: time,
-      })
+      // TODO: compare initialValues with values, create messages for updates
     } catch (err) {
       reportError(err)
       const msg = toErrorWithMessage(err).message
@@ -44,26 +59,9 @@ export default function GroupEdit() {
     }
   }
 
-  if (!group || !members || !policy) return <Loading />
-
   return (
     <GroupTemplate
-      defaultFormValues={{
-        admin: policy.admin,
-        members: members.map(({ member }) => ({
-          address: member.address,
-          weight: +member.weight,
-          metadata: member.metadata,
-        })),
-        name: group.metadata.name,
-        policyAsAdmin: policy.address === group.admin ? 'true' : 'false',
-        threshold: 51, // TODO decision_policy not typed correctly
-        votingWindow: 2, // TODO
-        description: group.metadata.description,
-        forumLink: group.metadata.forumLink,
-        otherMetadata: group.metadata.other,
-        // quorum: // TODO
-      }}
+      defaultFormValues={initialValues}
       text={{
         submitBtn: 'Redeploy',
         finished: 'You have successfully edited your group.',

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { type GroupWithPolicyFormValues } from 'models'
+import { type GroupWithPolicyFormValues, defaultGroupFormValues } from 'models'
 
 import { Wallet } from 'store'
 import { useSteps } from 'hooks/chakra'
@@ -8,11 +8,7 @@ import { useSteps } from 'hooks/chakra'
 import { AnimatePresence, HorizontalSlide } from '@/animations'
 import { Button, Flex, Heading, PageContainer, RouteLink, Stack, Text } from '@/atoms'
 import { PageStepper } from '@/molecules'
-import {
-  type GroupFormValues,
-  defaultGroupFormValues,
-  GroupForm,
-} from '@/organisms/group-form'
+import { type GroupFormValues, GroupForm } from '@/organisms/group-form'
 import {
   type GroupPolicyFormValues,
   GroupPolicyForm,

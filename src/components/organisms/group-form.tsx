@@ -14,6 +14,7 @@ import {
   Flex,
   FormCard,
   FormControl,
+  HStack,
   NumberInput,
   Stack,
   Table,
@@ -41,16 +42,6 @@ export type GroupFormValues = {
   members: MemberFormValues[]
   name: string
   otherMetadata?: string
-}
-
-export const defaultGroupFormValues: GroupFormValues = {
-  admin: '',
-  name: '',
-  members: [],
-  policyAsAdmin: 'true',
-  description: '',
-  forumLink: '',
-  otherMetadata: '',
 }
 
 const resolver = zodResolver(
@@ -179,8 +170,8 @@ export const GroupForm = ({
                     {controlledMemberFields.map((member, i) => (
                       <Tr key={i + member.address}>
                         <Td>{member.address}</Td>
-                        <Td pr={0}>
-                          <Flex>
+                        <Td>
+                          <HStack spacing={3}>
                             <FormControl isInvalid={!!errors.members?.[i]?.weight}>
                               <NumberInput
                                 type="number"
@@ -194,8 +185,8 @@ export const GroupForm = ({
                                 value={member.weight}
                               />
                             </FormControl>
-                            <DeleteButton ml={2} onClick={() => remove(i)} />
-                          </Flex>
+                            <DeleteButton onClick={() => remove(i)} />
+                          </HStack>
                         </Td>
                       </Tr>
                     ))}
