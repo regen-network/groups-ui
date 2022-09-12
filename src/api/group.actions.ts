@@ -12,7 +12,13 @@ export async function createGroupWithPolicy(values: GroupWithPolicyFormValues) {
   try {
     const msg = createGroupWithPolicyMsg(values)
     const data = await signAndBroadcast([msg])
-    return data
+    let groupId
+    if (data.rawLog) {
+      const [raw] = JSON.parse(data.rawLog)
+      const idRaw = raw.events[0].attributes[0].value
+      groupId = JSON.parse(idRaw)
+    }
+    return { ...data, groupId }
   } catch (error) {
     throwError(error)
   }

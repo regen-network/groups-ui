@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { type GroupWithPolicyFormValues } from 'types'
 import { toErrorWithMessage } from 'util/errors'
 import { defaultGroupFormValues, defaultGroupPolicyFormValues } from 'util/form.constants'
@@ -11,9 +13,11 @@ import GroupTemplate from '@/templates/group-template'
 
 export default function GroupCreate() {
   const toast = useToast()
+  const [newGroupId, setNewGroupId] = useState<string>()
   async function handleCreate(values: GroupWithPolicyFormValues) {
     try {
-      const { transactionHash } = await createGroupWithPolicy(values)
+      const { transactionHash, groupId } = await createGroupWithPolicy(values)
+      setNewGroupId(groupId?.toString())
       const time = 3000
       toast({
         ...TOAST_DEFAULTS,
@@ -39,6 +43,7 @@ export default function GroupCreate() {
 
   return (
     <GroupTemplate
+      linkToGroupId={newGroupId}
       initialGroupFormValues={{
         ...defaultGroupFormValues,
         admin: Wallet.account?.address,

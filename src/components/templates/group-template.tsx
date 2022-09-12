@@ -13,10 +13,10 @@ import {
   GroupPolicyForm,
 } from '@/organisms/group-policy-form'
 
-const Finished = ({ text }: { text: string }) => (
+const Finished = ({ text, linkTo }: { text: string; linkTo: string }) => (
   <Stack spacing={8}>
     <Text>{text}</Text>
-    <Button as={RouteLink} to="/" alignSelf="center">
+    <Button as={RouteLink} to={linkTo} alignSelf="center">
       View your group page
     </Button>
   </Stack>
@@ -25,12 +25,15 @@ const Finished = ({ text }: { text: string }) => (
 export default function GroupTemplate({
   initialGroupFormValues,
   initialPolicyFormValues,
+  linkToGroupId,
   submit,
   steps,
   text,
 }: {
   initialGroupFormValues: GroupFormValues
   initialPolicyFormValues: GroupPolicyFormValues
+  /** ID of group, used for redirect link */
+  linkToGroupId?: string
   submit: (values: GroupWithPolicyFormValues) => Promise<void>
   steps: string[]
   text: {
@@ -94,7 +97,10 @@ export default function GroupTemplate({
       case 2:
         return (
           <HorizontalSlide key="step-2">
-            <Finished text={text.finished} />
+            <Finished
+              text={text.finished}
+              linkTo={linkToGroupId ? `/${linkToGroupId}/details` : '/'}
+            />
           </HorizontalSlide>
         )
       default:
