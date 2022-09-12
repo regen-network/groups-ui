@@ -1,20 +1,23 @@
-import type { GroupWithPolicyFormValues } from 'types'
+import Long from 'long'
+
+import type { GroupWithPolicyFormValues, UIGroupMetadata } from 'types'
 import { daysToDuration, secondsToDuration } from 'util/date'
 
 import { cosmosgroups } from './cosmosgroups'
 
-export function createGroupWithPolicyMsg({
-  admin,
-  description,
-  forumLink,
-  members,
-  name,
-  otherMetadata,
-  policyAsAdmin,
-  quorum,
-  threshold: _threshold,
-  votingWindow,
-}: GroupWithPolicyFormValues) {
+export function createGroupWithPolicyMsg(values: GroupWithPolicyFormValues) {
+  const {
+    admin,
+    description,
+    forumLink,
+    members,
+    name,
+    otherMetadata,
+    policyAsAdmin,
+    quorum,
+    threshold: _threshold,
+    votingWindow,
+  } = values
   const groupMembers = members.map((m) => ({
     address: m.address,
     weight: m.weight.toString(),
@@ -58,5 +61,21 @@ export function createGroupWithPolicyMsg({
       other: otherMetadata,
     }),
     members: groupMembers,
+  })
+}
+
+export function updateGroupMetadataMsg({
+  admin,
+  metadata,
+  groupId,
+}: {
+  admin: string
+  groupId: string
+  metadata: UIGroupMetadata
+}) {
+  return cosmosgroups.MessageComposer.withTypeUrl.updateGroupMetadata({
+    admin,
+    group_id: Long.fromString(groupId),
+    metadata: JSON.stringify(metadata),
   })
 }

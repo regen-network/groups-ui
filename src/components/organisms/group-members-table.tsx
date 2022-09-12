@@ -22,22 +22,13 @@ import {
   Thead,
   Tr,
 } from '@/atoms'
+import { TableTitlebar } from '@/molecules'
 
 export const GroupMembersTable = ({ members = [] }: { members: GroupMember[] }) => {
   const [isEdit, setEdit] = useBoolean(false)
   return (
     <TableContainer w="full" borderRadius="lg" borderWidth={2} shadow="md">
-      <HStack
-        direction="row"
-        align="end"
-        justify="space-between"
-        px={SPACING.tableTitle.px}
-        py={SPACING.tableTitle.py}
-        borderBottomWidth={1}
-      >
-        <Heading size="md" mr={12}>
-          Members
-        </Heading>
+      <TableTitlebar title="Members">
         <AnimatePresence mode="wait">
           {isEdit && (
             <Flex grow={1} justify="end">
@@ -63,7 +54,7 @@ export const GroupMembersTable = ({ members = [] }: { members: GroupMember[] }) 
         <Button variant={isEdit ? 'solid' : 'outline'} onClick={setEdit.toggle}>
           {isEdit ? 'Save Changes' : 'Edit Members'}
         </Button>
-      </HStack>
+      </TableTitlebar>
       <Table variant="striped" size="lg">
         <Thead>
           <Tr sx={{ '& > th': { fontWeight: 'bold' } }}>

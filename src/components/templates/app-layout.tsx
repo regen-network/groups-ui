@@ -11,7 +11,7 @@ import { Navbar } from '@/organisms/navbar'
 export const AppLayout = () => {
   return (
     <PopUpFade>
-      <Flex flexDir="column" maxH="100vh" height="full" overflowY="auto">
+      <Flex flexDir="column" maxH="100vh" maxW="100vw" height="full" overflowY="auto">
         <Navbar />
         <Box as="main" h="full" bg={useColorModeValue('gray.50', 'gray.800')}>
           <Suspense fallback={<Loading />}>

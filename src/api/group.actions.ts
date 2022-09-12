@@ -3,17 +3,18 @@ import Long from 'long'
 import { type GroupWithPolicyFormValues, type UIGroup } from 'types'
 import { throwError } from 'util/errors'
 
-import { Group, Wallet } from 'store'
+import { Group, signAndBroadcast } from 'store'
 
 import { createGroupWithPolicyMsg } from './group.messages'
 import { addMembersToGroups, toUIGroup } from './group.transforms'
 
 export async function createGroupWithPolicy(values: GroupWithPolicyFormValues) {
-  const { account, signingClient, fee } = Wallet
-  if (!account || !signingClient || !fee) throwError('Wallet not initialized')
+  // const { account, signingClient, fee } = Wallet
+  // if (!account || !signingClient || !fee) throwError('Wallet not initialized')
   try {
     const msg = createGroupWithPolicyMsg(values)
-    const data = await signingClient.signAndBroadcast(account.address, [msg], fee)
+    // const data = await signingClient.signAndBroadcast(account.address, [msg], fee)
+    const data = await signAndBroadcast([msg])
     return data
   } catch (error) {
     throwError(error)

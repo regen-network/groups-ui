@@ -24,7 +24,7 @@
     "@cosmjs/tendermint-rpc": "^0.28.11",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
-    "@haveanicedavid/cosmos-groups-ts": "^0.0.22",
+    "@haveanicedavid/cosmos-groups-ts": "^0.0.24",
     "@hookform/resolvers": "^2.9.7",
     "@keplr-wallet/cosmos": "^0.10.24",
     "@keplr-wallet/stores": "^0.10.24",

@@ -39,10 +39,12 @@ export default function GroupCreate() {
 
   return (
     <GroupTemplate
-      defaultFormValues={{
-        ...defaultGroupPolicyFormValues,
+      initialGroupFormValues={{
         ...defaultGroupFormValues,
         admin: Wallet.account?.address,
+      }}
+      initialPolicyFormValues={{
+        ...defaultGroupPolicyFormValues,
       }}
       text={{
         submitBtn: 'Submit',

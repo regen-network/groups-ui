@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import type { GroupWithPolicyFormValues } from 'types'
-import { defaultGroupFormValues } from 'util/form.constants'
 
 import { Wallet } from 'store'
 import { useSteps } from 'hooks/chakra'
@@ -25,12 +24,14 @@ const Finished = ({ text }: { text: string }) => (
 )
 
 export default function GroupTemplate({
-  defaultFormValues,
+  initialGroupFormValues,
+  initialPolicyFormValues,
   submit,
   steps,
   text,
 }: {
-  defaultFormValues: GroupWithPolicyFormValues
+  initialGroupFormValues: GroupFormValues
+  initialPolicyFormValues: GroupPolicyFormValues
   submit: (values: GroupWithPolicyFormValues) => Promise<void>
   steps: string[]
   text: {
@@ -41,14 +42,11 @@ export default function GroupTemplate({
   const { activeStep, nextStep, prevStep /* reset, setStep */ } = useSteps({
     initialStep: 0,
   })
-  const [groupValues, setGroupValues] = useState<GroupFormValues>({
-    ...defaultGroupFormValues,
-    admin: Wallet.account?.address ?? '',
-  })
+  const [groupValues, setGroupValues] = useState<GroupFormValues>(initialGroupFormValues)
   const [submitting, setSubmitting] = useState(false)
   const [priorStep, setPriorStep] = useState(0)
 
-  const { threshold, votingWindow, quorum } = defaultFormValues
+  const { threshold, votingWindow, quorum } = initialPolicyFormValues
 
   function handleGroupSubmit(values: GroupFormValues) {
     setGroupValues(values)

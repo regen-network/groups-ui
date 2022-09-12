@@ -1,4 +1,4 @@
-import { AccountData, coins } from '@cosmjs/proto-signing'
+import { AccountData, coins, EncodeObject } from '@cosmjs/proto-signing'
 import { SigningStargateClient, StdFee } from '@cosmjs/stargate'
 import { cosmos, getSigningCosmosClient } from '@haveanicedavid/cosmos-groups-ts'
 import { proxy } from 'valtio'
@@ -57,4 +57,10 @@ export async function enableKeplr() {
     Wallet.keplrStatus = 'rejected'
     handleError(error)
   }
+}
+
+export async function signAndBroadcast(messages: EncodeObject[]) {
+  const { account, signingClient, fee } = Wallet
+  if (!account || !signingClient || !fee) throwError('Wallet not initialized')
+  return signingClient.signAndBroadcast(account.address, messages, fee)
 }

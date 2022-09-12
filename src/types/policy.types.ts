@@ -8,7 +8,7 @@ import type {
 export type { DecisionPolicyWindows, GroupPolicyInfo }
 
 type UIDecisionPolicyWindows = {
-  [K in keyof DecisionPolicyWindows]: string
+  [K in keyof DecisionPolicyWindows]: number
 }
 
 export type UIPercentageDecisionPolicy = Omit<PercentageDecisionPolicy, 'windows'> & {

@@ -1,5 +1,3 @@
-import { fromDuration } from '@osmonauts/helpers'
-
 import type {
   ChainGroupDecisionPolicy,
   GroupPolicyInfo,
@@ -8,6 +6,7 @@ import type {
   UIPercentageDecisionPolicy,
   UIThresholdDecisionPolicy,
 } from 'types'
+import { mistypedDurationToDays } from 'util/date'
 
 export function toUIGroupPolicy(policyInfo: GroupPolicyInfo): UIGroupPolicyInfo {
   const decision_policy =
@@ -19,8 +18,10 @@ export function toUIGroupPolicy(policyInfo: GroupPolicyInfo): UIGroupPolicyInfo 
     decision_policy: {
       ...decision_policy,
       windows: {
-        voting_period: fromDuration(decision_policy.windows.voting_period),
-        min_execution_period: fromDuration(decision_policy.windows.min_execution_period),
+        voting_period: mistypedDurationToDays(decision_policy.windows.voting_period),
+        min_execution_period: mistypedDurationToDays(
+          decision_policy.windows.min_execution_period,
+        ),
       },
     },
   }

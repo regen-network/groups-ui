@@ -7,8 +7,4 @@ export const TOAST_DEFAULTS: UseToastOptions = {
 
 export const SPACING = {
   formStack: 7,
-  tableTitle: {
-    px: 8,
-    py: 5,
-  },
 }

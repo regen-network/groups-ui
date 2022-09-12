@@ -2759,10 +2759,10 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@haveanicedavid/cosmos-groups-ts@^0.0.22":
-  version "0.0.22"
-  resolved "https://registry.yarnpkg.com/@haveanicedavid/cosmos-groups-ts/-/cosmos-groups-ts-0.0.22.tgz#c30b47fb6a5a96e95b6f816f5605947102d115ad"
-  integrity sha512-YWbb7tAO2lpn0yn9k8RwQSVBhRcoS8BsGKogtcRFdX5lWNkDkSf1Ev4QxSoLnKOcKBn/yynJMdHtHRO3z44FEQ==
+"@haveanicedavid/cosmos-groups-ts@^0.0.24":
+  version "0.0.24"
+  resolved "https://registry.yarnpkg.com/@haveanicedavid/cosmos-groups-ts/-/cosmos-groups-ts-0.0.24.tgz#f363de6551e7877cfca5f4a0d6efef7e66b2291e"
+  integrity sha512-3wtMFUIxG8T5EllfEnHiKAJAfT5wLG0ciT3PYKqQoD0zChy8qr2RI+yB+3BVFxKqxmNApJOhGt9DIidkwKh6vA==
   dependencies:
     "@babel/runtime" "^7.19.0"
     "@cosmjs/amino" "0.28.13"

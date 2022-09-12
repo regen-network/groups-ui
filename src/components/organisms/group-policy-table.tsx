@@ -4,10 +4,12 @@ import { formatDate } from 'util/date'
 import { getQuorum, getThreshold } from 'api/policy.helpers'
 
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@/atoms'
+import { TableTitlebar } from '@/molecules'
 
 export const GroupPolicyTable = ({ policies }: { policies: UIGroupPolicyInfo[] }) => {
   return (
     <TableContainer w="full" borderRadius="lg" borderWidth={2} shadow="md">
+      <TableTitlebar title="Group Policy" />
       <Table variant="striped" size="lg">
         <Thead>
           <Tr sx={{ '& > th': { fontWeight: 'bold' } }}>

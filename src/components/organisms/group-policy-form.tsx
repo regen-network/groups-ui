@@ -47,7 +47,7 @@ export const GroupPolicyForm = ({
               required
               name="votingWindow"
               label="Voting Window"
-              numberInputProps={{ min: 0 }}
+              numberInputProps={{ min: 0, flex: 1 }}
             >
               <Flex align="center" minW="50%">
                 <Text ml={5} fontWeight="bold">
@@ -59,7 +59,7 @@ export const GroupPolicyForm = ({
               required
               name="threshold"
               label="Set a threshold"
-              numberInputProps={{ min: 0 }}
+              numberInputProps={{ min: 0, flex: 1 }}
             >
               <Flex align="center" minW="50%">
                 <Text ml={5} fontWeight="bold">
