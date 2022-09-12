@@ -1,6 +1,5 @@
 import type { GroupMember } from 'types'
 import { formatDate } from 'util/date'
-import { SPACING } from 'util/style.constants'
 
 import { useBoolean } from 'hooks/chakra'
 
@@ -10,8 +9,6 @@ import {
   Button,
   DeleteButton,
   Flex,
-  Heading,
-  HStack,
   Input,
   NumberInput,
   Table,
@@ -44,7 +41,7 @@ export const GroupMembersTable = ({ members = [] }: { members: GroupMember[] }) 
               >
                 <Input width="auto" flexGrow={1} maxW={470} />
                 <Button variant="outline">+ Add Member</Button>
-                <Button variant="ghost" fontSize="xs">
+                <Button variant="ghost" fontSize="xs" onClick={setEdit.off}>
                   cancel
                 </Button>
               </FadeIn>

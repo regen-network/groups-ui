@@ -9,12 +9,13 @@ import type {
 import { mistypedDurationToDays } from 'util/date'
 
 export function toUIGroupPolicy(policyInfo: GroupPolicyInfo): UIGroupPolicyInfo {
+  /* By default, `decision_policy` is returned as a golang `Any`, and it seems
+   * easier to manage here than `cosmos-groups-ts` as decision policies can be
+   * proprietary */
   const decision_policy =
     policyInfo.decision_policy as unknown as ChainGroupDecisionPolicy
   return {
     ...policyInfo,
-    // Type generation doesn't properly type this, and it seems easier to manage
-    // here than `cosmos-groups-ts` as decision policies can be proprietary
     decision_policy: {
       ...decision_policy,
       windows: {

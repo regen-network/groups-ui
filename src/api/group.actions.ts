@@ -9,11 +9,8 @@ import { createGroupWithPolicyMsg } from './group.messages'
 import { addMembersToGroups, toUIGroup } from './group.transforms'
 
 export async function createGroupWithPolicy(values: GroupWithPolicyFormValues) {
-  // const { account, signingClient, fee } = Wallet
-  // if (!account || !signingClient || !fee) throwError('Wallet not initialized')
   try {
     const msg = createGroupWithPolicyMsg(values)
-    // const data = await signingClient.signAndBroadcast(account.address, [msg], fee)
     const data = await signAndBroadcast([msg])
     return data
   } catch (error) {

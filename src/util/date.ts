@@ -1,7 +1,7 @@
-// import { toDuration } from '@osmonauts/helpers'
-import type { Duration } from '@haveanicedavid/cosmos-groups-ts/types/codegen/google/protobuf/duration'
 import dayjs from 'dayjs'
 import Long from 'long'
+
+import type { Duration } from 'types'
 
 const dayInSeconds = 24 * 60 * 60
 

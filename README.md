@@ -51,18 +51,18 @@ cp .vscode/settings.suggested.json .vscode/settings.json
 
 # Architecture
 
-This project is organized by [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/) principals:
+This project is organized by [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/) principals for UI components:
 
 ```
 📦src
  ┣ 📂components
- ┃ ┣ 📂atoms
+ ┃ ┣ 📂atoms - elements which can't be reduced to something simpler
  ┃ ┃ ┗ 📜index.ts
- ┃ ┣ 📂molecules
+ ┃ ┣ 📂molecules - collection of atoms
  ┃ ┃ ┗ 📜index.ts
- ┃ ┣ 📂organisms
- ┃ ┗ 📂templates
- ┗ 📂pages
+ ┃ ┣ 📂organisms - more complex elements made up of atoms, molecules, and (sometimes) other organisms
+ ┃ ┗ 📂templates - viewport positioning and layout
+ ┗ 📂pages - implementations of templates
 ```
 
 Some relevant notes / Highlights:
@@ -72,13 +72,16 @@ Some relevant notes / Highlights:
 
 ## Types
 
-TODO: Explain telescope / cosmos package and UI prefix vs non-prefixed
+Ledger calls & typescript types are generated using [telescope](https://github.com/osmosis-labs/telescope), and reside in [another package](https://github.com/haveanicedavid/cosmos-groups-ts)
+
+- Because queries are currently handled through REST / LCD clients, property values are `camel_case` - this means the types used in this project won't work on RPC clients (relevant cosmos-sdk [issue](https://github.com/cosmos/cosmos-sdk/issues/8055))
+- Some types are manually combined / modified to ease the use in UI. These are prefixed with `UI` (e.g. the `UIGroup` type represnts a sdk `ChainInfo` with typed `metadata` which the UI creates)
 
 ## Library Resources
 
 - [Chakra](https://chakra-ui.com/) - UI Components
 - [Valtio](https://valtio.pmnd.rs/) - global state
-- [React Query](https://tanstack.com/query/v4) - Query caching
+- [React Query](https://tanstack.com/query/v4) - API calls / Query caching
 - [Zod](https://github.com/colinhacks/zod) - form validation
 
 ## Linting

@@ -2,7 +2,6 @@ import { useState } from 'react'
 
 import type { GroupWithPolicyFormValues } from 'types'
 
-import { Wallet } from 'store'
 import { useSteps } from 'hooks/chakra'
 
 import { AnimatePresence, HorizontalSlide } from '@/animations'

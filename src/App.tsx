@@ -24,7 +24,6 @@ function AppContent() {
       return <Routes />
     case 'uninstalled':
       return <InstallKeplr />
-    // case 'initialized':
     case 'rejected':
       return <EnableKeplr />
     default:
@@ -41,11 +40,9 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <Theme> */}
       <ErrorBoundary FallbackComponent={ErrorFallback} onReset={handleReset}>
         <AppContent />
       </ErrorBoundary>
-      {/* </Theme> */}
     </QueryClientProvider>
   )
 }
