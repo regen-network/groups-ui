@@ -1,9 +1,4 @@
-import type {
-  GroupFormValues,
-  MemberFormValues,
-  UIGroupDecisionPolicy,
-  UIGroupMetadata,
-} from 'types'
+import type { GroupFormValues, MemberFormValues } from 'types'
 
 import { GroupPolicyFormValues } from '@/organisms/group-policy-form'
 
@@ -23,7 +18,7 @@ export const defaultGroupFormValues: GroupFormValues = {
 }
 
 export const defaultGroupPolicyFormValues: GroupPolicyFormValues = {
-  votingWindow: '0',
+  votingWindow: 0,
   threshold: undefined,
   quorum: undefined,
 }

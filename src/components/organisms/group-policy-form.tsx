@@ -12,9 +12,9 @@ import { NumberField } from '@/molecules/form-fields'
 import { BackIcon } from 'assets/tsx'
 
 export type GroupPolicyFormValues = {
-  votingWindow: string
-  threshold?: string
-  quorum?: string
+  votingWindow: number
+  threshold?: number
+  quorum?: number
 }
 
 const resolver = zodResolver(
@@ -38,29 +38,24 @@ export const GroupPolicyForm = ({
   onSubmit: (data: GroupPolicyFormValues) => void
   submitting?: boolean
 }) => {
-  const testVals = { ...defaultValues, test: undefined }
-  const form = useForm<GroupPolicyFormValues & { test?: number }>({
-    defaultValues: testVals,
+  const form = useForm<GroupPolicyFormValues>({
+    defaultValues,
     resolver,
   })
   const { watch, setValue } = form
 
   const quorumField = watch('quorum')
   const thresholdField = watch('threshold')
-  const testField = watch('test')
-
-  console.log('test :>> ', JSON.stringify(testField))
 
   useEffect(() => {
     if (quorumField) {
-      setValue('threshold', '')
-      setValue('test', '' as unknown as undefined)
+      setValue('threshold', '' as unknown as undefined) // non-ideal, but works
     }
   }, [quorumField, setValue])
 
   useEffect(() => {
     if (thresholdField) {
-      setValue('quorum', '')
+      setValue('quorum', '' as unknown as undefined)
     }
   }, [thresholdField, setValue])
 
@@ -120,11 +115,12 @@ export const GroupPolicyForm = ({
             >
               <Flex align="center" minW="50%">
                 <Text ml={5} fontWeight="bold">
-                  {'total weighted yes votes'}
+                  {"weighted 'yes' votes"}
                 </Text>
               </Flex>
             </NumberField>
             <NumberField
+              required
               name="quorum"
               label="Define a quorum"
               numberInputProps={{ min: 0, max: 100, flex: 1 }}
@@ -132,17 +128,6 @@ export const GroupPolicyForm = ({
               <Flex align="center" minW="50%">
                 <Text ml={5} fontWeight="bold">
                   {'% of total voting power'}
-                </Text>
-              </Flex>
-            </NumberField>
-            <NumberField
-              name="test"
-              label="test"
-              numberInputProps={{ min: 0, max: 100, flex: 1 }}
-            >
-              <Flex align="center" minW="50%">
-                <Text ml={5} fontWeight="bold">
-                  {'testing'}
                 </Text>
               </Flex>
             </NumberField>

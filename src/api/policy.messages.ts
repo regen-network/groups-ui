@@ -13,9 +13,9 @@ export function updateDecisionPolicyMsg({
 }: {
   admin: string
   policyAddress: string
-  votingWindow: string
-  quorum?: string
-  threshold?: string
+  votingWindow: number
+  quorum?: number
+  threshold?: number
 }) {
   return MsgWithTypeUrl.updateGroupPolicyDecisionPolicy({
     admin,
@@ -37,22 +37,21 @@ export function encodeDecisionPolicy({
   quorum,
 }: {
   /** in days */
-  votingWindow: string
+  votingWindow: number
   /** positive integer */
-  threshold?: string
+  threshold?: number
   /** percentage expressed as an integer, ie `51 == 51% / 0.51` */
-  quorum?: string
+  quorum?: number
 }) {
   const windows = {
     min_execution_period: secondsToDuration(1),
-    voting_period: daysToDuration(parseInt(votingWindow)),
+    voting_period: daysToDuration(votingWindow),
   }
-  const val = quorum && parseInt(quorum)
-  if (val && typeof val === 'number' && val > 0) {
+  if (quorum) {
     return {
       type_url: '/cosmos.group.v1.PercentageDecisionPolicy',
       value: v1.PercentageDecisionPolicy.encode({
-        percentage: intToPercent(val),
+        percentage: intToPercent(quorum),
         windows,
       }).finish(),
     }

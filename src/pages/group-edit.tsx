@@ -6,6 +6,7 @@ import type {
   GroupWithPolicyFormValues,
 } from 'types'
 import { handleError, throwError } from 'util/errors'
+import { percentToInt } from 'util/helpers'
 
 import { signAndBroadcast } from 'store'
 import { updateGroupMetadataMsg } from 'api/group.messages'
@@ -47,11 +48,11 @@ export default function GroupEdit() {
 
   const initialPolicyValues: GroupPolicyFormValues = {
     threshold: isThresholdPolicy(decision_policy)
-      ? decision_policy.threshold // parseFloat(decision_policy.threshold)
+      ? parseFloat(decision_policy.threshold)
       : undefined,
-    votingWindow: decision_policy.windows.voting_period, // TODO
+    votingWindow: parseFloat(decision_policy.windows.voting_period),
     quorum: isPercentagePolicy(policy.decision_policy)
-      ? policy.decision_policy.percentage // percentToInt(policy.decision_policy.percentage)
+      ? percentToInt(policy.decision_policy.percentage)
       : undefined,
   }
 
