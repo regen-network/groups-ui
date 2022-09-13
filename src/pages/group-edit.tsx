@@ -5,20 +5,21 @@ import type {
   GroupPolicyFormValues,
   GroupWithPolicyFormValues,
 } from 'types'
-import { throwError, toErrorWithMessage } from 'util/errors'
-import { TOAST_DEFAULTS } from 'util/style.constants'
+import { handleError, throwError } from 'util/errors'
 
 import { signAndBroadcast } from 'store'
 import { updateGroupMetadataMsg } from 'api/group.messages'
+import { updateGroupMembersMsg } from 'api/member.messages'
 import { isPercentagePolicy, isThresholdPolicy } from 'api/policy.helpers'
-import { useToast } from 'hooks/chakra'
+import { updateDecisionPolicyMsg } from 'api/policy.messages'
 import { useGroup, useGroupMembers, useGroupPolicies } from 'hooks/use-query'
+import { useTxToasts } from 'hooks/useToasts'
 
 import { Loading } from '@/molecules'
 import GroupTemplate from '@/templates/group-template'
 
 export default function GroupEdit() {
-  const toast = useToast()
+  const { toastErr, toastSuccess } = useTxToasts()
   const { groupId } = useParams()
   const { data: group } = useGroup(groupId)
   const { data: members } = useGroupMembers(groupId)
@@ -26,13 +27,15 @@ export default function GroupEdit() {
 
   const [policy] = policies ?? []
 
-  if (!group || !members || !policy) return <Loading />
+  if (!group || !members || !policy?.decision_policy) return <Loading />
+
+  const { decision_policy } = policy
 
   const initialGroupValues: GroupFormValues = {
     admin: policy.admin,
     members: members.map(({ member }) => ({
       address: member.address,
-      weight: +member.weight,
+      weight: parseInt(member.weight),
       metadata: member.metadata,
     })),
     name: group.metadata.name,
@@ -42,15 +45,13 @@ export default function GroupEdit() {
     otherMetadata: group.metadata.other,
   }
 
-  console.log('wowowow :>> ', policy.decision_policy.windows)
-
   const initialPolicyValues: GroupPolicyFormValues = {
-    threshold: isThresholdPolicy(policy.decision_policy)
-      ? parseInt(policy.decision_policy.threshold)
-      : 0,
-    votingWindow: policy.decision_policy.windows.voting_period, // TODO
+    threshold: isThresholdPolicy(decision_policy)
+      ? decision_policy.threshold // parseFloat(decision_policy.threshold)
+      : undefined,
+    votingWindow: decision_policy.windows.voting_period, // TODO
     quorum: isPercentagePolicy(policy.decision_policy)
-      ? parseInt(policy.decision_policy.percentage)
+      ? policy.decision_policy.percentage // percentToInt(policy.decision_policy.percentage)
       : undefined,
   }
 
@@ -60,64 +61,77 @@ export default function GroupEdit() {
     ...initialPolicyValues,
   }
 
-  async function handleSave(values: GroupWithPolicyFormValues) {
-    if (!group || !group.admin || !groupId) throwError('Uh oh') // TODO
+  async function handleSave(values: GroupWithPolicyFormValues): Promise<boolean> {
+    if (!group || !group.admin || !groupId)
+      throwError('Something went wrong: missing admin or groupId')
     const msgs = []
     const hasUpdatedMetadata = false
     for (const _prop in values) {
       const prop = _prop as keyof GroupWithPolicyFormValues // ts hack
       if (initialValues[prop] !== values[prop]) {
-        // update metadata
         if (
           ['name', 'description', 'forumLink', 'otherMetadata'].includes(prop) &&
           !hasUpdatedMetadata
         ) {
+          // update metadata
           msgs.push(
             updateGroupMetadataMsg({
               groupId,
               admin: group.admin,
               metadata: {
                 ...group.metadata,
-                name: values.name,
                 description: values.description,
                 forumLink: values.forumLink,
-                updatedAt: Date.now().toString(),
+                name: values.name,
                 other: values.otherMetadata,
+                updatedAt: Date.now().toString(),
               },
             }),
           )
         }
         if (prop === 'admin') {
-          // TODO check if current admin, block in UI otherwise? maybe give disclosure
+          // disabled for now
+          // TODO: check if current admin, block in UI otherwise? maybe give disclosure
           // msg/updateGroupAdmin
         }
         if (prop === 'members') {
-          // TODO msg/updateGroupMembers
+          msgs.push(
+            updateGroupMembersMsg({
+              groupId,
+              admin: group.admin,
+              members: values.members,
+            }),
+          )
         }
         if (prop === 'votingWindow' || prop === 'threshold' || prop === 'quorum') {
           // TODO Msg/UpdateGroupPolicyDecisionPolicy
+          msgs.push(
+            updateDecisionPolicyMsg({
+              admin: group.admin,
+              policyAddress: policy.address,
+              votingWindow: values.votingWindow,
+              quorum: values.quorum,
+              threshold: values.threshold,
+            }),
+          )
         }
       }
     }
     try {
-      // TODO: compare initialValues with values, create messages for updates
       const { transactionHash } = await signAndBroadcast(msgs)
-      console.log('transactionHash :>> ', transactionHash)
+      toastSuccess(transactionHash)
+      return true
     } catch (err) {
-      reportError(err)
-      const msg = toErrorWithMessage(err).message
-      toast({
-        ...TOAST_DEFAULTS,
-        title: 'Group creation failed',
-        description: msg,
-        status: 'error',
-        duration: 9000,
-      })
+      handleError(err)
+      toastErr(err, 'Editing group')
+      return false
     }
   }
 
   return (
     <GroupTemplate
+      disabledGroupFormFields={['admin']}
+      linkToGroupId={groupId}
       initialGroupFormValues={initialGroupValues}
       initialPolicyFormValues={initialPolicyValues}
       text={{

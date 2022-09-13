@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 
 import { GroupInfo, UIGroup, UIGroupMetadata } from 'types'
 
-import { toUIGroup } from 'api/group.transforms'
+import { toUIGroup } from 'api/group.helpers'
 
 // TODO: move these to reusable stubs
 const date = new Date(2022, 1, 1)

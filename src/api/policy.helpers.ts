@@ -53,3 +53,5 @@ export function getQuorum(
 ) {
   return isPercentagePolicy(decision_policy) ? decision_policy.percentage : defaultValue
 }
+
+export const toFormPercent = (percentStr: string) => parseFloat(percentStr) * 100

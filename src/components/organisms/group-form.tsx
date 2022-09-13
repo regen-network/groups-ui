@@ -33,6 +33,7 @@ import {
   RadioGroupField,
   TextareaField,
 } from '@/molecules/form-fields'
+import { TruncateTooltip } from '@/molecules/TruncateTooltip'
 
 /** @see @haveanicedavid/cosmos-groups-ts/types/proto/cosmos/group/v1/types */
 export type GroupFormValues = {
@@ -44,6 +45,7 @@ export type GroupFormValues = {
   name: string
   otherMetadata?: string
 }
+export type GroupFormKeys = keyof GroupFormValues
 
 const resolver = zodResolver(
   z.object({
@@ -60,10 +62,12 @@ const resolver = zodResolver(
 export const GroupForm = ({
   btnText = 'Submit',
   defaultValues,
+  disabledFields = [],
   onSubmit,
 }: {
   btnText?: string
   defaultValues: GroupFormValues
+  disabledFields?: GroupFormKeys[]
   onSubmit: (data: GroupFormValues) => void
 }) => {
   const [memberAddr, setMemberAddr] = useState('')
@@ -120,6 +124,7 @@ export const GroupForm = ({
               required
               name="policyAsAdmin"
               label="Group admin"
+              radioGroupProps={{ isDisabled: disabledFields.includes('admin') }}
               options={[
                 { value: 'true', label: 'Group policy' },
                 {
@@ -170,9 +175,16 @@ export const GroupForm = ({
                   <Tbody>
                     {controlledMemberFields.map((member, i) => (
                       <Tr key={i + member.address}>
-                        <Td>{member.address}</Td>
                         <Td>
-                          <HStack spacing={3}>
+                          <TruncateTooltip
+                            text={member.address}
+                            headLength={18}
+                            tailLength={22}
+                            tooltipProps={{ maxW: 450 }}
+                          />
+                        </Td>
+                        <Td>
+                          <HStack spacing={4}>
                             <FormControl isInvalid={!!errors.members?.[i]?.weight}>
                               <NumberInput
                                 type="number"

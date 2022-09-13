@@ -38,15 +38,19 @@ const validAdmin = z.union([
   z.literal('group'),
 ])
 
-const validPercent = z
-  .number()
-  .min(1, 'Must be greater than zero')
-  .max(100, 'Must be less than 100')
-
-const validPositiveNumber = z.number().min(1, 'Must be a positive number')
-
 const validEmptyStr = z.literal('')
 const validBoolStr = z.union([z.literal('true'), z.literal('false')])
+
+const validPositiveNumStr = z
+  .string()
+  .refine((s) => s.length === 0 || Number(s) > 0, 'Must be a positive number')
+
+const validPercentStr = z
+  .string()
+  .refine(
+    (s) => s.length === 0 || (Number(s) > 0 && Number(s) <= 100),
+    'Must be between 0 and 100',
+  )
 
 export const valid = {
   admin: validAdmin,
@@ -59,7 +63,6 @@ export const valid = {
   members: validMembers,
   json: validJSON,
   url: z.string().url(),
-  votingWindow: validPositiveNumber,
-  threshold: validPercent,
-  quorum: validPercent,
+  positiveNumStr: validPositiveNumStr,
+  percentStr: validPercentStr,
 }

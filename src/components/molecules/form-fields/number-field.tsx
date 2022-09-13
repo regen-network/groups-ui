@@ -16,7 +16,7 @@ export const NumberField = ({
   const { control, getValues } = useFormContext()
   const {
     fieldState: { error },
-    field: { onChange, ...field },
+    field,
   } = useController({
     name,
     control,
@@ -26,11 +26,7 @@ export const NumberField = ({
   return (
     <FieldControl {...fieldProps} error={error}>
       <Flex>
-        <NumberInput
-          {...field}
-          {...numberInputProps}
-          onChange={(_, val) => onChange(val)}
-        />
+        <NumberInput {...field} {...numberInputProps} />
         {children}
       </Flex>
     </FieldControl>

@@ -1,41 +1,29 @@
 import { useState } from 'react'
 
-import { type GroupWithPolicyFormValues } from 'types'
-import { toErrorWithMessage } from 'util/errors'
+import type { GroupWithPolicyFormValues } from 'types'
+import { handleError } from 'util/errors'
 import { defaultGroupFormValues, defaultGroupPolicyFormValues } from 'util/form.constants'
-import { TOAST_DEFAULTS } from 'util/style.constants'
 
 import { Wallet } from 'store'
 import { createGroupWithPolicy } from 'api/group.actions'
-import { useToast } from 'hooks/chakra'
+import { useTxToasts } from 'hooks/useToasts'
 
 import GroupTemplate from '@/templates/group-template'
 
 export default function GroupCreate() {
-  const toast = useToast()
+  const { toastErr, toastSuccess } = useTxToasts()
   const [newGroupId, setNewGroupId] = useState<string>()
-  async function handleCreate(values: GroupWithPolicyFormValues) {
+
+  async function handleCreate(values: GroupWithPolicyFormValues): Promise<boolean> {
     try {
       const { transactionHash, groupId } = await createGroupWithPolicy(values)
       setNewGroupId(groupId?.toString())
-      const time = 3000
-      toast({
-        ...TOAST_DEFAULTS,
-        title: 'Group created',
-        description: 'Transaction hash: ' + transactionHash,
-        status: 'success',
-        duration: time,
-      })
+      toastSuccess(transactionHash, 'Group created!')
+      return true
     } catch (err) {
-      const msg = toErrorWithMessage(err).message
-      console.error(err)
-      toast({
-        ...TOAST_DEFAULTS,
-        title: 'Group creation failed',
-        description: msg,
-        status: 'error',
-        duration: 9000,
-      })
+      handleError(err)
+      toastErr(err, 'Group could not be created:')
+      return false
     }
   }
 
