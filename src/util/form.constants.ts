@@ -18,9 +18,7 @@ export const defaultGroupFormValues: GroupFormValues = {
 }
 
 export const defaultGroupPolicyFormValues: GroupPolicyFormValues = {
-  votingWindow: 0,
-  threshold: undefined,
-  quorum: undefined,
+  votingWindow: 1,
 }
 
 // type ObjKeys = {

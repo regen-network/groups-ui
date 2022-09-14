@@ -50,7 +50,7 @@ export default function GroupTemplate({
   const [submitting, setSubmitting] = useState(false)
   const [priorStep, setPriorStep] = useState(0)
 
-  const { threshold, votingWindow, quorum } = initialPolicyFormValues
+  const { threshold, votingWindow, percentage } = initialPolicyFormValues
 
   function handleGroupSubmit(values: GroupFormValues) {
     setGroupValues(values)
@@ -91,7 +91,7 @@ export default function GroupTemplate({
             <GroupPolicyForm
               submitting={submitting}
               onSubmit={handleSubmit}
-              defaultValues={{ threshold, votingWindow, quorum }}
+              defaultValues={{ threshold, votingWindow, percentage }}
               goBack={handlePrev}
               btnText={text.submitBtn}
             />

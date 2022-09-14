@@ -1,6 +1,7 @@
 import Long from 'long'
 
 import type { GroupWithPolicyFormValues, UIGroupMetadata } from 'types'
+import { clearEmptyStr } from 'util/helpers'
 
 import { MsgWithTypeUrl } from './cosmosgroups'
 import { encodeDecisionPolicy } from './policy.messages'
@@ -14,7 +15,7 @@ export function createGroupWithPolicyMsg(values: GroupWithPolicyFormValues) {
     name,
     otherMetadata,
     policyAsAdmin,
-    quorum,
+    percentage,
     threshold,
     votingWindow,
   } = values
@@ -23,9 +24,9 @@ export function createGroupWithPolicyMsg(values: GroupWithPolicyFormValues) {
     group_policy_metadata: '',
     group_policy_as_admin: policyAsAdmin === 'true',
     decision_policy: encodeDecisionPolicy({
-      quorum,
-      threshold,
-      votingWindow,
+      percentage: clearEmptyStr(percentage),
+      threshold: clearEmptyStr(threshold),
+      votingWindow: votingWindow,
     }),
     group_metadata: JSON.stringify({
       name,

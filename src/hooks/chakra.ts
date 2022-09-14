@@ -1,6 +1,7 @@
 export {
   type UseToastOptions,
   useBoolean,
+  useBreakpointValue,
   useColorMode,
   useColorModeValue,
   useTheme,

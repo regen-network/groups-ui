@@ -3,6 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
+import { NumOrEmpty } from 'types/form.types'
 import { SPACING } from 'util/style.constants'
 import { valid } from 'util/validation/zod'
 
@@ -13,15 +14,15 @@ import { BackIcon } from 'assets/tsx'
 
 export type GroupPolicyFormValues = {
   votingWindow: number
-  threshold?: number
-  quorum?: number
+  threshold?: NumOrEmpty
+  percentage?: NumOrEmpty
 }
 
 const resolver = zodResolver(
   z.object({
-    votingWindow: valid.positiveNumStr,
-    threshold: valid.positiveNumStr.optional(),
-    quorum: valid.percentStr.optional(),
+    votingWindow: valid.positiveNumber,
+    threshold: valid.positiveNumberOrEmptyStr.optional(),
+    percentage: valid.percentOrEmptyStr.optional(),
   }),
 )
 
@@ -44,44 +45,42 @@ export const GroupPolicyForm = ({
   })
   const { watch, setValue } = form
 
-  const quorumField = watch('quorum')
+  const percentField = watch('percentage')
   const thresholdField = watch('threshold')
 
   useEffect(() => {
-    if (quorumField) {
-      setValue('threshold', '' as unknown as undefined) // non-ideal, but works
+    if (percentField) {
+      setValue('threshold', '')
     }
-  }, [quorumField, setValue])
+  }, [percentField, setValue])
 
   useEffect(() => {
     if (thresholdField) {
-      setValue('quorum', '' as unknown as undefined)
+      setValue('percentage', '')
     }
   }, [thresholdField, setValue])
 
   function handleSubmit(data: GroupPolicyFormValues) {
-    const quorum = form.getValues().quorum
+    const percentage = form.getValues().percentage
     const threshold = form.getValues().threshold
-    // neither of these should happen because of other logic, but good to have the validation check
-    if (!quorum && !threshold) {
+    if (!percentage && !threshold) {
       // error if neither field is filled
-      form.setError('quorum', {
+      form.setError('percentage', {
         type: 'required',
-        message: 'Either a quorum of a threshold is required',
+        message: 'Either a percentage of a threshold is required',
       })
       form.setError('threshold', {
         type: 'required',
-        message: 'Either a quorum of a threshold is required',
+        message: 'Either a percentage of a threshold is required',
       })
       return
     }
-    if (quorum && threshold) {
-      // error if both fields are filled
+    if (percentage && threshold) {
       form.setError('threshold', {
         type: 'required',
         message: 'Please choose only',
       })
-      form.setError('quorum', {
+      form.setError('percentage', {
         type: 'required',
         message: 'one of these fields',
       })
@@ -99,7 +98,7 @@ export const GroupPolicyForm = ({
               required
               name="votingWindow"
               label="Voting Window"
-              numberInputProps={{ min: 0, flex: 1 }}
+              numberInputProps={{ flex: 1 }}
             >
               <Flex align="center" minW="50%">
                 <Text ml={5} fontWeight="bold">
@@ -121,8 +120,8 @@ export const GroupPolicyForm = ({
             </NumberField>
             <NumberField
               required
-              name="quorum"
-              label="Define a quorum"
+              name="percentage"
+              label="set a percentage"
               numberInputProps={{ min: 0, max: 100, flex: 1 }}
             >
               <Flex align="center" minW="50%">

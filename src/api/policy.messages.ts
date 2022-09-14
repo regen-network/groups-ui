@@ -1,27 +1,27 @@
 import { daysToDuration, secondsToDuration } from 'util/date'
 import { throwError } from 'util/errors'
-import { intToPercent } from 'util/helpers'
+import { numToPercentStr } from 'util/helpers'
 
 import { MsgWithTypeUrl, v1 } from './cosmosgroups'
 
 export function updateDecisionPolicyMsg({
   admin,
   policyAddress,
-  quorum,
+  percentage,
   threshold,
   votingWindow,
 }: {
   admin: string
   policyAddress: string
   votingWindow: number
-  quorum?: number
+  percentage?: number
   threshold?: number
 }) {
   return MsgWithTypeUrl.updateGroupPolicyDecisionPolicy({
     admin,
     decision_policy: encodeDecisionPolicy({
       votingWindow,
-      quorum,
+      percentage,
       threshold,
     }),
     group_policy_address: policyAddress,
@@ -34,29 +34,29 @@ export function updateDecisionPolicyMsg({
 export function encodeDecisionPolicy({
   votingWindow,
   threshold,
-  quorum,
+  percentage,
 }: {
-  /** in days */
+  /** number of days expressed as an integer string */
   votingWindow: number
-  /** positive integer */
+  /** positive integer string */
   threshold?: number
-  /** percentage expressed as an integer, ie `51 == 51% / 0.51` */
-  quorum?: number
+  /** percentage expressed as an integer string, ie `51` == 51% | '0.51'` */
+  percentage?: number
 }) {
   const windows = {
     min_execution_period: secondsToDuration(1),
     voting_period: daysToDuration(votingWindow),
   }
-  if (quorum) {
+  if (percentage) {
     return {
       type_url: '/cosmos.group.v1.PercentageDecisionPolicy',
       value: v1.PercentageDecisionPolicy.encode({
-        percentage: intToPercent(quorum),
+        percentage: numToPercentStr(percentage),
         windows,
       }).finish(),
     }
   }
-  if (!threshold) throwError('Must provide threshold or quorum')
+  if (!threshold) throwError('Must provide threshold or percentage')
   return {
     type_url: '/cosmos.group.v1.ThresholdDecisionPolicy',
     value: v1.ThresholdDecisionPolicy.encode({

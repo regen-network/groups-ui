@@ -12,7 +12,10 @@ import {
   Stack,
   Text,
 } from '@/atoms'
-import { GroupMembersTable } from '@/organisms/group-members-table'
+import {
+  type GroupMembersTableUpdateValues,
+  GroupMembersTable,
+} from '@/organisms/group-members-table'
 import { GroupPolicyTable } from '@/organisms/group-policy-table'
 
 export default function GroupDetails() {
@@ -27,6 +30,13 @@ export default function GroupDetails() {
   const [policy] = policies ?? []
   console.log('policy :>> ', policy)
   const policyIsAdmin = policy?.admin === policy?.address
+
+  async function handleUpdateMembers(
+    values: GroupMembersTableUpdateValues,
+  ): Promise<boolean> {
+    console.log('values :>> ', values)
+    return true
+  }
 
   return (
     <PageContainer>
@@ -45,7 +55,7 @@ export default function GroupDetails() {
           <Text>{policyIsAdmin ? 'Group Policy' : policy?.admin}</Text>
         </HStack>
         <GroupPolicyTable policies={policies || []} />
-        <GroupMembersTable members={members || []} />
+        <GroupMembersTable members={members || []} onSave={handleUpdateMembers} />
       </Stack>
     </PageContainer>
   )

@@ -33,7 +33,7 @@ import {
   RadioGroupField,
   TextareaField,
 } from '@/molecules/form-fields'
-import { TruncateTooltip } from '@/molecules/TruncateTooltip'
+import { Truncate } from '@/molecules/Truncate'
 
 /** @see @haveanicedavid/cosmos-groups-ts/types/proto/cosmos/group/v1/types */
 export type GroupFormValues = {
@@ -98,7 +98,7 @@ export const GroupForm = ({
       return false
     }
     try {
-      valid.bech32.parse(addr)
+      valid.bech32Address.parse(addr)
       return true
     } catch (err) {
       if (err instanceof z.ZodError) {
@@ -176,7 +176,7 @@ export const GroupForm = ({
                     {controlledMemberFields.map((member, i) => (
                       <Tr key={i + member.address}>
                         <Td>
-                          <TruncateTooltip
+                          <Truncate
                             text={member.address}
                             headLength={18}
                             tailLength={22}

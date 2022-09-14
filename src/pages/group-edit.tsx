@@ -6,13 +6,13 @@ import type {
   GroupWithPolicyFormValues,
 } from 'types'
 import { handleError, throwError } from 'util/errors'
-import { percentToInt } from 'util/helpers'
+import { clearEmptyStr, percentStrToNum } from 'util/helpers'
 
 import { signAndBroadcast } from 'store'
 import { updateGroupMetadataMsg } from 'api/group.messages'
 import { updateGroupMembersMsg } from 'api/member.messages'
-import { isPercentagePolicy, isThresholdPolicy } from 'api/policy.helpers'
 import { updateDecisionPolicyMsg } from 'api/policy.messages'
+import { isPercentagePolicy, isThresholdPolicy } from 'api/policy.utils'
 import { useGroup, useGroupMembers, useGroupPolicies } from 'hooks/use-query'
 import { useTxToasts } from 'hooks/useToasts'
 
@@ -48,11 +48,11 @@ export default function GroupEdit() {
 
   const initialPolicyValues: GroupPolicyFormValues = {
     threshold: isThresholdPolicy(decision_policy)
-      ? parseFloat(decision_policy.threshold)
+      ? parseInt(decision_policy.threshold)
       : undefined,
-    votingWindow: parseFloat(decision_policy.windows.voting_period),
-    quorum: isPercentagePolicy(policy.decision_policy)
-      ? percentToInt(policy.decision_policy.percentage)
+    votingWindow: parseInt(decision_policy.windows.voting_period), //parseFloat(decision_policy.windows.voting_period),
+    percentage: isPercentagePolicy(policy.decision_policy)
+      ? percentStrToNum(policy.decision_policy.percentage)
       : undefined,
   }
 
@@ -104,15 +104,14 @@ export default function GroupEdit() {
             }),
           )
         }
-        if (prop === 'votingWindow' || prop === 'threshold' || prop === 'quorum') {
-          // TODO Msg/UpdateGroupPolicyDecisionPolicy
+        if (prop === 'votingWindow' || prop === 'threshold' || prop === 'percentage') {
           msgs.push(
             updateDecisionPolicyMsg({
               admin: group.admin,
               policyAddress: policy.address,
               votingWindow: values.votingWindow,
-              quorum: values.quorum,
-              threshold: values.threshold,
+              percentage: clearEmptyStr(values.percentage),
+              threshold: clearEmptyStr(values.threshold),
             }),
           )
         }
