@@ -7,7 +7,7 @@ import { useSteps } from 'hooks/chakra'
 import { AnimatePresence, HorizontalSlide } from '@/animations'
 import { Button, Flex, Heading, PageContainer, RouteLink, Stack, Text } from '@/atoms'
 import { PageStepper } from '@/molecules'
-import { type GroupFormValues, GroupForm } from '@/organisms/group-form'
+import { type GroupFormValues, GroupForm, GroupFormKeys } from '@/organisms/group-form'
 import {
   type GroupPolicyFormValues,
   GroupPolicyForm,
@@ -24,17 +24,19 @@ const Finished = ({ text, linkTo }: { text: string; linkTo: string }) => (
 
 export default function GroupTemplate({
   initialGroupFormValues,
+  disabledGroupFormFields,
   initialPolicyFormValues,
   linkToGroupId,
   submit,
   steps,
   text,
 }: {
+  disabledGroupFormFields?: GroupFormKeys[]
   initialGroupFormValues: GroupFormValues
   initialPolicyFormValues: GroupPolicyFormValues
   /** ID of group, used for redirect link */
   linkToGroupId?: string
-  submit: (values: GroupWithPolicyFormValues) => Promise<void>
+  submit: (values: GroupWithPolicyFormValues) => Promise<boolean>
   steps: string[]
   text: {
     submitBtn?: string
@@ -48,7 +50,7 @@ export default function GroupTemplate({
   const [submitting, setSubmitting] = useState(false)
   const [priorStep, setPriorStep] = useState(0)
 
-  const { threshold, votingWindow, quorum } = initialPolicyFormValues
+  const { threshold, votingWindow, percentage } = initialPolicyFormValues
 
   function handleGroupSubmit(values: GroupFormValues) {
     setGroupValues(values)
@@ -62,12 +64,12 @@ export default function GroupTemplate({
 
   async function handleSubmit(policyValues: GroupPolicyFormValues) {
     setSubmitting(true)
-    await submit({
+    const success = await submit({
       ...policyValues,
       ...groupValues,
     })
     setSubmitting(false)
-    nextStep()
+    if (success) nextStep()
   }
 
   function renderStep() {
@@ -76,6 +78,7 @@ export default function GroupTemplate({
         return (
           <HorizontalSlide key="step-0" fromRight={priorStep !== 0}>
             <GroupForm
+              disabledFields={disabledGroupFormFields}
               onSubmit={handleGroupSubmit}
               defaultValues={groupValues}
               btnText="Next"
@@ -88,7 +91,7 @@ export default function GroupTemplate({
             <GroupPolicyForm
               submitting={submitting}
               onSubmit={handleSubmit}
-              defaultValues={{ threshold, votingWindow, quorum }}
+              defaultValues={{ threshold, votingWindow, percentage }}
               goBack={handlePrev}
               btnText={text.submitBtn}
             />

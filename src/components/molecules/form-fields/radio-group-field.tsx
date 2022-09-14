@@ -1,6 +1,12 @@
 import { useController, useFormContext } from 'react-hook-form'
 
-import { type RadioProps, RadioBox, RadioGroup, VStack } from '@/atoms'
+import {
+  type RadioGroupProps,
+  type RadioProps,
+  RadioBox,
+  RadioGroup,
+  VStack,
+} from '@/atoms'
 
 import { type FieldProps, FieldControl } from './field-control'
 
@@ -11,10 +17,17 @@ type Option = {
 
 type Props = FieldProps & {
   options: Option[]
+  radioGroupProps?: Omit<RadioGroupProps, 'children' | keyof FieldProps>
 }
 
 /** custom radio group field for react hook form */
-export const RadioGroupField = ({ options, label, required, name }: Props) => {
+export const RadioGroupField = ({
+  options,
+  label,
+  required,
+  name,
+  radioGroupProps,
+}: Props) => {
   const { control, getValues } = useFormContext()
   const {
     fieldState: { error },
@@ -33,6 +46,7 @@ export const RadioGroupField = ({ options, label, required, name }: Props) => {
         onBlur={field.onBlur}
         ref={field.ref}
         value={field.value}
+        {...radioGroupProps}
       >
         <VStack align="start">
           {options.map(({ value, label }, i) => (

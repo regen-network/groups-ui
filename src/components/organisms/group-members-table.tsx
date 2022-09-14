@@ -1,7 +1,11 @@
-import type { GroupMember } from 'types'
-import { formatDate } from 'util/date'
+import { useState } from 'react'
 
-import { useBoolean } from 'hooks/chakra'
+import type { GroupMember, MemberFormValues } from 'types'
+import { formatDate } from 'util/date'
+import { defaultMemberFormValues } from 'util/form.constants'
+import { isBech32Address } from 'util/validation'
+
+import { useBoolean, useBreakpointValue } from 'hooks/chakra'
 
 import { AnimatePresence, FadeIn } from '@/animations'
 import {
@@ -17,12 +21,49 @@ import {
   Td,
   Th,
   Thead,
+  Tooltip,
   Tr,
 } from '@/atoms'
 import { TableTitlebar } from '@/molecules'
+import { Truncate } from '@/molecules/Truncate'
 
-export const GroupMembersTable = ({ members = [] }: { members: GroupMember[] }) => {
+export type GroupMembersTableUpdateValues = {
+  newMembers: MemberFormValues[]
+  memberUpdates: GroupMember[]
+}
+
+export const GroupMembersTable = ({
+  members = [],
+  onSave,
+}: {
+  members: GroupMember[]
+  onSave: (vals: GroupMembersTableUpdateValues) => Promise<boolean>
+}) => {
   const [isEdit, setEdit] = useBoolean(false)
+  const [newMemberAddr, setNewMemberAddr] = useState('')
+  const [addrErr, setAddrErr] = useState('')
+  const [newMembers, setNewMembers] = useState<MemberFormValues[]>([])
+  const [membersToUpdate, setMembersToUpdate] = useState<{ [addr: string]: string }>({})
+  const tailSize = useBreakpointValue({ base: 4, sm: 6, md: 25, lg: 35, xl: 100 })
+
+  function addNewMember() {
+    if (!isBech32Address(newMemberAddr)) {
+      return setAddrErr('Must be a valid Bech32 address')
+    }
+    const member: MemberFormValues = {
+      ...defaultMemberFormValues,
+      address: newMemberAddr,
+    }
+    setNewMembers([...newMembers, member])
+  }
+
+  function handleCancel() {
+    setNewMembers([])
+    setMembersToUpdate({})
+    setAddrErr('')
+    setEdit.off()
+  }
+
   return (
     <TableContainer w="full" borderRadius="lg" borderWidth={2} shadow="md">
       <TableTitlebar title="Members">
@@ -39,9 +80,32 @@ export const GroupMembersTable = ({ members = [] }: { members: GroupMember[] }) 
                   justifyContent: 'flex-end',
                 }}
               >
-                <Input width="auto" flexGrow={1} maxW={470} />
-                <Button variant="outline">+ Add Member</Button>
-                <Button variant="ghost" fontSize="xs" onClick={setEdit.off}>
+                <Flex direction="column" pos="relative">
+                  <Tooltip
+                    hasArrow
+                    isOpen={!!addrErr}
+                    label={addrErr}
+                    color="black"
+                    bg="tomato"
+                  >
+                    <Input
+                      width="auto"
+                      flexGrow={1}
+                      maxW={470}
+                      value={newMemberAddr}
+                      errorBorderColor="tomato"
+                      isInvalid={!!addrErr}
+                      onChange={(e) => {
+                        setAddrErr('')
+                        setNewMemberAddr(e.target.value)
+                      }}
+                    />
+                  </Tooltip>
+                </Flex>
+                <Button variant="outline" onClick={addNewMember}>
+                  + Add Member
+                </Button>
+                <Button variant="ghost" fontSize="xs" onClick={handleCancel}>
                   cancel
                 </Button>
               </FadeIn>
@@ -62,23 +126,39 @@ export const GroupMembersTable = ({ members = [] }: { members: GroupMember[] }) 
           </Tr>
         </Thead>
         <Tbody>
-          {members.map((m, i) => {
-            const key = m.member.address + i
+          {members.map(({ member }, i) => {
+            const key = member.address + i
             return (
               <Tr key={key}>
-                <Td>{m.member.address}</Td>
+                <Td>
+                  <Truncate tailLength={tailSize} text={member.address} />
+                </Td>
                 <Td>
                   <AnimatePresence mode="wait">
                     {isEdit ? (
                       <FadeIn key={'weight-edit' + key}>
-                        <NumberInput value={m.member.weight} maxW={20} />
+                        <NumberInput
+                          maxW={20}
+                          min={0}
+                          type="number"
+                          value={membersToUpdate[member.address] ?? member.weight}
+                          onChange={(n) => {
+                            console.log('n :>> ', n)
+                            setMembersToUpdate({
+                              ...membersToUpdate,
+                              [member.address]: isNaN(parseInt(n))
+                                ? ''
+                                : parseInt(n).toString(),
+                            })
+                          }}
+                        />
                       </FadeIn>
                     ) : (
-                      <FadeIn key={'weight' + key}>{m.member.weight}</FadeIn>
+                      <FadeIn key={'weight' + key}>{member.weight}</FadeIn>
                     )}
                   </AnimatePresence>
                 </Td>
-                <Td>{formatDate(m.member.added_at)}</Td>
+                <Td>{formatDate(member.added_at)}</Td>
                 <Td>
                   <AnimatePresence mode="wait">
                     {isEdit ? (
@@ -100,37 +180,3 @@ export const GroupMembersTable = ({ members = [] }: { members: GroupMember[] }) 
     </TableContainer>
   )
 }
-
-// const TableRow = ({ member, index }: ChainGroupMember & { index: number }) => {
-//   const key = member.address + index
-//   return (
-//     <Tr>
-//       <Td>{member.address}</Td>
-//       <Td>
-//         <AnimatePresence mode="wait">
-//           {isEdit ? (
-//             <FadeIn key={'weight-edit' + key}>
-//               <NumberInput value={member.weight} maxW={20} />
-//             </FadeIn>
-//           ) : (
-//             <FadeIn key={'weight' + key}>{member.weight}</FadeIn>
-//           )}
-//         </AnimatePresence>
-//       </Td>
-//       <Td>{formatDate(member.added_at)}</Td>
-//       <Td>
-//         <AnimatePresence mode="wait">
-//           {isEdit ? (
-//             <FadeIn key={'delete' + key}>
-//               <DeleteButton />
-//             </FadeIn>
-//           ) : (
-//             <FadeIn key={'hidden' + key}>
-//               <Box h={10} w={10} />
-//             </FadeIn>
-//           )}
-//         </AnimatePresence>
-//       </Td>
-//     </Tr>
-//   )
-// }

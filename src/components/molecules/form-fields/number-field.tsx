@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react'
 import { useController, useFormContext } from 'react-hook-form'
 
+import { strToNumOrEmpty } from 'util/helpers'
+
 import { type NumberInputProps, Flex, NumberInput } from '@/atoms'
 
 import { type FieldProps, FieldControl } from './field-control'
@@ -29,7 +31,11 @@ export const NumberField = ({
         <NumberInput
           {...field}
           {...numberInputProps}
-          onChange={(_, val) => onChange(val)}
+          // without the conversion, this can be set to decimal values which we
+          // don't want. Setting it as a `number` causes a whole host of other
+          // issues as well, like `NaN` rendering in the input. There might be a
+          // better appraoch though, possible future refactor
+          onChange={(n) => onChange(strToNumOrEmpty(n))}
         />
         {children}
       </Flex>

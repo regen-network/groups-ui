@@ -1,7 +1,9 @@
+import { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
+import { NumOrEmpty } from 'types/form.types'
 import { SPACING } from 'util/style.constants'
 import { valid } from 'util/validation/zod'
 
@@ -12,15 +14,15 @@ import { BackIcon } from 'assets/tsx'
 
 export type GroupPolicyFormValues = {
   votingWindow: number
-  threshold: number
-  quorum?: number
+  threshold?: NumOrEmpty
+  percentage?: NumOrEmpty
 }
 
 const resolver = zodResolver(
   z.object({
-    votingWindow: valid.votingWindow,
-    threshold: valid.threshold,
-    quorum: valid.quorum.optional(),
+    votingWindow: valid.positiveNumber,
+    threshold: valid.positiveNumberOrEmptyStr.optional(),
+    percentage: valid.percentOrEmptyStr.optional(),
   }),
 )
 
@@ -37,17 +39,66 @@ export const GroupPolicyForm = ({
   onSubmit: (data: GroupPolicyFormValues) => void
   submitting?: boolean
 }) => {
-  const form = useForm<GroupPolicyFormValues>({ defaultValues, resolver })
+  const form = useForm<GroupPolicyFormValues>({
+    defaultValues,
+    resolver,
+  })
+  const { watch, setValue } = form
+
+  const percentField = watch('percentage')
+  const thresholdField = watch('threshold')
+
+  useEffect(() => {
+    if (percentField) {
+      setValue('threshold', '')
+    }
+  }, [percentField, setValue])
+
+  useEffect(() => {
+    if (thresholdField) {
+      setValue('percentage', '')
+    }
+  }, [thresholdField, setValue])
+
+  function handleSubmit(data: GroupPolicyFormValues) {
+    const percentage = form.getValues().percentage
+    const threshold = form.getValues().threshold
+    if (!percentage && !threshold) {
+      // error if neither field is filled
+      form.setError('percentage', {
+        type: 'required',
+        message: 'Either a percentage of a threshold is required',
+      })
+      form.setError('threshold', {
+        type: 'required',
+        message: 'Either a percentage of a threshold is required',
+      })
+      return
+    }
+    if (percentage && threshold) {
+      form.setError('threshold', {
+        type: 'required',
+        message: 'Please choose only',
+      })
+      form.setError('percentage', {
+        type: 'required',
+        message: 'one of these fields',
+      })
+      return
+    }
+    return onSubmit(data)
+  }
+
   return (
     <FormCard>
       <FormProvider {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(handleSubmit)}>
           <Stack spacing={SPACING.formStack}>
             <NumberField
               required
               name="votingWindow"
               label="Voting Window"
-              numberInputProps={{ min: 0, flex: 1 }}
+              numberInputProps={{ flex: 1 }}
             >
               <Flex align="center" minW="50%">
                 <Text ml={5} fontWeight="bold">
@@ -63,14 +114,15 @@ export const GroupPolicyForm = ({
             >
               <Flex align="center" minW="50%">
                 <Text ml={5} fontWeight="bold">
-                  {'yes votes of 100 (51%)'}
+                  {"weighted 'yes' votes"}
                 </Text>
               </Flex>
             </NumberField>
             <NumberField
-              name="quorum"
-              label="Define a quorum"
-              numberInputProps={{ min: 0, flex: 1 }}
+              required
+              name="percentage"
+              label="set a percentage"
+              numberInputProps={{ min: 0, max: 100, flex: 1 }}
             >
               <Flex align="center" minW="50%">
                 <Text ml={5} fontWeight="bold">

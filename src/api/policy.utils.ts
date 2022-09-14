@@ -7,6 +7,7 @@ import type {
   UIThresholdDecisionPolicy,
 } from 'types'
 import { mistypedDurationToDays } from 'util/date'
+import { percentStrToNum } from 'util/helpers'
 
 export function toUIGroupPolicy(policyInfo: GroupPolicyInfo): UIGroupPolicyInfo {
   /* By default, `decision_policy` is returned as a golang `Any`, and it seems
@@ -40,16 +41,29 @@ export function isPercentagePolicy(
   return 'percentage' in policy
 }
 
-export function getThreshold(
+export function formatThreshold(
   { decision_policy }: UIGroupPolicyInfo,
-  defaultValue: string | number = '-',
-) {
-  return isThresholdPolicy(decision_policy) ? decision_policy.threshold : defaultValue
+  defaultValue = '-',
+): string {
+  return isThresholdPolicy(decision_policy)
+    ? decision_policy.threshold.toString()
+    : defaultValue
 }
 
-export function getQuorum(
+export function formatPercentage(
   { decision_policy }: UIGroupPolicyInfo,
-  defaultValue: string | number = '-',
-) {
-  return isPercentagePolicy(decision_policy) ? decision_policy.percentage : defaultValue
+  defaultValue = '-',
+): string {
+  return isPercentagePolicy(decision_policy)
+    ? percentStrToNum(decision_policy.percentage) + '%'
+    : defaultValue
+}
+
+export function formatVotingPeriod(
+  { decision_policy }: UIGroupPolicyInfo,
+  defaultValue = '-',
+): string {
+  return isPercentagePolicy(decision_policy) || isThresholdPolicy(decision_policy)
+    ? decision_policy.windows.voting_period + ' days'
+    : defaultValue
 }

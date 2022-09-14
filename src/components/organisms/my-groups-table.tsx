@@ -36,7 +36,6 @@ export const MyGroupsTable = ({
     .filter((g) => !memberAndAdmin.some((mag) => mag.id === g.id))
     .map((g) => ({ ...g, type: ['member'] }))
   const groups = [...memberAndAdmin, ...onlyAdmin, ...onlyMember]
-  console.log('groups :>> ', groups)
 
   if (groups.length === 0) {
     return (

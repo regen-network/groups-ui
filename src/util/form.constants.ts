@@ -18,6 +18,20 @@ export const defaultGroupFormValues: GroupFormValues = {
 }
 
 export const defaultGroupPolicyFormValues: GroupPolicyFormValues = {
-  votingWindow: 0,
-  threshold: 51,
+  votingWindow: 1,
 }
+
+// type ObjKeys = {
+//   members: (keyof MemberFormValues)[]
+//   groupMetadata: (keyof UIGroupMetadata)[]
+//   decisionPolicy: (keyof UIGroupDecisionPolicy)[]
+// }
+
+// /** string form of the keys on various group objects, used for checking msg updates etc
+//  * @see `src/pages/group-edit.tsx` for example usage
+//  */
+// export const GROUP_OBJ_KEYS: ObjKeys = {
+//   members: ['address', 'metadata', 'weight'],
+//   groupMetadata: ['description', 'forumLink', 'name', 'other', 'updatedAt'],
+//   decisionPolicy: ['percentage', 'threshold', 'windows'],
+// }

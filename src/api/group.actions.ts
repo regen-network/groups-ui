@@ -6,7 +6,7 @@ import { throwError } from 'util/errors'
 import { Group, signAndBroadcast } from 'store'
 
 import { createGroupWithPolicyMsg } from './group.messages'
-import { addMembersToGroups, toUIGroup } from './group.transforms'
+import { addMembersToGroups, toUIGroup } from './group.utils'
 
 export async function createGroupWithPolicy(values: GroupWithPolicyFormValues) {
   try {

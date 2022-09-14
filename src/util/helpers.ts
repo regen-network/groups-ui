@@ -1,12 +1,62 @@
-export const openExternalLink = (url: string) => {
-  window.open(url, '_blank', 'noopener,noreferrer')
+import type { NumOrEmpty } from 'types/form.types'
+
+export function openExternalLink(url: string) {
+  return window.open(url, '_blank', 'noopener,noreferrer')
 }
 
-export const truncate = (str: string, maxLength = 12) => {
-  if (str.length > maxLength) {
-    const head = str.substring(0, 9)
-    const tail = str.substring(str.length - 4, str.length)
-    return head + '...' + tail
-  }
-  return str
+export function truncate(
+  str: string,
+  options?: {
+    headLength?: number
+    tailLength?: number
+    disabled?: boolean
+  },
+) {
+  const headLength = options?.headLength || 10
+  const tailLength = options?.tailLength || 6
+  const mask = '...'
+  const truncatedLen = headLength + tailLength + mask.length
+  if (str.length <= truncatedLen || options?.disabled) return str
+  const head = str.substring(0, headLength)
+  const tail = str.substring(str.length - tailLength, str.length)
+  return head + mask + tail
+}
+
+/** takes an int value and converts to a percentage string
+ * @example
+ * ```ts
+ * numToPercent(51) // '0.51'
+ * numToPercent(0) // '0'
+ * numToPercent('bob') // ''
+ * ```
+ */
+export const numToPercentStr = (n: number): string => `${n / 100}`
+
+/** takes a string value and converts to a percentage integer
+ * @example
+ * ```ts
+ * percentStrToNum('0.51') // 51
+ * ```
+ */
+export const percentStrToNum = (str: string): number => parseFloat(str) * 100
+
+/** takes a positive string number, returns the integer form, or
+ * an empty string for undefined values. Mainly for form `onChange`
+ * @example
+ * ```
+ * strToNumOrEmpty('1') // 1
+ * strToNumOrEmpty('1.1') // 1
+ * strToNumOrEmpty('bob') // ''
+ * strToNumOrEmpty(undefined) // ''
+ * ```
+ */
+export function strToNumOrEmpty(s?: string): NumOrEmpty {
+  if (!s) return ''
+  const n = parseInt(s)
+  return !isNaN(n) ? n : ''
+}
+
+/** change `''` empty string values used in forms to `undefined`  */
+export const clearEmptyStr = (n?: NumOrEmpty): number | undefined => {
+  return !n ? undefined : n
 }
