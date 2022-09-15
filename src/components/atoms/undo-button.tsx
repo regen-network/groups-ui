@@ -1,8 +1,8 @@
 import { type IconButtonProps, IconButton, Tooltip } from './chakra'
 
-import { DeleteIcon } from 'assets/tsx'
+import { UndoIcon } from 'assets/tsx'
 
-export const DeleteButton = ({
+export const UndoButton = ({
   hoverText,
   ...props
 }: Omit<IconButtonProps, 'aria-label'> & {
@@ -12,7 +12,7 @@ export const DeleteButton = ({
   return (
     <Tooltip label={hoverText} isDisabled={!hoverText}>
       <IconButton {...props} aria-label={props['aria-label'] || 'Delete'}>
-        <DeleteIcon />
+        <UndoIcon />
       </IconButton>
     </Tooltip>
   )

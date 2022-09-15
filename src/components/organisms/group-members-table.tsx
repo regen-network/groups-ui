@@ -24,6 +24,7 @@ import {
   Thead,
   Tooltip,
   Tr,
+  UndoButton,
 } from '@/atoms'
 import { TableTitlebar, Truncate } from '@/molecules'
 
@@ -44,6 +45,19 @@ export const GroupMembersTable = ({
   const [addrErr, setAddrErr] = useState('')
   const tailSize = useBreakpointValue({ base: 4, sm: 6, md: 25, lg: 35, xl: 100 })
 
+  const tableMembers: MemberFormValues[] = useMemo(() => {
+    const currMembers = members.map(toMemberFormValues)
+    return [...newMembers, ...currMembers]
+  }, [members, newMembers])
+
+  function resetState() {
+    setNewMembers([])
+    setMembersToUpdate({})
+    setNewMemberAddr('')
+    setAddrErr('')
+    setEdit.off()
+  }
+
   async function handleSave() {
     const members = Object.values(membersToUpdate)
     if (!members.length) return
@@ -56,11 +70,10 @@ export const GroupMembersTable = ({
     }
   }
 
-  function resetState() {
-    setNewMembers([])
-    setMembersToUpdate({})
-    setAddrErr('')
-    setEdit.off()
+  function handleUndo(member: MemberFormValues) {
+    const newMembers = { ...membersToUpdate }
+    delete newMembers[member.address]
+    setMembersToUpdate(newMembers)
   }
 
   function changeMemberWeight(member: MemberFormValues, weight: string) {
@@ -78,6 +91,9 @@ export const GroupMembersTable = ({
     if (!isBech32Address(newMemberAddr)) {
       return setAddrErr('Must be a valid Bech32 address')
     }
+    if (tableMembers.find((m) => m.address === newMemberAddr)) {
+      return setAddrErr('Address already added')
+    }
     const member: MemberFormValues = {
       ...defaultMemberFormValues(),
       address: newMemberAddr,
@@ -86,11 +102,6 @@ export const GroupMembersTable = ({
     setNewMembers([...newMembers, member])
     setNewMemberAddr('')
   }
-
-  const tableMembers: MemberFormValues[] = useMemo(() => {
-    const currMembers = members.map(toMemberFormValues)
-    return [...newMembers, ...currMembers]
-  }, [members, newMembers])
 
   const updatedBg = useColorModeValue('blue.100', 'blue.800')
   const deletedBg = useColorModeValue('red.100', 'red.900')
@@ -206,7 +217,25 @@ export const GroupMembersTable = ({
                   <AnimatePresence mode="wait">
                     {isEdit ? (
                       <FadeIn key={'delete' + key}>
-                        <DeleteButton onClick={() => changeMemberWeight(member, '0')} />
+                        {updatedMember ? (
+                          <UndoButton
+                            onClick={() => handleUndo(member)}
+                            hoverText={
+                              updatedMember.weight === 0
+                                ? 'Undo deletion'
+                                : 'Revert change'
+                            }
+                          />
+                        ) : (
+                          // <Button
+                          //   size="xs"
+                          //   variant="ghost"
+                          //   onClick={() => handleUndo(member)}
+                          // >
+                          //   {member.weight === 0 ? 'undo deletion' : 'remove'}
+                          // </Button>
+                          <DeleteButton onClick={() => changeMemberWeight(member, '0')} />
+                        )}
                       </FadeIn>
                     ) : (
                       <FadeIn key={'hidden' + key}>
