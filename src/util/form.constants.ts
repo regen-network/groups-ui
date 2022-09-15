@@ -2,10 +2,11 @@ import type { GroupFormValues, MemberFormValues } from 'types'
 
 import { GroupPolicyFormValues } from '@/organisms/group-policy-form'
 
-export const defaultMemberFormValues: MemberFormValues = {
+export const defaultMemberFormValues = (): MemberFormValues => ({
   address: '',
   weight: 1,
-}
+  addedAt: new Date(),
+})
 
 export const defaultGroupFormValues: GroupFormValues = {
   admin: '',

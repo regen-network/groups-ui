@@ -5,7 +5,7 @@ import type { Duration } from 'types'
 
 const dayInSeconds = 24 * 60 * 60
 
-export function formatDate(date: Date | string) {
+export function formatDate(date?: Date | string) {
   return dayjs(date).format('MMM D, YYYY')
 }
 

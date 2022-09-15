@@ -1,6 +1,12 @@
 import { useParams } from 'react-router-dom'
 
+import type { MemberFormValues } from 'types'
+import { handleError, throwError } from 'util/errors'
+
+import { signAndBroadcast } from 'store'
+import { updateGroupMembersMsg } from 'api/member.messages'
 import { useGroup, useGroupMembers, useGroupPolicies } from 'hooks/use-query'
+import { useTxToasts } from 'hooks/useToasts'
 
 import {
   Button,
@@ -12,17 +18,15 @@ import {
   Stack,
   Text,
 } from '@/atoms'
-import {
-  type GroupMembersTableUpdateValues,
-  GroupMembersTable,
-} from '@/organisms/group-members-table'
+import { GroupMembersTable } from '@/organisms/group-members-table'
 import { GroupPolicyTable } from '@/organisms/group-policy-table'
 
 export default function GroupDetails() {
   const { groupId } = useParams()
   const { data: group } = useGroup(groupId)
-  const { data: members } = useGroupMembers(groupId)
+  const { data: members, refetch: refetchMembers } = useGroupMembers(groupId)
   const { data: policies } = useGroupPolicies(groupId)
+  const { toastSuccess, toastErr } = useTxToasts()
 
   console.log('group :>> ', group)
   console.log('members :>> ', members)
@@ -31,11 +35,24 @@ export default function GroupDetails() {
   console.log('policy :>> ', policy)
   const policyIsAdmin = policy?.admin === policy?.address
 
-  async function handleUpdateMembers(
-    values: GroupMembersTableUpdateValues,
-  ): Promise<boolean> {
-    console.log('values :>> ', values)
-    return true
+  async function handleUpdateMembers(values: MemberFormValues[]): Promise<boolean> {
+    if (!groupId || !group?.admin)
+      throwError(`Can't update members: missing group ID or admin`)
+    const msg = updateGroupMembersMsg({
+      groupId: group.id, // TODO: change to groupId?
+      admin: group.admin,
+      members: values,
+    })
+    try {
+      const { transactionHash } = await signAndBroadcast([msg])
+      toastSuccess(transactionHash)
+      refetchMembers()
+      return true
+    } catch (err) {
+      handleError(err)
+      toastErr(err, 'Editing group')
+      return false
+    }
   }
 
   return (

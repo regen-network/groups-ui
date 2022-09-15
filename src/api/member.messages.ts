@@ -10,12 +10,12 @@ export function updateGroupMembersMsg({
   members,
 }: {
   admin: string
-  groupId: string
+  groupId: string | Long
   members: MemberFormValues[]
 }) {
   return MsgWithTypeUrl.updateGroupMembers({
     admin,
-    group_id: Long.fromString(groupId),
+    group_id: groupId instanceof Long ? groupId : Long.fromString(groupId),
     member_updates: members.map(({ address, metadata, weight }) => ({
       address,
       metadata: JSON.stringify(metadata),

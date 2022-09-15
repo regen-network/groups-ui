@@ -1,4 +1,11 @@
-import type { GroupInfo, UIGroup, UIGroupMetadata, UIGroupWithMembers } from 'types'
+import type {
+  GroupInfo,
+  GroupMember,
+  MemberFormValues,
+  UIGroup,
+  UIGroupMetadata,
+  UIGroupWithMembers,
+} from 'types'
 
 import { fetchGroupMembers } from './member.actions'
 
@@ -32,4 +39,12 @@ export async function addMembersToGroups(
       members: members[i],
     }
   })
+}
+
+export function toMemberFormValues({ member }: GroupMember): MemberFormValues {
+  return {
+    address: member.address,
+    weight: parseInt(member.weight),
+    addedAt: new Date(member.added_at),
+  }
 }

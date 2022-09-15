@@ -33,7 +33,7 @@ import {
   RadioGroupField,
   TextareaField,
 } from '@/molecules/form-fields'
-import { Truncate } from '@/molecules/Truncate'
+import { Truncate } from '@/molecules/truncate'
 
 /** @see @haveanicedavid/cosmos-groups-ts/types/proto/cosmos/group/v1/types */
 export type GroupFormValues = {
@@ -110,7 +110,7 @@ export const GroupForm = ({
 
   function addMember(): void {
     if (!validateAddress(memberAddr)) return
-    const member: MemberFormValues = { ...defaultMemberFormValues, address: memberAddr }
+    const member: MemberFormValues = { ...defaultMemberFormValues(), address: memberAddr }
     append(member)
     setMemberAddr('')
   }

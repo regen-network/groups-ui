@@ -11,7 +11,7 @@ import { useBreakpointValue } from 'hooks/chakra'
 
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@/atoms'
 import { TableTitlebar } from '@/molecules'
-import { Truncate } from '@/molecules/Truncate'
+import { Truncate } from '@/molecules/truncate'
 
 export const GroupPolicyTable = ({ policies }: { policies: UIGroupPolicyInfo[] }) => {
   const tailSize = useBreakpointValue({ base: 4, sm: 6, md: 25, lg: 35, xl: 100 })

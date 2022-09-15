@@ -4,6 +4,7 @@ dist
 dist-ssr
 *.local
 node_modules/*
+stats.html
 
 ### VisualStudioCode ###
 .vscode/**/*

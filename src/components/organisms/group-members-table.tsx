@@ -1,11 +1,12 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import type { GroupMember, MemberFormValues } from 'types'
 import { formatDate } from 'util/date'
 import { defaultMemberFormValues } from 'util/form.constants'
 import { isBech32Address } from 'util/validation'
 
-import { useBoolean, useBreakpointValue } from 'hooks/chakra'
+import { toMemberFormValues } from 'api/group.utils'
+import { useBoolean, useBreakpointValue, useColorModeValue } from 'hooks/chakra'
 
 import { AnimatePresence, FadeIn } from '@/animations'
 import {
@@ -24,45 +25,75 @@ import {
   Tooltip,
   Tr,
 } from '@/atoms'
-import { TableTitlebar } from '@/molecules'
-import { Truncate } from '@/molecules/Truncate'
-
-export type GroupMembersTableUpdateValues = {
-  newMembers: MemberFormValues[]
-  memberUpdates: GroupMember[]
-}
+import { TableTitlebar, Truncate } from '@/molecules'
 
 export const GroupMembersTable = ({
   members = [],
   onSave,
 }: {
   members: GroupMember[]
-  onSave: (vals: GroupMembersTableUpdateValues) => Promise<boolean>
+  onSave: (vals: MemberFormValues[]) => Promise<boolean>
 }) => {
   const [isEdit, setEdit] = useBoolean(false)
+  const [submitting, setSubmitting] = useState(false)
   const [newMemberAddr, setNewMemberAddr] = useState('')
-  const [addrErr, setAddrErr] = useState('')
   const [newMembers, setNewMembers] = useState<MemberFormValues[]>([])
-  const [membersToUpdate, setMembersToUpdate] = useState<{ [addr: string]: string }>({})
+  const [membersToUpdate, setMembersToUpdate] = useState<{
+    [addr: string]: MemberFormValues
+  }>({})
+  const [addrErr, setAddrErr] = useState('')
   const tailSize = useBreakpointValue({ base: 4, sm: 6, md: 25, lg: 35, xl: 100 })
+
+  async function handleSave() {
+    const members = Object.values(membersToUpdate)
+    if (!members.length) return
+    setSubmitting(true)
+    const success = await onSave(members)
+    setSubmitting(false)
+    if (success) {
+      resetState()
+      setEdit.off()
+    }
+  }
+
+  function resetState() {
+    setNewMembers([])
+    setMembersToUpdate({})
+    setAddrErr('')
+    setEdit.off()
+  }
+
+  function changeMemberWeight(member: MemberFormValues, weight: string) {
+    const n = parseInt(weight)
+    setMembersToUpdate({
+      ...membersToUpdate,
+      [member.address]: {
+        ...member,
+        weight: isNaN(n) ? 0 : n,
+      },
+    })
+  }
 
   function addNewMember() {
     if (!isBech32Address(newMemberAddr)) {
       return setAddrErr('Must be a valid Bech32 address')
     }
     const member: MemberFormValues = {
-      ...defaultMemberFormValues,
+      ...defaultMemberFormValues(),
       address: newMemberAddr,
     }
+    setMembersToUpdate({ ...membersToUpdate, [member.address]: member })
     setNewMembers([...newMembers, member])
+    setNewMemberAddr('')
   }
 
-  function handleCancel() {
-    setNewMembers([])
-    setMembersToUpdate({})
-    setAddrErr('')
-    setEdit.off()
-  }
+  const tableMembers: MemberFormValues[] = useMemo(() => {
+    const currMembers = members.map(toMemberFormValues)
+    return [...newMembers, ...currMembers]
+  }, [members, newMembers])
+
+  const updatedBg = useColorModeValue('blue.100', 'blue.800')
+  const deletedBg = useColorModeValue('red.100', 'red.900')
 
   return (
     <TableContainer w="full" borderRadius="lg" borderWidth={2} shadow="md">
@@ -80,7 +111,7 @@ export const GroupMembersTable = ({
                   justifyContent: 'flex-end',
                 }}
               >
-                <Flex direction="column" pos="relative">
+                <Flex direction="column" pos="relative" grow={1} maxW={440}>
                   <Tooltip
                     hasArrow
                     isOpen={!!addrErr}
@@ -90,8 +121,6 @@ export const GroupMembersTable = ({
                   >
                     <Input
                       width="auto"
-                      flexGrow={1}
-                      maxW={470}
                       value={newMemberAddr}
                       errorBorderColor="tomato"
                       isInvalid={!!addrErr}
@@ -102,21 +131,31 @@ export const GroupMembersTable = ({
                     />
                   </Tooltip>
                 </Flex>
-                <Button variant="outline" onClick={addNewMember}>
+                <Button variant="outline" onClick={addNewMember} disabled={submitting}>
                   + Add Member
                 </Button>
-                <Button variant="ghost" fontSize="xs" onClick={handleCancel}>
+                <Button
+                  variant="ghost"
+                  fontSize="xs"
+                  onClick={resetState}
+                  disabled={submitting}
+                >
                   cancel
                 </Button>
               </FadeIn>
             </Flex>
           )}
         </AnimatePresence>
-        <Button variant={isEdit ? 'solid' : 'outline'} onClick={setEdit.toggle}>
+        <Button
+          variant={isEdit ? 'solid' : 'outline'}
+          onClick={isEdit ? handleSave : setEdit.toggle}
+          loadingText="Saving"
+          isLoading={submitting}
+        >
           {isEdit ? 'Save Changes' : 'Edit Members'}
         </Button>
       </TableTitlebar>
-      <Table variant="striped" size="lg">
+      <Table size="lg" variant={isEdit ? undefined : 'striped'}>
         <Thead>
           <Tr sx={{ '& > th': { fontWeight: 'bold' } }}>
             <Th>Address</Th>
@@ -126,10 +165,22 @@ export const GroupMembersTable = ({
           </Tr>
         </Thead>
         <Tbody>
-          {members.map(({ member }, i) => {
+          {tableMembers.map((member, i) => {
             const key = member.address + i
+            const updatedMember = membersToUpdate[member.address]
             return (
-              <Tr key={key}>
+              <Tr
+                key={key}
+                sx={{
+                  '> td': {
+                    bgColor: updatedMember
+                      ? updatedMember.weight === 0
+                        ? deletedBg
+                        : updatedBg
+                      : undefined,
+                  },
+                }}
+              >
                 <Td>
                   <Truncate tailLength={tailSize} text={member.address} />
                 </Td>
@@ -141,16 +192,8 @@ export const GroupMembersTable = ({
                           maxW={20}
                           min={0}
                           type="number"
-                          value={membersToUpdate[member.address] ?? member.weight}
-                          onChange={(n) => {
-                            console.log('n :>> ', n)
-                            setMembersToUpdate({
-                              ...membersToUpdate,
-                              [member.address]: isNaN(parseInt(n))
-                                ? ''
-                                : parseInt(n).toString(),
-                            })
-                          }}
+                          value={updatedMember?.weight ?? member.weight}
+                          onChange={(weight) => changeMemberWeight(member, weight)}
                         />
                       </FadeIn>
                     ) : (
@@ -158,12 +201,12 @@ export const GroupMembersTable = ({
                     )}
                   </AnimatePresence>
                 </Td>
-                <Td>{formatDate(member.added_at)}</Td>
+                <Td>{formatDate(member.addedAt)}</Td>
                 <Td>
                   <AnimatePresence mode="wait">
                     {isEdit ? (
                       <FadeIn key={'delete' + key}>
-                        <DeleteButton />
+                        <DeleteButton onClick={() => changeMemberWeight(member, '0')} />
                       </FadeIn>
                     ) : (
                       <FadeIn key={'hidden' + key}>
