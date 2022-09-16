@@ -26,14 +26,13 @@ import {
   Thead,
   Tr,
 } from '@/atoms'
-import { InputWithButton } from '@/molecules'
+import { InputWithButton, Truncate } from '@/molecules'
 import {
   FieldControl,
   InputField,
   RadioGroupField,
   TextareaField,
 } from '@/molecules/form-fields'
-import { Truncate } from '@/molecules/truncate'
 
 /** @see @haveanicedavid/cosmos-groups-ts/types/proto/cosmos/group/v1/types */
 export type GroupFormValues = {
