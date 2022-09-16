@@ -24,7 +24,7 @@ export const AlertTemplate = ({
     <Container maxWidth="md">
       <Box borderWidth={1} borderRadius="lg" py={6} px={4} mt={5}>
         <Stack spacing={4}>
-          <GroupsIcon sx={{ height: 50, width: 50 }} />
+          <GroupsIcon sx={{ height: 50, width: 50, alignSelf: 'center' }} />
 
           <Notify title={title} status={status}>
             {text}
