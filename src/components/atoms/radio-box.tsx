@@ -1,12 +1,17 @@
 import { useColorModeValue } from 'hooks/chakra'
 
-import { type RadioProps, Box, forwardRef, Radio } from './chakra'
+import { type RadioProps, Box, Collapse, Flex, forwardRef, Radio } from './chakra'
 
 /** Cusom behavior and styles on a `<Radio /> element */
 export const RadioBox = forwardRef<
-  RadioProps & { selected: boolean; value: RadioProps['value']; error?: boolean },
+  RadioProps & {
+    error?: boolean
+    label: string
+    selected: boolean
+    value: RadioProps['value']
+  },
   'div'
->(({ selected, error, children, ...radioProps }, ref) => {
+>(({ error, children, label, selected, ...radioProps }, ref) => {
   const bgSelected = useColorModeValue('gray.100', 'gray.700')
   const borderSelected = useColorModeValue('gray.400', 'gray.500')
   const borderNormal = useColorModeValue('gray.300', 'gray.600')
@@ -19,10 +24,17 @@ export const RadioBox = forwardRef<
       shadow={selected ? 'md' : undefined}
       bg={selected ? bgSelected : undefined}
       transition="all 0.2s ease-in-out"
+      py={2.5}
+      px={3}
     >
-      <Radio size="md" py={2.5} px={3} value={radioProps.value} w="full" ref={ref}>
-        {children}
-      </Radio>
+      <Flex direction="column">
+        <Radio size="md" value={radioProps.value} w="full" ref={ref}>
+          {label}
+        </Radio>
+        <Collapse in={selected} animateOpacity>
+          {children}
+        </Collapse>
+      </Flex>
     </Box>
   )
 })

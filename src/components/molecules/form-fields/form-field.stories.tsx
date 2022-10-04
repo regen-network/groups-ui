@@ -3,11 +3,12 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import { SPACING } from 'util/style.constants'
 
-import { Center, FormCard, Stack } from '@/atoms'
+import { /* Box, */ Center, FormCard, Stack } from '@/atoms'
 
 import { InputField } from './input-field'
 import { NumberField } from './number-field'
 import { RadioGroupField } from './radio-group-field'
+// import { RadioGroupInputField } from './radio-group-input-field'
 import { TextareaField } from './textarea-field'
 
 export default {
@@ -35,6 +36,22 @@ const Template: ComponentStory<typeof FormProvider> = (args) => {
                 { label: 'label 2', value: '2' },
               ]}
             />
+            {/* <RadioGroupInputField
+              name="radiogroup2"
+              label="Radiogroup field with children"
+              options={[
+                { label: 'label selected', value: '1', children: <Box>Hello</Box> },
+                { label: 'label 2', value: '2', children: <Box>World</Box> },
+              ]}
+            /> */}
+            {/* <RadioInputGroupField
+              name="radiogroup3"
+              label="Radiogroup field custom"
+              options={[
+                { label: 'label selected', value: '1' },
+                { label: 'label 2', value: '2' },
+              ]}
+            /> */}
           </Stack>
         </FormProvider>
       </FormCard>

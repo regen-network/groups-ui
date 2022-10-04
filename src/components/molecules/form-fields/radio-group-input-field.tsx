@@ -3,8 +3,11 @@ import { useController, useFormContext } from 'react-hook-form'
 import {
   type RadioGroupProps,
   type RadioProps,
+  Flex,
+  Input,
   RadioBox,
   RadioGroup,
+  Text,
   VStack,
 } from '@/atoms'
 
@@ -13,6 +16,7 @@ import { type FieldProps, FieldControl } from './field-control'
 type Option = {
   label: string
   value: RadioProps['value']
+  // children?: ReactNode
 }
 
 type Props = FieldProps & {
@@ -20,8 +24,8 @@ type Props = FieldProps & {
   radioGroupProps?: Omit<RadioGroupProps, 'children' | keyof FieldProps>
 }
 
-/** custom radio group field for react hook form */
-export const RadioGroupField = ({
+/** custom radio group field with an input for value */
+export const RadioGroupInputField = ({
   options,
   label,
   required,
@@ -55,7 +59,12 @@ export const RadioGroupField = ({
               selected={field.value === value}
               value={value}
               label={label}
-            />
+            >
+              <Flex>
+                <Input />
+                <Text>Text for this component</Text>
+              </Flex>
+            </RadioBox>
           ))}
         </VStack>
       </RadioGroup>
