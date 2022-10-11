@@ -28,9 +28,9 @@ export default function GroupEdit() {
 
   const [policy] = policies ?? []
 
-  if (!group || !members || !policy?.decision_policy) return <Loading />
+  if (!group || !members || !policy?.decisionPolicy) return <Loading />
 
-  const { decision_policy } = policy
+  const { decisionPolicy } = policy
 
   const initialGroupValues: GroupFormValues = {
     admin: policy.admin,
@@ -47,12 +47,12 @@ export default function GroupEdit() {
   }
 
   const initialPolicyValues: GroupPolicyFormValues = {
-    threshold: isThresholdPolicy(decision_policy)
-      ? parseInt(decision_policy.threshold)
+    threshold: isThresholdPolicy(decisionPolicy)
+      ? parseInt(decisionPolicy.threshold)
       : undefined,
-    votingWindow: parseInt(decision_policy.windows.voting_period), //parseFloat(decision_policy.windows.voting_period),
-    percentage: isPercentagePolicy(policy.decision_policy)
-      ? percentStrToNum(policy.decision_policy.percentage)
+    votingWindow: parseInt(decisionPolicy.windows.votingPeriod), //parseFloat(decisionPolicy.windows.voting_period),
+    percentage: isPercentagePolicy(policy.decisionPolicy)
+      ? percentStrToNum(policy.decisionPolicy.percentage)
       : undefined,
   }
 

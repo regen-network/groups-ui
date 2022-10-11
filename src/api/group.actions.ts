@@ -39,7 +39,7 @@ export async function fetchGroupById(groupId?: string | Long): Promise<UIGroup> 
   if (!groupId) throwError('groupId is required')
   try {
     const { info } = await Group.query.groupInfo({
-      group_id: groupId instanceof Long ? groupId : Long.fromString(groupId),
+      groupId: groupId instanceof Long ? groupId : Long.fromString(groupId),
     })
     return toUIGroup(info)
   } catch (error) {

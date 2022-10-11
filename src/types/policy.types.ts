@@ -2,8 +2,11 @@ import type {
   DecisionPolicyWindows,
   GroupPolicyInfo,
   PercentageDecisionPolicy,
+  PercentageDecisionPolicySDKType,
   ThresholdDecisionPolicy,
+  ThresholdDecisionPolicySDKType,
 } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/types'
+export type { GroupPolicyInfoSDKType } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/types'
 
 export type { GroupPolicyInfo }
 
@@ -12,11 +15,14 @@ export type UIPercentageDecisionPolicy = WithWindows<PercentageDecisionPolicy>
 export type UIThresholdDecisionPolicy = WithWindows<ThresholdDecisionPolicy>
 
 export type ChainGroupDecisionPolicy = PercentageDecisionPolicy | ThresholdDecisionPolicy
+export type ChainGroupDecisionPolicySDK =
+  | PercentageDecisionPolicySDKType
+  | ThresholdDecisionPolicySDKType
 
 export type UIGroupDecisionPolicy = UIPercentageDecisionPolicy | UIThresholdDecisionPolicy
 
-export type UIGroupPolicyInfo = Omit<GroupPolicyInfo, 'decision_policy'> & {
-  decision_policy: UIGroupDecisionPolicy
+export type UIGroupPolicyInfo = Omit<GroupPolicyInfo, 'decisionPolicy'> & {
+  decisionPolicy: UIGroupDecisionPolicy
 }
 
 type UIDecisionPolicyWindows = {

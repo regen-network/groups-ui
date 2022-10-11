@@ -1,5 +1,5 @@
 import type {
-  GroupInfo,
+  GroupInfoSDKType,
   GroupMember,
   MemberFormValues,
   UIGroup,
@@ -10,7 +10,7 @@ import type {
 import { fetchGroupMembers } from './member.actions'
 
 /** Parses chain-group and returns typed metadata */
-export function toUIGroup(group: GroupInfo): UIGroup {
+export function toUIGroup(group: GroupInfoSDKType): UIGroup {
   // TODO - add AJV validation and error handling / filtering for invalid metadata
   let metadata: UIGroupMetadata
   if (group.metadata) {
@@ -22,8 +22,12 @@ export function toUIGroup(group: GroupInfo): UIGroup {
     }
   }
   return {
-    ...group,
     metadata,
+    admin: group.admin,
+    createdAt: group.created_at,
+    id: group.id,
+    totalWeight: group.total_weight,
+    version: group.version,
   }
 }
 
@@ -45,6 +49,6 @@ export function toMemberFormValues({ member }: GroupMember): MemberFormValues {
   return {
     address: member.address,
     weight: parseInt(member.weight),
-    addedAt: new Date(member.added_at),
+    addedAt: new Date(member.addedAt),
   }
 }

@@ -1,7 +1,7 @@
 import Long from 'long'
 import { describe, expect, it } from 'vitest'
 
-import { GroupInfo, UIGroup, UIGroupMetadata } from 'types'
+import { GroupInfoSDKType, UIGroup, UIGroupMetadata } from 'types'
 
 import { toUIGroup } from 'api/group.utils'
 
@@ -16,7 +16,7 @@ const metadata: UIGroupMetadata = {
   forumLink: 'https://forum.com',
 }
 
-const stubGroup: GroupInfo = {
+const stubGroup: GroupInfoSDKType = {
   admin: 'cosmos106ljn6kds9vegaux0w4jnend97fdm50yec59vq',
   created_at: date,
   id: Long.fromString('st123r'),
@@ -27,10 +27,10 @@ const stubGroup: GroupInfo = {
 
 const stubUIGroup: UIGroup = {
   admin: 'cosmos106ljn6kds9vegaux0w4jnend97fdm50yec59vq',
-  created_at: date,
+  createdAt: date,
   id: Long.fromString('st123r'),
   metadata,
-  total_weight: '2',
+  totalWeight: '2',
   version: Long.fromString('1'),
 }
 

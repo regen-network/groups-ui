@@ -1,5 +1,5 @@
+export type { UseToastOptions } from '@chakra-ui/react'
 export {
-  type UseToastOptions,
   useBoolean,
   useBreakpointValue,
   useColorMode,
@@ -9,4 +9,6 @@ export {
   useTheme,
   useToast,
 } from '@chakra-ui/react'
+
+// type test = UseToastOptions
 export { useSteps } from 'chakra-ui-steps'

@@ -4,14 +4,16 @@ import { throwError } from 'util/errors'
 
 import { Group } from 'store'
 
+import { toGroupMember } from './member.utils'
+
 export async function fetchGroupMembers(groupId?: string | Long) {
   if (!Group.query) throwError('Wallet not initialized')
   if (!groupId) throwError('groupId is required')
   try {
     const { members } = await Group.query.groupMembers({
-      group_id: groupId instanceof Long ? groupId : Long.fromString(groupId),
+      groupId: groupId instanceof Long ? groupId : Long.fromString(groupId),
     })
-    return members
+    return members.map(toGroupMember)
   } catch (error) {
     throwError(error)
   }

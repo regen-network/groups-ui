@@ -21,14 +21,14 @@ export function createGroupWithPolicyMsg(values: GroupWithPolicyFormValues) {
   } = values
   return MsgWithTypeUrl.createGroupWithPolicy({
     admin,
-    group_policy_metadata: '',
-    group_policy_as_admin: policyAsAdmin === 'true',
-    decision_policy: encodeDecisionPolicy({
+    groupPolicyMetadata: '',
+    groupPolicyAsAdmin: policyAsAdmin === 'true',
+    decisionPolicy: encodeDecisionPolicy({
       percentage: clearEmptyStr(percentage),
       threshold: clearEmptyStr(threshold),
       votingWindow: votingWindow,
     }),
-    group_metadata: JSON.stringify({
+    groupMetadata: JSON.stringify({
       name,
       description,
       forumLink,
@@ -54,7 +54,7 @@ export function updateGroupMetadataMsg({
 }) {
   return MsgWithTypeUrl.updateGroupMetadata({
     admin,
-    group_id: Long.fromString(groupId),
+    groupId: Long.fromString(groupId),
     metadata: JSON.stringify(metadata),
   })
 }

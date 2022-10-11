@@ -11,7 +11,7 @@ export async function fetchGroupPolicies(groupId?: string | Long) {
   if (!groupId) throwError('groupId is required')
   try {
     const { group_policies } = await Group.query.groupPoliciesByGroup({
-      group_id: groupId instanceof Long ? groupId : Long.fromString(groupId),
+      groupId: groupId instanceof Long ? groupId : Long.fromString(groupId),
     })
     return group_policies.map(toUIGroupPolicy)
   } catch (error) {

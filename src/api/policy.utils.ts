@@ -1,6 +1,6 @@
 import type {
-  ChainGroupDecisionPolicy,
-  GroupPolicyInfo,
+  ChainGroupDecisionPolicySDK,
+  GroupPolicyInfoSDKType,
   UIGroupDecisionPolicy,
   UIGroupPolicyInfo,
   UIPercentageDecisionPolicy,
@@ -9,20 +9,26 @@ import type {
 import { mistypedDurationToDays } from 'util/date'
 import { percentStrToNum } from 'util/helpers'
 
-export function toUIGroupPolicy(policyInfo: GroupPolicyInfo): UIGroupPolicyInfo {
-  /* By default, `decision_policy` is returned as a golang `Any`, and it seems
+export function toUIGroupPolicy(policyInfo: GroupPolicyInfoSDKType): UIGroupPolicyInfo {
+  /* By default, `decisionPolicy` is returned as a golang `Any`, and it seems
    * easier to manage here than `cosmos-groups-ts` as decision policies can be
    * proprietary */
-  const decision_policy =
-    policyInfo.decision_policy as unknown as ChainGroupDecisionPolicy
+  const decisionPolicy =
+    policyInfo.decision_policy as unknown as ChainGroupDecisionPolicySDK
   return {
-    ...policyInfo,
-    decision_policy: {
-      ...decision_policy,
+    address: policyInfo.address,
+    admin: policyInfo.admin,
+    createdAt: policyInfo.created_at,
+    metadata: policyInfo.metadata,
+    version: policyInfo.version,
+    groupId: policyInfo.group_id,
+    decisionPolicy: {
+      ...decisionPolicy,
       windows: {
-        voting_period: mistypedDurationToDays(decision_policy.windows.voting_period),
-        min_execution_period: mistypedDurationToDays(
-          decision_policy.windows.min_execution_period,
+        votingPeriod: mistypedDurationToDays(decisionPolicy.windows.voting_period),
+        minExecutionPeriod: mistypedDurationToDays(
+          // @ts-expect-error - TODO min_execution_period isn't typed correctly
+          decisionPolicy.windows.min_execution_period,
         ),
       },
     },
@@ -42,28 +48,28 @@ export function isPercentagePolicy(
 }
 
 export function formatThreshold(
-  { decision_policy }: UIGroupPolicyInfo,
+  { decisionPolicy }: UIGroupPolicyInfo,
   defaultValue = '-',
 ): string {
-  return isThresholdPolicy(decision_policy)
-    ? decision_policy.threshold.toString()
+  return isThresholdPolicy(decisionPolicy)
+    ? decisionPolicy.threshold.toString()
     : defaultValue
 }
 
 export function formatPercentage(
-  { decision_policy }: UIGroupPolicyInfo,
+  { decisionPolicy }: UIGroupPolicyInfo,
   defaultValue = '-',
 ): string {
-  return isPercentagePolicy(decision_policy)
-    ? percentStrToNum(decision_policy.percentage) + '%'
+  return isPercentagePolicy(decisionPolicy)
+    ? percentStrToNum(decisionPolicy.percentage) + '%'
     : defaultValue
 }
 
 export function formatVotingPeriod(
-  { decision_policy }: UIGroupPolicyInfo,
+  { decisionPolicy }: UIGroupPolicyInfo,
   defaultValue = '-',
 ): string {
-  return isPercentagePolicy(decision_policy) || isThresholdPolicy(decision_policy)
-    ? decision_policy.windows.voting_period + ' days'
+  return isPercentagePolicy(decisionPolicy) || isThresholdPolicy(decisionPolicy)
+    ? decisionPolicy.windows.votingPeriod + ' days'
     : defaultValue
 }

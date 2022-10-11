@@ -19,12 +19,12 @@ export function updateDecisionPolicyMsg({
 }) {
   return MsgWithTypeUrl.updateGroupPolicyDecisionPolicy({
     admin,
-    decision_policy: encodeDecisionPolicy({
+    decisionPolicy: encodeDecisionPolicy({
       votingWindow,
       percentage,
       threshold,
     }),
-    group_policy_address: policyAddress,
+    groupPolicyAddress: policyAddress,
   })
 }
 
@@ -44,12 +44,12 @@ export function encodeDecisionPolicy({
   percentage?: number
 }) {
   const windows = {
-    min_execution_period: secondsToDuration(1),
-    voting_period: daysToDuration(votingWindow),
+    minExecutionPeriod: secondsToDuration(1),
+    votingPeriod: daysToDuration(votingWindow),
   }
   if (percentage) {
     return {
-      type_url: '/cosmos.group.v1.PercentageDecisionPolicy',
+      typeUrl: '/cosmos.group.v1.PercentageDecisionPolicy',
       value: v1.PercentageDecisionPolicy.encode({
         percentage: numToPercentStr(percentage),
         windows,
@@ -58,7 +58,7 @@ export function encodeDecisionPolicy({
   }
   if (!threshold) throwError('Must provide threshold or percentage')
   return {
-    type_url: '/cosmos.group.v1.ThresholdDecisionPolicy',
+    typeUrl: '/cosmos.group.v1.ThresholdDecisionPolicy',
     value: v1.ThresholdDecisionPolicy.encode({
       threshold: threshold.toString(),
       windows,

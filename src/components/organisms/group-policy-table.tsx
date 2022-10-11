@@ -10,8 +10,7 @@ import {
 import { useBreakpointValue } from 'hooks/chakra'
 
 import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@/atoms'
-import { TableTitlebar } from '@/molecules'
-import { Truncate } from '@/molecules/truncate'
+import { TableTitlebar, Truncate } from '@/molecules'
 
 export const GroupPolicyTable = ({ policies }: { policies: UIGroupPolicyInfo[] }) => {
   const tailSize = useBreakpointValue({ base: 4, sm: 6, md: 25, lg: 35, xl: 100 })
@@ -25,17 +24,17 @@ export const GroupPolicyTable = ({ policies }: { policies: UIGroupPolicyInfo[] }
           <Tr sx={{ '& > th': { fontWeight: 'bold' } }}>
             <Th>Created</Th>
             <Th>Voting window</Th>
-            <Th>{isThresholdPolicy(p.decision_policy) ? 'Threshold' : 'Percentage'}</Th>
+            <Th>{isThresholdPolicy(p.decisionPolicy) ? 'Threshold' : 'Percentage'}</Th>
             <Th>Admin</Th>
           </Tr>
         </Thead>
         <Tbody>
           {/* {policies.map((p, i) => ( */}
           <Tr>
-            <Td>{formatDate(p.created_at)}</Td>
+            <Td>{formatDate(p.createdAt)}</Td>
             <Td>{formatVotingPeriod(p)}</Td>
             <Td>
-              {isThresholdPolicy(p.decision_policy)
+              {isThresholdPolicy(p.decisionPolicy)
                 ? formatThreshold(p)
                 : formatPercentage(p)}
             </Td>
