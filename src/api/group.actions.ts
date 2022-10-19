@@ -34,13 +34,14 @@ export async function fetchGroupsWithMembersByAdmin(address?: string) {
   return addMembersToGroups(groups)
 }
 
-export async function fetchGroupById(groupId?: string | Long): Promise<UIGroup> {
+export async function fetchGroupById(groupId?: string | Long): Promise<UIGroup | null> {
   if (!Group.query) throwError('Wallet not initialized')
   if (!groupId) throwError('groupId is required')
   try {
     const { info } = await Group.query.groupInfo({
       groupId: groupId instanceof Long ? groupId : Long.fromString(groupId),
     })
+    if (!info) return null
     return toUIGroup(info)
   } catch (error) {
     throwError(error)

@@ -25,10 +25,9 @@ export function toUIGroupPolicy(policyInfo: GroupPolicyInfoSDKType): UIGroupPoli
     decisionPolicy: {
       ...decisionPolicy,
       windows: {
-        votingPeriod: mistypedDurationToDays(decisionPolicy.windows.voting_period),
+        votingPeriod: mistypedDurationToDays(decisionPolicy.windows?.voting_period),
         minExecutionPeriod: mistypedDurationToDays(
-          // @ts-expect-error - TODO min_execution_period isn't typed correctly
-          decisionPolicy.windows.min_execution_period,
+          decisionPolicy.windows?.min_execution_period,
         ),
       },
     },

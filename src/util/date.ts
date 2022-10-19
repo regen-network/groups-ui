@@ -32,6 +32,7 @@ export function daysToDuration(days: number): Duration {
 // the types generated from proto list `Duration` types in several API returns
 // where its' actually a string in seconds, ie `86400s` representing 1 day. This
 // is a helper function to work around that, but a it's not an ideal solution.
-export function mistypedDurationToDays(duration: Duration): string {
+export function mistypedDurationToDays(duration?: Duration): string {
+  if (!duration) return ''
   return secondsToDays(parseInt(duration as unknown as string))
 }

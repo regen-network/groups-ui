@@ -18,8 +18,11 @@ export const defaultGroupFormValues: GroupFormValues = {
   otherMetadata: '',
 }
 
+export const DEFAULT_VOTING_WINDOW = 1
+export const DEFAULT_MEMBER_WEIGHT = 1
+
 export const defaultGroupPolicyFormValues: GroupPolicyFormValues = {
-  votingWindow: 1,
+  votingWindow: DEFAULT_VOTING_WINDOW,
 }
 
 // type ObjKeys = {

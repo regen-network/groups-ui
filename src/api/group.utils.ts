@@ -1,8 +1,8 @@
 import type {
   GroupInfoSDKType,
-  GroupMember,
   MemberFormValues,
   UIGroup,
+  UIGroupMember,
   UIGroupMetadata,
   UIGroupWithMembers,
 } from 'types'
@@ -45,7 +45,7 @@ export async function addMembersToGroups(
   })
 }
 
-export function toMemberFormValues({ member }: GroupMember): MemberFormValues {
+export function toMemberFormValues({ member }: UIGroupMember): MemberFormValues {
   return {
     address: member.address,
     weight: parseInt(member.weight),

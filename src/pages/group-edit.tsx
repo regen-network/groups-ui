@@ -6,6 +6,7 @@ import type {
   GroupWithPolicyFormValues,
 } from 'types'
 import { handleError, throwError } from 'util/errors'
+import { DEFAULT_MEMBER_WEIGHT, DEFAULT_VOTING_WINDOW } from 'util/form.constants'
 import { clearEmptyStr, percentStrToNum } from 'util/helpers'
 
 import { signAndBroadcast } from 'store'
@@ -35,9 +36,9 @@ export default function GroupEdit() {
   const initialGroupValues: GroupFormValues = {
     admin: policy.admin,
     members: members.map(({ member }) => ({
-      address: member.address,
-      weight: parseInt(member.weight),
-      metadata: member.metadata,
+      address: member?.address,
+      weight: parseInt(member?.weight || DEFAULT_MEMBER_WEIGHT.toString()),
+      metadata: member?.metadata,
     })),
     name: group.metadata.name,
     policyAsAdmin: policy.address === group.admin ? 'true' : 'false',
@@ -50,7 +51,9 @@ export default function GroupEdit() {
     threshold: isThresholdPolicy(decisionPolicy)
       ? parseInt(decisionPolicy.threshold)
       : undefined,
-    votingWindow: parseInt(decisionPolicy.windows.votingPeriod), //parseFloat(decisionPolicy.windows.voting_period),
+    votingWindow: parseInt(
+      decisionPolicy.windows?.votingPeriod || DEFAULT_VOTING_WINDOW.toString(),
+    ), //parseFloat(decisionPolicy.windows.voting_period),
     percentage: isPercentagePolicy(policy.decisionPolicy)
       ? percentStrToNum(policy.decisionPolicy.percentage)
       : undefined,

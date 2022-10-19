@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 
-import type { GroupMember, MemberFormValues } from 'types'
+import type { MemberFormValues, UIGroupMember } from 'types'
 import { formatDate } from 'util/date'
 import { defaultMemberFormValues } from 'util/form.constants'
 import { isBech32Address } from 'util/validation'
@@ -32,7 +32,7 @@ export const GroupMembersTable = ({
   members = [],
   onSave,
 }: {
-  members: GroupMember[]
+  members: UIGroupMember[]
   onSave: (vals: MemberFormValues[]) => Promise<boolean>
 }) => {
   const [isEdit, setEdit] = useBoolean(false)
