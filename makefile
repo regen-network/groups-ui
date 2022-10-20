@@ -48,6 +48,7 @@ local-init: local-clean local-keys
 	simd init $(MONIKER) --chain-id $(CHAIN_ID) --home $(CHAIN_HOME)
 	simd add-genesis-account alice 10000000000000000000000001stake --home $(CHAIN_HOME) --keyring-backend test
 	simd gentx alice 1000000000stake --chain-id $(CHAIN_ID) --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)
+	simd add-genesis-account machete 0stake --home $(CHAIN_HOME) --keyring-backend test
 	simd collect-gentxs --home $(CHAIN_HOME)
 	$(sed) "s/prometheus = false/prometheus = true/" $(CHAIN_HOME)/config/config.toml
 	$(sed) "s/cors_allowed_origins = \[\]/cors_allowed_origins = [\"*\"]/" $(CHAIN_HOME)/config/config.toml
@@ -59,9 +60,7 @@ local-init: local-clean local-keys
 
 .PHONY: local-start
 local-start:
-	#simd start --home $(CHAIN_HOME) --grpc-web.enable true --grpc-web.address 0.0.0.0:9091
-	# simd start --mode validator --home $(CHAIN_HOME)
-	simd start --home $(CHAIN_HOME)
+	simd start --home $(CHAIN_HOME)  --log_level debug
 
 .PHONY: query-balance
 query-balance:
