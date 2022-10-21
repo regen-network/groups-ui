@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { ComponentStoryFn, Meta } from '@storybook/react'
 
 import { AppLayout } from '../app-layout'
 
@@ -8,9 +8,13 @@ export default {
   argTypes: {
     onBtnClick: { action: 'clicked' },
   },
-} as ComponentMeta<typeof AppLayout>
+} as Meta<typeof AppLayout>
 
-const Template: ComponentStory<typeof AppLayout> = () => <AppLayout />
+const Template: ComponentStoryFn<typeof AppLayout> = () => (
+  <AppLayout>
+    <div>hello</div>
+  </AppLayout>
+)
 
 export const Component = Template.bind({})
 Component.args = {}

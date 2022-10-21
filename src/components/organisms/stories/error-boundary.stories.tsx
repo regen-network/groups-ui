@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { ComponentStoryFn, Meta } from '@storybook/react'
 
 import { ErrorFallback } from '../error-fallback'
 
@@ -8,11 +8,11 @@ export default {
   argTypes: {
     resetErrorBoundary: { action: 'resetErrorBoundary' },
   },
-} as ComponentMeta<typeof ErrorFallback>
+} as Meta<typeof ErrorFallback>
 
 const fakeError = new Error('Fake error message')
 
-const Template: ComponentStory<typeof ErrorFallback> = (args) => (
+const Template: ComponentStoryFn<typeof ErrorFallback> = (args) => (
   <ErrorFallback resetErrorBoundary={args.resetErrorBoundary} error={fakeError} />
 )
 

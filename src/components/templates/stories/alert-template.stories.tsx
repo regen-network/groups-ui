@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, ComponentStoryFn } from '@storybook/react'
 
 import { AlertTemplate } from '../alert-template'
 
@@ -8,9 +8,9 @@ export default {
   argTypes: {
     onBtnClick: { action: 'clicked' },
   },
-} as ComponentMeta<typeof AlertTemplate>
+} as Meta<typeof AlertTemplate>
 
-const Template: ComponentStory<typeof AlertTemplate> = (args) => (
+const Template: ComponentStoryFn<typeof AlertTemplate> = (args) => (
   <AlertTemplate {...args} />
 )
 

@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, ComponentStoryFn } from '@storybook/react'
 
 import { Button } from '..'
 
@@ -19,9 +19,9 @@ export default {
       control: 'radio',
     },
   },
-} as ComponentMeta<typeof Button>
+} as Meta<typeof Button>
 
-const Template: ComponentStory<typeof Button> = (args) => (
+const Template: ComponentStoryFn<typeof Button> = (args) => (
   <Button {...args}>Button</Button>
 )
 

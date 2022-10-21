@@ -1,12 +1,12 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, ComponentStoryFn } from '@storybook/react'
 
 import { InstallKeplr } from '../install-keplr'
 
 export default {
   title: 'Pages/Install Keplr',
   component: InstallKeplr,
-} as ComponentMeta<typeof InstallKeplr>
+} as Meta<typeof InstallKeplr>
 
-const Template: ComponentStory<typeof InstallKeplr> = () => <InstallKeplr />
+const Template: ComponentStoryFn<typeof InstallKeplr> = () => <InstallKeplr />
 
 export const LoginPage = Template.bind({})

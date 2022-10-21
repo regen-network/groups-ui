@@ -1,5 +1,5 @@
 // import { useState } from 'react'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, ComponentStoryFn } from '@storybook/react'
 
 import { SelectDropdown } from '../select-dropdown'
 
@@ -9,9 +9,9 @@ export default {
   argTypes: {
     onChange: { control: false },
   },
-} as ComponentMeta<typeof SelectDropdown>
+} as Meta<typeof SelectDropdown>
 
-const Template: ComponentStory<typeof SelectDropdown> = (args) => {
+const Template: ComponentStoryFn<typeof SelectDropdown> = (args) => {
   // const [value, setValue] = useState<string>()
   return <SelectDropdown {...args} />
 }

@@ -1,9 +1,16 @@
 import { lazy } from 'react'
-import { Route, Routes as RRouterRoutes, useLocation } from 'react-router-dom'
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  Routes as RRouterRoutes,
+  useLocation,
+} from 'react-router-dom'
 
 import { AnimatePresence } from '@/animations'
 import { AppLayout } from '@/templates/app-layout'
 
+const App = lazy(() => import('./App'))
 const GroupCreate = lazy(() => import('./pages/group-create'))
 const GroupEdit = lazy(() => import('./pages/group-edit'))
 const GroupDetails = lazy(() => import('./pages/group-details'))
@@ -28,3 +35,17 @@ export const Routes = () => {
     </AnimatePresence>
   )
 }
+
+export const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<AppLayout />}>
+      <Route index element={<Groups />} />
+      <Route path="new" element={<GroupCreate />} />
+      <Route path=":groupId">
+        <Route path="details" element={<GroupDetails />} />
+        <Route path="edit" element={<GroupEdit />} />
+      </Route>
+      <Route path="*" element={<NotFound />} />
+    </Route>,
+  ),
+)

@@ -1,6 +1,7 @@
 import { ErrorBoundary } from 'react-error-boundary'
+import { RouterProvider } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Routes } from 'routes'
+import { router, Routes } from 'routes'
 import { useSnapshot } from 'valtio'
 
 import { Wallet } from 'store'
@@ -21,7 +22,8 @@ function AppContent() {
     case 'initialized':
       return <Loading />
     case 'ready':
-      return <Routes />
+      // return <Routes />
+      return <RouterProvider router={router} />
     case 'uninstalled':
       return <InstallKeplr />
     case 'rejected':
@@ -39,10 +41,10 @@ export default function App() {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ErrorBoundary FallbackComponent={ErrorFallback} onReset={handleReset}>
-        <AppContent />
-      </ErrorBoundary>
-    </QueryClientProvider>
+    // <QueryClientProvider client={queryClient}>
+    // <ErrorBoundary FallbackComponent={ErrorFallback} onReset={handleReset}>
+    <AppContent />
+    // </ErrorBoundary>
+    // </QueryClientProvider>
   )
 }

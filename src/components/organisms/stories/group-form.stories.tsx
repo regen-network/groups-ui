@@ -1,4 +1,4 @@
-import type { ComponentMeta, ComponentStory } from '@storybook/react'
+import type { Meta, ComponentStoryFn } from '@storybook/react'
 
 import { defaultGroupFormValues } from 'util/form.constants'
 
@@ -11,9 +11,9 @@ export default {
   argTypes: {
     onSubmit: { action: 'onSubmit' },
   },
-} as ComponentMeta<typeof GroupForm>
+} as Meta<typeof GroupForm>
 
-const Template: ComponentStory<typeof GroupForm> = (args) => <GroupForm {...args} />
+const Template: ComponentStoryFn<typeof GroupForm> = (args) => <GroupForm {...args} />
 
 export const Component = Template.bind({})
 Component.args = {

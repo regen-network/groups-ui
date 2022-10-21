@@ -1,4 +1,4 @@
-import { Suspense } from 'react'
+import { ReactNode, Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
 
 import { useColorModeValue } from 'hooks/chakra'
@@ -8,7 +8,7 @@ import { Box, Flex } from '@/atoms'
 import { Loading } from '@/molecules'
 import { Navbar } from '@/organisms/navbar'
 
-export const AppLayout = () => {
+export const AppLayout = ({ children }: { children?: ReactNode }) => {
   return (
     <PopUpFade>
       <Flex
@@ -23,6 +23,7 @@ export const AppLayout = () => {
         <Box as="main" h="full">
           <Suspense fallback={<Loading />}>
             <Outlet />
+            {/* {children} */}
           </Suspense>
         </Box>
       </Flex>

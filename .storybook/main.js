@@ -8,14 +8,15 @@ module.exports = {
     '@storybook/addon-essentials',
     '@storybook/addon-links',
     '@storybook/addon-interactions',
-    'storybook-addon-react-router-v6',
-    '@chakra-ui/storybook-addon',
+    'storybook-addon-react-router-v6', // '@chakra-ui/storybook-addon'
     // '@snek-at/storybook-addon-chakra-ui',
   ],
-  framework: '@storybook/react',
-  core: {
-    builder: '@storybook/builder-vite',
+
+  framework: {
+    name: '@storybook/react-vite',
+    options: {},
   },
+  core: {},
   features: {
     // storyStoreV7: true,
     emotionAlias: false,
@@ -24,12 +25,11 @@ module.exports = {
    * A option exposed by storybook-builder-vite for customising the Vite config.
    * @see https://github.com/eirslett/storybook-builder-vite#customize-vite-config
    */
-  viteFinal: async (config) => {
-    config.plugins?.push(
-      /** @see https://github.com/aleclarson/vite-tsconfig-paths */
-      tsconfigPaths(),
-    )
-
-    return config
-  },
+  // viteFinal: async (config) => {
+  //   config.plugins?.push(
+  //     /** @see https://github.com/aleclarson/vite-tsconfig-paths */
+  //     tsconfigPaths(),
+  //   )
+  //   return config
+  // },
 }
