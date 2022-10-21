@@ -1,4 +1,4 @@
-import type { Meta, ComponentStoryFn } from '@storybook/react'
+import type { ComponentStoryFn, Meta } from '@storybook/react'
 
 import { defaultGroupFormValues } from 'util/form.constants'
 

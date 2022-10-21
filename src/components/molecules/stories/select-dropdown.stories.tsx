@@ -1,5 +1,5 @@
 // import { useState } from 'react'
-import { Meta, ComponentStoryFn } from '@storybook/react'
+import { ComponentStoryFn, Meta } from '@storybook/react'
 
 import { SelectDropdown } from '../select-dropdown'
 

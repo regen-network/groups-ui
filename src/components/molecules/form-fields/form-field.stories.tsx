@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from 'react-hook-form'
-import { Meta, ComponentStoryFn } from '@storybook/react'
+import { ComponentStoryFn, Meta } from '@storybook/react'
 
 import { SPACING } from 'util/style.constants'
 
