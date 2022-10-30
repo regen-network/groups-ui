@@ -10,11 +10,7 @@ export default {
   },
 } as Meta<typeof AppLayout>
 
-const Template: ComponentStoryFn<typeof AppLayout> = () => (
-  <AppLayout>
-    <div>hello</div>
-  </AppLayout>
-)
+const Template: ComponentStoryFn<typeof AppLayout> = () => <AppLayout />
 
 export const Component = Template.bind({})
 Component.args = {}
