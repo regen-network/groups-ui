@@ -16,7 +16,7 @@ function FrozenOutlet() {
   return <Suspense fallback={<Loading />}>{outlet}</Suspense>
 }
 
-export const AppLayout = () => {
+export const RootLayout = () => {
   const { pathname } = useLocation()
   return (
     <Flex

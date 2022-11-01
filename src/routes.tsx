@@ -6,7 +6,8 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
-import { AppLayout } from '@/templates/app-layout'
+import { ErrorFallback } from '@/organisms/error-fallback'
+import { RootLayout } from '@/templates/root-layout'
 
 const GroupCreate = lazy(() => import('./pages/group-create'))
 const GroupEdit = lazy(() => import('./pages/group-edit'))
@@ -16,7 +17,7 @@ const NotFound = lazy(() => import('./pages/not-found'))
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<AppLayout />}>
+    <Route path="/" element={<RootLayout />} errorElement={<ErrorFallback />}>
       <Route index element={<Groups />} />
       <Route path="new" element={<GroupCreate />} />
       <Route path=":groupId">
