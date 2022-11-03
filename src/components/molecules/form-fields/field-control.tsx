@@ -10,7 +10,7 @@ export type FieldProps = {
   required?: boolean
 }
 
-/** Wrapper for form elements which adds label + error handling */
+/** Wrapper for form elements which adds label + error display */
 export const FieldControl = ({
   children,
   error,

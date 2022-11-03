@@ -9,6 +9,4 @@ export {
   useTheme,
   useToast,
 } from '@chakra-ui/react'
-
-// type test = UseToastOptions
 export { useSteps } from 'chakra-ui-steps'
