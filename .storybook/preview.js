@@ -1,5 +1,5 @@
 import { withRouter } from 'storybook-addon-react-router-v6'
-import { theme } from '@chakra-ui/react'
+import { theme } from '../src/theme'
 
 export const decorators = [withRouter]
 

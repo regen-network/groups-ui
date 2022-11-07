@@ -90,9 +90,5 @@ Ledger calls & typescript types are generated using [telescope](https://github.c
 
 ## Storybook
 
-Storybook is installed for this project (not all components are inside it yet), but there's currently a [bug with vite](https://github.com/chakra-ui/chakra-ui/issues/6338) Also:
+Storybook is installed for this project (not all components are inside it yet), but there's currently a [bug with vite](https://github.com/chakra-ui/chakra-ui/issues/6338) preventing it from running. Also relevant:
 https://stackoverflow.com/questions/73606433/storybook-vite-failed-to-build-with-chakraui-react-18
-
-```
-rm -rf node_modules/.cache/storybook/
-```

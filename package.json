@@ -11,7 +11,7 @@
     "lint": "yarn lint:format && yarn lint:fix ",
     "test": "yarn vitest",
     "type-check": "tsc",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "start-storybook dev -p 6006",
     "build-storybook": "storybook build",
     "postinstall": "yarn gen:theme-typings"
   },
