@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { ComponentStoryFn, Meta } from '@storybook/react'
 
 import { GroupsIcon } from './groups-icon'
 
@@ -11,9 +11,9 @@ export default {
       control: 'radio',
     },
   },
-} as ComponentMeta<typeof GroupsIcon>
+} as Meta<typeof GroupsIcon>
 
-const Template: ComponentStory<typeof GroupsIcon> = () => <GroupsIcon />
+const Template: ComponentStoryFn<typeof GroupsIcon> = () => <GroupsIcon />
 
 export const Component = Template.bind({})
 Component.args = {}

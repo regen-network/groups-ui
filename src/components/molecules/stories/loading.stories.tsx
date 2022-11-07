@@ -1,12 +1,12 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { ComponentStoryFn, Meta } from '@storybook/react'
 
 import { Loading } from '../loading'
 
 export default {
   title: 'Molecules/Loading',
   component: Loading,
-} as ComponentMeta<typeof Loading>
+} as Meta<typeof Loading>
 
-const Template: ComponentStory<typeof Loading> = () => <Loading />
+const Template: ComponentStoryFn<typeof Loading> = () => <Loading />
 
 export const Component = Template.bind({})

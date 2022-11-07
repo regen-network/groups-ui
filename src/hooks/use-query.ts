@@ -8,13 +8,18 @@ import {
 import { fetchGroupMembers } from 'api/member.actions'
 import { fetchGroupPolicies } from 'api/policy.actions'
 
+const queryDefaults = (enabled?: string) => ({
+  enabled: !!enabled,
+  useErrorBoundary: true,
+})
+
 export function useGroup(groupId?: string) {
   return useQuery(
     ['group', groupId],
     () => {
       return fetchGroupById(groupId)
     },
-    { enabled: !!groupId },
+    { ...queryDefaults(groupId) },
   )
 }
 
@@ -24,9 +29,7 @@ export function useGroupMembers(groupId?: string) {
     () => {
       return fetchGroupMembers(groupId)
     },
-    {
-      enabled: !!groupId,
-    },
+    { ...queryDefaults(groupId) },
   )
 }
 
@@ -36,7 +39,7 @@ export function useMemberGroups(address?: string) {
     () => {
       return fetchGroupsWithMembersByMember(address)
     },
-    { enabled: !!address },
+    { ...queryDefaults(address) },
   )
 }
 
@@ -46,7 +49,7 @@ export function useAdminGroups(address?: string) {
     () => {
       return fetchGroupsWithMembersByAdmin(address)
     },
-    { enabled: !!address },
+    { ...queryDefaults(address) },
   )
 }
 
@@ -56,6 +59,6 @@ export function useGroupPolicies(groupId?: string) {
     () => {
       return fetchGroupPolicies(groupId)
     },
-    { enabled: !!groupId },
+    { ...queryDefaults(groupId) },
   )
 }

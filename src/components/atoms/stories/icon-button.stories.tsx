@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { ComponentStoryFn, Meta } from '@storybook/react'
 
 import { IconButton } from '..'
 
@@ -17,9 +17,9 @@ export default {
       control: 'radio',
     },
   },
-} as ComponentMeta<typeof IconButton>
+} as Meta<typeof IconButton>
 
-const Template: ComponentStory<typeof IconButton> = (args) => (
+const Template: ComponentStoryFn<typeof IconButton> = (args) => (
   <IconButton {...args}>
     <GroupsIcon />
   </IconButton>

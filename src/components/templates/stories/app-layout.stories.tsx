@@ -1,16 +1,16 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { ComponentStoryFn, Meta } from '@storybook/react'
 
-import { AppLayout } from '../app-layout'
+import { RootLayout } from '../root-layout'
 
 export default {
   title: 'Templates/App layout',
-  component: AppLayout,
+  component: RootLayout,
   argTypes: {
     onBtnClick: { action: 'clicked' },
   },
-} as ComponentMeta<typeof AppLayout>
+} as Meta<typeof RootLayout>
 
-const Template: ComponentStory<typeof AppLayout> = () => <AppLayout />
+const Template: ComponentStoryFn<typeof RootLayout> = () => <RootLayout />
 
 export const Component = Template.bind({})
 Component.args = {}

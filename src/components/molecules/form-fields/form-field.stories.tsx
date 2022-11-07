@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from 'react-hook-form'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { ComponentStoryFn, Meta } from '@storybook/react'
 
 import { SPACING } from 'util/style.constants'
 
@@ -15,9 +15,9 @@ export default {
   title: 'Molecules/Form fields',
   component: FormProvider,
   argTypes: {},
-} as ComponentMeta<typeof FormProvider>
+} as Meta<typeof FormProvider>
 
-const Template: ComponentStory<typeof FormProvider> = (args) => {
+const Template: ComponentStoryFn<typeof FormProvider> = (args) => {
   const form = useForm()
   return (
     <Center>
