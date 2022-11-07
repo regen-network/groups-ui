@@ -59,7 +59,7 @@ local-init: local-clean local-keys
 
 .PHONY: local-start
 local-start:
-	simd start --home $(CHAIN_HOME) --long_level debug
+	simd start --home $(CHAIN_HOME) --log_level debug
 
 .PHONY: query-balance
 query-balance:
