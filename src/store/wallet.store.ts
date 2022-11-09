@@ -1,4 +1,4 @@
-import { AccountData, coins, EncodeObject } from '@cosmjs/proto-signing'
+import { type AccountData, type EncodeObject, coins } from '@cosmjs/proto-signing'
 import type { SigningStargateClient, StdFee } from '@cosmjs/stargate'
 import { cosmos, getSigningCosmosClient } from '@haveanicedavid/cosmos-groups-ts'
 import { proxy } from 'valtio'

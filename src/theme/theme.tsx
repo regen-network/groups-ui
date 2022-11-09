@@ -1,4 +1,5 @@
-import { type ThemeConfig, extendTheme } from '@chakra-ui/react'
+import type { ReactNode } from 'react'
+import { type ThemeConfig, ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { StepsStyleConfig as Steps } from 'chakra-ui-steps'
 
 import { Button } from './components/button-styles'
@@ -13,3 +14,7 @@ export const theme = extendTheme({
   config: config,
   components: { Steps, Heading, Button },
 })
+
+export const ThemeProvider = ({ children }: { children: ReactNode }) => (
+  <ChakraProvider theme={theme}>{children}</ChakraProvider>
+)
