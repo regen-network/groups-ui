@@ -227,13 +227,6 @@ export const GroupMembersTable = ({
                             }
                           />
                         ) : (
-                          // <Button
-                          //   size="xs"
-                          //   variant="ghost"
-                          //   onClick={() => handleUndo(member)}
-                          // >
-                          //   {member.weight === 0 ? 'undo deletion' : 'remove'}
-                          // </Button>
                           <DeleteButton onClick={() => changeMemberWeight(member, '0')} />
                         )}
                       </FadeIn>

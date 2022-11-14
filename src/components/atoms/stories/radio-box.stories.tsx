@@ -1,4 +1,4 @@
-import { ComponentStoryFn, Meta } from '@storybook/react'
+import { StoryFn, Meta } from '@storybook/react'
 
 import { Heading, Stack, Text } from '../chakra'
 import { RadioBox } from '../radio-box'
@@ -9,7 +9,7 @@ export default {
   argTypes: {},
 } as Meta<typeof RadioBox>
 
-const Template: ComponentStoryFn<typeof RadioBox> = (args) => <RadioBox {...args} />
+const Template: StoryFn<typeof RadioBox> = (args) => <RadioBox {...args} />
 
 export const Component = Template.bind({})
 Component.args = { label: 'Radio Box' }

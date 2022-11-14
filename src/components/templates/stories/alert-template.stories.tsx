@@ -1,4 +1,4 @@
-import { ComponentStoryFn, Meta } from '@storybook/react'
+import { StoryFn, Meta } from '@storybook/react'
 
 import { AlertTemplate } from '../alert-template'
 
@@ -10,9 +10,7 @@ export default {
   },
 } as Meta<typeof AlertTemplate>
 
-const Template: ComponentStoryFn<typeof AlertTemplate> = (args) => (
-  <AlertTemplate {...args} />
-)
+const Template: StoryFn<typeof AlertTemplate> = (args) => <AlertTemplate {...args} />
 
 export const Component = Template.bind({})
 Component.args = {

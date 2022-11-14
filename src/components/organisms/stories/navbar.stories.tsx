@@ -1,4 +1,4 @@
-import { ComponentStoryFn, Meta } from '@storybook/react'
+import { StoryFn, Meta } from '@storybook/react'
 
 import { Navbar } from '../navbar'
 
@@ -8,7 +8,7 @@ export default {
   argTypes: {},
 } as Meta<typeof Navbar>
 
-const Template: ComponentStoryFn<typeof Navbar> = () => <Navbar />
+const Template: StoryFn<typeof Navbar> = () => <Navbar />
 
 export const Component = Template.bind({})
 Component.args = {}

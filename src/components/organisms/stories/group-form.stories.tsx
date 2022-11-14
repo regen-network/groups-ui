@@ -1,4 +1,4 @@
-import type { ComponentStoryFn, Meta } from '@storybook/react'
+import type { StoryFn, Meta } from '@storybook/react'
 
 import { defaultGroupFormValues } from 'util/form.constants'
 
@@ -13,7 +13,7 @@ export default {
   },
 } as Meta<typeof GroupForm>
 
-const Template: ComponentStoryFn<typeof GroupForm> = (args) => <GroupForm {...args} />
+const Template: StoryFn<typeof GroupForm> = (args) => <GroupForm {...args} />
 
 export const Component = Template.bind({})
 Component.args = {

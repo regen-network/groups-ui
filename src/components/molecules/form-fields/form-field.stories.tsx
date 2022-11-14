@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from 'react-hook-form'
-import { ComponentStoryFn, Meta } from '@storybook/react'
+import { StoryFn, Meta } from '@storybook/react'
 
 import { SPACING } from 'util/style.constants'
 
@@ -17,7 +17,7 @@ export default {
   argTypes: {},
 } as Meta<typeof FormProvider>
 
-const Template: ComponentStoryFn<typeof FormProvider> = (args) => {
+const Template: StoryFn<typeof FormProvider> = (args) => {
   const form = useForm()
   return (
     <Center>

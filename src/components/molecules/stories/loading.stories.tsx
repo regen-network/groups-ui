@@ -1,4 +1,4 @@
-import { ComponentStoryFn, Meta } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 
 import { Loading } from '../loading'
 
@@ -7,6 +7,6 @@ export default {
   component: Loading,
 } as Meta<typeof Loading>
 
-const Template: ComponentStoryFn<typeof Loading> = () => <Loading />
+const Template: StoryFn<typeof Loading> = () => <Loading />
 
 export const Component = Template.bind({})

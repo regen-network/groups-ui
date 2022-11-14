@@ -1,4 +1,4 @@
-import { ComponentStoryFn, Meta } from '@storybook/react'
+import { StoryFn, Meta } from '@storybook/react'
 
 import { RootLayout } from '../root-layout'
 
@@ -10,7 +10,7 @@ export default {
   },
 } as Meta<typeof RootLayout>
 
-const Template: ComponentStoryFn<typeof RootLayout> = () => <RootLayout />
+const Template: StoryFn<typeof RootLayout> = () => <RootLayout />
 
 export const Component = Template.bind({})
 Component.args = {}

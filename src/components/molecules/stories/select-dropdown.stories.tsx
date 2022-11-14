@@ -1,5 +1,5 @@
 // import { useState } from 'react'
-import { ComponentStoryFn, Meta } from '@storybook/react'
+import { StoryFn, Meta } from '@storybook/react'
 
 import { SelectDropdown } from '../select-dropdown'
 
@@ -11,7 +11,7 @@ export default {
   },
 } as Meta<typeof SelectDropdown>
 
-const Template: ComponentStoryFn<typeof SelectDropdown> = (args) => {
+const Template: StoryFn<typeof SelectDropdown> = (args) => {
   // const [value, setValue] = useState<string>()
   return <SelectDropdown {...args} />
 }
