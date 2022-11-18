@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 
 import { InstallKeplr } from '../install-keplr'
 

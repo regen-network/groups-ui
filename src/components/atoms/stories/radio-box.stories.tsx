@@ -1,4 +1,4 @@
-import { StoryFn, Meta } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 
 import { Heading, Stack, Text } from '../chakra'
 import { RadioBox } from '../radio-box'
@@ -17,6 +17,7 @@ Component.args = { label: 'Radio Box' }
 export const WithChildren = Template.bind({})
 WithChildren.args = {
   ...Component.args,
+  selected: true,
   children: (
     <Stack>
       <Heading>heading</Heading>
