@@ -4,7 +4,7 @@ import { Box, Button, Container, Flex, HStack, IconButton, RouteLink } from '@/a
 
 import { ChainSelect } from './chain-select'
 
-import { GroupsIcon, MoonIcon, SunIcon } from 'assets/tsx'
+import { GroupsIcon, BsMoonStarsFill, BsSun } from 'assets/tsx'
 
 export const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -34,7 +34,7 @@ export const Navbar = () => {
               _focus={{ boxShadow: 'none' }}
               w="fit-content"
             >
-              {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+              {colorMode === 'light' ? <BsMoonStarsFill /> : <BsSun />}
             </Button>
           </Flex>
         </HStack>

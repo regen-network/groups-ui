@@ -14,4 +14,5 @@ export const TOAST_DEFAULTS: UseToastOptions = {
 
 export const SPACING = {
   formStack: 7,
+  formWidth: 570,
 }

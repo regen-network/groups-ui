@@ -10,7 +10,7 @@ import { valid } from 'util/validation/zod'
 import { Button, Flex, FormCard, IconButton, Stack, Text } from '@/atoms'
 import { NumberField } from '@/molecules/form-fields'
 
-import { BackIcon } from 'assets/tsx'
+import { IoMdArrowBack } from 'assets/tsx'
 
 export type GroupPolicyFormValues = {
   votingWindow: number
@@ -133,7 +133,7 @@ export const GroupPolicyForm = ({
             <Flex>
               {goBack && (
                 <IconButton aria-label="go back" onClick={goBack} variant="outline">
-                  <BackIcon />
+                  <IoMdArrowBack />
                 </IconButton>
               )}
               <Flex justify="end" flexGrow={1}>

@@ -34,6 +34,8 @@ export {
   FormHelperText,
   FormLabel,
   forwardRef,
+  Grid,
+  GridItem,
   Heading,
   HStack,
   Icon,

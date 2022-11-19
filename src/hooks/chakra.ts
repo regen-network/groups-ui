@@ -2,6 +2,7 @@ export type { UseToastOptions } from '@chakra-ui/react'
 export {
   useBoolean,
   useBreakpointValue,
+  useClipboard,
   useColorMode,
   useColorModeValue,
   useRadio,

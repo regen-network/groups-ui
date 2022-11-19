@@ -13,7 +13,7 @@ export const RadioBox = forwardRef<
   'div'
 >(({ error, children, label, selected, ...radioProps }, ref) => {
   const bgSelected = useColorModeValue('gray.100', 'gray.700')
-  const borderSelected = useColorModeValue('gray.400', 'gray.500')
+  const borderSelected = useColorModeValue('blue.300', 'blue.700')
   const borderNormal = useColorModeValue('gray.300', 'gray.600')
   return (
     <Box
@@ -28,7 +28,7 @@ export const RadioBox = forwardRef<
       px={3}
     >
       <Flex direction="column">
-        <Radio size="md" value={radioProps.value} w="full" ref={ref}>
+        <Radio size="md" value={radioProps.value} isChecked={selected} w="full" ref={ref}>
           {label}
         </Radio>
         <Collapse in={selected} animateOpacity>
