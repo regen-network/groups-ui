@@ -6,13 +6,17 @@ import { RadioBox } from '../radio-box'
 export default {
   title: 'Atoms/Radio Box',
   component: RadioBox,
-  argTypes: {},
+  argTypes: {
+    selected: {
+      type: 'boolean',
+    },
+  },
 } as Meta<typeof RadioBox>
 
 const Template: StoryFn<typeof RadioBox> = (args) => <RadioBox {...args} />
 
 export const Component = Template.bind({})
-Component.args = { label: 'Radio Box' }
+Component.args = { label: 'Radio Box', selected: false }
 
 export const WithChildren = Template.bind({})
 WithChildren.args = {
