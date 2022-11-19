@@ -4,7 +4,7 @@ import { Box, Button, Container, Flex, HStack, IconButton, RouteLink } from '@/a
 
 import { ChainSelect } from './chain-select'
 
-import { GroupsIcon, BsMoonStarsFill, BsSun } from 'assets/tsx'
+import { BsMoonStarsFill, BsSun, GroupsIcon } from 'assets/tsx'
 
 export const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode()
