@@ -8,6 +8,7 @@ module.exports = {
     '@storybook/addon-essentials',
     '@storybook/addon-links',
     '@storybook/addon-interactions',
+    'storybook-addon-react-router-v6',
     '@chakra-ui/storybook-addon',
   ],
 

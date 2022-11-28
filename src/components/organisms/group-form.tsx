@@ -13,7 +13,6 @@ import {
   Button,
   DeleteButton,
   Flex,
-  FormCard,
   FormControl,
   HStack,
   NumberInput,
@@ -26,7 +25,7 @@ import {
   Thead,
   Tr,
 } from '@/atoms'
-import { InputWithButton, Truncate } from '@/molecules'
+import { FormCard, InputWithButton, Truncate } from '@/molecules'
 import {
   FieldControl,
   InputField,

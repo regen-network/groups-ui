@@ -1,9 +1,9 @@
 import { Meta, StoryFn } from '@storybook/react'
 
-import { FormCard } from '..'
+import { FormCard } from '../form-card'
 
 export default {
-  title: 'Atoms/Form Card',
+  title: 'Molecules/Form Card',
   component: FormCard,
   argTypes: {
     title: {

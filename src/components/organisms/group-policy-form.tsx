@@ -7,7 +7,8 @@ import { NumOrEmpty } from 'types/form.types'
 import { SPACING } from 'util/style.constants'
 import { valid } from 'util/validation/zod'
 
-import { Button, Flex, FormCard, IconButton, Stack, Text } from '@/atoms'
+import { Button, Flex, IconButton, Stack, Text } from '@/atoms'
+import { FormCard } from '@/molecules'
 import { NumberField } from '@/molecules/form-fields'
 
 import { IoMdArrowBack } from 'assets/tsx'

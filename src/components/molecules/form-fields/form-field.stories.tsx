@@ -3,7 +3,9 @@ import { Meta, StoryFn } from '@storybook/react'
 
 import { SPACING } from 'util/style.constants'
 
-import { /* Box, */ Center, FormCard, Stack } from '@/atoms'
+import { /* Box, */ Center, Stack } from '@/atoms'
+
+import { FormCard } from '../form-card'
 
 import { InputField } from './input-field'
 import { NumberField } from './number-field'

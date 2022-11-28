@@ -9,4 +9,4 @@ export default {
 
 const Template: StoryFn<typeof InstallKeplr> = () => <InstallKeplr />
 
-export const LoginPage = Template.bind({})
+export const InstallKeplrPage = Template.bind({})

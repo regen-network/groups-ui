@@ -1,8 +1,8 @@
-// import { withRouter } from 'storybook-addon-react-router-v6'
+import { withRouter } from 'storybook-addon-react-router-v6'
 import { theme, ThemeProvider } from '../src/theme'
 
 export const decorators = [
-  // withRouter,
+  withRouter,
   (Story) => (
     <ThemeProvider>
       <Story />
