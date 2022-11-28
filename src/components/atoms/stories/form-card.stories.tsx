@@ -17,5 +17,10 @@ const Template: StoryFn<typeof FormCard> = (args) => (
   <FormCard {...args}>Content within form card</FormCard>
 )
 
-export const Component = Template.bind({})
-Component.args = {}
+export const Base = Template.bind({})
+Base.args = {}
+
+export const WithTitle = Template.bind({})
+WithTitle.args = {
+  title: 'Form card with title',
+}
