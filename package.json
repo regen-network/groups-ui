@@ -16,7 +16,7 @@
     "postinstall": "yarn gen:theme-typings"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.3.7",
+    "@chakra-ui/react": "^2.4.1",
     "@cosmjs/amino": "0.29.3",
     "@cosmjs/launchpad": "^0.27.1",
     "@cosmjs/proto-signing": "0.29.3",
@@ -48,9 +48,8 @@
   "devDependencies": {
     "@babel/core": "^7.20.2",
     "@chakra-ui/cli": "^2.1.8",
-    "@chakra-ui/storybook-addon": "^4.0.12",
+    "@chakra-ui/storybook-addon": "^4.0.13",
     "@keplr-wallet/types": "^0.11.16",
-    "@snek-at/storybook-addon-chakra-ui": "^1.1.0",
     "@storybook/addon-actions": "^7.0.0-alpha.48",
     "@storybook/addon-essentials": "^7.0.0-alpha.48",
     "@storybook/addon-interactions": "^7.0.0-alpha.48",
