@@ -1,3 +1,4 @@
+export * from './editable'
 export * from './form-card'
 export * from './input-with-button'
 export * from './loading'

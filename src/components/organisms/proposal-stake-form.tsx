@@ -1,5 +1,5 @@
 import { FormCard } from '@/molecules'
 
 export const ProposalStakeForm = () => {
-  return <FormCard>Stake form</FormCard>
+  return <FormCard title="Stake">Stake form</FormCard>
 }

@@ -5,7 +5,9 @@
   "editor.formatOnPaste": false,
   "editor.codeActionsOnSave": ["source.formatDocument", "source.fixAll.eslint"],
   "typescript.preferences.autoImportFileExcludePatterns": [
-    "node_modules/@chakra-ui/**/*"
+    "node_modules/@chakra-ui/**/*",
+    "node_modules/framer-motion/**/*",
+    "node_modules/react-icons/**/*"
   ],
   "typescript.tsdk": "node_modules/typescript/lib"
 }

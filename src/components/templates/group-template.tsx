@@ -22,7 +22,7 @@ const Finished = ({ text, linkTo }: { text: string; linkTo: string }) => (
   </Stack>
 )
 
-export default function GroupTemplate({
+export function GroupTemplate({
   initialGroupFormValues,
   disabledGroupFormFields,
   initialPolicyFormValues,
@@ -114,7 +114,7 @@ export default function GroupTemplate({
   return (
     <Flex flexDir="column">
       <PageStepper activeStep={activeStep} steps={steps} />
-      <PageContainer>
+      <PageContainer centerContent>
         <Heading textAlign="center" mb={8}>
           {steps[activeStep]}
         </Heading>

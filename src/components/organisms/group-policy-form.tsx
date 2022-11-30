@@ -3,7 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { NumOrEmpty } from 'types/form.types'
+import type { NumOrEmpty } from 'types'
 import { SPACING } from 'util/style.constants'
 import { valid } from 'util/validation/zod'
 

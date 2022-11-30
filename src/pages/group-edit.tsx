@@ -18,7 +18,7 @@ import { useGroup, useGroupMembers, useGroupPolicies } from 'hooks/use-query'
 import { useTxToasts } from 'hooks/useToasts'
 
 import { Loading } from '@/molecules'
-import GroupTemplate from '@/templates/group-template'
+import { GroupTemplate } from '@/templates/group-template'
 
 export default function GroupEdit() {
   const { toastErr, toastSuccess } = useTxToasts()

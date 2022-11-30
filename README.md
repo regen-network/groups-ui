@@ -7,6 +7,7 @@ UI for Cosmos groups module
 1. `yarn install`
 2. copy over the config `cp .env.local.example .env.local`
 3. `yarn dev` to run the repo
+4. (optional) `yarn storybook` to
 
 ## Install Cosmos-SDK
 
@@ -87,8 +88,3 @@ Ledger calls & typescript types are generated using [telescope](https://github.c
 ## Linting
 
 `yarn lint` - format with Prettier, fix linting errors
-
-## Storybook
-
-Storybook is installed for this project (not all components are inside it yet), but there's currently a [bug with vite](https://github.com/chakra-ui/chakra-ui/issues/6338) preventing it from running. Also relevant:
-https://stackoverflow.com/questions/73606433/storybook-vite-failed-to-build-with-chakraui-react-18

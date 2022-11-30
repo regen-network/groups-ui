@@ -4,7 +4,7 @@ import { SPACING } from 'util/style.constants'
 
 import { useColorModeValue } from 'hooks/chakra'
 
-import { Card, CardBody, CardHeader, Text } from '../atoms/chakra'
+import { Card, CardBody, CardHeader, Text } from '@/atoms/chakra'
 
 export const FormCard = ({
   title,
@@ -18,7 +18,7 @@ export const FormCard = ({
   return (
     <Card w={['100%', SPACING.formWidth]} variant="outline" borderRadius="lg" bg={bg}>
       {title && (
-        <CardHeader bg={titleBg}>
+        <CardHeader bg={titleBg} py={3}>
           <Text fontWeight="bold">{title}</Text>
         </CardHeader>
       )}

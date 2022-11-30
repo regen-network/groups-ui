@@ -8,7 +8,7 @@ import { Wallet } from 'store'
 import { createGroupWithPolicy } from 'api/group.actions'
 import { useTxToasts } from 'hooks/useToasts'
 
-import GroupTemplate from '@/templates/group-template'
+import { GroupTemplate } from '@/templates/group-template'
 
 export default function GroupCreate() {
   const { toastErr, toastSuccess } = useTxToasts()

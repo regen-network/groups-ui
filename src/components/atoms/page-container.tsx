@@ -1,10 +1,12 @@
-import { ReactNode } from 'react'
+import { type ContainerProps, Container } from './chakra'
 
-import { Container } from './chakra'
-
-export const PageContainer = ({ children }: { children: ReactNode }) => {
+export const PageContainer = ({
+  children,
+  maxW = 'container.xl',
+  ...containerProps
+}: ContainerProps) => {
   return (
-    <Container centerContent maxW="container.xl" pt={8} pb={16} h="full">
+    <Container {...containerProps} maxW={maxW} pt={8} pb={16} h="full">
       {children}
     </Container>
   )

@@ -5,6 +5,7 @@ export {
   useClipboard,
   useColorMode,
   useColorModeValue,
+  useEditableControls,
   useRadio,
   useRadioGroup,
   useTheme,

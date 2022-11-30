@@ -5,23 +5,10 @@ import { useClipboard } from 'hooks/chakra'
 import { Grid, GridItem, Heading, Stack, Text } from '@/atoms'
 
 import { GroupsIcon } from './groups-icon'
-import {
-  BsMoonStarsFill,
-  BsSun,
-  FaUndoAlt,
-  IoMdArrowBack,
-  RiDeleteBin6Line,
-} from './react-icons'
+import * as ReactIcons from './react-icons'
 
 /** Import component and add here to display */
-const icons = [
-  GroupsIcon,
-  IoMdArrowBack,
-  RiDeleteBin6Line,
-  BsMoonStarsFill,
-  BsSun,
-  FaUndoAlt,
-]
+const icons = [GroupsIcon, ...Object.values(ReactIcons)]
 
 export default {
   title: 'Atoms/Icons',

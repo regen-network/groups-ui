@@ -2,7 +2,7 @@ import { Meta, StoryFn } from '@storybook/react'
 
 import { defaultGroupFormValues, defaultGroupPolicyFormValues } from 'util/form.constants'
 
-import GroupTemplate from '../group-template'
+import { GroupTemplate } from '../group-template'
 
 export default {
   title: 'Templates/Group',
