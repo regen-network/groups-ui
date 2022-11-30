@@ -28,7 +28,7 @@ export const RadioBox = forwardRef<
       px={3}
     >
       <Flex direction="column">
-        <Radio size="md" value={radioProps.value} isChecked={selected} w="full" ref={ref}>
+        <Radio size="md" value={radioProps.value} w="full" ref={ref}>
           {label}
         </Radio>
         <Collapse in={selected} animateOpacity>

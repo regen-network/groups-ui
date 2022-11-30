@@ -3,13 +3,14 @@ import { Meta, StoryFn } from '@storybook/react'
 
 import { SPACING } from 'util/style.constants'
 
-import { /* Box, */ Center, Stack } from '@/atoms'
+import { /* Box, */ Button, Center, Stack, Text } from '@/atoms'
 
 import { FormCard } from '../form-card'
 
 import { InputField } from './input-field'
 import { NumberField } from './number-field'
 import { RadioGroupField } from './radio-group-field'
+import { SelectField } from './select-field'
 // import { RadioGroupInputField } from './radio-group-input-field'
 import { TextareaField } from './textarea-field'
 
@@ -19,10 +20,17 @@ export default {
   argTypes: {},
 } as Meta<typeof FormProvider>
 
+const options = [
+  { label: 'label 1', value: '1' },
+  { label: 'label 2', value: '2' },
+  { label: 'label 3', value: '3' },
+]
+
 const Template: StoryFn<typeof FormProvider> = (args) => {
   const form = useForm()
   return (
-    <Center>
+    <Center flexDir="column">
+      <Text mb={4}>(Fields to be used within react-hook-form)</Text>
       <FormCard>
         <FormProvider {...form} {...args}>
           <Stack spacing={SPACING.formStack}>
@@ -33,10 +41,13 @@ const Template: StoryFn<typeof FormProvider> = (args) => {
             <RadioGroupField
               name="radiogroup"
               label="Radiogroup field"
-              options={[
-                { label: 'label selected', value: '1' },
-                { label: 'label 2', value: '2' },
-              ]}
+              options={options}
+            />
+            <SelectField
+              name="select"
+              label="Select"
+              dropdownLabel="pick an option"
+              items={options}
             />
             {/* <RadioGroupInputField
               name="radiogroup2"
@@ -54,6 +65,13 @@ const Template: StoryFn<typeof FormProvider> = (args) => {
                 { label: 'label 2', value: '2' },
               ]}
             /> */}
+            <div>
+              <Button
+                onClick={form.handleSubmit((vals) => console.log('vield values: ', vals))}
+              >
+                Submit
+              </Button>
+            </div>
           </Stack>
         </FormProvider>
       </FormCard>

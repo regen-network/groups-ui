@@ -8,3 +8,5 @@ type ProposalMetadata = {
 export interface UIProposal extends Omit<Proposal, 'metadata'> {
   metadata: ProposalMetadata
 }
+
+export type ProposalStakeType = 'delegate' | 'redelegate' | 'undelegate' | 'claim'

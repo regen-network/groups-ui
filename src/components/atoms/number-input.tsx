@@ -13,7 +13,7 @@ export type { NumberInputProps }
 
 export const NumberInput = forwardRef((props: NumberInputProps, ref) => {
   return (
-    <ChakraNumberInput {...props}>
+    <ChakraNumberInput {...props} w="full">
       <ChakraNumberInputField ref={ref} />
       <NumberInputStepper>
         <NumberIncrementStepper />

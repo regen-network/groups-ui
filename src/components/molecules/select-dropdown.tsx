@@ -1,27 +1,32 @@
-import { ActionMeta, Select, SingleValue } from 'chakra-react-select'
+import { type ActionMeta, Select, SingleValue } from 'chakra-react-select'
 
-export type SelectItem = {
+import { forwardRef } from '@/atoms'
+
+type SelectItem = {
   value: string
   label: string
 }
 
-export type OnSelectChange = (
+type OnSelectChange = (
   newValue: SingleValue<SelectItem>,
   actionMeta: ActionMeta<SelectItem>,
 ) => void
 
-export const SelectDropdown = (p: {
+export type SelectDropdownProps = {
   selected?: SelectItem
   onChange: OnSelectChange
   label: string
   items: SelectItem[]
-}) => {
+}
+
+export const SelectDropdown = forwardRef((p: SelectDropdownProps, ref) => {
   return (
     <Select
+      ref={ref}
       placeholder={p.label}
       value={p.selected}
       options={p.items}
       onChange={p.onChange}
     />
   )
-}
+})

@@ -1,22 +1,13 @@
 import { useController, useFormContext } from 'react-hook-form'
 
-import {
-  type RadioGroupProps,
-  type RadioProps,
-  RadioBox,
-  RadioGroup,
-  VStack,
-} from '@/atoms'
+import { type RadioGroupProps, RadioGroup } from '@/atoms'
+
+import { type RadioGroupOption, RadioGroupOptions } from '../radio-group-options'
 
 import { type FieldProps, FieldControl } from './field-control'
 
-type Option = {
-  label: string
-  value: RadioProps['value']
-}
-
 type Props = FieldProps & {
-  options: Option[]
+  options: RadioGroupOption[]
   radioGroupProps?: Omit<RadioGroupProps, 'children' | keyof FieldProps>
 }
 
@@ -46,18 +37,10 @@ export const RadioGroupField = ({
         onBlur={field.onBlur}
         ref={field.ref}
         value={field.value}
+        defaultValue={field.value}
         {...radioGroupProps}
       >
-        <VStack align="start">
-          {options.map(({ value, label }, i) => (
-            <RadioBox
-              key={label + i}
-              selected={field.value === value}
-              value={value}
-              label={label}
-            />
-          ))}
-        </VStack>
+        <RadioGroupOptions options={options} selected={field.value} />
       </RadioGroup>
     </FieldControl>
   )
