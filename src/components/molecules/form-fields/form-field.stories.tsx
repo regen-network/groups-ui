@@ -7,11 +7,11 @@ import { /* Box, */ Button, Center, Stack, Text } from '@/atoms'
 
 import { FormCard } from '../form-card'
 
+import { AmountField } from './amount-field'
 import { InputField } from './input-field'
 import { NumberField } from './number-field'
 import { RadioGroupField } from './radio-group-field'
 import { SelectField } from './select-field'
-// import { RadioGroupInputField } from './radio-group-input-field'
 import { TextareaField } from './textarea-field'
 
 export default {
@@ -37,6 +37,12 @@ const Template: StoryFn<typeof FormProvider> = (args) => {
             <InputField name="input" label="Input field" required />
             <InputField name="input2" label="Input field" />
             <NumberField name="number" label="Number field" />
+            <AmountField
+              name="amount"
+              label="Amount field"
+              maxValue="100"
+              denom="regen"
+            />
             <TextareaField name="textarea" label="Textarea field" />
             <RadioGroupField
               name="radiogroup"
@@ -45,29 +51,13 @@ const Template: StoryFn<typeof FormProvider> = (args) => {
             />
             <SelectField
               name="select"
-              label="Select"
+              label="Select Field"
               dropdownLabel="pick an option"
               items={options}
             />
-            {/* <RadioGroupInputField
-              name="radiogroup2"
-              label="Radiogroup field with children"
-              options={[
-                { label: 'label selected', value: '1', children: <Box>Hello</Box> },
-                { label: 'label 2', value: '2', children: <Box>World</Box> },
-              ]}
-            /> */}
-            {/* <RadioInputGroupField
-              name="radiogroup3"
-              label="Radiogroup field custom"
-              options={[
-                { label: 'label selected', value: '1' },
-                { label: 'label 2', value: '2' },
-              ]}
-            /> */}
             <div>
               <Button
-                onClick={form.handleSubmit((vals) => console.log('vield values: ', vals))}
+                onClick={form.handleSubmit((vals) => console.log('field values: ', vals))}
               >
                 Submit
               </Button>
@@ -79,5 +69,5 @@ const Template: StoryFn<typeof FormProvider> = (args) => {
   )
 }
 
-export const Component = Template.bind({})
-Component.args = {}
+export const Fields = Template.bind({})
+Fields.args = {}

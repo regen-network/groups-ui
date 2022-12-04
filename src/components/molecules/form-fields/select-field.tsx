@@ -39,12 +39,12 @@ export const SelectField = ({
       <SelectDropdown
         {...field}
         items={items}
+        label={dropdownLabel}
         onChange={(item) => {
           if (item?.value) {
             onChange(item.value)
           }
         }}
-        label={dropdownLabel}
         selected={selected}
       />
     </FieldControl>

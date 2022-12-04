@@ -1,12 +1,20 @@
 import type { ReactNode } from 'react'
 import { type FieldError } from 'react-hook-form'
 
-import { FormControl, FormErrorMessage, FormHelperText, FormLabel, Text } from '@/atoms'
+import {
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormHelperText,
+  FormLabel,
+  Text,
+} from '@/atoms'
 
 export type FieldProps = {
-  name: string
-  label?: string
   helperText?: string
+  label?: string
+  labelRight?: JSX.Element
+  name: string
   required?: boolean
 }
 
@@ -15,9 +23,10 @@ export const FieldControl = ({
   children,
   error,
   helperText,
-  required,
   label,
+  labelRight,
   name,
+  required,
 }: FieldProps & {
   children: ReactNode
   error?: FieldError
@@ -25,14 +34,17 @@ export const FieldControl = ({
   return (
     <FormControl isInvalid={!!error}>
       {!!label && (
-        <FormLabel htmlFor={name}>
-          {label}
-          {!required && (
-            <Text fontSize="sm" color="gray" display="inline">
-              {' (optional)'}
-            </Text>
-          )}
-        </FormLabel>
+        <Flex justify="space-between" align="baseline">
+          <FormLabel htmlFor={name}>
+            {label}
+            {!required && (
+              <Text fontSize="sm" color="gray" display="inline">
+                {' (optional)'}
+              </Text>
+            )}
+          </FormLabel>
+          {!!labelRight && <div>{labelRight}</div>}
+        </Flex>
       )}
       {children}
       {!error && helperText ? (

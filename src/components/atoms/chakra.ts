@@ -52,6 +52,8 @@ export {
   Icon,
   IconButton,
   Input,
+  InputGroup,
+  InputRightElement,
   Menu,
   MenuButton,
   MenuItem,
