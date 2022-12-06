@@ -8,7 +8,6 @@ import type {
 } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/types'
 
 // exports
-export type { GroupPolicyFormValues } from '@/organisms/group-policy-form'
 export type { GroupPolicyInfoSDKType } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/types'
 
 export type { GroupPolicyInfo }

@@ -2,15 +2,15 @@ import Long from 'long'
 
 import { throwError } from 'util/errors'
 
-import { Group } from 'store'
+import { Query } from 'store'
 
 import { toUIGroupMembers } from './member.utils'
 
 export async function fetchGroupMembers(groupId?: string | Long) {
-  if (!Group.query) throwError('Wallet not initialized')
+  if (!Query.groups) throwError('Wallet not initialized')
   if (!groupId) throwError('groupId is required')
   try {
-    const { members } = await Group.query.groupMembers({
+    const { members } = await Query.groups.groupMembers({
       groupId: groupId instanceof Long ? groupId : Long.fromString(groupId),
     })
     return toUIGroupMembers(members)

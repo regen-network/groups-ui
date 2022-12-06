@@ -7,7 +7,13 @@ import App from './App'
 
 import './main.css'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      useErrorBoundary: true,
+    },
+  },
+})
 const container = document.getElementById('root')
 const root = createRoot(container as HTMLElement)
 

@@ -3,7 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import type { NumOrEmpty } from 'types'
+import type { GroupPolicyFormValues } from 'types'
 import { SPACING } from 'util/style.constants'
 import { valid } from 'util/validation/zod'
 
@@ -12,12 +12,6 @@ import { FormCard } from '@/molecules'
 import { NumberField } from '@/molecules/form-fields'
 
 import { IoMdArrowBack } from 'assets/tsx'
-
-export type GroupPolicyFormValues = {
-  votingWindow: number
-  threshold?: NumOrEmpty
-  percentage?: NumOrEmpty
-}
 
 const resolver = zodResolver(
   z.object({

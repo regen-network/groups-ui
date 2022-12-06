@@ -1,3 +1,4 @@
+export { AiOutlinePlus } from 'react-icons/ai'
 export { BsMoonStarsFill, BsSun } from 'react-icons/bs'
 export { FaUndoAlt } from 'react-icons/fa'
 export { IoMdArrowBack } from 'react-icons/io'

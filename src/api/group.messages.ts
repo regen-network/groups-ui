@@ -3,7 +3,7 @@ import Long from 'long'
 import type { GroupWithPolicyFormValues, UIGroupMetadata } from 'types'
 import { clearEmptyStr } from 'util/helpers'
 
-import { MsgWithTypeUrl } from './cosmosgroups'
+import { GroupMsgWithTypeUrl } from './cosmosgroups'
 import { encodeDecisionPolicy } from './policy.messages'
 
 export function createGroupWithPolicyMsg(values: GroupWithPolicyFormValues) {
@@ -19,7 +19,7 @@ export function createGroupWithPolicyMsg(values: GroupWithPolicyFormValues) {
     threshold,
     votingWindow,
   } = values
-  return MsgWithTypeUrl.createGroupWithPolicy({
+  return GroupMsgWithTypeUrl.createGroupWithPolicy({
     admin,
     groupPolicyMetadata: '',
     groupPolicyAsAdmin: policyAsAdmin === 'true',
@@ -52,7 +52,7 @@ export function updateGroupMetadataMsg({
   groupId: string
   metadata: UIGroupMetadata
 }) {
-  return MsgWithTypeUrl.updateGroupMetadata({
+  return GroupMsgWithTypeUrl.updateGroupMetadata({
     admin,
     groupId: Long.fromString(groupId),
     metadata: JSON.stringify(metadata),

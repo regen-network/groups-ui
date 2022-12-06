@@ -10,3 +10,8 @@ export interface UIProposal extends Omit<Proposal, 'metadata'> {
 }
 
 export type ProposalStakeType = 'delegate' | 'redelegate' | 'undelegate' | 'claim'
+
+export type DelegateFormValues = {
+  validator: string
+  amount: string
+}

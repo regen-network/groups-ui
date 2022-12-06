@@ -1,5 +1,8 @@
+import type { StdFee } from '@cosmjs/stargate'
 import type { ChainInfo } from '@keplr-wallet/types'
 import { proxy } from 'valtio'
+
+import type { ValidatorSDKType } from 'types'
 
 import { allChainsArray } from 'api/chains'
 
@@ -13,11 +16,14 @@ const defaultChain = allChainsArray.find((c) => c.chainId === 'cosmoswithgroups'
 type ChainStore = {
   active: ChainInfo
   all: ChainInfo[]
+  fee?: StdFee | 'auto' | number
+  validators: ValidatorSDKType[]
 }
 
 export const Chain = proxy<ChainStore>({
   active: savedChain ? JSON.parse(savedChain) : defaultChain,
   all: allChainsArray,
+  validators: [],
 })
 
 export function setActiveChain(chainId: string) {

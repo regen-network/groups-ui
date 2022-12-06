@@ -3,7 +3,7 @@ import { type FieldError, FormProvider, useFieldArray, useForm } from 'react-hoo
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import type { MemberFormValues } from 'types'
+import type { GroupFormKeys, GroupFormValues, MemberFormValues } from 'types'
 import { defaultMemberFormValues } from 'util/form.constants'
 import { truncate } from 'util/helpers'
 import { SPACING } from 'util/style.constants'
@@ -32,18 +32,6 @@ import {
   RadioGroupField,
   TextareaField,
 } from '@/molecules/form-fields'
-
-/** @see @haveanicedavid/cosmos-groups-ts/types/proto/cosmos/group/v1/types */
-export type GroupFormValues = {
-  admin: 'policy' | string
-  description?: string
-  policyAsAdmin: 'true' | 'false'
-  forumLink?: string
-  members: MemberFormValues[]
-  name: string
-  otherMetadata?: string
-}
-export type GroupFormKeys = keyof GroupFormValues
 
 const resolver = zodResolver(
   z.object({

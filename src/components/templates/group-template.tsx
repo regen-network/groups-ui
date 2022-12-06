@@ -1,17 +1,19 @@
 import { useState } from 'react'
 
-import type { GroupWithPolicyFormValues } from 'types'
+import type {
+  GroupFormKeys,
+  GroupFormValues,
+  GroupPolicyFormValues,
+  GroupWithPolicyFormValues,
+} from 'types'
 
 import { useSteps } from 'hooks/chakra'
 
 import { AnimatePresence, HorizontalSlide } from '@/animations'
 import { Button, Flex, Heading, PageContainer, RouteLink, Stack, Text } from '@/atoms'
 import { PageStepper } from '@/molecules'
-import { type GroupFormValues, GroupForm, GroupFormKeys } from '@/organisms/group-form'
-import {
-  type GroupPolicyFormValues,
-  GroupPolicyForm,
-} from '@/organisms/group-policy-form'
+import { GroupForm } from '@/organisms/group-form'
+import { GroupPolicyForm } from '@/organisms/group-policy-form'
 
 const Finished = ({ text, linkTo }: { text: string; linkTo: string }) => (
   <Stack spacing={8}>

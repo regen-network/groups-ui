@@ -4,7 +4,8 @@ import {
   forwardRef,
   Input,
   InputGroup,
-  InputRightElement,
+  InputRightAddon,
+  Text,
 } from './chakra'
 
 export type AmountInputProps = InputProps & {
@@ -16,11 +17,9 @@ export const AmountInput = forwardRef((props: AmountInputProps, ref) => {
   return (
     <InputGroup>
       <Input ref={ref} type="number" {...inputProps} />
-      <InputRightElement w={14}>
-        <Button fontSize="xs" borderLeftRadius={0} onClick={onMaxClick}>
-          max
-        </Button>
-      </InputRightElement>
+      <InputRightAddon as={Button} onClick={onMaxClick}>
+        <Text fontSize="sm">max</Text>
+      </InputRightAddon>
     </InputGroup>
   )
 })

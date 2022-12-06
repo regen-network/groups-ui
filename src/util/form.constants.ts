@@ -1,4 +1,9 @@
-import type { GroupFormValues, GroupPolicyFormValues, MemberFormValues } from 'types'
+import type {
+  DelegateFormValues,
+  GroupFormValues,
+  GroupPolicyFormValues,
+  MemberFormValues,
+} from 'types'
 
 export const defaultMemberFormValues = (): MemberFormValues => ({
   address: '',
@@ -21,4 +26,9 @@ export const DEFAULT_MEMBER_WEIGHT = 1
 
 export const defaultGroupPolicyFormValues: GroupPolicyFormValues = {
   votingWindow: DEFAULT_VOTING_WINDOW,
+}
+
+export const defaultDelegateFormValues: DelegateFormValues = {
+  amount: '',
+  validator: '',
 }

@@ -74,67 +74,86 @@ keys-list:
 bank-send:
 	simd tx bank send $(ALICE) $(USER2) 1000000000000000stake --chain-id $(CHAIN_ID) --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)
 
-.PHONY: create-group
-create-group:
-	simd tx group create-group $(USER2) $$(echo '{"name": "bla1", "description": "blabbl", "created": $(NOW), "lastEdited": $(NOW), "linkToForum": "", "other": "blabla"}' | $(base64)) \
-		./testdata/members.json --chain-id $(CHAIN_ID) --keyring-backend test --keyring-dir $(CHAIN_HOME)
+# .PHONY: create-validator
+# create-validator:
+# 	simd tx staking create-validator \
+#   --amount=1000000stake \
+#   --pubkey=$(simd tendermint show-validator) \
+#   --moniker="mock-validator" \
+#   --website="https://myweb.site" \
+#   --details="description of your validator" \
+#   --chain-id=$(CHAIN_ID) \
+#   --commission-rate="0.10" \
+#   --commission-max-rate="0.20" \
+#   --commission-max-change-rate="0.01" \
+#   --min-self-delegation="1" \
+#   --gas="auto" \
+#   --gas-adjustment="1.2" \
+#   --gas-prices="0.025stake" \
+#   --from=mykey
 
-.PHONY: create-group-with-policy
-create-group-with-policy:
-	# USER2 should have some coins to pay fee
-	simd tx group create-group-with-policy $(USER2) \
- 		$$(echo '{"name": "bla1", "description": "blabbl", "created": $(NOW), "lastEdited": $(NOW), "linkToForum": "", "other": "blabla"}' | $(base64)) \
-		'' ./testdata/members.json \
-		'{"@type":"/cosmos.group.v1.PercentageDecisionPolicy", "percentage":"1", "windows": {"voting_period": "120h"}}' \
-		 --chain-id $(CHAIN_ID) --keyring-backend test --keyring-dir $(CHAIN_HOME)
 
-.PHONY: create-group-policy
-create-group-policy:
-	@read -p "Group ID:" groupId; \
-	simd tx group create-group-policy $(USER2) $$groupId '' --chain-id $(CHAIN_ID) \
-    	'{"@type":"/cosmos.group.v1.ThresholdDecisionPolicy", "threshold":"1", "windows": {"voting_period": "120h"}}'
+# .PHONY: create-group
+# create-group:
+# 	simd tx group create-group $(USER2) $$(echo '{"name": "bla1", "description": "blabbl", "created": $(NOW), "lastEdited": $(NOW), "linkToForum": "", "other": "blabla"}' | $(base64)) \
+# 		./testdata/members.json --chain-id $(CHAIN_ID) --keyring-backend test --keyring-dir $(CHAIN_HOME)
 
-.PHONY: query-group-proposals-by-group-policy
-query-group-proposals-by-group-policy:
-	@read -p "Group Policy Address:" address; \
-	simd q group proposals-by-group-policy $$address
+# .PHONY: create-group-with-policy
+# create-group-with-policy:
+# 	# USER2 should have some coins to pay fee
+# 	simd tx group create-group-with-policy $(USER2) \
+#  		$$(echo '{"name": "bla1", "description": "blabbl", "created": $(NOW), "lastEdited": $(NOW), "linkToForum": "", "other": "blabla"}' | $(base64)) \
+# 		'' ./testdata/members.json \
+# 		'{"@type":"/cosmos.group.v1.PercentageDecisionPolicy", "percentage":"1", "windows": {"voting_period": "120h"}}' \
+# 		 --chain-id $(CHAIN_ID) --keyring-backend test --keyring-dir $(CHAIN_HOME)
 
-.PHONY: query-group-policies
-query-group-policies:
-	@read -p "Group ID:" groupId; \
-	simd q group group-policies-by-group $$groupId
+# .PHONY: create-group-policy
+# create-group-policy:
+# 	@read -p "Group ID:" groupId; \
+# 	simd tx group create-group-policy $(USER2) $$groupId '' --chain-id $(CHAIN_ID) \
+#     	'{"@type":"/cosmos.group.v1.ThresholdDecisionPolicy", "threshold":"1", "windows": {"voting_period": "120h"}}'
 
-.PHONY: query-group-proposal
-query-group-proposal:
-	@read -p "Proposal ID:" proposalId; \
-	simd q group proposal $$proposalId
+# .PHONY: query-group-proposals-by-group-policy
+# query-group-proposals-by-group-policy:
+# 	@read -p "Group Policy Address:" address; \
+# 	simd q group proposals-by-group-policy $$address
 
-.PHONY: submit-bank-send-proposal
-submit-bank-send-proposal:
-	simd tx group submit-proposal ./testdata/proposals/bank-send-proposal.json --chain-id $(CHAIN_ID)
+# .PHONY: query-group-policies
+# query-group-policies:
+# 	@read -p "Group ID:" groupId; \
+# 	simd q group group-policies-by-group $$groupId
 
-.PHONY: submit-text-proposal
-submit-text-proposal:
-	simd tx group submit-proposal ./testdata/proposals/text-proposal.json --chain-id $(CHAIN_ID)
+# .PHONY: query-group-proposal
+# query-group-proposal:
+# 	@read -p "Proposal ID:" proposalId; \
+# 	simd q group proposal $$proposalId
 
-.PHONY: update-group-metadata
-update-group-metadata:
-	simd tx group update-group-metadata $(USER2) 2 $$(echo '{"name": "bla1", "description": "blabbl", "created": $(NOW), "lastEdited": $(NOW), "linkToForum": "", "other": "blabla"}' | base64 -w 0) --home $(CHAIN_HOME) --chain-id $(CHAIN_ID) --keyring-backend test --keyring-dir $(CHAIN_HOME)
+# .PHONY: submit-bank-send-proposal
+# submit-bank-send-proposal:
+# 	simd tx group submit-proposal ./testdata/proposals/bank-send-proposal.json --chain-id $(CHAIN_ID)
 
-.PHONY: query-groups
-query-groups:
-	simd q group groups-by-admin $(USER2)
+# .PHONY: submit-text-proposal
+# submit-text-proposal:
+# 	simd tx group submit-proposal ./testdata/proposals/text-proposal.json --chain-id $(CHAIN_ID)
 
-.PHONY: vote
-vote:
-	@read -p "Proposal ID:" proposalId; \
-	read -p "Voter Address:" voter; \
-	read -p "Vote Option (VOTE_OPTION_UNSPECIFIED|VOTE_OPTION_NO|VOTE_OPTION_YES|VOTE_OPTION_ABSTAIN|VOTE_OPTION_NO_WITH_VETO):" option; \
-	read -p "Metadata" metadata; \
-	simd tx group vote $$proposalId $$voter $$option $$metadata --chain-id $(CHAIN_ID)
+# .PHONY: update-group-metadata
+# update-group-metadata:
+# 	simd tx group update-group-metadata $(USER2) 2 $$(echo '{"name": "bla1", "description": "blabbl", "created": $(NOW), "lastEdited": $(NOW), "linkToForum": "", "other": "blabla"}' | base64 -w 0) --home $(CHAIN_HOME) --chain-id $(CHAIN_ID) --keyring-backend test --keyring-dir $(CHAIN_HOME)
 
-.PHONY: query-votes
-query-votes:
-	@read -p "Proposal ID:" proposalId; \
-	read -p "Voter Address:" voter; \
-	simd q group vote $$proposalId $$voter
+# .PHONY: query-groups
+# query-groups:
+# 	simd q group groups-by-admin $(USER2)
+
+# .PHONY: vote
+# vote:
+# 	@read -p "Proposal ID:" proposalId; \
+# 	read -p "Voter Address:" voter; \
+# 	read -p "Vote Option (VOTE_OPTION_UNSPECIFIED|VOTE_OPTION_NO|VOTE_OPTION_YES|VOTE_OPTION_ABSTAIN|VOTE_OPTION_NO_WITH_VETO):" option; \
+# 	read -p "Metadata" metadata; \
+# 	simd tx group vote $$proposalId $$voter $$option $$metadata --chain-id $(CHAIN_ID)
+
+# .PHONY: query-votes
+# query-votes:
+# 	@read -p "Proposal ID:" proposalId; \
+# 	read -p "Voter Address:" voter; \
+# 	simd q group vote $$proposalId $$voter

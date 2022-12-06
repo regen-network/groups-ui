@@ -2,7 +2,7 @@ import { daysToDuration, secondsToDuration } from 'util/date'
 import { throwError } from 'util/errors'
 import { numToPercentStr } from 'util/helpers'
 
-import { MsgWithTypeUrl, v1 } from './cosmosgroups'
+import { GroupMsgWithTypeUrl, groupV1 } from './cosmosgroups'
 
 export function updateDecisionPolicyMsg({
   admin,
@@ -17,7 +17,7 @@ export function updateDecisionPolicyMsg({
   percentage?: number
   threshold?: number
 }) {
-  return MsgWithTypeUrl.updateGroupPolicyDecisionPolicy({
+  return GroupMsgWithTypeUrl.updateGroupPolicyDecisionPolicy({
     admin,
     decisionPolicy: encodeDecisionPolicy({
       votingWindow,
@@ -50,7 +50,7 @@ export function encodeDecisionPolicy({
   if (percentage) {
     return {
       typeUrl: '/cosmos.group.v1.PercentageDecisionPolicy',
-      value: v1.PercentageDecisionPolicy.encode({
+      value: groupV1.PercentageDecisionPolicy.encode({
         percentage: numToPercentStr(percentage),
         windows,
       }).finish(),
@@ -59,7 +59,7 @@ export function encodeDecisionPolicy({
   if (!threshold) throwError('Must provide threshold or percentage')
   return {
     typeUrl: '/cosmos.group.v1.ThresholdDecisionPolicy',
-    value: v1.ThresholdDecisionPolicy.encode({
+    value: groupV1.ThresholdDecisionPolicy.encode({
       threshold: threshold.toString(),
       windows,
     }).finish(),

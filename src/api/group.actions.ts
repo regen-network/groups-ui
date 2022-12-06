@@ -1,9 +1,9 @@
 import Long from 'long'
 
-import { type GroupWithPolicyFormValues, type UIGroup } from 'types'
+import type { GroupWithPolicyFormValues, UIGroup } from 'types'
 import { throwError } from 'util/errors'
 
-import { Group, signAndBroadcast } from 'store'
+import { Query, signAndBroadcast } from 'store'
 
 import { createGroupWithPolicyMsg } from './group.messages'
 import { addMembersToGroups, toUIGroup } from './group.utils'
@@ -35,10 +35,10 @@ export async function fetchGroupsWithMembersByAdmin(address?: string) {
 }
 
 export async function fetchGroupById(groupId?: string | Long): Promise<UIGroup | null> {
-  if (!Group.query) throwError('Wallet not initialized')
+  if (!Query.groups) throwError('Wallet not initialized')
   if (!groupId) throwError('groupId is required')
   try {
-    const { info } = await Group.query.groupInfo({
+    const { info } = await Query.groups.groupInfo({
       groupId: groupId instanceof Long ? groupId : Long.fromString(groupId),
     })
     if (!info) return null
@@ -49,10 +49,10 @@ export async function fetchGroupById(groupId?: string | Long): Promise<UIGroup |
 }
 
 export async function fetchGroupsByMember(address?: string): Promise<UIGroup[]> {
-  if (!Group.query) throwError('Wallet not initialized')
+  if (!Query.groups) throwError('Wallet not initialized')
   if (!address) throwError('cannot fetch group members without an address')
   try {
-    const { groups } = await Group.query.groupsByMember({
+    const { groups } = await Query.groups.groupsByMember({
       address,
       // pagination: PageRequest.encode({key}).finish(),
     })
@@ -64,10 +64,10 @@ export async function fetchGroupsByMember(address?: string): Promise<UIGroup[]> 
 }
 
 export async function fetchGroupsByAdmin(admin?: string): Promise<UIGroup[]> {
-  if (!Group.query) throwError('Wallet not initialized')
+  if (!Query.groups) throwError('Wallet not initialized')
   if (!admin) throwError('No admin ID passed to fetchGroups')
   try {
-    const { groups } = await Group.query.groupsByAdmin({
+    const { groups } = await Query.groups.groupsByAdmin({
       admin,
     })
     return groups.map(toUIGroup)

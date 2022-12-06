@@ -1,12 +1,16 @@
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { useSnapshot } from 'valtio'
 
-import type { ProposalStakeType } from 'types'
+import type { DelegateFormValues, ProposalStakeType } from 'types'
+import { defaultDelegateFormValues } from 'util/form.constants'
 import { SPACING } from 'util/style.constants'
+
+import { Chain } from 'store'
 
 import { FormControl, FormLabel, Heading, RadioGroup, Stack } from '@/atoms'
 import { FormCard, RadioGroupOptions } from '@/molecules'
-import { SelectField } from '@/molecules/form-fields'
+import { AmountField, SelectField } from '@/molecules/form-fields'
 
 const stakeOptions: { label: string; value: ProposalStakeType }[] = [
   { label: 'Delegate', value: 'delegate' },
@@ -17,9 +21,27 @@ const stakeOptions: { label: string; value: ProposalStakeType }[] = [
 
 export const ProposalStakeForm = () => {
   const [stakeType, setStakeType] = useState<ProposalStakeType>('delegate')
+
+  function renderForm() {
+    switch (stakeType) {
+      case 'claim':
+        return <ClaimForm maxAmount="100" fee="0.75" denom="atom" />
+      case 'redelegate':
+      case 'delegate':
+      case 'undelegate':
+      default:
+        return (
+          <DelegateForm
+            maxAmount="1000"
+            denom="regen"
+            fee="1.23"
+            defaultValues={defaultDelegateFormValues}
+          />
+        )
+    }
+  }
   return (
     <FormCard title="Stake">
-      {/* <FormProvider {...form}> */}
       <Stack spacing={SPACING.formStack}>
         <FormControl>
           <FormLabel>Type</FormLabel>
@@ -30,21 +52,26 @@ export const ProposalStakeForm = () => {
             <RadioGroupOptions options={stakeOptions} selected={stakeType} />
           </RadioGroup>
         </FormControl>
-        <DelegateForm />
+        {renderForm()}
       </Stack>
-      {/* </FormProvider> */}
     </FormCard>
   )
 }
 
-const stubValidators = [
-  { label: 'Validator 1', value: 'validator1' },
-  { label: 'Validator 2', value: 'validator2' },
-  { label: 'Validator 3', value: 'validator3' },
-]
-
-const DelegateForm = () => {
-  const form = useForm()
+const DelegateForm = (props: {
+  maxAmount: string
+  fee: string
+  denom: string
+  defaultValues: DelegateFormValues
+}) => {
+  const form = useForm({ defaultValues: props.defaultValues })
+  const { validators } = useSnapshot(Chain)
+  const items = validators.map((v, i) => {
+    return {
+      label: v.description?.moniker || `Validator ${i}`,
+      value: v.operator_address || '',
+    }
+  })
   return (
     <FormProvider {...form}>
       <SelectField
@@ -52,12 +79,39 @@ const DelegateForm = () => {
         name="validator"
         label="Validator"
         dropdownLabel="Select a validator"
-        items={stubValidators}
+        items={items}
+      />
+      <AmountField
+        required
+        name="amount"
+        label="Amount"
+        maxValue={props.maxAmount}
+        denom={props.denom}
       />
       <FormControl>
         <FormLabel>Transaction Fee</FormLabel>
         <Heading variant="label" size="xs">
-          -REGEN TODO
+          {props.fee} {props.denom}
+        </Heading>
+      </FormControl>
+    </FormProvider>
+  )
+}
+const ClaimForm = (props: { maxAmount: string; fee: string; denom: string }) => {
+  const form = useForm()
+  return (
+    <FormProvider {...form}>
+      <AmountField
+        required
+        name="amount"
+        label="Amount"
+        maxValue={props.maxAmount}
+        denom={props.denom}
+      />
+      <FormControl>
+        <FormLabel>Transaction Fee</FormLabel>
+        <Heading variant="label" size="xs">
+          {props.fee} {props.denom}
         </Heading>
       </FormControl>
     </FormProvider>
