@@ -1,6 +1,7 @@
 export * from './amount-input'
 export * from './chakra'
 export * from './delete-button'
+export * from './info-tooltip'
 export * from './link'
 export * from './number-input'
 export * from './page-container'

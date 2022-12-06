@@ -3,6 +3,7 @@ export type {
   ButtonProps,
   ChakraProps,
   ContainerProps,
+  DrawerProps,
   EditableProps,
   EffectProps,
   HeadingProps,
