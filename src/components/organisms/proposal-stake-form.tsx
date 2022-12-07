@@ -64,7 +64,6 @@ const DelegateForm = (props: {
   denom: string
   defaultValues: DelegateFormValues
 }) => {
-  const form = useForm({ defaultValues: props.defaultValues })
   const { validators } = useSnapshot(Chain)
   const items = validators.map((v, i) => {
     return {
@@ -72,12 +71,14 @@ const DelegateForm = (props: {
       value: v.operator_address || '',
     }
   })
+  const form = useForm({ defaultValues: { ...props.defaultValues, validator: items[0] } })
   return (
     <FormProvider {...form}>
       <SelectField
         required
         name="validator"
         label="Validator"
+        selected={form.getValues().validator}
         dropdownLabel="Select a validator"
         items={items}
       />

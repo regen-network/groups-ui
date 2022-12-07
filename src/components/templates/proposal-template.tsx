@@ -4,7 +4,17 @@ import type { ProposalEventType, UIProposal } from 'types'
 
 import { useDisclosure } from 'hooks/chakra'
 
-import { Center, Flex, Heading, IconButton, PageContainer, Stack, Text } from '@/atoms'
+import {
+  AddActionButton,
+  Box,
+  Center,
+  Flex,
+  Heading,
+  IconButton,
+  PageContainer,
+  Stack,
+  Text,
+} from '@/atoms'
 import { EditableDescription, EditableHeading, PageStepper } from '@/molecules'
 import { ProposalActionDrawer } from '@/organisms/proposal-action-drawer'
 import { ProposalStakeForm } from '@/organisms/proposal-stake-form'
@@ -48,15 +58,7 @@ export function ProposalTemplate({
             <Text ml={2}>Group name</Text>
           </Flex>
           <ProposalStakeForm />
-          <Center>
-            <IconButton
-              aria-label="new action"
-              onClick={onOpen}
-              ref={btnRef}
-              rounded="full"
-              icon={<AiOutlinePlus />}
-            />
-          </Center>
+          <AddActionButton ref={btnRef} onClick={onOpen} />
         </Stack>
         <ProposalActionDrawer
           isOpen={isOpen}
