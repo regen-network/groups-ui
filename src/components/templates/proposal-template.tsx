@@ -1,25 +1,14 @@
 import { useRef } from 'react'
 
 import type { ProposalEventType, UIProposal } from 'types'
+import { SPACING } from 'util/style.constants'
 
 import { useDisclosure } from 'hooks/chakra'
 
-import {
-  AddActionButton,
-  Box,
-  Center,
-  Flex,
-  Heading,
-  IconButton,
-  PageContainer,
-  Stack,
-  Text,
-} from '@/atoms'
+import { AddActionButton, Flex, Heading, PageContainer, Stack, Text } from '@/atoms'
 import { EditableDescription, EditableHeading, PageStepper } from '@/molecules'
 import { ProposalActionDrawer } from '@/organisms/proposal-action-drawer'
 import { ProposalStakeForm } from '@/organisms/proposal-stake-form'
-
-import { AiOutlinePlus } from 'assets/tsx'
 
 export function ProposalTemplate({
   proposal,
@@ -40,7 +29,7 @@ export function ProposalTemplate({
   return (
     <Flex direction="column">
       <PageStepper activeStep={0} steps={steps} />
-      <PageContainer maxW="container.sm">
+      <PageContainer maxW={SPACING.formWidth}>
         <Stack spacing={3}>
           <EditableHeading
             value={title}

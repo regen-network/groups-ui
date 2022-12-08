@@ -13,6 +13,7 @@ export const HorizontalSlide = ({
   const offset = 20
   return (
     <motion.div
+      style={{ width: '100%' }}
       initial={{ opacity: 0, x: fromRight ? offset : -offset }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: fromRight ? offset : -offset }}

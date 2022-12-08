@@ -163,9 +163,10 @@ export const GroupForm = ({
                       <Tr key={i + member.address}>
                         <Td>
                           <Truncate
+                            clickToCopy
                             text={member.address}
-                            headLength={18}
-                            tailLength={22}
+                            headLength={12}
+                            tailLength={20}
                             tooltipProps={{ maxW: 450 }}
                           />
                         </Td>

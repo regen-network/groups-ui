@@ -1,33 +1,44 @@
 import { toErrorWithMessage } from 'util/errors'
-import { TOAST_DEFAULTS, TOAST_DURATIONS } from 'util/style.constants'
+
+import type { UseToastOptions } from 'hooks/chakra'
 
 import { useToast } from './chakra'
+
+const TOAST_DURATIONS = {
+  short: 1500,
+  medium: 3000,
+  long: 9000,
+}
+
+const TX_TOAST_DEFAULTS: UseToastOptions = {
+  position: 'top-right',
+  isClosable: true,
+  duration: TOAST_DURATIONS.medium,
+}
 
 export function useTxToasts() {
   const toast = useToast()
   return {
     toastNotify: (title = 'Broadcasting message...', description?: string) => {
       return toast({
-        ...TOAST_DEFAULTS,
+        ...TX_TOAST_DEFAULTS,
         ...(!!description && { description }),
         title,
         status: 'info',
-        duration: TOAST_DURATIONS.short,
       })
     },
     toastSuccess: (txHash: string, title = 'Transaction complete!') => {
       return toast({
-        ...TOAST_DEFAULTS,
+        ...TX_TOAST_DEFAULTS,
         title,
         description: 'Transaction hash: ' + txHash,
         status: 'success',
-        duration: TOAST_DURATIONS.short,
       })
     },
     toastErr: (err: unknown, title = 'Transaction failed') => {
       const msg = toErrorWithMessage(err).message
       return toast({
-        ...TOAST_DEFAULTS,
+        ...TX_TOAST_DEFAULTS,
         title,
         description: msg,
         status: 'error',
@@ -35,4 +46,15 @@ export function useTxToasts() {
       })
     },
   }
+}
+
+export function useToastCopied(title = 'Copied to clipboard!') {
+  const toast = useToast()
+  return () =>
+    toast({
+      title,
+      position: 'bottom',
+      status: 'info',
+      duration: TOAST_DURATIONS.short,
+    })
 }

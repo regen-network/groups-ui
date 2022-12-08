@@ -6,6 +6,7 @@ import type {
   GroupPolicyFormValues,
   GroupWithPolicyFormValues,
 } from 'types'
+import { SPACING } from 'util/style.constants'
 
 import { useSteps } from 'hooks/chakra'
 
@@ -116,7 +117,7 @@ export function GroupTemplate({
   return (
     <Flex flexDir="column">
       <PageStepper activeStep={activeStep} steps={steps} />
-      <PageContainer centerContent>
+      <PageContainer centerContent maxW={SPACING.formWidth}>
         <Heading textAlign="center" mb={8}>
           {steps[activeStep]}
         </Heading>

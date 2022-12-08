@@ -193,7 +193,7 @@ export const GroupMembersTable = ({
                 }}
               >
                 <Td>
-                  <Truncate tailLength={tailSize} text={member.address} />
+                  <Truncate clickToCopy tailLength={tailSize} text={member.address} />
                 </Td>
                 <Td>
                   <AnimatePresence mode="wait">

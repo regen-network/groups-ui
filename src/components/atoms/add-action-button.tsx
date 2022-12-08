@@ -2,6 +2,7 @@ import { Center, forwardRef, IconButton } from './chakra'
 
 import { AiOutlinePlus } from 'assets/tsx'
 
+/** Icon button   */
 export const AddActionButton = forwardRef(({ onClick }: { onClick: () => void }, ref) => {
   return (
     <Center

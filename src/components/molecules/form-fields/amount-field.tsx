@@ -20,7 +20,6 @@ export const AmountField = ({
   ...fieldProps
 }: Props) => {
   const { name, required } = fieldProps
-
   const { control, getValues, setValue } = useFormContext()
   const {
     fieldState: { error },

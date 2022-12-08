@@ -39,7 +39,7 @@ export const GroupPolicyTable = ({ policies }: { policies: UIGroupPolicyInfo[] }
                 : formatPercentage(p)}
             </Td>
             <Td>
-              <Truncate tailLength={tailSize} text={p.admin} />
+              <Truncate clickToCopy tailLength={tailSize} text={p.admin} />
             </Td>
           </Tr>
           {/* ))} */}
