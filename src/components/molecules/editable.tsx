@@ -16,7 +16,7 @@ import { MdCheck, RiCloseLine } from 'assets/tsx'
 
 type EditableProps = {
   value?: string
-  onSubmit: (value: string) => void
+  onSave: (value: string) => void
 }
 
 const EditableControls = () => {
@@ -34,7 +34,7 @@ const EditableControls = () => {
 const EditableWrapper = ({
   value,
   variant,
-  onSubmit,
+  onSave,
 }: EditableProps & { variant: 'heading' | 'textarea' }) => {
   const hoverBg = useColorModeValue('gray.100', 'gray.700')
   // const py = 2
@@ -45,7 +45,7 @@ const EditableWrapper = ({
       defaultValue={value}
       isPreviewFocusable={true}
       selectAllOnFocus={false}
-      onSubmit={onSubmit}
+      onSubmit={onSave}
     >
       <Tooltip label="Click to edit">
         <EditablePreview

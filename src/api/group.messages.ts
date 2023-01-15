@@ -38,7 +38,8 @@ export function createGroupWithPolicyMsg(values: GroupWithPolicyFormValues) {
     members: members.map((m) => ({
       address: m.address,
       weight: m.weight.toString(),
-      metadata: JSON.stringify(m.metadata),
+      metadata: '',
+      // metadata: JSON.stringify(m.metadata),
     })),
   })
 }

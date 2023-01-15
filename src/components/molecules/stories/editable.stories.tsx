@@ -17,11 +17,11 @@ const TextTemplate: StoryFn<typeof EditableDescription> = (args) => (
 const onSubmit = (value: string) => console.log(value)
 
 export const Heading = HeadingTemplate.bind({})
-Heading.args = { value: 'Editable Heading', onSubmit }
+Heading.args = { value: 'Editable Heading', onSave: onSubmit }
 
 export const TextShort = TextTemplate.bind({})
 TextShort.args = {
-  onSubmit,
+  onSave: onSubmit,
   value: 'Editable Text',
 }
 
@@ -30,7 +30,7 @@ TextEmpty.args = {}
 
 export const TextLong = TextTemplate.bind({})
 TextLong.args = {
-  onSubmit,
+  onSave: onSubmit,
   value:
     'Editable Text Duis commodo sint anim eu incididunt ut in voluptate enim aliqua adipisicing incididunt deserunt culpa.',
 }

@@ -1,16 +1,14 @@
 import { useState } from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
-import { useSnapshot } from 'valtio'
 
-import type { DelegateFormValues, ProposalStakeType } from 'types'
-import { defaultDelegateFormValues } from 'util/form.constants'
+import type { ProposalStakeFormValues, ProposalStakeType } from 'types'
 import { SPACING } from 'util/style.constants'
 
-import { Chain } from 'store'
-
-import { FormControl, FormLabel, Heading, RadioGroup, Stack } from '@/atoms'
+import { FormControl, FormLabel, RadioGroup, Stack } from '@/atoms'
 import { FormCard, RadioGroupOptions } from '@/molecules'
-import { AmountField, SelectField } from '@/molecules/form-fields'
+
+import { type ClaimFormValues, ClaimForm } from './stake-claim-form'
+import { type DelegateFormValues, DelegateForm } from './stake-delegate-form'
+import { type RedelegateFormValues, RedelegateForm } from './stake-redelegate-form'
 
 const stakeOptions: { label: string; value: ProposalStakeType }[] = [
   { label: 'Delegate', value: 'delegate' },
@@ -19,23 +17,43 @@ const stakeOptions: { label: string; value: ProposalStakeType }[] = [
   { label: 'Claim reward', value: 'claim' },
 ]
 
-export const ProposalStakeForm = () => {
+export const ProposalStakeForm = ({
+  defaultValues,
+  formId,
+  onSubmit,
+}: {
+  defaultValues: ProposalStakeFormValues
+  formId: string
+  onSubmit: (values: ProposalStakeFormValues) => void
+}) => {
   const [stakeType, setStakeType] = useState<ProposalStakeType>('delegate')
 
   function renderForm() {
+    const baseProps = {
+      formId,
+      onSubmit,
+      maxAmount: '1000',
+    }
     switch (stakeType) {
       case 'claim':
-        return <ClaimForm maxAmount="100" fee="0.75" denom="atom" />
+        return (
+          <ClaimForm {...baseProps} defaultValues={defaultValues as ClaimFormValues} />
+        )
       case 'redelegate':
-      case 'delegate':
+        return (
+          <RedelegateForm
+            {...baseProps}
+            defaultValues={defaultValues as RedelegateFormValues}
+          />
+        )
       case 'undelegate':
+      case 'delegate':
       default:
         return (
           <DelegateForm
-            maxAmount="1000"
-            denom="regen"
-            fee="1.23"
-            defaultValues={defaultDelegateFormValues}
+            {...baseProps}
+            key={formId + stakeType} // force re-render when toggling between delegate / undelegate
+            defaultValues={defaultValues as DelegateFormValues}
           />
         )
     }
@@ -55,66 +73,5 @@ export const ProposalStakeForm = () => {
         {renderForm()}
       </Stack>
     </FormCard>
-  )
-}
-
-const DelegateForm = (props: {
-  maxAmount: string
-  fee: string
-  denom: string
-  defaultValues: DelegateFormValues
-}) => {
-  const { validators } = useSnapshot(Chain)
-  const items = validators.map((v, i) => {
-    return {
-      label: v.description?.moniker || `Validator ${i}`,
-      value: v.operator_address || '',
-    }
-  })
-  const form = useForm({ defaultValues: { ...props.defaultValues, validator: items[0] } })
-  return (
-    <FormProvider {...form}>
-      <SelectField
-        required
-        name="validator"
-        label="Validator"
-        selected={form.getValues().validator}
-        dropdownLabel="Select a validator"
-        items={items}
-      />
-      <AmountField
-        required
-        name="amount"
-        label="Amount"
-        maxValue={props.maxAmount}
-        denom={props.denom}
-      />
-      <FormControl>
-        <FormLabel>Transaction Fee</FormLabel>
-        <Heading variant="label" size="xs">
-          {props.fee} {props.denom}
-        </Heading>
-      </FormControl>
-    </FormProvider>
-  )
-}
-const ClaimForm = (props: { maxAmount: string; fee: string; denom: string }) => {
-  const form = useForm()
-  return (
-    <FormProvider {...form}>
-      <AmountField
-        required
-        name="amount"
-        label="Amount"
-        maxValue={props.maxAmount}
-        denom={props.denom}
-      />
-      <FormControl>
-        <FormLabel>Transaction Fee</FormLabel>
-        <Heading variant="label" size="xs">
-          {props.fee} {props.denom}
-        </Heading>
-      </FormControl>
-    </FormProvider>
   )
 }

@@ -1,3 +1,5 @@
+import type { StdFee } from '@cosmjs/stargate'
+
 import type { NumOrEmpty } from 'types/form.types'
 
 export function openExternalLink(url: string) {
@@ -59,4 +61,24 @@ export function strToNumOrEmpty(s?: string): NumOrEmpty {
 /** change `''` empty string values used in forms to `undefined`  */
 export const clearEmptyStr = (n?: NumOrEmpty): number | undefined => {
   return !n ? undefined : n
+}
+
+/** take a @cosmjs/stargate `StdFee` object, return formatted string */
+export function formatFee(fee?: StdFee): string | null {
+  if (!fee) return null
+  const [{ amount, denom }] = fee.amount
+  return `${amount} ${denom}`
+}
+
+export function getFeeDenom(fee?: StdFee): string {
+  if (!fee) return '-'
+  const [{ denom }] = fee.amount
+  return denom
+}
+
+/** basic UUID generator */
+export function uuid(): string {
+  const dateStr = Date.now().toString(36) // convert num to base 36 and stringify
+  const randomStr = Math.random().toString(36).substring(2, 8) // start at index 2 to skip decimal point
+  return `${dateStr}-${randomStr}`
 }

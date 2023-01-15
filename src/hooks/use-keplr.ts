@@ -1,14 +1,14 @@
 import { useEffect } from 'react'
 
-import { enableKeplr } from 'store'
+import { bootstrapKeplr } from 'store'
 
 export function useKeplr() {
   useEffect(() => {
-    enableKeplr()
+    bootstrapKeplr()
     // watch for user key store change
-    window.addEventListener('keplr_keystorechange', enableKeplr)
+    window.addEventListener('keplr_keystorechange', bootstrapKeplr)
     return () => {
-      window.removeEventListener('keplr_keystorechange', enableKeplr)
+      window.removeEventListener('keplr_keystorechange', bootstrapKeplr)
     }
   }, [])
 }

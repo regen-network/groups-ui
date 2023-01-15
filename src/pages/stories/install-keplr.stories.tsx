@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react'
 
-import { InstallKeplr } from '../install-keplr'
+import { InstallKeplr } from '../install-keplr-page'
 
 export default {
   title: 'Pages/Install Keplr',

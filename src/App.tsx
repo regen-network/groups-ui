@@ -4,8 +4,8 @@ import { useSnapshot } from 'valtio'
 import { Wallet } from 'store'
 import { useKeplr } from 'hooks/use-keplr'
 
-import { EnableKeplr } from 'pages/enable-keplr'
-import { InstallKeplr } from 'pages/install-keplr'
+import { EnableKeplr } from 'pages/enable-keplr-page'
+import { InstallKeplr } from 'pages/install-keplr-page'
 import { Loading } from '@/molecules/loading'
 
 export default function App() {

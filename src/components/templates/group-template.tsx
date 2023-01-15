@@ -29,7 +29,7 @@ export function GroupTemplate({
   initialGroupFormValues,
   disabledGroupFormFields,
   initialPolicyFormValues,
-  linkToGroupId,
+  newGroupId,
   submit,
   steps,
   text,
@@ -37,8 +37,8 @@ export function GroupTemplate({
   disabledGroupFormFields?: GroupFormKeys[]
   initialGroupFormValues: GroupFormValues
   initialPolicyFormValues: GroupPolicyFormValues
-  /** ID of group, used for redirect link */
-  linkToGroupId?: string
+  /** ID of new group, used for redirect link */
+  newGroupId?: string
   submit: (values: GroupWithPolicyFormValues) => Promise<boolean>
   steps: string[]
   text: {
@@ -105,7 +105,7 @@ export function GroupTemplate({
           <HorizontalSlide key="step-2">
             <Finished
               text={text.finished}
-              linkTo={linkToGroupId ? `/${linkToGroupId}/details` : '/'}
+              linkTo={newGroupId ? `/${newGroupId}/details` : '/'}
             />
           </HorizontalSlide>
         )

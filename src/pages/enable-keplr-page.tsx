@@ -1,4 +1,4 @@
-import { enableKeplr } from 'store'
+import { bootstrapKeplr } from 'store'
 
 import { ChainSelect } from '@/organisms/chain-select'
 import { AlertTemplate } from '@/templates/alert-template'
@@ -9,7 +9,7 @@ export const EnableKeplr = () => {
       status="info"
       text="You need to enable Keplr to run this app"
       btnText="Enable"
-      onBtnClick={enableKeplr}
+      onBtnClick={bootstrapKeplr}
     >
       <ChainSelect />
     </AlertTemplate>

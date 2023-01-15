@@ -1,25 +1,24 @@
 import { useEffect } from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import type { GroupPolicyFormValues } from 'types'
-import { SPACING } from 'util/style.constants'
+// import type { GroupPolicyFormValues } from 'types'
 import { valid } from 'util/validation/zod'
 
-import { Button, Flex, IconButton, Stack, Text } from '@/atoms'
-import { FormCard } from '@/molecules'
+import { useZodForm } from 'hooks/use-zod-form'
+
+import { Button, Flex, IconButton, Text } from '@/atoms'
+import { Form, FormCard } from '@/molecules'
 import { NumberField } from '@/molecules/form-fields'
 
 import { IoMdArrowBack } from 'assets/tsx'
 
-const resolver = zodResolver(
-  z.object({
-    votingWindow: valid.positiveNumber,
-    threshold: valid.positiveNumberOrEmptyStr.optional(),
-    percentage: valid.percentOrEmptyStr.optional(),
-  }),
-)
+const schema = z.object({
+  votingWindow: valid.positiveNumber,
+  threshold: valid.positiveNumberOrEmptyStr.optional(),
+  percentage: valid.percentOrEmptyStr.optional(),
+})
+
+export type GroupPolicyFormValues = z.infer<typeof schema>
 
 export const GroupPolicyForm = ({
   btnText = 'Submit',
@@ -34,9 +33,10 @@ export const GroupPolicyForm = ({
   onSubmit: (data: GroupPolicyFormValues) => void
   submitting?: boolean
 }) => {
-  const form = useForm<GroupPolicyFormValues>({
+  const form = useZodForm({
     defaultValues,
-    resolver,
+    schema,
+    // resolver,
   })
   const { watch, setValue } = form
 
@@ -86,60 +86,57 @@ export const GroupPolicyForm = ({
 
   return (
     <FormCard>
-      <FormProvider {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)}>
-          <Stack spacing={SPACING.formStack}>
-            <NumberField
-              required
-              name="votingWindow"
-              label="Voting Window"
-              numberInputProps={{ flex: 1 }}
-            >
-              <Flex align="center" minW="50%">
-                <Text ml={5} fontWeight="bold">
-                  {'maximum days'}
-                </Text>
-              </Flex>
-            </NumberField>
-            <NumberField
-              required
-              name="threshold"
-              label="Set a threshold"
-              numberInputProps={{ min: 0, flex: 1 }}
-            >
-              <Flex align="center" minW="50%">
-                <Text ml={5} fontWeight="bold">
-                  {"weighted 'yes' votes"}
-                </Text>
-              </Flex>
-            </NumberField>
-            <NumberField
-              required
-              name="percentage"
-              label="set a percentage"
-              numberInputProps={{ min: 0, max: 100, flex: 1 }}
-            >
-              <Flex align="center" minW="50%">
-                <Text ml={5} fontWeight="bold">
-                  {'% of total voting power'}
-                </Text>
-              </Flex>
-            </NumberField>
-            <Flex>
-              {goBack && (
-                <IconButton aria-label="go back" onClick={goBack} variant="outline">
-                  <IoMdArrowBack />
-                </IconButton>
-              )}
-              <Flex justify="end" flexGrow={1}>
-                <Button type="submit" isLoading={submitting} loadingText="Submitting">
-                  {btnText}
-                </Button>
-              </Flex>
-            </Flex>
-          </Stack>
-        </form>
-      </FormProvider>
+      <Form form={form} onSubmit={handleSubmit}>
+        <NumberField
+          required
+          name="votingWindow"
+          label="Voting Window"
+          numberInputProps={{ flex: 1 }}
+        >
+          <Flex align="center" minW="50%">
+            <Text ml={5} fontWeight="bold">
+              {'maximum days'}
+            </Text>
+          </Flex>
+        </NumberField>
+        <NumberField
+          required
+          name="threshold"
+          label="Set a threshold"
+          numberInputProps={{ min: 0, flex: 1 }}
+        >
+          <Flex align="center" minW="50%">
+            <Text ml={5} fontWeight="bold">
+              {"weighted 'yes' votes"}
+            </Text>
+          </Flex>
+        </NumberField>
+        <NumberField
+          required
+          name="percentage"
+          label="set a percentage"
+          numberInputProps={{ min: 0, max: 100, flex: 1 }}
+        >
+          <Flex align="center" minW="50%">
+            <Text ml={5} fontWeight="bold">
+              {'% of total voting power'}
+            </Text>
+          </Flex>
+        </NumberField>
+        <Flex>
+          {/* TODO: extract back / forward to sticky footer component */}
+          {goBack && (
+            <IconButton aria-label="go back" onClick={goBack} variant="outline">
+              <IoMdArrowBack />
+            </IconButton>
+          )}
+          <Flex justify="end" flexGrow={1}>
+            <Button type="submit" isLoading={submitting} loadingText="Submitting">
+              {btnText}
+            </Button>
+          </Flex>
+        </Flex>
+      </Form>
     </FormCard>
   )
 }

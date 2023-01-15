@@ -22,7 +22,7 @@ export const Wallet = proxy<WalletStore>({
   keplrStatus: 'loading',
 })
 
-export async function enableKeplr() {
+export async function bootstrapKeplr() {
   const { keplr } = window
   if (!keplr) {
     Wallet.keplrStatus = 'uninstalled'
@@ -50,9 +50,13 @@ export async function enableKeplr() {
     Wallet.signingClient = signingClient
     Wallet.account = account
     Chain.fee = {
-      amount: coins(0, Chain.active.feeCurrencies[0].coinDenom),
+      amount: coins(10, Chain.active.feeCurrencies[0].coinDenom),
       gas: '2000000', // TODO how do I calculate this?
     }
+    // Chain.fee = {
+    //   amt: Chain.active.feeCurrencies[0].gasPriceStep?.average || 0.025,
+    //   denom: Chain.active.feeCurrencies[0].coinMinimalDenom,
+    // }
     Wallet.keplrStatus = 'ready'
     fetchValidators()
   } catch (error) {

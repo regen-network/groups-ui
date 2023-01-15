@@ -12,7 +12,6 @@ export default {
 } as Meta<typeof SelectDropdown>
 
 const Template: StoryFn<typeof SelectDropdown> = (args) => {
-  // const [value, setValue] = useState<string>()
   return <SelectDropdown {...args} />
 }
 

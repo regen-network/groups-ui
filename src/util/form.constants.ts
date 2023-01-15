@@ -1,8 +1,12 @@
 import type {
+  ClaimFormValues,
   DelegateFormValues,
   GroupFormValues,
   GroupPolicyFormValues,
   MemberFormValues,
+  ProposalStakeFormValues,
+  ProposalTextFormValues,
+  RedelegateFormValues,
 } from 'types'
 
 export const defaultMemberFormValues = (): MemberFormValues => ({
@@ -31,4 +35,32 @@ export const defaultGroupPolicyFormValues: GroupPolicyFormValues = {
 export const defaultDelegateFormValues: DelegateFormValues = {
   amount: '',
   validator: '',
+  stakeType: 'delegate',
+}
+
+export const defaultUndelegateFormValues: DelegateFormValues = {
+  amount: '',
+  validator: '',
+  stakeType: 'undelegate',
+}
+
+export const defaultRedelegateFormValues: RedelegateFormValues = {
+  amount: '',
+  fromValidator: '',
+  toValidator: '',
+  stakeType: 'redelegate',
+}
+
+export const defaultClaimFormValues: ClaimFormValues = {
+  amount: '',
+  stakeType: 'claim',
+}
+
+export const defaultStakeFormValues: ProposalStakeFormValues = {
+  // `delegate` is the default stake type - copying here to avoid confusing naming
+  ...defaultDelegateFormValues,
+}
+
+export const defaultTextFormValues: ProposalTextFormValues = {
+  text: '',
 }

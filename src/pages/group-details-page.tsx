@@ -10,6 +10,7 @@ import { useTxToasts } from 'hooks/useToasts'
 
 import {
   Button,
+  ButtonGroup,
   Flex,
   Heading,
   HStack,
@@ -27,12 +28,7 @@ export default function GroupDetails() {
   const { data: members, refetch: refetchMembers } = useGroupMembers(groupId)
   const { data: policies } = useGroupPolicies(groupId)
   const { toastSuccess, toastErr } = useTxToasts()
-
-  console.log('group :>> ', group)
-  console.log('members :>> ', members)
-
   const [policy] = policies ?? []
-  console.log('policy :>> ', policy)
   const policyIsAdmin = policy?.admin === policy?.address
 
   async function handleUpdateMembers(values: MemberFormValues[]): Promise<boolean> {
@@ -60,9 +56,15 @@ export default function GroupDetails() {
       <Stack w="full" spacing={6}>
         <Flex justify="space-between">
           <Heading>{group?.metadata.name}</Heading>
-          <Button as={RouteLink} to={`/${groupId}/edit`}>
-            Edit Group
-          </Button>
+          <ButtonGroup>
+            {/* TODO: This isn't in mockup, added for convenience */}
+            <Button as={RouteLink} to={`/${groupId}/proposals/new`}>
+              New Proposal
+            </Button>
+            <Button as={RouteLink} to={`/${groupId}/edit`}>
+              Edit Group
+            </Button>
+          </ButtonGroup>
         </Flex>
         <Text fontSize="larger">{group?.metadata.description}</Text>
         <HStack spacing={3}>

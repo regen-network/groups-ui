@@ -1,60 +1,97 @@
-import { useRef } from 'react'
+import { useState } from 'react'
 
-import type { ProposalEventType, UIProposal } from 'types'
 import { SPACING } from 'util/style.constants'
 
-import { useDisclosure } from 'hooks/chakra'
+import { useSteps } from 'hooks/chakra'
 
-import { AddActionButton, Flex, Heading, PageContainer, Stack, Text } from '@/atoms'
-import { EditableDescription, EditableHeading, PageStepper } from '@/molecules'
-import { ProposalActionDrawer } from '@/organisms/proposal-action-drawer'
-import { ProposalStakeForm } from '@/organisms/proposal-stake-form'
+import { AnimatePresence, HorizontalSlide } from '@/animations'
+import { Button, Flex, Heading, PageContainer, RouteLink, Stack, Text } from '@/atoms'
+import { PageStepper } from '@/molecules'
+import { type ProposalFormValues, ProposalForm } from '@/organisms/proposal-form'
+import { ProposalReview } from '@/organisms/proposal-review'
 
-export function ProposalTemplate({
-  proposal,
-  steps,
-}: {
+const Finished = ({ linkTo }: { linkTo: string }) => (
+  <Stack spacing={8}>
+    <Heading>{'Your proposal is open'}</Heading>
+    <Text>{'You have successfully created a proposal!'}</Text>
+    <Button as={RouteLink} to={linkTo} alignSelf="center">
+      View your proposal
+    </Button>
+  </Stack>
+)
+
+export const ProposalTemplate = (props: {
+  initialProposalFormValues: ProposalFormValues
+  /** ID of new proposal, used for redirect link */
+  newProposalId?: string
+  submit: (values: ProposalFormValues) => Promise<boolean>
   steps: string[]
-  proposal: UIProposal
-}) {
-  const { title, description } = proposal.metadata
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const btnRef = useRef(null)
+  groupName: string
+}) => {
+  const { activeStep, nextStep, prevStep } = useSteps({
+    initialStep: 0,
+  })
+  const [proposalValues, setProposalValues] = useState<ProposalFormValues>(
+    props.initialProposalFormValues,
+  )
+  const [submitting, setSubmitting] = useState(false)
+  const [priorStep, setPriorStep] = useState(0)
 
-  function handleNewAction(action: ProposalEventType) {
-    console.log('new action: ', action)
-    onClose()
+  function handleStep1(values: ProposalFormValues) {
+    setProposalValues(values)
+    nextStep()
+  }
+
+  function handlePrev() {
+    setPriorStep(activeStep)
+    prevStep()
+  }
+
+  async function handleSubmit(proposalValues: ProposalFormValues) {
+    setSubmitting(true)
+    const success = await props.submit({
+      ...proposalValues,
+    })
+    setSubmitting(false)
+    if (success) nextStep()
+  }
+
+  function renderStep() {
+    switch (activeStep) {
+      case 0:
+        return (
+          <HorizontalSlide key="step-0" fromRight={priorStep !== 0}>
+            <ProposalForm
+              defaultValues={proposalValues}
+              groupName={props.groupName}
+              onSubmit={handleStep1}
+            />
+          </HorizontalSlide>
+        )
+      case 1:
+        return (
+          <HorizontalSlide key="step-1">
+            <ProposalReview groupName={props.groupName} values={proposalValues} />
+          </HorizontalSlide>
+        )
+      case 2:
+        return (
+          <HorizontalSlide key="step-2">
+            <Finished
+              linkTo={props.newProposalId ? `/${props.newProposalId}/details` : '/'}
+            />
+          </HorizontalSlide>
+        )
+      default:
+        return null
+    }
   }
 
   return (
-    <Flex direction="column">
-      <PageStepper activeStep={0} steps={steps} />
-      <PageContainer maxW={SPACING.formWidth}>
-        <Stack spacing={3}>
-          <EditableHeading
-            value={title}
-            onSubmit={(value) => console.log('heading change:', value)}
-          />
-          <EditableDescription
-            value={description}
-            onSubmit={(value) => console.log('description changed: ', value)}
-          />
-
-          <Flex align="baseline" pb={3}>
-            <Heading variant="label" size="xs">
-              Group:
-            </Heading>
-            <Text ml={2}>Group name</Text>
-          </Flex>
-          <ProposalStakeForm />
-          <AddActionButton ref={btnRef} onClick={onOpen} />
-        </Stack>
-        <ProposalActionDrawer
-          isOpen={isOpen}
-          onClose={onClose}
-          finalFocusRef={btnRef}
-          onActionSelect={handleNewAction}
-        />
+    <Flex flexDir="column">
+      <PageStepper activeStep={activeStep} steps={props.steps} />
+      <PageContainer centerContent maxW={SPACING.formWidth}>
+        <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
       </PageContainer>
     </Flex>
   )

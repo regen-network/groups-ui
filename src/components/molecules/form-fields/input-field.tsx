@@ -11,7 +11,8 @@ export const InputField = ({
 }: FieldProps & { inputProps?: InputProps }) => {
   const { name, required } = fieldProps
 
-  const { control, getValues } = useFormContext()
+  const ctx = useFormContext()
+  const { control, getValues } = ctx
   const {
     fieldState: { error },
     field,

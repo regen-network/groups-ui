@@ -35,6 +35,8 @@ const emptyStr = z.literal('')
 
 const boolStr = z.union([z.literal('true'), z.literal('false')])
 const url = z.string().url('Must be a valid URL')
+const positiveNumStrRegex = /^[+]?([.]\d+|\d+[.]?\d*)$/
+const amount = z.string().regex(positiveNumStrRegex, 'Must be a positive number')
 
 // unions
 
@@ -55,6 +57,7 @@ const percentOrEmptyStr = z.union([percent, emptyStr])
 
 export const valid = {
   admin,
+  amount,
   bech32Address,
   emptyStr,
   boolStr,

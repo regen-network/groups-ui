@@ -6,7 +6,7 @@ import type { ValidatorSDKType } from 'types'
 
 import { allChainsArray } from 'api/chains'
 
-import { enableKeplr } from './wallet.store'
+import { bootstrapKeplr } from './wallet.store'
 
 export const LOCALSTORAGE_CHAIN_KEY = 'active-chain'
 
@@ -16,7 +16,7 @@ const defaultChain = allChainsArray.find((c) => c.chainId === 'cosmoswithgroups'
 type ChainStore = {
   active: ChainInfo
   all: ChainInfo[]
-  fee?: StdFee | 'auto' | number
+  fee?: StdFee // | 'auto' | number
   validators: ValidatorSDKType[]
 }
 
@@ -31,6 +31,6 @@ export function setActiveChain(chainId: string) {
   if (newChain) {
     Chain.active = newChain
     localStorage.setItem(LOCALSTORAGE_CHAIN_KEY, JSON.stringify(newChain))
-    enableKeplr()
+    bootstrapKeplr()
   }
 }

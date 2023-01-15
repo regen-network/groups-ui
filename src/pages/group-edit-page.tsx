@@ -134,7 +134,7 @@ export default function GroupEdit() {
   return (
     <GroupTemplate
       disabledGroupFormFields={['admin']}
-      linkToGroupId={groupId}
+      newGroupId={groupId}
       initialGroupFormValues={initialGroupValues}
       initialPolicyFormValues={initialPolicyValues}
       text={{

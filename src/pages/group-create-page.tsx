@@ -31,7 +31,7 @@ export default function GroupCreate() {
 
   return (
     <GroupTemplate
-      linkToGroupId={newGroupId}
+      newGroupId={newGroupId}
       initialGroupFormValues={{
         ...defaultGroupFormValues,
         admin: Wallet.account?.address,

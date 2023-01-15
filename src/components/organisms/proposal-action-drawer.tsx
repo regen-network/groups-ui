@@ -1,4 +1,4 @@
-import { ProposalEventType } from 'types'
+import type { ProposalAction } from 'types'
 
 import {
   type DrawerProps,
@@ -16,10 +16,10 @@ import { ActionButton } from '@/molecules'
 import { CgListTree, ImFileText2 } from 'assets/tsx'
 
 type Props = {
-  onActionSelect: (action: ProposalEventType) => void
+  onActionSelect: (actionType: ProposalAction['type']) => void
   isOpen: DrawerProps['isOpen']
   onClose: DrawerProps['onClose']
-  finalFocusRef: DrawerProps['finalFocusRef']
+  finalFocusRef?: DrawerProps['finalFocusRef']
 }
 
 export const ProposalActionDrawer = ({
