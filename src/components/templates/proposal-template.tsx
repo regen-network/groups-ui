@@ -7,13 +7,14 @@ import { useSteps } from 'hooks/chakra'
 import { AnimatePresence, HorizontalSlide } from '@/animations'
 import { Button, Flex, Heading, PageContainer, RouteLink, Stack, Text } from '@/atoms'
 import { PageStepper } from '@/molecules'
+import { FormFooter } from '@/molecules/form-footer'
 import { type ProposalFormValues, ProposalForm } from '@/organisms/proposal-form'
 import { ProposalReview } from '@/organisms/proposal-review'
 
 const Finished = ({ linkTo }: { linkTo: string }) => (
   <Stack spacing={8}>
-    <Heading>{'Your proposal is open'}</Heading>
-    <Text>{'You have successfully created a proposal!'}</Text>
+    <Heading textAlign="center">{'Your proposal is open'}</Heading>
+    <Text align="center">{'You have successfully created a proposal!'}</Text>
     <Button as={RouteLink} to={linkTo} alignSelf="center">
       View your proposal
     </Button>
@@ -37,17 +38,17 @@ export const ProposalTemplate = (props: {
   const [submitting, setSubmitting] = useState(false)
   const [priorStep, setPriorStep] = useState(0)
 
-  function handleStep1(values: ProposalFormValues) {
-    setProposalValues(values)
-    nextStep()
-  }
-
   function handlePrev() {
     setPriorStep(activeStep)
     prevStep()
   }
 
-  async function handleSubmit(proposalValues: ProposalFormValues) {
+  function handleSave(values: ProposalFormValues) {
+    setProposalValues(values)
+    nextStep()
+  }
+
+  async function handleSubmit() {
     setSubmitting(true)
     const success = await props.submit({
       ...proposalValues,
@@ -64,14 +65,19 @@ export const ProposalTemplate = (props: {
             <ProposalForm
               defaultValues={proposalValues}
               groupName={props.groupName}
-              onSubmit={handleStep1}
+              onSubmit={handleSave}
             />
           </HorizontalSlide>
         )
       case 1:
         return (
           <HorizontalSlide key="step-1">
-            <ProposalReview groupName={props.groupName} values={proposalValues} />
+            <ProposalReview
+              groupName={props.groupName}
+              values={proposalValues}
+              onPrev={handlePrev}
+              onSubmit={handleSubmit}
+            />
           </HorizontalSlide>
         )
       case 2:
@@ -88,11 +94,12 @@ export const ProposalTemplate = (props: {
   }
 
   return (
-    <Flex flexDir="column">
+    <Flex flexDir="column" flex={1}>
       <PageStepper activeStep={activeStep} steps={props.steps} />
       <PageContainer centerContent maxW={SPACING.formWidth}>
         <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
       </PageContainer>
+      <FormFooter />
     </Flex>
   )
 }

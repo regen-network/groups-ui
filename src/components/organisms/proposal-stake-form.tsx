@@ -21,17 +21,19 @@ export const ProposalStakeForm = ({
   defaultValues,
   formId,
   onSubmit,
+  onError,
 }: {
   defaultValues: ProposalStakeFormValues
   formId: string
   onSubmit: (values: ProposalStakeFormValues) => void
+  onError: () => void
 }) => {
   const [stakeType, setStakeType] = useState<ProposalStakeType>('delegate')
-
   function renderForm() {
     const baseProps = {
       formId,
       onSubmit,
+      onError,
       maxAmount: '1000',
     }
     switch (stakeType) {

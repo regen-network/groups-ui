@@ -5,6 +5,7 @@ import {
   Input,
   InputGroup,
   InputRightAddon,
+  InputRightElement,
   Text,
 } from './chakra'
 
@@ -17,9 +18,11 @@ export const AmountInput = forwardRef((props: AmountInputProps, ref) => {
   return (
     <InputGroup>
       <Input ref={ref} type="number" {...inputProps} />
-      <InputRightAddon as={Button} onClick={onMaxClick}>
-        <Text fontSize="sm">max</Text>
-      </InputRightAddon>
+      <InputRightElement width="4.5rem">
+        <Button size="sm" h="1.75rem" onClick={onMaxClick}>
+          max
+        </Button>
+      </InputRightElement>
     </InputGroup>
   )
 })

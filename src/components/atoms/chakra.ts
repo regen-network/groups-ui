@@ -62,6 +62,7 @@ export {
   Input,
   InputGroup,
   InputRightAddon,
+  InputRightElement,
   Menu,
   MenuButton,
   MenuItem,

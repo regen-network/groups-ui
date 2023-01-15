@@ -1,4 +1,6 @@
 import react from '@vitejs/plugin-react'
+import jotaiDebugLabel from 'jotai/babel/plugin-debug-label'
+import jotaiReactRefresh from 'jotai/babel/plugin-react-refresh'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig /* , splitVendorChunkPlugin */ } from 'vite'
 import checker from 'vite-plugin-checker'
@@ -11,7 +13,7 @@ export default defineConfig({
   plugins: [
     tsconfigPaths(),
     checker({ typescript: true }),
-    react(),
+    react({ babel: { plugins: [jotaiDebugLabel, jotaiReactRefresh] } }),
     svgr(),
     VitePluginFonts({
       google: {

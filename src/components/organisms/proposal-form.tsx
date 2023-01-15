@@ -1,4 +1,4 @@
-import { type MouseEvent, Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 import type {
   ProposalAction,
@@ -10,9 +10,9 @@ import { uuid } from 'util/helpers'
 
 import { useDisclosure } from 'hooks/chakra'
 
-import { AddActionButton, Button, Flex, Heading, Stack, Text } from '@/atoms'
+import { AddActionButton, Flex, Heading, Stack, Text } from '@/atoms'
 import { EditableDescription, EditableHeading, WithRemoveButton } from '@/molecules'
-import { FormFooter } from '@/molecules/form-footer'
+import { useFormFooter } from '@/molecules/form-footer'
 import { ProposalActionDrawer } from '@/organisms/proposal-action-drawer'
 import { ProposalStakeForm } from '@/organisms/proposal-stake-form'
 import { ProposalTextForm } from '@/organisms/proposal-text-form'
@@ -35,8 +35,26 @@ export const ProposalForm = (props: {
   // possible refactor
   const { defaultValues } = props
   const [actions, setActions] = useState<ProposalAction[]>(defaultValues.actions)
+  const [validForms, setValidForms] = useState<Record<string, boolean>>({})
   const [title, setTitle] = useState(defaultValues.title)
   const [description, setDescription] = useState(defaultValues.description)
+
+  useEffect(() => {
+    // watch for new actions and make sure their ID is referenced
+    actions.forEach((action) => {
+      if (!(action.id in validForms)) {
+        setValidForms({ ...validForms, [action.id]: false })
+      }
+    })
+  }, [actions, validForms])
+
+  useEffect(() => {
+    const valid = Object.values(validForms)
+    const allReady = valid.every((v) => !!v)
+    if (valid.length > 0 && allReady) {
+      props.onSubmit({ title, description, actions })
+    }
+  }, [actions, description, props, title, validForms])
 
   function handleNewAction(actionType: ProposalAction['type']) {
     const id = uuid()
@@ -60,8 +78,8 @@ export const ProposalForm = (props: {
     setActions(actions.filter((a) => action.id !== a.id))
   }
 
-  function handleSubmitAllForms(e: MouseEvent) {
-    e.preventDefault()
+  function handleSubmitAllForms() {
+    // e.preventDefault()
     // A bit hacky - programmatically grabbing all forms based on the ID we
     // create and calling `requestSubmit` to trigger their respective `onSubmit`
     // handlers - which then triggers `updateActionValues` so the updated
@@ -70,8 +88,9 @@ export const ProposalForm = (props: {
     const formElements: HTMLFormElement[] = actions.map(
       (a) => document.getElementById(a.id) as HTMLFormElement,
     )
-    formElements.forEach((form) => form.requestSubmit())
-    props.onSubmit({ title, description, actions })
+    formElements.forEach((formEl) => {
+      formEl.requestSubmit()
+    })
   }
 
   function updateActionValues(id: string, values: ProposalAction['values']) {
@@ -83,7 +102,17 @@ export const ProposalForm = (props: {
       return action
     })
     setActions(newActions)
+    setValidForms({ ...validForms, [id]: true })
   }
+
+  function handleFormError(id: string) {
+    setValidForms({ ...validForms, [id]: false })
+  }
+
+  useFormFooter({
+    onSubmit: handleSubmitAllForms,
+    btnText: 'Save & next',
+  })
 
   function renderAction(action: ProposalAction) {
     switch (action.type) {
@@ -92,6 +121,7 @@ export const ProposalForm = (props: {
           <ProposalStakeForm
             defaultValues={action.values as ProposalStakeFormValues}
             formId={action.id}
+            onError={() => handleFormError(action.id)}
             onSubmit={(data) => updateActionValues(action.id, data)}
           />
         )
@@ -101,6 +131,7 @@ export const ProposalForm = (props: {
             defaultValues={action.values as ProposalTextFormValues}
             formId={action.id}
             onSubmit={(data) => updateActionValues(action.id, data)}
+            onError={() => handleFormError(action.id)}
           />
         )
       default:
@@ -134,11 +165,7 @@ export const ProposalForm = (props: {
             </Fragment>
           )
         })}
-        <Flex justify="end">
-          <Button onClick={handleSubmitAllForms}>Next</Button>
-        </Flex>
       </Stack>
-      <FormFooter onBtnClick={handleSubmitAllForms} />
       <ProposalActionDrawer
         isOpen={isOpen}
         onClose={onClose}

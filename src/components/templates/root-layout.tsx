@@ -24,17 +24,20 @@ export const RootLayout = () => {
       maxH="100vh"
       maxW="100vw"
       height="full"
-      overflowY="auto"
+      overflowY="hidden"
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
       <Navbar />
-      <Box as="main" h="full">
+      <Flex as="main" h="full" overflowY="auto" direction="column">
         <AnimatePresence mode="wait">
-          <PopUpFade key={pathname}>
+          <PopUpFade
+            key={pathname}
+            style={{ flex: 1, display: 'flex', flexDirection: 'column' }}
+          >
             <FrozenOutlet />
           </PopUpFade>
         </AnimatePresence>
-      </Box>
+      </Flex>
     </Flex>
   )
 }

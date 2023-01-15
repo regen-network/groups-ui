@@ -14,15 +14,19 @@ import { Chain } from 'store'
 
 import { Heading, Stack, Text } from '@/atoms'
 import { FormCard } from '@/molecules'
+import { useFormFooter } from '@/molecules/form-footer'
 import { ReviewItem } from '@/molecules/review-item'
 
 export const ProposalReview = (props: {
   values: ProposalFormValues
   groupName: string
+  onPrev: () => void
+  onSubmit: () => void
 }) => {
   const {
     values: { actions, title, description },
   } = props
+  useFormFooter({ onPrev: props.onPrev, onSubmit: props.onSubmit })
   return (
     <Stack spacing={8}>
       <FormCard>

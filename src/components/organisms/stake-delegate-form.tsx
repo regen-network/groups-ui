@@ -23,6 +23,7 @@ export const DelegateForm = (props: {
   formId: string
   maxAmount: string
   onSubmit: (data: DelegateFormValues) => void
+  onError: () => void
 }) => {
   const { validators, fee } = useSnapshot(Chain)
   const items = validators.map((v, i) => {
@@ -39,7 +40,7 @@ export const DelegateForm = (props: {
     },
   })
   return (
-    <Form form={form} onSubmit={props.onSubmit} id={props.formId}>
+    <Form id={props.formId} form={form} onSubmit={props.onSubmit} onError={props.onError}>
       <SelectField
         required
         name="validator"

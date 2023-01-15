@@ -1,13 +1,20 @@
 import type { ReactNode } from 'react'
 
-import { motion } from './framer-motion'
+import { type MotionStyle, motion } from './framer-motion'
 
-export const PopUpFade = ({ children }: { children: ReactNode }) => {
+export const PopUpFade = ({
+  children,
+  style,
+}: {
+  children: ReactNode
+  style?: MotionStyle
+}) => {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.995, y: 10, height: '95%' }}
-      animate={{ opacity: 1, scale: 1, y: 0, height: '100%' }}
-      exit={{ opacity: 0, scale: 0.995, y: -10, height: '95%' }}
+      style={style}
+      initial={{ opacity: 0, scale: 0.99, height: '90%' }}
+      animate={{ opacity: 1, scale: 1, height: '100%' }}
+      exit={{ opacity: 0, scale: 0.99, height: '90%' }}
       transition={{ duration: 0.2 }}
     >
       {children}

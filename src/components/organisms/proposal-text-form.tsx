@@ -18,6 +18,7 @@ export const ProposalTextForm = (props: {
   defaultValues?: TextProposalFormValues
   formId: string
   onSubmit: (values: TextProposalFormValues) => void
+  onError: () => void
 }) => {
   const form = useZodForm({
     schema,
@@ -25,7 +26,12 @@ export const ProposalTextForm = (props: {
   })
   return (
     <FormCard title="Text">
-      <Form form={form} onSubmit={props.onSubmit} id={props.formId}>
+      <Form
+        form={form}
+        onSubmit={props.onSubmit}
+        onError={props.onError}
+        id={props.formId}
+      >
         <TextareaField required name="text" label="Proposal Text" />
         <FeeDisplayField />
       </Form>

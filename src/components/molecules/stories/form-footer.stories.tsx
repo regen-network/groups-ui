@@ -12,7 +12,7 @@ export default {
   },
 } as Meta<typeof FormFooter>
 
-const Template: StoryFn<typeof FormFooter> = (args) => <FormFooter {...args} />
+const Template: StoryFn<typeof FormFooter> = () => <FormFooter />
 
 export const Component = Template.bind({})
 
