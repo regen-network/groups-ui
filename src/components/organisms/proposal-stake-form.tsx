@@ -49,6 +49,15 @@ export const ProposalStakeForm = ({
           />
         )
       case 'undelegate':
+        return (
+          <DelegateForm
+            {...baseProps}
+            key={formId}
+            defaultValues={
+              { ...defaultValues, stakeType: 'undelegate' } as DelegateFormValues
+            }
+          />
+        )
       case 'delegate':
       default:
         return (

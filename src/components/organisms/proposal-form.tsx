@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from 'react'
+import { omit } from 'remeda'
 
 import type {
   ProposalAction,
@@ -35,9 +36,12 @@ export const ProposalForm = (props: {
   // possible refactor
   const { defaultValues } = props
   const [actions, setActions] = useState<ProposalAction[]>(defaultValues.actions)
-  const [validForms, setValidForms] = useState<Record<string, boolean>>({})
+  const [validForms, setValidForms] = useState<{ [id: string]: boolean }>({})
   const [title, setTitle] = useState(defaultValues.title)
   const [description, setDescription] = useState(defaultValues.description)
+
+  const valid = Object.values(validForms)
+  const allFormsValid = valid.length > 0 && valid.every(Boolean)
 
   useEffect(() => {
     // watch for new actions and make sure their ID is referenced
@@ -49,12 +53,11 @@ export const ProposalForm = (props: {
   }, [actions, validForms])
 
   useEffect(() => {
-    const valid = Object.values(validForms)
-    const allReady = valid.every((v) => !!v)
-    if (valid.length > 0 && allReady) {
+    // see: comment in `handleSubmitAllForms`
+    if (allFormsValid) {
       props.onSubmit({ title, description, actions })
     }
-  }, [actions, description, props, title, validForms])
+  }, [actions, description, props, title, allFormsValid])
 
   function handleNewAction(actionType: ProposalAction['type']) {
     const id = uuid()
@@ -74,22 +77,17 @@ export const ProposalForm = (props: {
     onClose()
   }
 
-  function handleRemoveAction(action: ProposalAction) {
-    setActions(actions.filter((a) => action.id !== a.id))
-  }
-
   function handleSubmitAllForms() {
-    // e.preventDefault()
     // A bit hacky - programmatically grabbing all forms based on the ID we
     // create and calling `requestSubmit` to trigger their respective `onSubmit`
-    // handlers - which then triggers `updateActionValues` so the updated
-    // `actions` can be passed to the parent `onSubmit` handler
-    // Possible refactor, but would require a good bit of reworking
+    // and `onError` handlers - which then trigger `updateActionValues` or
+    // `handleFormError` on each form. When all forms are valid, the root
+    // `onSubmit` is called through `useEffect`
     const formElements: HTMLFormElement[] = actions.map(
       (a) => document.getElementById(a.id) as HTMLFormElement,
     )
     formElements.forEach((formEl) => {
-      formEl.requestSubmit()
+      formEl.requestSubmit() // trigger `onSubmit` / `onError`
     })
   }
 
@@ -101,16 +99,21 @@ export const ProposalForm = (props: {
       }
       return action
     })
+    setValidForms((prev) => ({ ...prev, [id]: true }))
     setActions(newActions)
-    setValidForms({ ...validForms, [id]: true })
+  }
+
+  function handleRemoveAction(action: ProposalAction) {
+    setActions(actions.filter((a) => action.id !== a.id))
+    setValidForms(omit(validForms, [action.id]))
   }
 
   function handleFormError(id: string) {
-    setValidForms({ ...validForms, [id]: false })
+    setValidForms((prev) => ({ ...prev, [id]: false }))
   }
 
   useFormFooter({
-    onSubmit: handleSubmitAllForms,
+    onSubmit: () => handleSubmitAllForms(),
     btnText: 'Save & next',
   })
 
@@ -121,8 +124,8 @@ export const ProposalForm = (props: {
           <ProposalStakeForm
             defaultValues={action.values as ProposalStakeFormValues}
             formId={action.id}
-            onError={() => handleFormError(action.id)}
             onSubmit={(data) => updateActionValues(action.id, data)}
+            onError={() => handleFormError(action.id)}
           />
         )
       case 'text':

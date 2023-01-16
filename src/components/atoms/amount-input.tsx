@@ -4,9 +4,7 @@ import {
   forwardRef,
   Input,
   InputGroup,
-  InputRightAddon,
   InputRightElement,
-  Text,
 } from './chakra'
 
 export type AmountInputProps = InputProps & {

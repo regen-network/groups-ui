@@ -61,7 +61,6 @@ export {
   IconButton,
   Input,
   InputGroup,
-  InputRightAddon,
   InputRightElement,
   Menu,
   MenuButton,

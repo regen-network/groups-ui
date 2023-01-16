@@ -26,7 +26,7 @@ export const ProposalReview = (props: {
   const {
     values: { actions, title, description },
   } = props
-  useFormFooter({ onPrev: props.onPrev, onSubmit: props.onSubmit })
+  useFormFooter({ onPrev: props.onPrev, onSubmit: () => props.onSubmit() })
   return (
     <Stack spacing={8}>
       <FormCard>

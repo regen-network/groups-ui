@@ -50,9 +50,7 @@ export const ProposalTemplate = (props: {
 
   async function handleSubmit() {
     setSubmitting(true)
-    const success = await props.submit({
-      ...proposalValues,
-    })
+    const success = await props.submit(proposalValues)
     setSubmitting(false)
     if (success) nextStep()
   }
