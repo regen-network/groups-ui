@@ -154,11 +154,11 @@ export const ProposalForm = (props: {
           </Heading>
           <Text ml={2}>{props.groupName}</Text>
         </Flex>
-        {actions.map((action, i) => {
+        {actions.map((action) => {
           return (
             <Fragment key={`action-form-${action.id}`}>
               <WithRemoveButton
-                hideBtn={i === 0}
+                hideBtn={actions.length <= 1}
                 label="remove action"
                 onClick={() => handleRemoveAction(action)}
               >

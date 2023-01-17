@@ -4,7 +4,7 @@ import { numToPercentStr } from 'util/helpers'
 
 import { GroupMsgWithTypeUrl, groupV1 } from './cosmosgroups'
 
-export function updateDecisionPolicyMsg({
+export function msgUpdateDecisionPolicy({
   admin,
   policyAddress,
   percentage,

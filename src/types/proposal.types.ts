@@ -5,13 +5,13 @@ import type { ClaimFormValues } from '@/organisms/stake-claim-form'
 import type { DelegateFormValues } from '@/organisms/stake-delegate-form'
 import type { RedelegateFormValues } from '@/organisms/stake-redelegate-form'
 
-type ProposalMetadata = {
+export type UIProposalMetadata = {
   title: string
   description?: string
 }
 
 export interface UIProposal extends Omit<Proposal, 'metadata'> {
-  metadata: ProposalMetadata
+  metadata: UIProposalMetadata
 }
 
 export type ProposalAction = {

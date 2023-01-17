@@ -53,10 +53,6 @@ export async function bootstrapKeplr() {
       amount: coins(10, Chain.active.feeCurrencies[0].coinDenom),
       gas: '2000000', // TODO how do I calculate this?
     }
-    // Chain.fee = {
-    //   amt: Chain.active.feeCurrencies[0].gasPriceStep?.average || 0.025,
-    //   denom: Chain.active.feeCurrencies[0].coinMinimalDenom,
-    // }
     Wallet.keplrStatus = 'ready'
     fetchValidators()
   } catch (error) {
@@ -68,6 +64,6 @@ export async function bootstrapKeplr() {
 export async function signAndBroadcast(messages: EncodeObject[]) {
   const { account, signingClient } = Wallet
   const { fee } = Chain
-  if (!account || !signingClient || !fee) throwError('Wallet not initialized')
+  if (!account?.address || !signingClient || !fee) throwError('Wallet not initialized')
   return signingClient.signAndBroadcast(account.address, messages, fee)
 }

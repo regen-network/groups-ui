@@ -1,9 +1,14 @@
 import { redirect, useParams } from 'react-router-dom'
+import { useSnapshot } from 'valtio'
 
+import { handleError, throwError } from 'util/errors'
 import { defaultDelegateFormValues } from 'util/form.constants'
-import { uuid } from 'util/helpers'
+import { getFeeDenom, uuid } from 'util/helpers'
 
-import { useGroup } from 'hooks/use-query'
+import { Chain, Wallet } from 'store'
+import { createProposal } from 'api/proposal.actions'
+import { useGroup, useGroupPolicies } from 'hooks/use-query'
+import { useTxToasts } from 'hooks/useToasts'
 
 import { Loading } from '@/molecules'
 import { type ProposalFormValues } from '@/organisms/proposal-form'
@@ -12,18 +17,45 @@ import { ProposalTemplate } from '@/templates/proposal-template'
 const steps = ['Propose Action', 'Review Proposal', 'Proposal Open']
 
 export default function ProposalCreate() {
+  const { toastSuccess, toastErr } = useTxToasts()
   const { groupId } = useParams()
-  const { data: group, isLoading } = useGroup(groupId)
+  const { data: group, isLoading: isLoadingGroup } = useGroup(groupId)
+  const { data: groupPolicies, isLoading: isLoadingPolicy } = useGroupPolicies(groupId)
+  const { fee } = useSnapshot(Chain)
+  const { account } = useSnapshot(Wallet)
+  const [groupPolicy] = groupPolicies || []
 
-  if (isLoading) return <Loading />
-  if (!group) {
+  if (isLoadingGroup || isLoadingPolicy) return <Loading />
+  if (!group || !groupPolicy) {
     redirect('/')
     return null
   }
 
-  async function handleSubmit(values: ProposalFormValues): Promise<boolean> {
-    console.log('proposal values :>> ', values)
-    return true
+  async function handleSubmit({
+    actions,
+    title,
+    description,
+  }: ProposalFormValues): Promise<string | null> {
+    try {
+      if (!fee || !groupPolicies?.[0] || !account?.address) {
+        throwError('Error submitting proposal:  No fee or group policy found')
+      }
+      const data = await createProposal({
+        actions,
+        denom: getFeeDenom(fee),
+        groupPolicyAddress: groupPolicy.address,
+        metadata: { title, description },
+        proposers: [account.address],
+      })
+      if (!data?.proposalId)
+        throwError('Proposal transaction completed, but no proposal ID found')
+      toastSuccess(data.transactionHash, 'Proposal created!')
+      return data.proposalId
+    } catch (error) {
+      handleError(error)
+      toastErr(error, 'Proposal could not be created:')
+      return null
+    }
   }
 
   return (
@@ -36,6 +68,7 @@ export default function ProposalCreate() {
         description: 'Proposal Description',
       }}
       groupName={group.metadata.name}
+      groupId={group.id.toString()}
       submit={handleSubmit}
       steps={steps}
     />

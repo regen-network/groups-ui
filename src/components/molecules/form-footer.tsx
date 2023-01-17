@@ -7,14 +7,14 @@ import { Box, Button, Container, HStack, IconButton } from '@/atoms'
 
 import { IoMdArrowBack, IoMdArrowForward } from 'assets/tsx'
 
-type FormFooterStateType = {
+export type FormFooterStateType = {
   btnText?: string
   onSubmit?: () => void
   onPrev?: () => void
   onNext?: () => void
 }
 
-const FormFooterState = atom<FormFooterStateType>({})
+export const FormFooterState = atom<FormFooterStateType>({})
 
 export function useFormFooter({
   btnText,
@@ -29,9 +29,7 @@ export function useFormFooter({
   }, [btnText, onPrev, onNext, onSubmit, setFooterActions])
 }
 
-/** Unused for now - hard to connect form `submit` logic with the button here -
- * above hook is an attempt at one idea */
-export const FormFooter = () => {
+export const FormFooter = ({ isSubmitting }: { isSubmitting?: boolean }) => {
   const [{ onSubmit, onNext, onPrev, btnText }, setFooterActions] =
     useAtom(FormFooterState)
   const hasNavButtons = Boolean(onPrev || onNext)
@@ -65,6 +63,7 @@ export const FormFooter = () => {
                   size="lg"
                   aria-label="Go back"
                   variant="outline"
+                  disabled={isSubmitting}
                   icon={<IoMdArrowBack />}
                   onClick={onPrev}
                 />
@@ -74,6 +73,7 @@ export const FormFooter = () => {
                   size="lg"
                   aria-label="Go Forward"
                   variant="outline"
+                  disabled={isSubmitting}
                   icon={<IoMdArrowForward />}
                   onClick={onNext}
                 />
@@ -83,6 +83,7 @@ export const FormFooter = () => {
           <Button
             aria-label="Submit"
             size="lg"
+            isLoading={isSubmitting}
             onClick={(e) => {
               e.preventDefault()
               onSubmit()

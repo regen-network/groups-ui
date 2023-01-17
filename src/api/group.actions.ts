@@ -5,12 +5,12 @@ import { throwError } from 'util/errors'
 
 import { Query, signAndBroadcast } from 'store'
 
-import { createGroupWithPolicyMsg } from './group.messages'
+import { msgCreateGroupWithPolicy } from './group.messages'
 import { addMembersToGroups, toUIGroup } from './group.utils'
 
 export async function createGroupWithPolicy(values: GroupWithPolicyFormValues) {
   try {
-    const msg = createGroupWithPolicyMsg(values)
+    const msg = msgCreateGroupWithPolicy(values)
     const data = await signAndBroadcast([msg])
     let groupId
     if (data.rawLog) {

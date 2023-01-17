@@ -6,7 +6,7 @@ import { clearEmptyStr } from 'util/helpers'
 import { GroupMsgWithTypeUrl } from './cosmosgroups'
 import { encodeDecisionPolicy } from './policy.messages'
 
-export function createGroupWithPolicyMsg(values: GroupWithPolicyFormValues) {
+export function msgCreateGroupWithPolicy(values: GroupWithPolicyFormValues) {
   const {
     admin,
     description,
@@ -44,7 +44,7 @@ export function createGroupWithPolicyMsg(values: GroupWithPolicyFormValues) {
   })
 }
 
-export function updateGroupMetadataMsg({
+export function msgUpdateGroupMetadata({
   admin,
   metadata,
   groupId,

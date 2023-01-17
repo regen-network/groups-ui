@@ -10,9 +10,9 @@ import { DEFAULT_MEMBER_WEIGHT, DEFAULT_VOTING_WINDOW } from 'util/form.constant
 import { clearEmptyStr, percentStrToNum } from 'util/helpers'
 
 import { signAndBroadcast } from 'store'
-import { updateGroupMetadataMsg } from 'api/group.messages'
-import { updateGroupMembersMsg } from 'api/member.messages'
-import { updateDecisionPolicyMsg } from 'api/policy.messages'
+import { msgUpdateGroupMetadata } from 'api/group.messages'
+import { msgUpdateGroupMembers } from 'api/member.messages'
+import { msgUpdateDecisionPolicy } from 'api/policy.messages'
 import { isPercentagePolicy, isThresholdPolicy } from 'api/policy.utils'
 import { useGroup, useGroupMembers, useGroupPolicies } from 'hooks/use-query'
 import { useTxToasts } from 'hooks/useToasts'
@@ -79,7 +79,7 @@ export default function GroupEdit() {
         ) {
           // update metadata
           msgs.push(
-            updateGroupMetadataMsg({
+            msgUpdateGroupMetadata({
               groupId,
               admin: group.admin,
               metadata: {
@@ -100,7 +100,7 @@ export default function GroupEdit() {
         }
         if (prop === 'members') {
           msgs.push(
-            updateGroupMembersMsg({
+            msgUpdateGroupMembers({
               groupId,
               admin: group.admin,
               members: values.members,
@@ -109,7 +109,7 @@ export default function GroupEdit() {
         }
         if (prop === 'votingWindow' || prop === 'threshold' || prop === 'percentage') {
           msgs.push(
-            updateDecisionPolicyMsg({
+            msgUpdateDecisionPolicy({
               admin: group.admin,
               policyAddress: policy.address,
               votingWindow: values.votingWindow,

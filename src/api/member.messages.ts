@@ -4,7 +4,7 @@ import type { MemberFormValues } from 'types'
 
 import { GroupMsgWithTypeUrl } from './cosmosgroups'
 
-export function updateGroupMembersMsg({
+export function msgUpdateGroupMembers({
   admin,
   groupId,
   members,

@@ -22,12 +22,11 @@ const Finished = ({ linkTo }: { linkTo: string }) => (
 )
 
 export const ProposalTemplate = (props: {
-  initialProposalFormValues: ProposalFormValues
-  /** ID of new proposal, used for redirect link */
-  newProposalId?: string
-  submit: (values: ProposalFormValues) => Promise<boolean>
-  steps: string[]
+  groupId: string
   groupName: string
+  initialProposalFormValues: ProposalFormValues
+  steps: string[]
+  submit: (values: ProposalFormValues) => Promise<string | null>
 }) => {
   const { activeStep, nextStep, prevStep } = useSteps({
     initialStep: 0,
@@ -37,6 +36,7 @@ export const ProposalTemplate = (props: {
   )
   const [submitting, setSubmitting] = useState(false)
   const [priorStep, setPriorStep] = useState(0)
+  const [newProposalId, setNewProposalId] = useState<string>()
 
   function handlePrev() {
     setPriorStep(activeStep)
@@ -50,9 +50,12 @@ export const ProposalTemplate = (props: {
 
   async function handleSubmit() {
     setSubmitting(true)
-    const success = await props.submit(proposalValues)
+    const proposalId = await props.submit(proposalValues)
     setSubmitting(false)
-    if (success) nextStep()
+    if (proposalId) {
+      setNewProposalId(proposalId)
+      nextStep()
+    }
   }
 
   function renderStep() {
@@ -81,9 +84,7 @@ export const ProposalTemplate = (props: {
       case 2:
         return (
           <HorizontalSlide key="step-2">
-            <Finished
-              linkTo={props.newProposalId ? `/${props.newProposalId}/details` : '/'}
-            />
+            <Finished linkTo={`/${props.groupId}/proposals/${newProposalId}`} />
           </HorizontalSlide>
         )
       default:
@@ -97,7 +98,7 @@ export const ProposalTemplate = (props: {
       <PageContainer centerContent maxW={SPACING.formWidth}>
         <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
       </PageContainer>
-      <FormFooter />
+      <FormFooter isSubmitting={submitting} />
     </Flex>
   )
 }

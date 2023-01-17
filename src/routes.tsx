@@ -15,6 +15,7 @@ const GroupEdit = lazy(() => import('./pages/group-edit-page'))
 const Groups = lazy(() => import('./pages/groups-page'))
 const NotFound = lazy(() => import('./pages/not-found-page'))
 const ProposalCreate = lazy(() => import('./pages/proposal-create-page'))
+const ProposalDetails = lazy(() => import('./pages/proposal-details-page'))
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,6 +27,7 @@ const router = createBrowserRouter(
         <Route path="edit" element={<GroupEdit />} />
         <Route path="proposals">
           <Route path="new" element={<ProposalCreate />} />
+          <Route path=":proposalId" element={<ProposalDetails />} />
         </Route>
       </Route>
       <Route path="*" element={<NotFound />} />

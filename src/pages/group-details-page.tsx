@@ -4,7 +4,7 @@ import type { MemberFormValues } from 'types'
 import { handleError, throwError } from 'util/errors'
 
 import { signAndBroadcast } from 'store'
-import { updateGroupMembersMsg } from 'api/member.messages'
+import { msgUpdateGroupMembers } from 'api/member.messages'
 import { useGroup, useGroupMembers, useGroupPolicies } from 'hooks/use-query'
 import { useTxToasts } from 'hooks/useToasts'
 
@@ -34,7 +34,7 @@ export default function GroupDetails() {
   async function handleUpdateMembers(values: MemberFormValues[]): Promise<boolean> {
     if (!groupId || !group?.admin)
       throwError(`Can't update members: missing group ID or admin`)
-    const msg = updateGroupMembersMsg({
+    const msg = msgUpdateGroupMembers({
       groupId: group.id, // TODO: change to groupId?
       admin: group.admin,
       members: values,
