@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { atom, useAtom, useSetAtom } from 'jotai'
 
 import { useColorModeValue } from 'hooks/chakra'
@@ -7,41 +7,51 @@ import { Box, Button, Container, HStack, IconButton } from '@/atoms'
 
 import { IoMdArrowBack, IoMdArrowForward } from 'assets/tsx'
 
-export type FormFooterStateType = {
+type FormFooterState = {
   btnText?: string
-  onSubmit?: () => void
+  submitRef?: React.RefObject<HTMLButtonElement>
   onPrev?: () => void
   onNext?: () => void
 }
 
-export const FormFooterState = atom<FormFooterStateType>({})
+export const FormFooterAtom = atom<FormFooterState>({})
 
-export function useFormFooter({
-  btnText,
-  onPrev,
-  onNext,
-  onSubmit,
-}: FormFooterStateType) {
-  const setFooterActions = useSetAtom(FormFooterState)
+/** In order for the `formFooter` submit handler to work properly, this must be
+ * placed within the `<form>` element it's supposed to trigger. It won't
+ * actually appear in the dom, just forwards the submit behavior Note:
+ * `FormFooter` does not need to be a child of the `form` it triggers, ie this
+ * is fine:
+ * @example
+ * ```tsx
+ * <FormFooter />
+ * <form onSubmit={mySubmitFunc}>
+ *   <FormSubmitHiddenButton />
+ * </form>
+ * ``` */
+export const FormSubmitHiddenButton = ({ btnText, onPrev, onNext }: FormFooterState) => {
+  const setFooterActions = useSetAtom(FormFooterAtom)
+  const submitRef = useRef<HTMLButtonElement>(null)
   useEffect(() => {
-    setFooterActions({ btnText, onPrev, onNext, onSubmit })
+    setFooterActions({ btnText, onPrev, onNext, submitRef })
     return () => setFooterActions({})
-  }, [btnText, onPrev, onNext, onSubmit, setFooterActions])
+  }, [btnText, onPrev, onNext, setFooterActions])
+  return <Button hidden type="submit" ref={submitRef} />
 }
 
 export const FormFooter = ({ isSubmitting }: { isSubmitting?: boolean }) => {
-  const [{ onSubmit, onNext, onPrev, btnText }, setFooterActions] =
-    useAtom(FormFooterState)
+  const [{ onNext, onPrev, btnText, submitRef }, setFooterActions] =
+    useAtom(FormFooterAtom)
   const hasNavButtons = Boolean(onPrev || onNext)
   const bg = useColorModeValue('white', 'gray.800')
   const borderTopColor = useColorModeValue('gray.200', 'gray.700')
+  const shadow = useColorModeValue('md', 'dark-lg')
 
   // wipe state if footer removed from DOM
   useEffect(() => {
     return () => setFooterActions({})
   }, [setFooterActions])
 
-  if (!onSubmit) return null
+  if (!submitRef) return null
   return (
     <Box
       bg={bg}
@@ -52,6 +62,7 @@ export const FormFooter = ({ isSubmitting }: { isSubmitting?: boolean }) => {
       right={0}
       borderTopWidth={2}
       borderTopColor={borderTopColor}
+      shadow={shadow}
       zIndex={10}
     >
       <Container maxW="container.xl">
@@ -86,7 +97,8 @@ export const FormFooter = ({ isSubmitting }: { isSubmitting?: boolean }) => {
             isLoading={isSubmitting}
             onClick={(e) => {
               e.preventDefault()
-              onSubmit()
+              // NOTE: For this to work, there needs to be a
+              submitRef.current?.click()
             }}
           >
             {btnText || 'Submit'}

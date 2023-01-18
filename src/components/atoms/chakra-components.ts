@@ -26,7 +26,6 @@ export {
   Box,
   Button,
   ButtonGroup,
-  Card,
   CardBody,
   CardHeader,
   Center,
@@ -68,6 +67,7 @@ export {
   Select as NativeSelect, // `Select` being used by `chakra-react-select`
   Radio,
   RadioGroup,
+  SimpleGrid,
   Skeleton,
   Spacer,
   Spinner,

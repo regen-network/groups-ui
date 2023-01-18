@@ -1,13 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
 
 import { Chain } from 'store'
+import { fetchAllBalances } from 'api/bank.actions'
 import {
   fetchGroupById,
   fetchGroupsWithMembersByAdmin,
   fetchGroupsWithMembersByMember,
 } from 'api/group.actions'
 import { fetchGroupMembers } from 'api/member.actions'
-import { fetchGroupPolicies } from 'api/policy.actions'
+import { fetchGroupPolicies, fetchGroupPoliciesWithProposals } from 'api/policy.actions'
+import { fetchProposalbyId } from 'api/proposal.actions'
 import { fetchValidators } from 'api/staking.actions'
 
 export function useGroup(groupId?: string) {
@@ -50,11 +52,36 @@ export function useGroupPolicies(groupId?: string) {
   })
 }
 
+export function useGroupPoliciesWithProposals(groupId?: string) {
+  return useQuery({
+    queryKey: ['groupPoliciesWithProposals', groupId],
+    queryFn: () => fetchGroupPoliciesWithProposals(groupId),
+    enabled: !!groupId,
+  })
+}
+
 export function useValidators() {
   const { chainId } = Chain.active
   return useQuery({
     queryKey: ['validators', chainId],
     queryFn: () => fetchValidators(),
     enabled: !!chainId,
+  })
+}
+
+export function useProposal(proposalId?: string) {
+  return useQuery({
+    queryKey: ['proposal', proposalId],
+    queryFn: () => fetchProposalbyId(proposalId),
+    enabled: !!proposalId,
+  })
+}
+
+export function useBalances(address?: string) {
+  console.log('address :>> ', address)
+  return useQuery({
+    queryKey: ['balances', address],
+    queryFn: () => fetchAllBalances(address),
+    enabled: !!address,
   })
 }

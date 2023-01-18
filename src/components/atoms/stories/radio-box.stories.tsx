@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react'
 
-import { Heading, Stack, Text } from '../chakra'
+import { Heading, Stack, Text } from '../chakra-components'
 import { RadioBox } from '../radio-box'
 
 export default {

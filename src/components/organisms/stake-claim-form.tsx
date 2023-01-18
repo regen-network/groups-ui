@@ -9,6 +9,7 @@ import { useZodForm } from 'hooks/use-zod-form'
 
 import { Form } from '@/molecules'
 import { AmountField, FeeDisplayField } from '@/molecules/form-fields'
+import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 
 const schema = z.object({
   amount: valid.amount,
@@ -38,6 +39,7 @@ export const ClaimForm = (props: {
         denom={getFeeDenom(fee)}
       />
       <FeeDisplayField />
+      <FormSubmitHiddenButton />
     </Form>
   )
 }

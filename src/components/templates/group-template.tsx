@@ -13,6 +13,7 @@ import { useSteps } from 'hooks/chakra'
 import { AnimatePresence, HorizontalSlide } from '@/animations'
 import { Button, Flex, Heading, PageContainer, RouteLink, Stack, Text } from '@/atoms'
 import { PageStepper } from '@/molecules'
+import { FormFooter } from '@/molecules/form-footer'
 import { GroupForm } from '@/organisms/group-form'
 import { GroupPolicyForm } from '@/organisms/group-policy-form'
 
@@ -92,21 +93,16 @@ export function GroupTemplate({
         return (
           <HorizontalSlide key="step-1">
             <GroupPolicyForm
-              submitting={submitting}
               onSubmit={handleSubmit}
               defaultValues={{ threshold, votingWindow, percentage }}
               goBack={handlePrev}
-              btnText={text.submitBtn}
             />
           </HorizontalSlide>
         )
       case 2:
         return (
           <HorizontalSlide key="step-2">
-            <Finished
-              text={text.finished}
-              linkTo={newGroupId ? `/${newGroupId}/details` : '/'}
-            />
+            <Finished text={text.finished} linkTo={newGroupId ? `/${newGroupId}` : '/'} />
           </HorizontalSlide>
         )
       default:
@@ -115,7 +111,7 @@ export function GroupTemplate({
   }
 
   return (
-    <Flex flexDir="column">
+    <Flex flexDir="column" flex={1}>
       <PageStepper activeStep={activeStep} steps={steps} />
       <PageContainer centerContent maxW={SPACING.formWidth}>
         <Heading textAlign="center" mb={8}>
@@ -123,6 +119,7 @@ export function GroupTemplate({
         </Heading>
         <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
       </PageContainer>
+      <FormFooter isSubmitting={submitting} />
     </Flex>
   )
 }

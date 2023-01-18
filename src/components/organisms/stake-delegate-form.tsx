@@ -9,6 +9,7 @@ import { useZodForm } from 'hooks/use-zod-form'
 
 import { Form } from '@/molecules'
 import { AmountField, FeeDisplayField, SelectField } from '@/molecules/form-fields'
+import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 
 const schema = z.object({
   validator: valid.bech32Address,
@@ -57,6 +58,7 @@ export const DelegateForm = (props: {
         denom={getFeeDenom(fee)}
       />
       <FeeDisplayField />
+      <FormSubmitHiddenButton />
     </Form>
   )
 }

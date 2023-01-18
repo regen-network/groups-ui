@@ -13,6 +13,7 @@ const GroupCreate = lazy(() => import('./pages/group-create-page'))
 const GroupDetails = lazy(() => import('./pages/group-details-page'))
 const GroupEdit = lazy(() => import('./pages/group-edit-page'))
 const Groups = lazy(() => import('./pages/groups-page'))
+const Group = lazy(() => import('./pages/group-page'))
 const NotFound = lazy(() => import('./pages/not-found-page'))
 const ProposalCreate = lazy(() => import('./pages/proposal-create-page'))
 const ProposalDetails = lazy(() => import('./pages/proposal-details-page'))
@@ -23,6 +24,7 @@ const router = createBrowserRouter(
       <Route index element={<Groups />} />
       <Route path="new" element={<GroupCreate />} />
       <Route path=":groupId">
+        <Route index element={<Group />} />
         <Route path="details" element={<GroupDetails />} />
         <Route path="edit" element={<GroupEdit />} />
         <Route path="proposals">

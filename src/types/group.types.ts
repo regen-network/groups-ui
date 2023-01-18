@@ -7,6 +7,7 @@ import type { UIGroupMember } from './member.types'
 
 // exports
 
+export type { LCDQueryClient as BankQueryClient } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/bank/v1beta1/query.lcd'
 export type { LCDQueryClient as GroupQueryClient } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/query.lcd'
 export type { GroupInfoSDKType } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/types'
 export type { LCDQueryClient as StakingQueryClient } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/staking/v1beta1/query.lcd'

@@ -5,6 +5,8 @@ import type { ClaimFormValues } from '@/organisms/stake-claim-form'
 import type { DelegateFormValues } from '@/organisms/stake-delegate-form'
 import type { RedelegateFormValues } from '@/organisms/stake-redelegate-form'
 
+export type { ProposalSDKType } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/types'
+
 export type UIProposalMetadata = {
   title: string
   description?: string

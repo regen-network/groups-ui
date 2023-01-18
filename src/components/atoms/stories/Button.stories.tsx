@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from '@storybook/react'
 
-import { Button } from '../chakra'
+import { Button } from '../chakra-components'
 
 export default {
   title: 'Atoms/Button',

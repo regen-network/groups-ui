@@ -1,8 +1,10 @@
 import type {
   Any,
   ProposalAction,
+  ProposalSDKType,
   ProposalStakeFormValues,
   ProposalTextFormValues,
+  UIProposal,
 } from 'types'
 import { throwError } from 'util/errors'
 
@@ -21,18 +23,6 @@ type ProposalData = {
   description: string
 }
 
-export function isStakeProposal(
-  values: ProposalAction['values'],
-): values is ProposalStakeFormValues {
-  return 'stakeType' in values
-}
-
-function isTextProposal(
-  values: ProposalAction['values'],
-): values is ProposalTextFormValues {
-  return !isStakeProposal(values) && 'text' in values
-}
-
 export function proposalActionsToMsgs(
   actions: ProposalAction[],
   data: ProposalData,
@@ -46,6 +36,48 @@ export function proposalActionsToMsgs(
     }
     throwError(`Unknown proposal action: ${JSON.stringify(values, null, 2)}`)
   })
+}
+
+export function toUIProposal(sdkProposal: ProposalSDKType): UIProposal {
+  const { final_tally_result } = sdkProposal
+  return {
+    // executorResult is an enum - currently identical to SDK versions so this
+    // should be fine
+    executorResult:
+      sdkProposal.executor_result as unknown as UIProposal['executorResult'],
+    groupPolicyAddress: sdkProposal.group_policy_address,
+    groupPolicyVersion: sdkProposal.group_policy_version,
+    groupVersion: sdkProposal.group_version,
+    id: sdkProposal.id,
+    messages: sdkProposal.messages.map((msg) => ({
+      typeUrl: msg.type_url,
+      value: msg.value,
+    })),
+    metadata: JSON.parse(sdkProposal.metadata),
+    proposers: sdkProposal.proposers,
+    // Identical enum - see above
+    status: sdkProposal.status as unknown as UIProposal['status'],
+    ...(!!final_tally_result && {
+      abstainCount: final_tally_result.abstain_count,
+      noCount: final_tally_result.no_count,
+      noWithVetoCount: final_tally_result.no_with_veto_count,
+      yesCount: final_tally_result.yes_count,
+    }),
+    submitTime: sdkProposal.submit_time,
+    votingPeriodEnd: sdkProposal.voting_period_end,
+  }
+}
+
+function isStakeProposal(
+  values: ProposalAction['values'],
+): values is ProposalStakeFormValues {
+  return 'stakeType' in values
+}
+
+function isTextProposal(
+  values: ProposalAction['values'],
+): values is ProposalTextFormValues {
+  return !isStakeProposal(values) && 'text' in values
 }
 
 function stakeValuesToMsg(values: ProposalStakeFormValues, data: ProposalData) {

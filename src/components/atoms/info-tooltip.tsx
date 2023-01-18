@@ -1,4 +1,4 @@
-import { Tooltip } from './chakra'
+import { Tooltip } from './chakra-components'
 
 import { InfoOutlineIcon } from 'assets/tsx'
 

@@ -63,7 +63,7 @@ export const MyGroupsTable = ({
           {groups.map((group, i) => (
             <Tr key={i + group.metadata.name}>
               <Td>
-                <Link to={`/${group.id}/details`}>{group.metadata.name}</Link>
+                <Link to={`/${group.id}`}>{group.metadata.name}</Link>
               </Td>
               <Td>{formatDate(group.createdAt)}</Td>
               <Td>{formatDate(group.metadata.updatedAt)}</Td>

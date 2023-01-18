@@ -5,7 +5,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-} from './chakra'
+} from './chakra-components'
 
 export type AmountInputProps = InputProps & {
   onMaxClick: () => void

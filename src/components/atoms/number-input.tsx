@@ -7,7 +7,7 @@ import {
   NumberInputStepper,
 } from '@chakra-ui/react'
 
-import { forwardRef } from './chakra'
+import { forwardRef } from './chakra-components'
 
 export type { NumberInputProps }
 

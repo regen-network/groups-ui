@@ -47,6 +47,7 @@ export async function bootstrapKeplr() {
 
     Query.groups = lcdClient.cosmos.group.v1
     Query.staking = lcdClient.cosmos.staking.v1beta1
+    Query.bank = lcdClient.cosmos.bank.v1beta1
     Wallet.signingClient = signingClient
     Wallet.account = account
     Chain.fee = {

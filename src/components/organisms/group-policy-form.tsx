@@ -1,16 +1,14 @@
 import { useEffect } from 'react'
 import { z } from 'zod'
 
-// import type { GroupPolicyFormValues } from 'types'
 import { valid } from 'util/validation/zod'
 
 import { useZodForm } from 'hooks/use-zod-form'
 
-import { Button, Flex, IconButton, Text } from '@/atoms'
+import { Flex, Text } from '@/atoms'
 import { Form, FormCard } from '@/molecules'
 import { NumberField } from '@/molecules/form-fields'
-
-import { IoMdArrowBack } from 'assets/tsx'
+import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 
 const schema = z.object({
   votingWindow: valid.positiveNumber,
@@ -25,18 +23,15 @@ export const GroupPolicyForm = ({
   goBack,
   defaultValues,
   onSubmit,
-  submitting = false,
 }: {
   btnText?: string
   goBack?: () => void
   defaultValues: GroupPolicyFormValues
   onSubmit: (data: GroupPolicyFormValues) => void
-  submitting?: boolean
 }) => {
   const form = useZodForm({
     defaultValues,
     schema,
-    // resolver,
   })
   const { watch, setValue } = form
 
@@ -114,7 +109,7 @@ export const GroupPolicyForm = ({
         <NumberField
           required
           name="percentage"
-          label="set a percentage"
+          label="Set a percentage"
           numberInputProps={{ min: 0, max: 100, flex: 1 }}
         >
           <Flex align="center" minW="50%">
@@ -123,19 +118,8 @@ export const GroupPolicyForm = ({
             </Text>
           </Flex>
         </NumberField>
-        <Flex>
-          {/* TODO: extract back / forward to sticky footer component */}
-          {goBack && (
-            <IconButton aria-label="go back" onClick={goBack} variant="outline">
-              <IoMdArrowBack />
-            </IconButton>
-          )}
-          <Flex justify="end" flexGrow={1}>
-            <Button type="submit" isLoading={submitting} loadingText="Submitting">
-              {btnText}
-            </Button>
-          </Flex>
-        </Flex>
+
+        <FormSubmitHiddenButton onPrev={goBack} btnText={btnText} />
       </Form>
     </FormCard>
   )

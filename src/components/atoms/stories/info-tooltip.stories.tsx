@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react'
 
-import { Box } from '../chakra'
+import { Box } from '../chakra-components'
 import { InfoTooltip } from '../info-tooltip'
 
 export default {

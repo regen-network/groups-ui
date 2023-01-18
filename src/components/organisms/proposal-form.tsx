@@ -13,7 +13,7 @@ import { useDisclosure } from 'hooks/chakra'
 
 import { AddActionButton, Flex, Heading, Stack, Text } from '@/atoms'
 import { EditableDescription, EditableHeading, WithRemoveButton } from '@/molecules'
-import { useFormFooter } from '@/molecules/form-footer'
+import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 import { ProposalActionDrawer } from '@/organisms/proposal-action-drawer'
 import { ProposalStakeForm } from '@/organisms/proposal-stake-form'
 import { ProposalTextForm } from '@/organisms/proposal-text-form'
@@ -77,7 +77,7 @@ export const ProposalForm = (props: {
     onClose()
   }
 
-  function handleSubmitAllForms() {
+  function triggerSubmitAllForms() {
     // A bit hacky - programmatically grabbing all forms based on the ID we
     // create and calling `requestSubmit` to trigger their respective `onSubmit`
     // and `onError` handlers - which then trigger `updateActionValues` or
@@ -112,10 +112,10 @@ export const ProposalForm = (props: {
     setValidForms((prev) => ({ ...prev, [id]: false }))
   }
 
-  useFormFooter({
-    onSubmit: () => handleSubmitAllForms(),
-    btnText: 'Save & next',
-  })
+  // useFormFooter({
+  //   onSubmit: () => handleSubmitAllForms(),
+  //   btnText: 'Save & next',
+  // })
 
   function renderAction(action: ProposalAction) {
     switch (action.type) {
@@ -145,8 +145,11 @@ export const ProposalForm = (props: {
   return (
     <>
       <Stack spacing={3}>
-        <EditableHeading value={title} onSave={setTitle} />
-        <EditableDescription value={description} onSave={setDescription} />
+        <form onSubmit={() => triggerSubmitAllForms()}>
+          <EditableHeading value={title} onSave={setTitle} />
+          <EditableDescription value={description} onSave={setDescription} />
+          <FormSubmitHiddenButton />
+        </form>
 
         <Flex align="baseline" pb={3}>
           <Heading variant="label" size="xs">

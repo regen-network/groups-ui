@@ -1,5 +1,5 @@
 export { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
-export { BsMoonStarsFill, BsSun } from 'react-icons/bs'
+export { BsChatRight, BsMoonStarsFill, BsSun } from 'react-icons/bs'
 export { CgListTree } from 'react-icons/cg'
 export { FaUndoAlt } from 'react-icons/fa'
 export { ImFileText2 } from 'react-icons/im'

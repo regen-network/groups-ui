@@ -1,17 +1,35 @@
-import type { ProposalAction, UIProposalMetadata } from 'types'
+import Long from 'long'
+
+import type { ProposalAction, UIProposal, UIProposalMetadata } from 'types'
 import { handleError, throwError } from 'util/errors'
 
 import { Query, signAndBroadcast } from 'store'
 
 import { msgSubmitProposal } from './proposal.messages'
-import { proposalActionsToMsgs } from './proposal.utils'
+import { proposalActionsToMsgs, toUIProposal } from './proposal.utils'
 
 export async function fetchProposalsByGroupPolicy(address?: string) {
   if (!Query.groups) throwError('Wallet not initialized')
   if (!address) throwError('Address is required')
   try {
     const { proposals } = await Query.groups.proposalsByGroupPolicy({ address })
-    return proposals
+    return proposals.map(toUIProposal)
+  } catch (error) {
+    throwError(error)
+  }
+}
+
+export async function fetchProposalbyId(
+  proposalId?: string | Long,
+): Promise<UIProposal | null> {
+  if (!Query.groups) throwError('Wallet not initialized')
+  if (!proposalId) throwError('Proposal ID is required')
+  try {
+    const { proposal } = await Query.groups.proposal({
+      proposalId:
+        typeof proposalId === 'string' ? Long.fromString(proposalId) : proposalId,
+    })
+    return proposal ? toUIProposal(proposal) : null
   } catch (error) {
     throwError(error)
   }

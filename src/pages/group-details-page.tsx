@@ -22,6 +22,8 @@ import {
 import { GroupMembersTable } from '@/organisms/group-members-table'
 import { GroupPolicyTable } from '@/organisms/group-policy-table'
 
+import { IoMdArrowBack } from 'assets/tsx'
+
 export default function GroupDetails() {
   const { groupId } = useParams()
   const { data: group } = useGroup(groupId)
@@ -54,8 +56,18 @@ export default function GroupDetails() {
   return (
     <PageContainer>
       <Stack w="full" spacing={6}>
+        <div>
+          <Button
+            variant="ghost"
+            leftIcon={<IoMdArrowBack />}
+            as={RouteLink}
+            to={`/${groupId}`}
+          >
+            {group?.metadata.name}
+          </Button>
+        </div>
         <Flex justify="space-between">
-          <Heading>{group?.metadata.name}</Heading>
+          <Heading>Group Details</Heading>
           <ButtonGroup>
             {/* TODO: This isn't in mockup, added for convenience */}
             <Button as={RouteLink} to={`/${groupId}/proposals/new`}>

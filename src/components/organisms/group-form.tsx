@@ -10,7 +10,6 @@ import { valid } from 'util/validation/zod'
 import { useZodForm } from 'hooks/use-zod-form'
 
 import {
-  Button,
   DeleteButton,
   Flex,
   FormControl,
@@ -31,6 +30,7 @@ import {
   RadioGroupField,
   TextareaField,
 } from '@/molecules/form-fields'
+import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 
 /** @see @haveanicedavid/cosmos-groups-ts/types/proto/cosmos/group/v1/types */
 const schema = z.object({
@@ -191,9 +191,7 @@ export const GroupForm = ({
             </Table>
           </TableContainer>
         )}
-        <Flex justify="end">
-          <Button type="submit">{btnText}</Button>
-        </Flex>
+        <FormSubmitHiddenButton btnText={btnText} />
       </Form>
     </FormCard>
   )

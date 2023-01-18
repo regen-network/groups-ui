@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from '@storybook/react'
 import { Provider } from 'jotai'
 
-import { type FormFooterStateType, FormFooter, FormFooterState } from '../form-footer'
+import { FormFooter, FormFooterAtom } from '../form-footer'
 
 export default {
   title: 'Molecules/FormFooter',
@@ -17,21 +17,19 @@ const Template: StoryFn<typeof FormFooter> = () => <FormFooter />
 
 const voidFunc = () => void null
 
-const baseState: FormFooterStateType = {
-  onSubmit: voidFunc,
-}
+const baseState = {}
 
 export const Component = Template.bind({})
 Component.decorators = [
   (Story) => (
-    <Provider initialValues={[[FormFooterState, baseState]]}>{<Story />}</Provider>
+    <Provider initialValues={[[FormFooterAtom, baseState]]}>{<Story />}</Provider>
   ),
 ]
 
 export const WithBackBtn = Template.bind({})
 WithBackBtn.decorators = [
   (Story) => (
-    <Provider initialValues={[[FormFooterState, { ...baseState, onPrev: voidFunc }]]}>
+    <Provider initialValues={[[FormFooterAtom, { ...baseState, onPrev: voidFunc }]]}>
       {<Story />}
     </Provider>
   ),
@@ -42,7 +40,7 @@ WithBothBtns.decorators = [
   (Story) => (
     <Provider
       initialValues={[
-        [FormFooterState, { ...baseState, onPrev: voidFunc, onNext: voidFunc }],
+        [FormFooterAtom, { ...baseState, onPrev: voidFunc, onNext: voidFunc }],
       ]}
     >
       {<Story />}

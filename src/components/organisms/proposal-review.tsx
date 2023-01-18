@@ -14,7 +14,7 @@ import { Chain } from 'store'
 
 import { Heading, Stack, Text } from '@/atoms'
 import { FormCard } from '@/molecules'
-import { useFormFooter } from '@/molecules/form-footer'
+import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 import { ReviewItem } from '@/molecules/review-item'
 
 export const ProposalReview = (props: {
@@ -26,17 +26,20 @@ export const ProposalReview = (props: {
   const {
     values: { actions, title, description },
   } = props
-  useFormFooter({ onPrev: props.onPrev, onSubmit: () => props.onSubmit() })
+  // useFormFooter({ onPrev: props.onPrev })
   return (
     <Stack spacing={8}>
       <FormCard>
-        <Stack spacing={SPACING.formStack}>
-          <Stack spacing={8}>
-            <Heading>{title}</Heading>
-            <Text>{description}</Text>
+        <form onSubmit={() => props.onSubmit()}>
+          <Stack spacing={SPACING.formStack}>
+            <Stack spacing={8}>
+              <Heading>{title}</Heading>
+              <Text>{description}</Text>
+            </Stack>
+            <ReviewItem label="Group:">{props.groupName}</ReviewItem>
           </Stack>
-          <ReviewItem label="Group:">{props.groupName}</ReviewItem>
-        </Stack>
+          <FormSubmitHiddenButton onPrev={props.onPrev} />
+        </form>
       </FormCard>
       {actions.map((action, i) => {
         return <Fragment key={'review-action-' + i}>{renderAction(action)}</Fragment>

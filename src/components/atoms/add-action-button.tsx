@@ -1,4 +1,4 @@
-import { Center, forwardRef, IconButton } from './chakra'
+import { Center, forwardRef, IconButton } from './chakra-components'
 
 import { AiOutlinePlus } from 'assets/tsx'
 
