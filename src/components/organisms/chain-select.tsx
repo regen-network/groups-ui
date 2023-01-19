@@ -3,7 +3,7 @@ import { useSnapshot } from 'valtio'
 import { Chain, setActiveChain } from 'store'
 import { allChainsArray } from 'api/chains'
 
-import { SelectDropdown } from '@/molecules'
+import { SelectDropdown } from '@/molecules/select-dropdown'
 
 const CHAIN_ITEMS = allChainsArray.map(({ chainId, chainName }) => ({
   value: chainId,

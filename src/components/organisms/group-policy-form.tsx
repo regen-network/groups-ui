@@ -6,7 +6,8 @@ import { valid } from 'util/validation/zod'
 import { useZodForm } from 'hooks/use-zod-form'
 
 import { Flex, Text } from '@/atoms'
-import { Form, FormCard } from '@/molecules'
+import { Form } from '@/molecules/form'
+import { FormCard } from '@/molecules/form-card'
 import { NumberField } from '@/molecules/form-fields'
 import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 

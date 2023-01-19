@@ -10,7 +10,7 @@ import { createProposal } from 'api/proposal.actions'
 import { useGroup, useGroupPolicies } from 'hooks/use-query'
 import { useTxToasts } from 'hooks/useToasts'
 
-import { Loading } from '@/molecules'
+import { Loading } from '@/molecules/loading'
 import { type ProposalFormValues } from '@/organisms/proposal-form'
 import { ProposalTemplate } from '@/templates/proposal-template'
 

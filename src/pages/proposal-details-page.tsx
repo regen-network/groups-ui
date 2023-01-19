@@ -16,7 +16,7 @@ import {
   Stack,
   Text,
 } from '@/atoms'
-import { Loading } from '@/molecules'
+import { Loading } from '@/molecules/loading'
 
 import { IoMdArrowBack } from 'assets/tsx'
 

@@ -26,7 +26,8 @@ import {
   Tr,
   UndoButton,
 } from '@/atoms'
-import { TableTitlebar, Truncate } from '@/molecules'
+import { TableTitlebar } from '@/molecules/table-titlebar'
+import { Truncate } from '@/molecules/truncate'
 
 export const GroupMembersTable = ({
   members = [],

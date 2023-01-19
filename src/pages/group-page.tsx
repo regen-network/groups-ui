@@ -25,7 +25,8 @@ import {
   Thead,
   Tr,
 } from '@/atoms'
-import { Loading, SelectDropdown } from '@/molecules'
+import { Loading } from '@/molecules/loading'
+import { SelectDropdown } from '@/molecules/select-dropdown'
 
 import { ChatIcon } from 'assets/tsx'
 

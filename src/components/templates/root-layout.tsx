@@ -5,7 +5,7 @@ import { useColorModeValue } from 'hooks/chakra'
 
 import { AnimatePresence, PopUpFade } from '@/animations'
 import { Flex } from '@/atoms'
-import { Loading } from '@/molecules'
+import { Loading } from '@/molecules/loading'
 import { Navbar } from '@/organisms/navbar'
 
 // Need to freeze outlet in order for route transition animations to work for

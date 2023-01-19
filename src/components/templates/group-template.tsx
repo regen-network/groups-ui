@@ -12,8 +12,8 @@ import { useSteps } from 'hooks/chakra'
 
 import { AnimatePresence, HorizontalSlide } from '@/animations'
 import { Button, Flex, Heading, PageContainer, RouteLink, Stack, Text } from '@/atoms'
-import { PageStepper } from '@/molecules'
 import { FormFooter } from '@/molecules/form-footer'
+import { PageStepper } from '@/molecules/page-stepper'
 import { GroupForm } from '@/organisms/group-form'
 import { GroupPolicyForm } from '@/organisms/group-policy-form'
 

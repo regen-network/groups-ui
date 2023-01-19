@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
 import { AlertProps, Box, Button, Container, Stack } from '@/atoms'
-import { Notify } from '@/molecules'
+import { Notify } from '@/molecules/notify'
 
 import { GroupsIcon } from 'assets/tsx'
 

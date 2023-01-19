@@ -5,7 +5,8 @@ import { valid } from 'util/validation/zod'
 
 import { useZodForm } from 'hooks/use-zod-form'
 
-import { Form, FormCard } from '@/molecules'
+import { Form } from '@/molecules/form'
+import { FormCard } from '@/molecules/form-card'
 import { FeeDisplayField, TextareaField } from '@/molecules/form-fields'
 
 const schema = z.object({

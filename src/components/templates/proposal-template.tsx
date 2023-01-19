@@ -6,8 +6,8 @@ import { useSteps } from 'hooks/chakra'
 
 import { AnimatePresence, HorizontalSlide } from '@/animations'
 import { Button, Flex, Heading, PageContainer, RouteLink, Stack, Text } from '@/atoms'
-import { PageStepper } from '@/molecules'
 import { FormFooter } from '@/molecules/form-footer'
+import { PageStepper } from '@/molecules/page-stepper'
 import { type ProposalFormValues, ProposalForm } from '@/organisms/proposal-form'
 import { ProposalReview } from '@/organisms/proposal-review'
 

@@ -23,7 +23,8 @@ import {
   Thead,
   Tr,
 } from '@/atoms'
-import { Form, FormCard, InputWithButton, Truncate } from '@/molecules'
+import { Form } from '@/molecules/form'
+import { FormCard } from '@/molecules/form-card'
 import {
   FieldControl,
   InputField,
@@ -31,6 +32,8 @@ import {
   TextareaField,
 } from '@/molecules/form-fields'
 import { FormSubmitHiddenButton } from '@/molecules/form-footer'
+import { InputWithButton } from '@/molecules/input-with-button'
+import { Truncate } from '@/molecules/truncate'
 
 /** @see @haveanicedavid/cosmos-groups-ts/types/proto/cosmos/group/v1/types */
 const schema = z.object({

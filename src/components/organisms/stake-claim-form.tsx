@@ -7,7 +7,7 @@ import { valid } from 'util/validation/zod'
 import { Chain } from 'store'
 import { useZodForm } from 'hooks/use-zod-form'
 
-import { Form } from '@/molecules'
+import { Form } from '@/molecules/form'
 import { AmountField, FeeDisplayField } from '@/molecules/form-fields'
 import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 

@@ -4,7 +4,8 @@ import type { ProposalStakeFormValues, ProposalStakeType } from 'types'
 import { SPACING } from 'util/style.constants'
 
 import { FormControl, FormLabel, RadioGroup, Stack } from '@/atoms'
-import { FormCard, RadioGroupOptions } from '@/molecules'
+import { FormCard } from '@/molecules/form-card'
+import { RadioGroupOptions } from '@/molecules/radio-group-options'
 
 import { type ClaimFormValues, ClaimForm } from './stake-claim-form'
 import { type DelegateFormValues, DelegateForm } from './stake-delegate-form'

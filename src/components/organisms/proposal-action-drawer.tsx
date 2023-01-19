@@ -11,7 +11,7 @@ import {
   Stack,
   Text,
 } from '@/atoms'
-import { ActionButton } from '@/molecules'
+import { ActionButton } from '@/molecules/action-button'
 
 import { CgListTree, ImFileText2 } from 'assets/tsx'
 

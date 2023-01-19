@@ -17,7 +17,7 @@ import { isPercentagePolicy, isThresholdPolicy } from 'api/policy.utils'
 import { useGroup, useGroupMembers, useGroupPolicies } from 'hooks/use-query'
 import { useTxToasts } from 'hooks/useToasts'
 
-import { Loading } from '@/molecules'
+import { Loading } from '@/molecules/loading'
 import { GroupTemplate } from '@/templates/group-template'
 
 export default function GroupEdit() {
