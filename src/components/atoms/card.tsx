@@ -4,7 +4,7 @@ import { useColorModeValue } from 'hooks/chakra'
 
 export const Card = ({ variant, borderRadius, bg, shadow, ...props }: CardProps) => {
   const defaultBg = useColorModeValue('white', 'gray.800')
-  const defaultShadow = useColorModeValue('md', 'dark-lg')
+  const defaultShadow = useColorModeValue('md', 'xl')
   return (
     <ChakraCard
       {...props}

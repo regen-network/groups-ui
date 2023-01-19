@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { type ThemeConfig, ChakraProvider, extendTheme } from '@chakra-ui/react'
-import { StepsStyleConfig as Steps } from 'chakra-ui-steps'
+import { StepsTheme as Steps } from 'chakra-ui-steps'
 
 import { Button } from './components/button-styles'
 import { Heading } from './components/heading-styles'

@@ -24,8 +24,16 @@ const EditableControls = () => {
 
   return isEditing ? (
     <ButtonGroup justifyContent="end" size="sm" w="full" spacing={2} mt={2}>
-      <IconButton icon={<MdCheck />} {...getSubmitButtonProps()} />
-      <IconButton icon={<RiCloseLine />} {...getCancelButtonProps()} />
+      <IconButton
+        aria-label="Save changes"
+        icon={<MdCheck />}
+        {...getSubmitButtonProps()}
+      />
+      <IconButton
+        aria-label="Cancel changes"
+        icon={<RiCloseLine />}
+        {...getCancelButtonProps()}
+      />
     </ButtonGroup>
   ) : null
 }
@@ -37,8 +45,6 @@ const EditableWrapper = ({
   onSave,
 }: EditableProps & { variant: 'heading' | 'textarea' }) => {
   const hoverBg = useColorModeValue('gray.100', 'gray.700')
-  // const py = 2
-  // const px = 4
   return (
     <Editable
       as={variant === 'heading' ? Heading : undefined}
@@ -49,8 +55,6 @@ const EditableWrapper = ({
     >
       <Tooltip label="Click to edit">
         <EditablePreview
-          // py={py}
-          // px={px}
           _hover={{
             background: hoverBg,
           }}

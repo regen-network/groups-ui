@@ -19,7 +19,7 @@ import { GroupPolicyForm } from '@/organisms/group-policy-form'
 
 const Finished = ({ text, linkTo }: { text: string; linkTo: string }) => (
   <Stack spacing={8}>
-    <Text>{text}</Text>
+    <Text align="center">{text}</Text>
     <Button as={RouteLink} to={linkTo} alignSelf="center">
       View your group page
     </Button>
@@ -47,7 +47,7 @@ export function GroupTemplate({
     finished: string
   }
 }) {
-  const { activeStep, nextStep, prevStep /* reset, setStep */ } = useSteps({
+  const { activeStep, nextStep, prevStep } = useSteps({
     initialStep: 0,
   })
   const [groupValues, setGroupValues] = useState<GroupFormValues>(initialGroupFormValues)

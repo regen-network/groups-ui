@@ -9,7 +9,7 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-interactions',
     'storybook-addon-react-router-v6',
-    '@chakra-ui/storybook-addon',
+    // '@chakra-ui/storybook-addon', // TODO: Add this back in when it's fixed
   ],
 
   framework: {
