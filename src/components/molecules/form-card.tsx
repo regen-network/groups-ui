@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { useColorModeValue } from 'hooks/chakra'
+import { useColorModeValue } from 'hooks/chakra-hooks'
 
 import { Card } from '@/atoms/card'
 import { CardBody, CardHeader, Text } from '@/atoms/chakra-components'

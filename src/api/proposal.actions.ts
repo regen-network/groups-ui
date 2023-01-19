@@ -3,7 +3,8 @@ import Long from 'long'
 import type { ProposalAction, UIProposal, UIProposalMetadata } from 'types'
 import { handleError, throwError } from 'util/errors'
 
-import { Query, signAndBroadcast } from 'store'
+import { Query } from 'store/query.store'
+import { signAndBroadcast } from 'store/wallet.store'
 
 import { msgSubmitProposal } from './proposal.messages'
 import { proposalActionsToMsgs, toUIProposal } from './proposal.utils'

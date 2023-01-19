@@ -4,8 +4,8 @@ import { z } from 'zod'
 import { getFeeDenom } from 'util/helpers'
 import { valid } from 'util/validation/zod'
 
-import { Chain } from 'store'
 import { useZodForm } from 'hooks/use-zod-form'
+import { Chain } from 'store/chain.store'
 
 import { Form } from '@/molecules/form'
 import { AmountField, FeeDisplayField } from '@/molecules/form-fields'

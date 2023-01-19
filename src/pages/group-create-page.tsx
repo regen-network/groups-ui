@@ -4,9 +4,9 @@ import type { GroupWithPolicyFormValues } from 'types'
 import { handleError } from 'util/errors'
 import { defaultGroupFormValues, defaultGroupPolicyFormValues } from 'util/form.constants'
 
-import { Wallet } from 'store'
 import { createGroupWithPolicy } from 'api/group.actions'
 import { useTxToasts } from 'hooks/useToasts'
+import { Wallet } from 'store/wallet.store'
 
 import { GroupTemplate } from '@/templates/group-template'
 

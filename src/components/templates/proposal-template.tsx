@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { SPACING } from 'util/style.constants'
 
-import { useSteps } from 'hooks/chakra'
+import { useSteps } from 'hooks/chakra-hooks'
 
 import { AnimatePresence, HorizontalSlide } from '@/animations'
 import { Button, Flex, Heading, Stack, Text } from '@/atoms/chakra-components'

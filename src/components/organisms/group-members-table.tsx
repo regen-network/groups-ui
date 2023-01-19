@@ -6,7 +6,7 @@ import { defaultMemberFormValues } from 'util/form.constants'
 import { isBech32Address } from 'util/validation'
 
 import { toMemberFormValues } from 'api/group.utils'
-import { useBoolean, useBreakpointValue, useColorModeValue } from 'hooks/chakra'
+import { useBoolean, useBreakpointValue, useColorModeValue } from 'hooks/chakra-hooks'
 
 import { AnimatePresence, FadeIn } from '@/animations'
 import {

@@ -1,4 +1,4 @@
-import { bootstrapKeplr } from 'store'
+import { bootstrapKeplr } from 'store/wallet.store'
 
 import { ChainSelect } from '@/organisms/chain-select'
 import { AlertTemplate } from '@/templates/alert-template'

@@ -1,4 +1,4 @@
-import { useColorModeValue } from 'hooks/chakra'
+import { useColorModeValue } from 'hooks/chakra-hooks'
 
 import {
   type RadioProps,

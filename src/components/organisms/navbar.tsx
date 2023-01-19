@@ -1,4 +1,4 @@
-import { useColorMode, useColorModeValue } from 'hooks/chakra'
+import { useColorMode, useColorModeValue } from 'hooks/chakra-hooks'
 
 import {
   Box,

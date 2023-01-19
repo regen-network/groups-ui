@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom'
 import type { MemberFormValues } from 'types'
 import { handleError, throwError } from 'util/errors'
 
-import { signAndBroadcast } from 'store'
 import { msgUpdateGroupMembers } from 'api/member.messages'
 import { useGroup, useGroupMembers, useGroupPolicies } from 'hooks/use-query'
 import { useTxToasts } from 'hooks/useToasts'
+import { signAndBroadcast } from 'store/wallet.store'
 
 import {
   Button,

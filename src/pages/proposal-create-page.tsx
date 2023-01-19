@@ -5,10 +5,11 @@ import { handleError, throwError } from 'util/errors'
 import { defaultDelegateFormValues } from 'util/form.constants'
 import { getFeeDenom, uuid } from 'util/helpers'
 
-import { Chain, Wallet } from 'store'
 import { createProposal } from 'api/proposal.actions'
 import { useGroup, useGroupPolicies } from 'hooks/use-query'
 import { useTxToasts } from 'hooks/useToasts'
+import { Chain } from 'store/chain.store'
+import { Wallet } from 'store/wallet.store'
 
 import { Loading } from '@/molecules/loading'
 import { type ProposalFormValues } from '@/organisms/proposal-form'

@@ -1,6 +1,6 @@
 import { redirect, useParams } from 'react-router-dom'
 
-import { useColorModeValue } from 'hooks/chakra'
+import { useColorModeValue } from 'hooks/chakra-hooks'
 import { useGroup, useProposal } from 'hooks/use-query'
 
 import { Card } from '@/atoms/card'

@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 
 import { formatDate } from 'util/date'
 
-import { useColorModeValue } from 'hooks/chakra'
+import { useColorModeValue } from 'hooks/chakra-hooks'
 import { useBalances, useGroup, useGroupPoliciesWithProposals } from 'hooks/use-query'
 
 import { Card } from '@/atoms/card'

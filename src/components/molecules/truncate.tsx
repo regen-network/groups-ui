@@ -1,6 +1,6 @@
 import { truncate } from 'util/helpers'
 
-import { useClipboard } from 'hooks/chakra'
+import { useClipboard } from 'hooks/chakra-hooks'
 import { useToastCopied } from 'hooks/useToasts'
 
 import {

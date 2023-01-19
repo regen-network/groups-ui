@@ -1,6 +1,6 @@
 import { type CardProps, Card as ChakraCard } from '@chakra-ui/react'
 
-import { useColorModeValue } from 'hooks/chakra'
+import { useColorModeValue } from 'hooks/chakra-hooks'
 
 export const Card = ({ variant, borderRadius, bg, shadow, ...props }: CardProps) => {
   const defaultBg = useColorModeValue('white', 'gray.800')

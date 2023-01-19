@@ -3,7 +3,7 @@ import { useSnapshot } from 'valtio'
 
 import { formatFee } from 'util/helpers'
 
-import { Chain } from 'store'
+import { Chain } from 'store/chain.store'
 
 import { FormControl, FormLabel, Heading } from '@/atoms/chakra-components'
 

@@ -10,7 +10,7 @@ import type {
 import { formatFee } from 'util/helpers'
 import { SPACING } from 'util/style.constants'
 
-import { Chain } from 'store'
+import { Chain } from 'store/chain.store'
 
 import { Heading, Stack, Text } from '@/atoms/chakra-components'
 import { FormCard } from '@/molecules/form-card'

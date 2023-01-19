@@ -1,8 +1,8 @@
 import { Routes } from 'routes'
 import { useSnapshot } from 'valtio'
 
-import { Wallet } from 'store'
 import { useKeplr } from 'hooks/use-keplr'
+import { Wallet } from 'store/wallet.store'
 
 import { EnableKeplr } from 'pages/enable-keplr-page'
 import { InstallKeplr } from 'pages/install-keplr-page'

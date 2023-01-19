@@ -1,6 +1,6 @@
 import { Step, Steps } from 'chakra-ui-steps'
 
-import { useColorModeValue } from 'hooks/chakra'
+import { useColorModeValue } from 'hooks/chakra-hooks'
 
 import { Box, Container } from '@/atoms/chakra-components'
 

@@ -1,7 +1,7 @@
 import { Suspense, useState } from 'react'
 import { useLocation, useOutlet } from 'react-router-dom'
 
-import { useColorModeValue } from 'hooks/chakra'
+import { useColorModeValue } from 'hooks/chakra-hooks'
 
 import { AnimatePresence, PopUpFade } from '@/animations'
 import { Flex } from '@/atoms/chakra-components'

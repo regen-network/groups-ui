@@ -3,7 +3,8 @@ import Long from 'long'
 import type { GroupWithPolicyFormValues, UIGroup } from 'types'
 import { throwError } from 'util/errors'
 
-import { Query, signAndBroadcast } from 'store'
+import { Query } from 'store/query.store'
+import { signAndBroadcast } from 'store/wallet.store'
 
 import { msgCreateGroupWithPolicy } from './group.messages'
 import { addMembersToGroups, toUIGroup } from './group.utils'

@@ -7,7 +7,7 @@ import {
   formatVotingPeriod,
   isThresholdPolicy,
 } from 'api/policy.utils'
-import { useBreakpointValue } from 'hooks/chakra'
+import { useBreakpointValue } from 'hooks/chakra-hooks'
 
 import {
   Table,

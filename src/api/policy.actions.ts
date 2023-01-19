@@ -2,7 +2,7 @@ import Long from 'long'
 
 import { throwError } from 'util/errors'
 
-import { Query } from 'store'
+import { Query } from 'store/query.store'
 
 import { toUIGroupPolicy } from './policy.utils'
 import { fetchProposalsByGroupPolicy } from './proposal.actions'

@@ -1,6 +1,6 @@
 import { throwError } from 'util/errors'
 
-import { Query } from 'store'
+import { Query } from 'store/query.store'
 
 export async function fetchAllBalances(address?: string) {
   if (!Query.bank) throwError('Wallet not properly initialized')

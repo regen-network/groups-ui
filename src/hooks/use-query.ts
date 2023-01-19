@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { Chain } from 'store'
 import { fetchAllBalances } from 'api/bank.actions'
 import {
   fetchGroupById,
@@ -11,6 +10,7 @@ import { fetchGroupMembers } from 'api/member.actions'
 import { fetchGroupPolicies, fetchGroupPoliciesWithProposals } from 'api/policy.actions'
 import { fetchProposalbyId } from 'api/proposal.actions'
 import { fetchValidators } from 'api/staking.actions'
+import { Chain } from 'store/chain.store'
 
 export function useGroup(groupId?: string) {
   return useQuery({

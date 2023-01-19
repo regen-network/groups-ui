@@ -1,5 +1,5 @@
-import { Wallet } from 'store'
 import { useAdminGroups, useMemberGroups } from 'hooks/use-query'
+import { Wallet } from 'store/wallet.store'
 
 import { Button, Flex, Heading } from '@/atoms/chakra-components'
 import { PageContainer } from '@/atoms/page-container'

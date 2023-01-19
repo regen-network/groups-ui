@@ -1,6 +1,7 @@
 import { throwError } from 'util/errors'
 
-import { Chain, Query } from 'store'
+import { Chain } from 'store/chain.store'
+import { Query } from 'store/query.store'
 
 export async function fetchValidators() {
   if (!Query.staking) throwError('Wallet not properly initialized')

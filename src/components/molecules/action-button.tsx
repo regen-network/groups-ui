@@ -1,6 +1,6 @@
 import type { IconType } from 'react-icons'
 
-import { useColorModeValue } from 'hooks/chakra'
+import { useColorModeValue } from 'hooks/chakra-hooks'
 
 import { Card } from '@/atoms/card'
 import { Box, CardBody, Flex, Text } from '@/atoms/chakra-components'

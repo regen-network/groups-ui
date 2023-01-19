@@ -9,7 +9,7 @@ import type {
 import { defaultStakeFormValues, defaultTextFormValues } from 'util/form.constants'
 import { uuid } from 'util/helpers'
 
-import { useDisclosure } from 'hooks/chakra'
+import { useDisclosure } from 'hooks/chakra-hooks'
 
 import { AddActionButton } from '@/atoms/add-action-button'
 import { Flex, Heading, Stack, Text } from '@/atoms/chakra-components'

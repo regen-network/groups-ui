@@ -1,8 +1,8 @@
 import { toErrorWithMessage } from 'util/errors'
 
-import type { UseToastOptions } from 'hooks/chakra'
+import type { UseToastOptions } from 'hooks/chakra-hooks'
 
-import { useToast } from './chakra'
+import { useToast } from './chakra-hooks'
 
 const TOAST_DURATIONS = {
   short: 1500,

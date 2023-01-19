@@ -1,4 +1,4 @@
-import { useColorModeValue, useEditableControls } from 'hooks/chakra'
+import { useColorModeValue, useEditableControls } from 'hooks/chakra-hooks'
 
 import {
   ButtonGroup,

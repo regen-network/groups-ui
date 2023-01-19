@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { atom, useAtom, useSetAtom } from 'jotai'
 
-import { useColorModeValue } from 'hooks/chakra'
+import { useColorModeValue } from 'hooks/chakra-hooks'
 
 import { Box, Button, Container, HStack, IconButton } from '@/atoms/chakra-components'
 
