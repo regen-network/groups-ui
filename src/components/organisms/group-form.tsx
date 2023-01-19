@@ -10,11 +10,9 @@ import { valid } from 'util/validation/zod'
 import { useZodForm } from 'hooks/use-zod-form'
 
 import {
-  DeleteButton,
   Flex,
   FormControl,
   HStack,
-  NumberInput,
   Table,
   TableContainer,
   Tbody,
@@ -22,7 +20,9 @@ import {
   Th,
   Thead,
   Tr,
-} from '@/atoms'
+} from '@/atoms/chakra-components'
+import { DeleteButton } from '@/atoms/delete-button'
+import { NumberInput } from '@/atoms/number-input'
 import { Form } from '@/molecules/form'
 import { FormCard } from '@/molecules/form-card'
 import {

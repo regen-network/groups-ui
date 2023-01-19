@@ -4,7 +4,7 @@ import { useLocation, useOutlet } from 'react-router-dom'
 import { useColorModeValue } from 'hooks/chakra'
 
 import { AnimatePresence, PopUpFade } from '@/animations'
-import { Flex } from '@/atoms'
+import { Flex } from '@/atoms/chakra-components'
 import { Loading } from '@/molecules/loading'
 import { Navbar } from '@/organisms/navbar'
 

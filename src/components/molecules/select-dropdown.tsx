@@ -1,6 +1,6 @@
 import { type ActionMeta, Select, SingleValue } from 'chakra-react-select'
 
-import { forwardRef } from '@/atoms'
+import { forwardRef } from '@/atoms/chakra-components'
 
 type SelectItem = {
   value: string

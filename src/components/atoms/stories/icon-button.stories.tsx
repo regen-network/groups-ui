@@ -1,6 +1,6 @@
-import { Meta, StoryFn } from '@storybook/react'
+import type { Meta, StoryFn } from '@storybook/react'
 
-import { IconButton } from '..'
+import { IconButton } from '../chakra-components'
 
 import { GroupsIcon } from 'assets/tsx'
 

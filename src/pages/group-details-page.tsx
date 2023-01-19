@@ -14,11 +14,11 @@ import {
   Flex,
   Heading,
   HStack,
-  PageContainer,
-  RouteLink,
   Stack,
   Text,
-} from '@/atoms'
+} from '@/atoms/chakra-components'
+import { PageContainer } from '@/atoms/page-container'
+import { RouteLink } from '@/atoms/route-link'
 import { GroupMembersTable } from '@/organisms/group-members-table'
 import { GroupPolicyTable } from '@/organisms/group-policy-table'
 

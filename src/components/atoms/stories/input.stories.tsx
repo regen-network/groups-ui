@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react'
-import { Meta, StoryFn } from '@storybook/react'
+import type { Meta, StoryFn } from '@storybook/react'
 
-import { Center, HStack, NumberInput, Stack, Text } from '@/atoms'
-
-import { AmountInput } from '../amount-input'
+import { AmountInput } from '@/atoms/amount-input'
+import { Center, HStack, Stack, Text } from '@/atoms/chakra-components'
+import { NumberInput } from '@/atoms/number-input'
 
 export default {
   title: 'Atoms/inputs',

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import type { ProposalStakeFormValues, ProposalStakeType } from 'types'
 import { SPACING } from 'util/style.constants'
 
-import { FormControl, FormLabel, RadioGroup, Stack } from '@/atoms'
+import { FormControl, FormLabel, RadioGroup, Stack } from '@/atoms/chakra-components'
 import { FormCard } from '@/molecules/form-card'
 import { RadioGroupOptions } from '@/molecules/radio-group-options'
 

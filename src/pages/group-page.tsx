@@ -5,26 +5,24 @@ import { formatDate } from 'util/date'
 import { useColorModeValue } from 'hooks/chakra'
 import { useBalances, useGroup, useGroupPoliciesWithProposals } from 'hooks/use-query'
 
+import { Card } from '@/atoms/card'
 import {
   Box,
   Button,
-  Card,
   CardBody,
   CardHeader,
   Flex,
   Heading,
   HStack,
-  Link,
-  PageContainer,
-  RouteLink,
-  Select,
   Stack,
   Table,
-  Td,
   Text,
   Thead,
   Tr,
-} from '@/atoms'
+} from '@/atoms/chakra-components'
+import { Link } from '@/atoms/link'
+import { PageContainer } from '@/atoms/page-container'
+import { RouteLink } from '@/atoms/route-link'
 import { Loading } from '@/molecules/loading'
 import { SelectDropdown } from '@/molecules/select-dropdown'
 

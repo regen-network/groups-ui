@@ -11,7 +11,8 @@ import { uuid } from 'util/helpers'
 
 import { useDisclosure } from 'hooks/chakra'
 
-import { AddActionButton, Flex, Heading, Stack, Text } from '@/atoms'
+import { AddActionButton } from '@/atoms/add-action-button'
+import { Flex, Heading, Stack, Text } from '@/atoms/chakra-components'
 import { EditableDescription, EditableHeading } from '@/molecules/editable'
 import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 import { WithRemoveButton } from '@/molecules/with-remove-button'

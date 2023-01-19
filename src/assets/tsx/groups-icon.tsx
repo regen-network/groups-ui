@@ -1,4 +1,4 @@
-import { Icon, IconProps } from '@/atoms'
+import { type IconProps, Icon } from '@/atoms/chakra-components'
 
 export const GroupsIcon = (props: IconProps) => (
   <Icon {...props} viewBox="0 0 55 43">

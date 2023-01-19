@@ -2,8 +2,8 @@ import type { ReactNode } from 'react'
 import { type ThemeConfig, ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { StepsTheme as Steps } from 'chakra-ui-steps'
 
-import { Button } from './components/button-styles'
-import { Heading } from './components/heading-styles'
+import { ButtonStyles as Button } from './components/button-theme'
+import { HeadingStyles as Heading } from './components/heading-theme'
 
 const config: ThemeConfig = {
   initialColorMode: 'light',

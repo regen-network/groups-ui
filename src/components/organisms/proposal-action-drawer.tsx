@@ -10,7 +10,7 @@ import {
   DrawerOverlay,
   Stack,
   Text,
-} from '@/atoms'
+} from '@/atoms/chakra-components'
 import { ActionButton } from '@/molecules/action-button'
 
 import { CgListTree, ImFileText2 } from 'assets/tsx'

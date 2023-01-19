@@ -1,8 +1,8 @@
-import { Meta, StoryFn } from '@storybook/react'
+import type { Meta, StoryFn } from '@storybook/react'
 
 import { useClipboard } from 'hooks/chakra'
 
-import { Grid, GridItem, Heading, Stack, Text } from '@/atoms'
+import { Grid, GridItem, Heading, Stack, Text } from '@/atoms/chakra-components'
 
 import * as ChakraIcons from './chakra-icons'
 import { GroupsIcon } from './groups-icon'
@@ -50,7 +50,7 @@ const Template: StoryFn<typeof GroupsIcon> = () => {
             }}
           >
             {hasCopied && value.includes(Icon.name) ? 'Copied!' : Icon.name}
-            <Icon h={25} w={25} />
+            <Icon height={25} width={25} />
           </GridItem>
         ))}
       </Grid>

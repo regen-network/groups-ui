@@ -7,7 +7,6 @@ import {
   Center,
   Heading,
   HStack,
-  Link,
   Table,
   TableContainer,
   Tbody,
@@ -15,7 +14,8 @@ import {
   Th,
   Thead,
   Tr,
-} from '@/atoms'
+} from '@/atoms/chakra-components'
+import { Link } from '@/atoms/link'
 
 export const MyGroupsTable = ({
   memberGroups = [],

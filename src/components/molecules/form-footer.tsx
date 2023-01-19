@@ -3,7 +3,7 @@ import { atom, useAtom, useSetAtom } from 'jotai'
 
 import { useColorModeValue } from 'hooks/chakra'
 
-import { Box, Button, Container, HStack, IconButton } from '@/atoms'
+import { Box, Button, Container, HStack, IconButton } from '@/atoms/chakra-components'
 
 import { IoMdArrowBack, IoMdArrowForward } from 'assets/tsx'
 

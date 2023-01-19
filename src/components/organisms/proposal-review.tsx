@@ -12,7 +12,7 @@ import { SPACING } from 'util/style.constants'
 
 import { Chain } from 'store'
 
-import { Heading, Stack, Text } from '@/atoms'
+import { Heading, Stack, Text } from '@/atoms/chakra-components'
 import { FormCard } from '@/molecules/form-card'
 import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 import { ReviewItem } from '@/molecules/review-item'

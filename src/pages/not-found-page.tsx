@@ -1,4 +1,5 @@
-import { Button, Heading, RouteLink, Text, VStack } from '@/atoms'
+import { Button, Heading, Text, VStack } from '@/atoms/chakra-components'
+import { RouteLink } from '@/atoms/route-link'
 
 export default function NotFound() {
   return (

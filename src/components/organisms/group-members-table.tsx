@@ -12,10 +12,8 @@ import { AnimatePresence, FadeIn } from '@/animations'
 import {
   Box,
   Button,
-  DeleteButton,
   Flex,
   Input,
-  NumberInput,
   Table,
   TableContainer,
   Tbody,
@@ -24,8 +22,10 @@ import {
   Thead,
   Tooltip,
   Tr,
-  UndoButton,
-} from '@/atoms'
+} from '@/atoms/chakra-components'
+import { DeleteButton } from '@/atoms/delete-button'
+import { NumberInput } from '@/atoms/number-input'
+import { UndoButton } from '@/atoms/undo-button'
 import { TableTitlebar } from '@/molecules/table-titlebar'
 import { Truncate } from '@/molecules/truncate'
 

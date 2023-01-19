@@ -3,19 +3,20 @@ import { redirect, useParams } from 'react-router-dom'
 import { useColorModeValue } from 'hooks/chakra'
 import { useGroup, useProposal } from 'hooks/use-query'
 
+import { Card } from '@/atoms/card'
 import {
   Button,
-  Card,
+  ButtonGroup,
   CardBody,
   CardHeader,
   Flex,
   Heading,
-  PageContainer,
-  RouteLink,
   SimpleGrid,
   Stack,
   Text,
-} from '@/atoms'
+} from '@/atoms/chakra-components'
+import { PageContainer } from '@/atoms/page-container'
+import { RouteLink } from '@/atoms/route-link'
 import { Loading } from '@/molecules/loading'
 
 import { IoMdArrowBack } from 'assets/tsx'
@@ -67,9 +68,9 @@ export default function ProposalDetails() {
                   <Text ml={2}>{group?.metadata.name}</Text>
                 </Flex>
                 <SimpleGrid columns={2} gap={3} columnGap={4}>
-                  <Button colorScheme="green" variant="outline">
+                  <ButtonGroup colorScheme="green" variant="outline">
                     Yes
-                  </Button>
+                  </ButtonGroup>
                   <Button colorScheme="red" variant="outline">
                     No
                   </Button>

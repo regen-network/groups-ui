@@ -1,4 +1,4 @@
-import { Center, Spinner } from '@/atoms'
+import { Center, Spinner } from '@/atoms/chakra-components'
 
 export const Loading = () => {
   return (

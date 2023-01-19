@@ -1,6 +1,6 @@
 import { useController, useFormContext } from 'react-hook-form'
 
-import { Textarea } from '@/atoms'
+import { Textarea } from '@/atoms/chakra-components'
 
 import { type FieldProps, FieldControl } from './field-control'
 

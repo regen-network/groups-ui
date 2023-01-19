@@ -9,7 +9,7 @@ import {
 
 import { SPACING } from 'util/style.constants'
 
-import { Stack } from '@/atoms'
+import { Stack } from '@/atoms/chakra-components'
 
 interface Props<T extends FieldValues>
   extends Omit<ComponentProps<'form'>, 'onSubmit' | 'onError'> {

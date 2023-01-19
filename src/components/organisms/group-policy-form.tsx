@@ -5,7 +5,7 @@ import { valid } from 'util/validation/zod'
 
 import { useZodForm } from 'hooks/use-zod-form'
 
-import { Flex, Text } from '@/atoms'
+import { Flex, Text } from '@/atoms/chakra-components'
 import { Form } from '@/molecules/form'
 import { FormCard } from '@/molecules/form-card'
 import { NumberField } from '@/molecules/form-fields'

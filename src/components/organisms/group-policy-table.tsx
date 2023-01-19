@@ -9,7 +9,15 @@ import {
 } from 'api/policy.utils'
 import { useBreakpointValue } from 'hooks/chakra'
 
-import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@/atoms'
+import {
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from '@/atoms/chakra-components'
 import { TableTitlebar } from '@/molecules/table-titlebar'
 import { Truncate } from '@/molecules/truncate'
 

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { Heading, HStack } from '@/atoms'
+import { Heading, HStack } from '@/atoms/chakra-components'
 
 export const TableTitlebar = ({
   children,

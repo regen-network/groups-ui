@@ -1,6 +1,14 @@
 import { useColorMode, useColorModeValue } from 'hooks/chakra'
 
-import { Box, Button, Container, Flex, HStack, IconButton, RouteLink } from '@/atoms'
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  HStack,
+  IconButton,
+} from '@/atoms/chakra-components'
+import { RouteLink } from '@/atoms/route-link'
 
 import { ChainSelect } from './chain-select'
 

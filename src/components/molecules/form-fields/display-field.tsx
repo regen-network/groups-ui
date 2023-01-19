@@ -5,7 +5,7 @@ import { formatFee } from 'util/helpers'
 
 import { Chain } from 'store'
 
-import { FormControl, FormLabel, Heading } from '@/atoms'
+import { FormControl, FormLabel, Heading } from '@/atoms/chakra-components'
 
 /** for displaying decorative / read-only data in field area of forms without
  * actually modifying form data */

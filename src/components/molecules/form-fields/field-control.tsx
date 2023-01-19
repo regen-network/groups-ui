@@ -8,7 +8,7 @@ import {
   FormHelperText,
   FormLabel,
   Text,
-} from '@/atoms'
+} from '@/atoms/chakra-components'
 
 export type FieldProps = {
   helperText?: string

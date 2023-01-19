@@ -1,6 +1,6 @@
 import { useController, useFormContext } from 'react-hook-form'
 
-import { type InputProps, Input } from '@/atoms'
+import { type InputProps, Input } from '@/atoms/chakra-components'
 
 import { type FieldProps, FieldControl } from './field-control'
 

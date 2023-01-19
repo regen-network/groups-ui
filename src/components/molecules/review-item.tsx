@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { Heading, Stack, Text } from '@/atoms'
+import { Heading, Stack, Text } from '@/atoms/chakra-components'
 
 /** Labeled text, vertically aligned */
 export const ReviewItem = ({

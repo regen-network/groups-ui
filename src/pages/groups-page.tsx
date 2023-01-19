@@ -1,7 +1,9 @@
 import { Wallet } from 'store'
 import { useAdminGroups, useMemberGroups } from 'hooks/use-query'
 
-import { Button, Flex, Heading, PageContainer, RouteLink } from '@/atoms'
+import { Button, Flex, Heading } from '@/atoms/chakra-components'
+import { PageContainer } from '@/atoms/page-container'
+import { RouteLink } from '@/atoms/route-link'
 import { MyGroupsTable } from '@/organisms/my-groups-table'
 
 export default function Groups() {

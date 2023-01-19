@@ -2,7 +2,8 @@ import { ReactNode } from 'react'
 
 import { useColorModeValue } from 'hooks/chakra'
 
-import { Card, CardBody, CardHeader, Text } from '@/atoms'
+import { Card } from '@/atoms/card'
+import { CardBody, CardHeader, Text } from '@/atoms/chakra-components'
 
 export const FormCard = ({
   title,
