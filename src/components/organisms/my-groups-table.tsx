@@ -8,7 +8,6 @@ import {
   Heading,
   HStack,
   Table,
-  TableContainer,
   Tbody,
   Td,
   Th,
@@ -16,6 +15,7 @@ import {
   Tr,
 } from '@/atoms/chakra-components'
 import { Link } from '@/atoms/link'
+import { TableContainer } from '@/atoms/table-container'
 
 export const MyGroupsTable = ({
   memberGroups = [],
@@ -48,7 +48,7 @@ export const MyGroupsTable = ({
   }
 
   return (
-    <TableContainer borderRadius="lg" borderWidth={2} shadow="md">
+    <TableContainer>
       <Table variant="striped" size="lg">
         <Thead>
           <Tr>

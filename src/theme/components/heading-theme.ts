@@ -1,6 +1,6 @@
 import type { ComponentStyleConfig } from '@chakra-ui/theme'
 
-export const HeadingStyles: ComponentStyleConfig = {
+export const HeadingTheme: ComponentStyleConfig = {
   baseStyle: {
     letterSpacing: '1px',
     fontFamily: '"Mulish", -apple-system, sans-serif',

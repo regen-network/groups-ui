@@ -2,18 +2,15 @@ import { useParams } from 'react-router-dom'
 
 import { formatDate } from 'util/date'
 
-import { useColorModeValue } from 'hooks/chakra-hooks'
 import { useBalances, useGroup, useGroupPoliciesWithProposals } from 'hooks/use-query'
 
 import { Card } from '@/atoms/card'
 import {
-  Box,
   Button,
   CardBody,
   CardHeader,
   Flex,
   Heading,
-  HStack,
   Stack,
   Table,
   Text,
@@ -23,8 +20,8 @@ import {
 import { Link } from '@/atoms/link'
 import { PageContainer } from '@/atoms/page-container'
 import { RouteLink } from '@/atoms/route-link'
+import { CoinBalanceTotalInfo } from '@/molecules/coin-balance-total-info'
 import { Loading } from '@/molecules/loading'
-import { SelectDropdown } from '@/molecules/select-dropdown'
 
 import { ChatIcon } from 'assets/tsx'
 
@@ -37,7 +34,6 @@ export default function GroupPage() {
   const groupPolicy = policies?.[0]
   const { data: balances } = useBalances(groupPolicy?.address)
   console.log('balances :>> ', balances)
-  const firstBalance = balances?.[0] || { amount: 0, denom: 'stake' } // TODO
 
   if (!group) return <Loading />
 
@@ -47,7 +43,7 @@ export default function GroupPage() {
     <PageContainer>
       <Stack spacing={4}>
         <Flex justify="space-between">
-          <Heading size="2xl">{name}</Heading>
+          <Heading>{name}</Heading>
           <Button
             size="large"
             px={4}
@@ -61,7 +57,7 @@ export default function GroupPage() {
 
         <Flex justify="space-between">
           <Text fontSize="lg">{description}</Text>
-          <Text fontSize="sm">{`Created ${formatDate(group.createdAt)}`}</Text>
+          <Text fontSize="sm">{`Created ${formatDate(group.createdAt, 'long')}`}</Text>
         </Flex>
         {forumLink && (
           <Link href={forumLink}>
@@ -69,24 +65,7 @@ export default function GroupPage() {
             {'View discussion on group forum»'}
           </Link>
         )}
-
-        <HStack spacing={4} pt={4}>
-          <HStack align="baseline" spacing={2}>
-            <Heading size="lg">{firstBalance.amount}</Heading>
-            <Heading variant="label" size="sm">
-              {firstBalance.denom}
-            </Heading>
-          </HStack>
-          {balances && balances.length > 0 && (
-            <Box flex={1} maxW="15rem">
-              <SelectDropdown
-                onChange={() => void null}
-                label={`${Math.max(balances.length - 1, 0)} other tokens`}
-                items={balances.map((b) => ({ label: b.denom, value: b.amount }))}
-              />
-            </Box>
-          )}
-        </HStack>
+        <CoinBalanceTotalInfo coins={balances} />
       </Stack>
       <Stack mt={8}>
         <Card>

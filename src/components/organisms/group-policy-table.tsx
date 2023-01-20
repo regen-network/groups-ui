@@ -9,15 +9,8 @@ import {
 } from 'api/policy.utils'
 import { useBreakpointValue } from 'hooks/chakra-hooks'
 
-import {
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-} from '@/atoms/chakra-components'
+import { Table, Tbody, Td, Th, Thead, Tr } from '@/atoms/chakra-components'
+import { TableContainer } from '@/atoms/table-container'
 import { TableTitlebar } from '@/molecules/table-titlebar'
 import { Truncate } from '@/molecules/truncate'
 
@@ -26,11 +19,11 @@ export const GroupPolicyTable = ({ policies }: { policies: UIGroupPolicyInfo[] }
   const [p] = policies
   if (!p) return null
   return (
-    <TableContainer w="full" borderRadius="lg" borderWidth={2} shadow="md">
+    <TableContainer>
       <TableTitlebar title="Group Policy" />
       <Table variant="striped" size="lg">
         <Thead>
-          <Tr sx={{ '& > th': { fontWeight: 'bold' } }}>
+          <Tr>
             <Th>Created</Th>
             <Th>Voting window</Th>
             <Th>{isThresholdPolicy(p.decisionPolicy) ? 'Threshold' : 'Percentage'}</Th>

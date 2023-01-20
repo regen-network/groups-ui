@@ -112,3 +112,32 @@ function stakeValuesToMsg(values: ProposalStakeFormValues, data: ProposalData) {
   }
   throwError('Unknown stake type')
 }
+
+// copy-pasted from the SDK `ProposalStatus` enum - vite doesn't handle enums well
+export const ProposalStatus = {
+  /** PROPOSAL_STATUS_UNSPECIFIED - An empty value is invalid and not allowed. */
+  PROPOSAL_STATUS_UNSPECIFIED: 0,
+  /** PROPOSAL_STATUS_SUBMITTED - Initial status of a proposal when submitted. */
+  PROPOSAL_STATUS_SUBMITTED: 1,
+  /**
+   * PROPOSAL_STATUS_ACCEPTED - Final status of a proposal when the final tally is done and the outcome
+   * passes the group policy's decision policy.
+   */
+  PROPOSAL_STATUS_ACCEPTED: 2,
+  /**
+   * PROPOSAL_STATUS_REJECTED - Final status of a proposal when the final tally is done and the outcome
+   * is rejected by the group policy's decision policy.
+   */
+  PROPOSAL_STATUS_REJECTED: 3,
+  /**
+   * PROPOSAL_STATUS_ABORTED - Final status of a proposal when the group policy is modified before the
+   * final tally.
+   */
+  PROPOSAL_STATUS_ABORTED: 4,
+  /**
+   * PROPOSAL_STATUS_WITHDRAWN - A proposal can be withdrawn before the voting start time by the owner.
+   * When this happens the final status is Withdrawn.
+   */
+  PROPOSAL_STATUS_WITHDRAWN: 5,
+  UNRECOGNIZED: -1,
+} as const

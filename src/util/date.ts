@@ -5,8 +5,19 @@ import type { Duration } from 'types'
 
 const dayInSeconds = 24 * 60 * 60
 
-export function formatDate(date?: Date | string) {
-  return dayjs(date).format('MMM D, YYYY')
+export const DATE_FORMATS = {
+  /** ex: `Oct 30, 2022` */
+  default: 'MMM D, YYYY',
+  /** ex: `Oct 30 2022, 6:59:11 pm` */
+  long: 'MMM D YYYY, h:mm:ss a',
+} as const
+
+export function formatDate(
+  date: Date | string | undefined,
+  format: keyof typeof DATE_FORMATS = 'default',
+) {
+  if (!date) return '-'
+  return dayjs(date).format(DATE_FORMATS[format])
 }
 
 export function daysToSeconds(days: number): number {

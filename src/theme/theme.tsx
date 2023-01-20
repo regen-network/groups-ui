@@ -3,7 +3,8 @@ import { type ThemeConfig, ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { StepsTheme as Steps } from 'chakra-ui-steps'
 
 import { ButtonStyles as Button } from './components/button-theme'
-import { HeadingStyles as Heading } from './components/heading-theme'
+import { HeadingTheme as Heading } from './components/heading-theme'
+import { TrTheme as Tr } from './components/table-theme'
 
 const config: ThemeConfig = {
   initialColorMode: 'light',
@@ -12,7 +13,7 @@ const config: ThemeConfig = {
 
 export const theme = extendTheme({
   config: config,
-  components: { Steps, Heading, Button },
+  components: { Steps, Heading, Button, Tr },
 })
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => (

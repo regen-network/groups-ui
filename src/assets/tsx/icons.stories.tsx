@@ -2,7 +2,7 @@ import type { Meta, StoryFn } from '@storybook/react'
 
 import { useClipboard } from 'hooks/chakra-hooks'
 
-import { Grid, GridItem, Heading, Stack, Text } from '@/atoms/chakra-components'
+import { Grid, GridItem, Heading, Stack, Text } from '@/atoms'
 
 import * as ChakraIcons from './chakra-icons'
 import { GroupsIcon } from './groups-icon'

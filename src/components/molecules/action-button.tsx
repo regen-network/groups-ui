@@ -2,9 +2,7 @@ import type { IconType } from 'react-icons'
 
 import { useColorModeValue } from 'hooks/chakra-hooks'
 
-import { Card } from '@/atoms/card'
-import { Box, CardBody, Flex, Text } from '@/atoms/chakra-components'
-import { InfoTooltip } from '@/atoms/info-tooltip'
+import { Box, Card, CardBody, Flex, InfoTooltip, Text } from '@/atoms'
 
 export const ActionButton = (props: {
   label: string

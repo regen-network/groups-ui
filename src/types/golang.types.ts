@@ -18,4 +18,4 @@ export interface Duration {
   nanos: number
 }
 
-export { Any } from '@haveanicedavid/cosmos-groups-ts/types/codegen/google/protobuf/any'
+export type { Any } from '@haveanicedavid/cosmos-groups-ts/types/codegen/google/protobuf/any'

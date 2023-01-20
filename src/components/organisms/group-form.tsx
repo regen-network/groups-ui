@@ -14,7 +14,6 @@ import {
   FormControl,
   HStack,
   Table,
-  TableContainer,
   Tbody,
   Td,
   Th,
@@ -23,6 +22,7 @@ import {
 } from '@/atoms/chakra-components'
 import { DeleteButton } from '@/atoms/delete-button'
 import { NumberInput } from '@/atoms/number-input'
+import { TableContainer } from '@/atoms/table-container'
 import { Form } from '@/molecules/form'
 import { FormCard } from '@/molecules/form-card'
 import {

@@ -15,7 +15,6 @@ import {
   Flex,
   Input,
   Table,
-  TableContainer,
   Tbody,
   Td,
   Th,
@@ -25,6 +24,7 @@ import {
 } from '@/atoms/chakra-components'
 import { DeleteButton } from '@/atoms/delete-button'
 import { NumberInput } from '@/atoms/number-input'
+import { TableContainer } from '@/atoms/table-container'
 import { UndoButton } from '@/atoms/undo-button'
 import { TableTitlebar } from '@/molecules/table-titlebar'
 import { Truncate } from '@/molecules/truncate'
@@ -108,7 +108,7 @@ export const GroupMembersTable = ({
   const deletedBg = useColorModeValue('red.100', 'red.900')
 
   return (
-    <TableContainer w="full" borderRadius="lg" borderWidth={2} shadow="md">
+    <TableContainer w="full">
       <TableTitlebar title="Members">
         <AnimatePresence mode="wait">
           {isEdit && (
@@ -169,7 +169,7 @@ export const GroupMembersTable = ({
       </TableTitlebar>
       <Table size="lg" variant={isEdit ? undefined : 'striped'}>
         <Thead>
-          <Tr sx={{ '& > th': { fontWeight: 'bold' } }}>
+          <Tr>
             <Th>Address</Th>
             <Th>Voting Weight</Th>
             <Th>Date Added</Th>

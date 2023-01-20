@@ -1,3 +1,4 @@
+export * from './bank.types'
 export * from './form.types'
 export * from './golang.types'
 export * from './group.types'

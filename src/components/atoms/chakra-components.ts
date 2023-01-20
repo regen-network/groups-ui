@@ -74,7 +74,6 @@ export {
   Stack,
   styled,
   Table,
-  TableContainer,
   Tbody,
   Td,
   Text,
