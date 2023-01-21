@@ -2,13 +2,13 @@ import { useState } from 'react'
 
 import type { GroupWithPolicyFormValues } from 'types'
 import { handleError } from 'util/errors'
-import { defaultGroupFormValues, defaultGroupPolicyFormValues } from 'util/form.constants'
+import { defaultGroupFormValues, defaultGroupPolicyFormValues } from 'util/form.defaults'
 
 import { createGroupWithPolicy } from 'api/group.actions'
-import { useTxToasts } from 'hooks/useToasts'
+import { useTxToasts } from 'hooks/use-toasts'
 import { Wallet } from 'store/wallet.store'
 
-import { GroupTemplate } from '@/templates/group-template'
+import { GroupCRUDTemplate } from '@/templates/group-crud-template'
 
 export default function GroupCreate() {
   const { toastErr, toastSuccess } = useTxToasts()
@@ -30,7 +30,7 @@ export default function GroupCreate() {
   if (!Wallet.account?.address) return null
 
   return (
-    <GroupTemplate
+    <GroupCRUDTemplate
       newGroupId={newGroupId}
       initialGroupFormValues={{
         ...defaultGroupFormValues,

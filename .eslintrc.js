@@ -76,7 +76,7 @@ const eslintConfig = {
           ['^react', '^@?\\w'],
           // absolute imports - types/util, then data-related
           ['^(types)', '^(util)(/.*|$)'],
-          ['^(api|store|hooks)', '^(api|store|hooks)(/.*|$)'], // (repeating is due to a bug importing types)
+          ['^(api|store|hooks|routes)', '^(api|store|hooks|routes)(/.*|$)'], // (repeating is due to a bug importing types)
           // Pages, components
           ['^(pages)(/.*|$)', '^(@)(/.*|$)'],
           // Parent imports. Put `..` last.

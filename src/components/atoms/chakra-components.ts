@@ -1,5 +1,6 @@
 export type {
   AlertProps,
+  BadgeProps,
   ButtonProps,
   ChakraProps,
   ContainerProps,

@@ -1,35 +1,49 @@
 import { redirect, useParams } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
 
+import type { ProposalAction, ProposalFormValues } from 'types'
 import { handleError, throwError } from 'util/errors'
-import { defaultDelegateFormValues } from 'util/form.constants'
+import { defaultDelegateFormValues, defaultTextFormValues } from 'util/form.defaults'
 import { getFeeDenom, uuid } from 'util/helpers'
 
 import { createProposal } from 'api/proposal.actions'
-import { useGroup, useGroupPolicies } from 'hooks/use-query'
-import { useTxToasts } from 'hooks/useToasts'
+import { useAppLocation } from 'hooks/react-router'
+import { useGroup, useGroupPolicies, useGroupProposals } from 'hooks/use-query'
+import { useTxToasts } from 'hooks/use-toasts'
 import { Chain } from 'store/chain.store'
 import { Wallet } from 'store/wallet.store'
 
 import { Loading } from '@/molecules/loading'
-import { type ProposalFormValues } from '@/organisms/proposal-form'
-import { ProposalTemplate } from '@/templates/proposal-template'
+import { ProposalCRUDTemplate } from '@/templates/proposal-crud-template'
 
 const steps = ['Propose Action', 'Review Proposal', 'Proposal Open']
 
 export default function ProposalCreate() {
-  const { toastSuccess, toastErr } = useTxToasts()
   const { groupId } = useParams()
-  const { data: group, isLoading: isLoadingGroup } = useGroup(groupId)
-  const { data: groupPolicies, isLoading: isLoadingPolicy } = useGroupPolicies(groupId)
+  const { state } = useAppLocation()
+  const { toastSuccess, toastErr } = useTxToasts()
   const { fee } = useSnapshot(Chain)
   const { account } = useSnapshot(Wallet)
+  const { data: group, isLoading: isLoadingGroup } = useGroup(groupId)
+  const { data: groupPolicies } = useGroupPolicies(groupId)
+  const { data: proposals, isLoading: isLoadingProposals } = useGroupProposals(groupId)
   const [groupPolicy] = groupPolicies || []
 
-  if (isLoadingGroup || isLoadingPolicy) return <Loading />
+  if (isLoadingGroup || isLoadingProposals) return <Loading />
   if (!group || !groupPolicy) {
     redirect('/')
     return null
+  }
+
+  function getInitialFormAction(): ProposalAction {
+    const id = uuid()
+    switch (state?.newProposalType) {
+      case 'text':
+        return { id, type: 'text', values: defaultTextFormValues }
+      case 'stake':
+      default:
+        return { id, type: 'stake', values: defaultDelegateFormValues }
+    }
   }
 
   async function handleSubmit({
@@ -38,9 +52,10 @@ export default function ProposalCreate() {
     description,
   }: ProposalFormValues): Promise<string | null> {
     try {
-      if (!fee || !groupPolicies?.[0] || !account?.address) {
+      if (!fee || !account?.address) {
         throwError('Error submitting proposal:  No fee or group policy found')
       }
+      // TODO: should this be a react-query mutation?
       const data = await createProposal({
         actions,
         denom: getFeeDenom(fee),
@@ -60,13 +75,11 @@ export default function ProposalCreate() {
   }
 
   return (
-    <ProposalTemplate
+    <ProposalCRUDTemplate
       initialProposalFormValues={{
-        actions: [{ id: uuid(), type: 'stake', values: defaultDelegateFormValues }],
-        // TODO: set initial title / description based on the number of
-        // previous proposals?
-        title: 'Proposal Title',
-        description: 'Proposal Description',
+        actions: [getInitialFormAction()],
+        title: `Proposal ${proposals ? proposals.length + 1 : 'Title'}`,
+        description: `Proposal ${proposals ? proposals.length + 1 : ''} Description`,
       }}
       groupName={group.metadata.name}
       groupId={group.id.toString()}

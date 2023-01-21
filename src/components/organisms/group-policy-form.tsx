@@ -5,7 +5,7 @@ import { valid } from 'util/validation/zod'
 
 import { useZodForm } from 'hooks/use-zod-form'
 
-import { Flex, Text } from '@/atoms/chakra-components'
+import { Flex, Text } from '@/atoms'
 import { Form } from '@/molecules/form'
 import { FormCard } from '@/molecules/form-card'
 import { NumberField } from '@/molecules/form-fields'
@@ -20,13 +20,9 @@ const schema = z.object({
 export type GroupPolicyFormValues = z.infer<typeof schema>
 
 export const GroupPolicyForm = ({
-  btnText = 'Submit',
-  goBack,
   defaultValues,
   onSubmit,
 }: {
-  btnText?: string
-  goBack?: () => void
   defaultValues: GroupPolicyFormValues
   onSubmit: (data: GroupPolicyFormValues) => void
 }) => {
@@ -120,7 +116,7 @@ export const GroupPolicyForm = ({
           </Flex>
         </NumberField>
 
-        <FormSubmitHiddenButton onPrev={goBack} btnText={btnText} />
+        <FormSubmitHiddenButton />
       </Form>
     </FormCard>
   )

@@ -7,8 +7,8 @@ import {
   fetchGroupsWithMembersByMember,
 } from 'api/group.actions'
 import { fetchGroupMembers } from 'api/member.actions'
-import { fetchGroupPolicies, fetchGroupPoliciesWithProposals } from 'api/policy.actions'
-import { fetchProposalbyId } from 'api/proposal.actions'
+import { fetchGroupPolicies } from 'api/policy.actions'
+import { fetchProposalbyId, fetchProposalsByGroupPolicy } from 'api/proposal.actions'
 import { fetchValidators } from 'api/staking.actions'
 import { Chain } from 'store/chain.store'
 
@@ -52,14 +52,6 @@ export function useGroupPolicies(groupId?: string) {
   })
 }
 
-export function useGroupPoliciesWithProposals(groupId?: string) {
-  return useQuery({
-    queryKey: ['groupPoliciesWithProposals', groupId],
-    queryFn: () => fetchGroupPoliciesWithProposals(groupId),
-    enabled: !!groupId,
-  })
-}
-
 export function useValidators() {
   const { chainId } = Chain.active
   return useQuery({
@@ -77,8 +69,22 @@ export function useProposal(proposalId?: string) {
   })
 }
 
+export function useGroupProposals(groupId?: string) {
+  const { data: policies } = useGroupPolicies(groupId)
+  const policyIds = policies?.map((p) => p.address) || []
+  return useQuery({
+    queryKey: ['proposals', groupId],
+    enabled: policyIds.length > 0,
+    queryFn: async () => {
+      const proposals = await Promise.all(
+        policyIds.map(async (address) => await fetchProposalsByGroupPolicy(address)),
+      )
+      return proposals.flat()
+    },
+  })
+}
+
 export function useBalances(address?: string) {
-  console.log('address :>> ', address)
   return useQuery({
     queryKey: ['balances', address],
     queryFn: () => fetchAllBalances(address),

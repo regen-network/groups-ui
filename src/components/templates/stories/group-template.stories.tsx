@@ -1,21 +1,22 @@
 import type { Meta, StoryFn } from '@storybook/react'
 
-import { defaultGroupFormValues, defaultGroupPolicyFormValues } from 'util/form.constants'
+import { defaultGroupFormValues, defaultGroupPolicyFormValues } from 'util/form.defaults'
 
-import { GroupTemplate } from '../group-template'
+import { GroupCRUDTemplate } from '../group-crud-template'
 
 export default {
   title: 'Templates/Group',
-  component: GroupTemplate,
+  component: GroupCRUDTemplate,
   argTypes: {
     submit: { action: 'clicked' },
   },
-} as Meta<typeof GroupTemplate>
+} as Meta<typeof GroupCRUDTemplate>
 
-const Template: StoryFn<typeof GroupTemplate> = (args) => <GroupTemplate {...args} />
+const Template: StoryFn<typeof GroupCRUDTemplate> = (args) => (
+  <GroupCRUDTemplate {...args} />
+)
 
-const onSubmit = async (values: unknown) => {
-  console.log(values)
+const onSubmit = async () => {
   return true
 }
 

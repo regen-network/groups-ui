@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { defaultTextFormValues } from 'util/form.constants'
+import { defaultTextFormValues } from 'util/form.defaults'
 import { valid } from 'util/validation/zod'
 
 import { useZodForm } from 'hooks/use-zod-form'

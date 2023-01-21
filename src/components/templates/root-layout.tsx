@@ -1,10 +1,11 @@
 import { Suspense, useState } from 'react'
-import { useLocation, useOutlet } from 'react-router-dom'
+import { useOutlet } from 'react-router-dom'
 
 import { useColorModeValue } from 'hooks/chakra-hooks'
+import { useAppLocation } from 'hooks/react-router'
 
 import { AnimatePresence, PopUpFade } from '@/animations'
-import { Flex } from '@/atoms/chakra-components'
+import { Flex } from '@/atoms'
 import { Loading } from '@/molecules/loading'
 import { Navbar } from '@/organisms/navbar'
 
@@ -17,27 +18,30 @@ function FrozenOutlet() {
 }
 
 export const RootLayout = () => {
-  const { pathname } = useLocation()
+  const { pathname } = useAppLocation()
   return (
     <Flex
       flexDir="column"
-      maxH="100vh"
-      maxW="100vw"
-      height="full"
+      h="100vh"
+      w="100vw"
       overflowY="hidden"
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
       <Navbar />
-      <Flex as="main" h="full" overflowY="auto" direction="column">
-        <AnimatePresence mode="wait">
-          <PopUpFade
-            key={pathname}
-            style={{ flex: 1, display: 'flex', flexDirection: 'column' }}
-          >
-            <FrozenOutlet />
-          </PopUpFade>
-        </AnimatePresence>
-      </Flex>
+      <AnimatePresence mode="wait">
+        <PopUpFade
+          key={pathname}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+            flexGrow: 1,
+            overflowY: 'auto',
+          }}
+        >
+          <FrozenOutlet />
+        </PopUpFade>
+      </AnimatePresence>
     </Flex>
   )
 }

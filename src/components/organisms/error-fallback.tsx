@@ -2,7 +2,7 @@ import { isRouteErrorResponse, useRouteError } from 'react-router-dom'
 
 import { toErrorWithMessage } from 'util/errors'
 
-import { Center, Code } from '@/atoms/chakra-components'
+import { Center, Code } from '@/atoms'
 import { AlertTemplate } from '@/templates/alert-template'
 
 function getErrorText(error: unknown): { text: string; message?: string } {

@@ -82,7 +82,6 @@ function isTextProposal(
 
 function stakeValuesToMsg(values: ProposalStakeFormValues, data: ProposalData) {
   if (isDelegateValues(values)) {
-    console.log('Delegate msg')
     const delegateInfo = {
       amount: values.amount,
       validatorAddress: values.validator,
@@ -94,7 +93,6 @@ function stakeValuesToMsg(values: ProposalStakeFormValues, data: ProposalData) {
       : msgStakingUndelegate(delegateInfo)
   }
   if (isRedelegateValues(values)) {
-    console.log('redelegate msg')
     return msgStakingRedelegate({
       amount: values.amount,
       denom: data.denom,

@@ -1,4 +1,5 @@
 import type { ProposalAction } from 'types'
+import { ENABLED_ACTIONS } from 'util/constants'
 
 import {
   type DrawerProps,
@@ -10,10 +11,8 @@ import {
   DrawerOverlay,
   Stack,
   Text,
-} from '@/atoms/chakra-components'
+} from '@/atoms'
 import { ActionButton } from '@/molecules/action-button'
-
-import { CgListTree, ImFileText2 } from 'assets/tsx'
 
 type Props = {
   onActionSelect: (actionType: ProposalAction['type']) => void
@@ -45,18 +44,15 @@ export const ProposalActionDrawer = ({
             Event type
           </Text>
           <Stack spacing={3}>
-            <ActionButton
-              icon={ImFileText2}
-              label="Text"
-              tooltipText='Create a "text" proposal'
-              onClick={() => onActionSelect('text')}
-            />
-            <ActionButton
-              icon={CgListTree}
-              label="Stake"
-              tooltipText='Create a "stake" proposal'
-              onClick={() => onActionSelect('stake')}
-            />
+            {ENABLED_ACTIONS.map((a, i) => (
+              <ActionButton
+                key={'action-' + i}
+                icon={a.icon}
+                label={a.label}
+                tooltipText={a.tooltip}
+                onClick={() => onActionSelect(a.type)}
+              />
+            ))}
           </Stack>
         </DrawerBody>
       </DrawerContent>

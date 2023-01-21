@@ -18,6 +18,18 @@ const NotFound = lazy(() => import('./pages/not-found-page'))
 const ProposalCreate = lazy(() => import('./pages/proposal-create-page'))
 const ProposalDetails = lazy(() => import('./pages/proposal-details-page'))
 
+export const ROUTE_PATH = {
+  home: '/',
+  group: (id: string) => `/${id}`,
+  groups: '/',
+  groupCreate: '/new',
+  groupDetails: (id: string) => `/${id}/details`,
+  groupEdit: (id: string) => `/${id}/edit`,
+  proposalCreate: (groupId: string) => `/${groupId}/proposals/new`,
+  proposal: (groupId: string, proposalId: string) =>
+    `/${groupId}/proposals/${proposalId}`,
+} as const
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />} errorElement={<ErrorFallback />}>

@@ -2,20 +2,22 @@
 import { type UIGroupWithMembers } from 'types'
 import { formatDate } from 'util/date'
 
+import { ROUTE_PATH } from 'routes'
+
 import {
   Badge,
   Center,
   Heading,
   HStack,
+  Link,
   Table,
+  TableContainer,
   Tbody,
   Td,
   Th,
   Thead,
   Tr,
-} from '@/atoms/chakra-components'
-import { Link } from '@/atoms/link'
-import { TableContainer } from '@/atoms/table-container'
+} from '@/atoms'
 
 export const MyGroupsTable = ({
   memberGroups = [],
@@ -63,7 +65,9 @@ export const MyGroupsTable = ({
           {groups.map((group, i) => (
             <Tr key={i + group.metadata.name}>
               <Td>
-                <Link to={`/${group.id}`}>{group.metadata.name}</Link>
+                <Link to={ROUTE_PATH.group(group.id.toString())}>
+                  {group.metadata.name}
+                </Link>
               </Td>
               <Td>{formatDate(group.createdAt)}</Td>
               <Td>{formatDate(group.metadata.updatedAt)}</Td>

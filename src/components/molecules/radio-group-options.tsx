@@ -1,5 +1,4 @@
-import { type RadioProps, VStack } from '@/atoms/chakra-components'
-import { RadioBox } from '@/atoms/radio-box'
+import { type RadioProps, RadioBox, VStack } from '@/atoms'
 
 export type RadioGroupOption = {
   label: string

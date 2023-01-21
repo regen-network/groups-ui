@@ -1,10 +1,4 @@
-import {
-  type AlertProps,
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-} from '@/atoms/chakra-components'
+import { type AlertProps, Alert, AlertDescription, AlertIcon, AlertTitle } from '@/atoms'
 
 export const Notify = (p: AlertProps) => {
   return (

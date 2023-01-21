@@ -1,44 +1,45 @@
 import { redirect, useParams } from 'react-router-dom'
 
+import { ROUTE_PATH } from 'routes'
 import { useColorModeValue } from 'hooks/chakra-hooks'
 import { useGroup, useProposal } from 'hooks/use-query'
 
-import { Card } from '@/atoms/card'
 import {
   Button,
-  ButtonGroup,
+  Card,
   CardBody,
   CardHeader,
   Flex,
   Heading,
+  PageContainer,
+  RouteLink,
   SimpleGrid,
   Stack,
   Text,
-} from '@/atoms/chakra-components'
-import { PageContainer } from '@/atoms/page-container'
-import { RouteLink } from '@/atoms/route-link'
+} from '@/atoms'
 import { Loading } from '@/molecules/loading'
 
 import { IoMdArrowBack } from 'assets/tsx'
 
-const StakingMsgInfo = () => {
-  return (
-    <Card variant="filled">
-      <CardHeader></CardHeader>
-    </Card>
-  )
-}
+// const StakingMsgInfo = () => {
+//   return (
+//     <Card variant="filled">
+//       <CardHeader></CardHeader>
+//     </Card>
+//   )
+// }
 
 export default function ProposalDetails() {
   const { proposalId, groupId } = useParams()
   const { data: group, isLoading: isLoadingGroup } = useGroup(groupId)
   const { data: proposal, isLoading: isLoadingProposal } = useProposal(proposalId)
-  console.log('proposal :>> ', proposal)
-
   const cardBgDark = useColorModeValue('gray.100', 'gray.600')
 
   if (isLoadingProposal || isLoadingGroup) return <Loading />
-  if (!proposal) redirect(`/${groupId}`)
+  if (!groupId || !proposal) {
+    redirect(groupId ? ROUTE_PATH.group(groupId) : ROUTE_PATH.groups)
+    return null
+  }
 
   return (
     <PageContainer>
@@ -48,7 +49,7 @@ export default function ProposalDetails() {
             variant="ghost"
             leftIcon={<IoMdArrowBack />}
             as={RouteLink}
-            to={`/${groupId}`}
+            to={ROUTE_PATH.group(groupId)}
           >
             {group?.metadata.name}
           </Button>
@@ -68,9 +69,9 @@ export default function ProposalDetails() {
                   <Text ml={2}>{group?.metadata.name}</Text>
                 </Flex>
                 <SimpleGrid columns={2} gap={3} columnGap={4}>
-                  <ButtonGroup colorScheme="green" variant="outline">
+                  <Button colorScheme="green" variant="outline">
                     Yes
-                  </ButtonGroup>
+                  </Button>
                   <Button colorScheme="red" variant="outline">
                     No
                   </Button>

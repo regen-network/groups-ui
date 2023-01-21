@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { type AlertProps, Box, Button, Container, Stack } from '@/atoms/chakra-components'
+import { type AlertProps, Box, Button, Container, Stack } from '@/atoms'
 import { Notify } from '@/molecules/notify'
 
 import { GroupsIcon } from 'assets/tsx'

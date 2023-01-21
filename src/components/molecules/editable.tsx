@@ -10,7 +10,7 @@ import {
   IconButton,
   Textarea,
   Tooltip,
-} from '@/atoms/chakra-components'
+} from '@/atoms'
 
 import { MdCheck, RiCloseLine } from 'assets/tsx'
 

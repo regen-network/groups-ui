@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { type IconButtonProps, Box, IconButton } from '@/atoms/chakra-components'
+import { type IconButtonProps, Box, IconButton } from '@/atoms'
 
 import { AiOutlineMinus } from 'assets/tsx'
 

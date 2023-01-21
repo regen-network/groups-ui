@@ -1,6 +1,6 @@
 import { useController, useFormContext } from 'react-hook-form'
 
-import { type RadioGroupProps, RadioGroup } from '@/atoms/chakra-components'
+import { type RadioGroupProps, RadioGroup } from '@/atoms'
 
 import { type RadioGroupOption, RadioGroupOptions } from '../radio-group-options'
 

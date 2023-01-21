@@ -1,14 +1,9 @@
 import { truncate } from 'util/helpers'
 
 import { useClipboard } from 'hooks/chakra-hooks'
-import { useToastCopied } from 'hooks/useToasts'
+import { useToastCopied } from 'hooks/use-toasts'
 
-import {
-  type TextProps,
-  type TooltipProps,
-  Text,
-  Tooltip,
-} from '@/atoms/chakra-components'
+import { type TextProps, type TooltipProps, Text, Tooltip } from '@/atoms'
 
 export const Truncate = ({
   clickToCopy = false,

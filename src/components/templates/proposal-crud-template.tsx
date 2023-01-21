@@ -1,14 +1,13 @@
 import { useState } from 'react'
 
-import { SPACING } from 'util/style.constants'
+import { SPACING } from 'util/constants'
 
+import { ROUTE_PATH } from 'routes'
 import { useSteps } from 'hooks/chakra-hooks'
 
 import { AnimatePresence, HorizontalSlide } from '@/animations'
-import { Button, Flex, Heading, Stack, Text } from '@/atoms/chakra-components'
-import { PageContainer } from '@/atoms/page-container'
-import { RouteLink } from '@/atoms/route-link'
-import { FormFooter } from '@/molecules/form-footer'
+import { Button, Flex, Heading, PageContainer, RouteLink, Stack, Text } from '@/atoms'
+import { FormFooter, useFormFooter } from '@/molecules/form-footer'
 import { PageStepper } from '@/molecules/page-stepper'
 import { type ProposalFormValues, ProposalForm } from '@/organisms/proposal-form'
 import { ProposalReview } from '@/organisms/proposal-review'
@@ -23,7 +22,7 @@ const Finished = ({ linkTo }: { linkTo: string }) => (
   </Stack>
 )
 
-export const ProposalTemplate = (props: {
+export const ProposalCRUDTemplate = (props: {
   groupId: string
   groupName: string
   initialProposalFormValues: ProposalFormValues
@@ -39,6 +38,8 @@ export const ProposalTemplate = (props: {
   const [submitting, setSubmitting] = useState(false)
   const [priorStep, setPriorStep] = useState(0)
   const [newProposalId, setNewProposalId] = useState<string>()
+
+  console.log('props.initial :>> ', props.initialProposalFormValues)
 
   function handlePrev() {
     setPriorStep(activeStep)
@@ -59,6 +60,11 @@ export const ProposalTemplate = (props: {
       nextStep()
     }
   }
+
+  useFormFooter({
+    btnText: activeStep === 0 ? 'Save & Next' : 'Submit',
+    onPrev: activeStep === 1 ? handlePrev : undefined,
+  })
 
   function renderStep() {
     switch (activeStep) {
@@ -86,7 +92,13 @@ export const ProposalTemplate = (props: {
       case 2:
         return (
           <HorizontalSlide key="step-2">
-            <Finished linkTo={`/${props.groupId}/proposals/${newProposalId}`} />
+            <Finished
+              linkTo={
+                newProposalId
+                  ? ROUTE_PATH.proposal(props.groupId, newProposalId)
+                  : ROUTE_PATH.group(props.groupId)
+              }
+            />
           </HorizontalSlide>
         )
       default:

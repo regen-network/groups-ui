@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
 import type { ProposalStakeFormValues, ProposalStakeType } from 'types'
-import { SPACING } from 'util/style.constants'
+import { SPACING } from 'util/constants'
 
-import { FormControl, FormLabel, RadioGroup, Stack } from '@/atoms/chakra-components'
+import { FormControl, FormLabel, RadioGroup, Stack } from '@/atoms'
 import { FormCard } from '@/molecules/form-card'
 import { RadioGroupOptions } from '@/molecules/radio-group-options'
 
@@ -53,7 +53,7 @@ export const ProposalStakeForm = ({
         return (
           <DelegateForm
             {...baseProps}
-            key={formId}
+            key={formId + '-undelegate'}
             defaultValues={
               { ...defaultValues, stakeType: 'undelegate' } as DelegateFormValues
             }
@@ -64,7 +64,7 @@ export const ProposalStakeForm = ({
         return (
           <DelegateForm
             {...baseProps}
-            key={formId} // force re-render when toggling between delegate / undelegate
+            key={formId + '-delegate'} // force re-render when toggling between delegate / undelegate
             defaultValues={defaultValues as DelegateFormValues}
           />
         )

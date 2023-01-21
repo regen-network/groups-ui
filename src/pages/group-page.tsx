@@ -1,86 +1,45 @@
-import { useParams } from 'react-router-dom'
+import { redirect, useParams } from 'react-router-dom'
 
-import { formatDate } from 'util/date'
+import { handleError } from 'util/errors'
 
-import { useBalances, useGroup, useGroupPoliciesWithProposals } from 'hooks/use-query'
-
-import { Card } from '@/atoms/card'
+import { useDerivedProposals } from 'hooks/use-derived-proposals'
 import {
-  Button,
-  CardBody,
-  CardHeader,
-  Flex,
-  Heading,
-  Stack,
-  Table,
-  Text,
-  Thead,
-  Tr,
-} from '@/atoms/chakra-components'
-import { Link } from '@/atoms/link'
-import { PageContainer } from '@/atoms/page-container'
-import { RouteLink } from '@/atoms/route-link'
-import { CoinBalanceTotalInfo } from '@/molecules/coin-balance-total-info'
-import { Loading } from '@/molecules/loading'
+  useBalances,
+  useGroup,
+  useGroupPolicies,
+  useGroupProposals,
+} from 'hooks/use-query'
 
-import { ChatIcon } from 'assets/tsx'
+import { Loading } from '@/molecules/loading'
+import { GroupTemplate } from '@/templates/group-template'
 
 export default function GroupPage() {
   const { groupId } = useParams()
-  const { data: group } = useGroup(groupId)
-  const { data: policiesWithProposals } = useGroupPoliciesWithProposals(groupId)
-  const policies = policiesWithProposals?.policies
-  const proposals = policiesWithProposals?.proposals
+  const { data: group, isLoading: isLoadingGoup } = useGroup(groupId)
+  const { data: policies } = useGroupPolicies(groupId)
+  const { data: proposals, isLoading: isLoadingProposals } = useGroupProposals(groupId)
+
   const groupPolicy = policies?.[0]
   const { data: balances } = useBalances(groupPolicy?.address)
-  console.log('balances :>> ', balances)
+  const derivedProposals = useDerivedProposals(proposals)
 
-  if (!group) return <Loading />
-
-  const { name, description, forumLink, updatedAt } = group.metadata
+  if (isLoadingGoup || isLoadingProposals) return <Loading />
+  if (!group) {
+    handleError('Group not found')
+    redirect('/')
+    return null
+  }
 
   return (
-    <PageContainer>
-      <Stack spacing={4}>
-        <Flex justify="space-between">
-          <Heading>{name}</Heading>
-          <Button
-            size="large"
-            px={4}
-            as={RouteLink}
-            variant="outline"
-            to={`/${groupId}/details`}
-          >
-            group details
-          </Button>
-        </Flex>
-
-        <Flex justify="space-between">
-          <Text fontSize="lg">{description}</Text>
-          <Text fontSize="sm">{`Created ${formatDate(group.createdAt, 'long')}`}</Text>
-        </Flex>
-        {forumLink && (
-          <Link href={forumLink}>
-            <ChatIcon mr={3} />
-            {'View discussion on group forum»'}
-          </Link>
-        )}
-        <CoinBalanceTotalInfo coins={balances} />
-      </Stack>
-      <Stack mt={8}>
-        <Card>
-          <CardHeader>
-            <Heading size="md">Ready to Execute</Heading>
-          </CardHeader>
-          <CardBody>
-            <Table>
-              <Thead>
-                <Tr></Tr>
-              </Thead>
-            </Table>
-          </CardBody>
-        </Card>
-      </Stack>
-    </PageContainer>
+    <GroupTemplate
+      group={group}
+      balances={balances}
+      onExecute={(p) => console.log('execute proposal', p)}
+      proposals={{
+        accepted: derivedProposals.accepted,
+        history: derivedProposals.other,
+        submitted: derivedProposals.submitted,
+      }}
+    />
   )
 }

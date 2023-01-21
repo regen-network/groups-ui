@@ -6,7 +6,7 @@ import type {
   GroupWithPolicyFormValues,
 } from 'types'
 import { handleError, throwError } from 'util/errors'
-import { DEFAULT_MEMBER_WEIGHT, DEFAULT_VOTING_WINDOW } from 'util/form.constants'
+import { DEFAULT_MEMBER_WEIGHT, DEFAULT_VOTING_WINDOW } from 'util/form.defaults'
 import { clearEmptyStr, percentStrToNum } from 'util/helpers'
 
 import { msgUpdateGroupMetadata } from 'api/group.messages'
@@ -14,11 +14,11 @@ import { msgUpdateGroupMembers } from 'api/member.messages'
 import { msgUpdateDecisionPolicy } from 'api/policy.messages'
 import { isPercentagePolicy, isThresholdPolicy } from 'api/policy.utils'
 import { useGroup, useGroupMembers, useGroupPolicies } from 'hooks/use-query'
-import { useTxToasts } from 'hooks/useToasts'
+import { useTxToasts } from 'hooks/use-toasts'
 import { signAndBroadcast } from 'store/wallet.store'
 
 import { Loading } from '@/molecules/loading'
-import { GroupTemplate } from '@/templates/group-template'
+import { GroupCRUDTemplate } from '@/templates/group-crud-template'
 
 export default function GroupEdit() {
   const { toastErr, toastSuccess } = useTxToasts()
@@ -132,7 +132,7 @@ export default function GroupEdit() {
   }
 
   return (
-    <GroupTemplate
+    <GroupCRUDTemplate
       disabledGroupFormFields={['admin']}
       newGroupId={groupId}
       initialGroupFormValues={initialGroupValues}

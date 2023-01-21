@@ -1,6 +1,6 @@
 import Long from 'long'
 
-import type { UIProposal } from 'types'
+import type { ProposalStatusType, UIProposal } from 'types'
 
 import { ProposalStatus } from 'api/proposal.utils'
 
@@ -8,7 +8,7 @@ const baseDate = new Date('2021-07-01T00:00:00Z')
 
 export function mockProposal(
   i: number,
-  status = ProposalStatus.PROPOSAL_STATUS_SUBMITTED,
+  status: ProposalStatusType = ProposalStatus.PROPOSAL_STATUS_SUBMITTED,
 ): UIProposal {
   return {
     status,

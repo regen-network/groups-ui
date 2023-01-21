@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react'
 
-import { defaultGroupFormValues } from 'util/form.constants'
+import { defaultGroupFormValues } from 'util/form.defaults'
 
 import { GroupForm } from '../group-form'
 

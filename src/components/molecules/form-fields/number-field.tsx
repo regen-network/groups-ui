@@ -3,8 +3,7 @@ import { useController, useFormContext } from 'react-hook-form'
 
 import { strToNumOrEmpty } from 'util/helpers'
 
-import { Flex } from '@/atoms/chakra-components'
-import { type NumberInputProps, NumberInput } from '@/atoms/number-input'
+import { type NumberInputProps, Flex, NumberInput } from '@/atoms'
 
 import { type FieldProps, FieldControl } from './field-control'
 

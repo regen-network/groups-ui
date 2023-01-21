@@ -7,9 +7,9 @@ import {
   SubmitErrorHandler,
 } from 'react-hook-form'
 
-import { SPACING } from 'util/style.constants'
+import { SPACING } from 'util/constants'
 
-import { Stack } from '@/atoms/chakra-components'
+import { Stack } from '@/atoms'
 
 interface Props<T extends FieldValues>
   extends Omit<ComponentProps<'form'>, 'onSubmit' | 'onError'> {

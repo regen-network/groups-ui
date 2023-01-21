@@ -1,127 +1,98 @@
-import { useState } from 'react'
+import type { UICoin, UIGroup, UIProposal } from 'types'
+import { formatDate } from 'util/date'
 
-import type {
-  GroupFormKeys,
-  GroupFormValues,
-  GroupPolicyFormValues,
-  GroupWithPolicyFormValues,
-} from 'types'
-import { SPACING } from 'util/style.constants'
+import { ROUTE_PATH } from 'routes'
 
-import { useSteps } from 'hooks/chakra-hooks'
+import {
+  Button,
+  Flex,
+  Heading,
+  HStack,
+  Link,
+  PageContainer,
+  RouteLink,
+  Stack,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Text,
+  Tr,
+} from '@/atoms'
+import { CoinBalanceTotalInfo } from '@/molecules/coin-balance-total-info'
+import { ProposalActionButtons } from '@/molecules/proposal-action-buttons'
+import { TableTitlebar } from '@/molecules/table-titlebar'
+import { GroupProposalsTable } from '@/organisms/group-proposals-table'
 
-import { AnimatePresence, HorizontalSlide } from '@/animations'
-import { Button, Flex, Heading, Stack, Text } from '@/atoms/chakra-components'
-import { PageContainer } from '@/atoms/page-container'
-import { RouteLink } from '@/atoms/route-link'
-import { FormFooter } from '@/molecules/form-footer'
-import { PageStepper } from '@/molecules/page-stepper'
-import { GroupForm } from '@/organisms/group-form'
-import { GroupPolicyForm } from '@/organisms/group-policy-form'
+import { ChatIcon } from 'assets/tsx'
 
-const Finished = ({ text, linkTo }: { text: string; linkTo: string }) => (
-  <Stack spacing={8}>
-    <Text align="center">{text}</Text>
-    <Button as={RouteLink} to={linkTo} alignSelf="center">
-      View your group page
-    </Button>
-  </Stack>
-)
-
-export function GroupTemplate({
-  initialGroupFormValues,
-  disabledGroupFormFields,
-  initialPolicyFormValues,
-  newGroupId,
-  submit,
-  steps,
-  text,
+export const GroupTemplate = ({
+  group,
+  balances,
+  onExecute,
+  proposals,
 }: {
-  disabledGroupFormFields?: GroupFormKeys[]
-  initialGroupFormValues: GroupFormValues
-  initialPolicyFormValues: GroupPolicyFormValues
-  /** ID of new group, used for redirect link */
-  newGroupId?: string
-  submit: (values: GroupWithPolicyFormValues) => Promise<boolean>
-  steps: string[]
-  text: {
-    submitBtn?: string
-    finished: string
+  group: UIGroup
+  balances?: UICoin[]
+  onExecute: (proposal: UIProposal) => void
+  proposals: {
+    accepted: UIProposal[]
+    submitted: UIProposal[]
+    history: UIProposal[]
   }
-}) {
-  const { activeStep, nextStep, prevStep } = useSteps({
-    initialStep: 0,
-  })
-  const [groupValues, setGroupValues] = useState<GroupFormValues>(initialGroupFormValues)
-  const [submitting, setSubmitting] = useState(false)
-  const [priorStep, setPriorStep] = useState(0)
-
-  const { threshold, votingWindow, percentage } = initialPolicyFormValues
-
-  function handleGroupSubmit(values: GroupFormValues) {
-    setGroupValues(values)
-    nextStep()
-  }
-
-  function handlePrev() {
-    setPriorStep(activeStep)
-    prevStep()
-  }
-
-  async function handleSubmit(policyValues: GroupPolicyFormValues) {
-    setSubmitting(true)
-    const success = await submit({
-      ...policyValues,
-      ...groupValues,
-    })
-    setSubmitting(false)
-    if (success) nextStep()
-  }
-
-  function renderStep() {
-    switch (activeStep) {
-      case 0:
-        return (
-          <HorizontalSlide key="step-0" fromRight={priorStep !== 0}>
-            <GroupForm
-              disabledFields={disabledGroupFormFields}
-              onSubmit={handleGroupSubmit}
-              defaultValues={groupValues}
-              btnText="Next"
-            />
-          </HorizontalSlide>
-        )
-      case 1:
-        return (
-          <HorizontalSlide key="step-1">
-            <GroupPolicyForm
-              onSubmit={handleSubmit}
-              defaultValues={{ threshold, votingWindow, percentage }}
-              goBack={handlePrev}
-            />
-          </HorizontalSlide>
-        )
-      case 2:
-        return (
-          <HorizontalSlide key="step-2">
-            <Finished text={text.finished} linkTo={newGroupId ? `/${newGroupId}` : '/'} />
-          </HorizontalSlide>
-        )
-      default:
-        return null
-    }
-  }
-
+}) => {
+  const { name, description, forumLink } = group.metadata
   return (
-    <Flex flexDir="column" flex={1}>
-      <PageStepper activeStep={activeStep} steps={steps} />
-      <PageContainer centerContent maxW={SPACING.formWidth}>
-        <Heading textAlign="center" mb={8}>
-          {steps[activeStep]}
-        </Heading>
-        <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
-      </PageContainer>
-      <FormFooter isSubmitting={submitting} />
-    </Flex>
+    <PageContainer>
+      <Stack spacing={4}>
+        <Flex justify="space-between">
+          <Heading>{name}</Heading>
+          <Button
+            size="large"
+            px={4}
+            as={RouteLink}
+            variant="outline"
+            to={ROUTE_PATH.groupDetails(group.id.toString())}
+          >
+            group details
+          </Button>
+        </Flex>
+
+        <Flex justify="space-between">
+          <Text fontSize="lg">{description}</Text>
+          <Text fontSize="sm">{`Created ${formatDate(group.createdAt, 'long')}`}</Text>
+        </Flex>
+        {forumLink && (
+          <Link href={forumLink} target="_blank" rel="noopener noreferrer">
+            <ChatIcon mr={3} />
+            {'View discussion on group forum»'}
+          </Link>
+        )}
+        <CoinBalanceTotalInfo coins={balances} />
+      </Stack>
+      <Stack mt={8} spacing={6}>
+        <TableContainer>
+          <TableTitlebar noBorder title="Actions" />
+          <Table>
+            <Tbody>
+              <Tr>
+                <Td>
+                  <HStack align="stretch" width="full">
+                    <ProposalActionButtons groupId={group.id.toString()} />
+                  </HStack>
+                </Td>
+              </Tr>
+            </Tbody>
+          </Table>
+        </TableContainer>
+        <GroupProposalsTable
+          title="Ready to Execute"
+          proposals={proposals.accepted}
+          onExecute={onExecute}
+        />
+        <GroupProposalsTable title="Proposed Actions" proposals={proposals.submitted} />
+        <GroupProposalsTable title="History" proposals={proposals.history} />
+      </Stack>
+    </PageContainer>
   )
 }

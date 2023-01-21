@@ -3,26 +3,25 @@ import { type FieldError, useFieldArray } from 'react-hook-form'
 import { z } from 'zod'
 
 import type { MemberFormValues } from 'types'
-import { defaultMemberFormValues } from 'util/form.constants'
+import { defaultMemberFormValues } from 'util/form.defaults'
 import { truncate } from 'util/helpers'
 import { valid } from 'util/validation/zod'
 
 import { useZodForm } from 'hooks/use-zod-form'
 
 import {
+  DeleteButton,
   Flex,
   FormControl,
   HStack,
+  NumberInput,
   Table,
   Tbody,
   Td,
   Th,
   Thead,
   Tr,
-} from '@/atoms/chakra-components'
-import { DeleteButton } from '@/atoms/delete-button'
-import { NumberInput } from '@/atoms/number-input'
-import { TableContainer } from '@/atoms/table-container'
+} from '@/atoms'
 import { Form } from '@/molecules/form'
 import { FormCard } from '@/molecules/form-card'
 import {
@@ -50,12 +49,10 @@ export type GroupFormValues = z.infer<typeof schema>
 export type GroupFormKeys = keyof GroupFormValues
 
 export const GroupForm = ({
-  btnText = 'Submit',
   defaultValues,
   disabledFields = [],
   onSubmit,
 }: {
-  btnText?: string
   defaultValues: GroupFormValues
   disabledFields?: GroupFormKeys[]
   onSubmit: (data: GroupFormValues) => void
@@ -152,49 +149,47 @@ export const GroupForm = ({
           </FieldControl>
         </Flex>
         {controlledMemberFields.length > 0 && (
-          <TableContainer>
-            <Table size="sm">
-              <Thead>
-                <Tr>
-                  <Th>Accounts added</Th>
-                  <Th>Weight</Th>
+          <Table size="sm">
+            <Thead>
+              <Tr>
+                <Th>Accounts added</Th>
+                <Th>Weight</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {controlledMemberFields.map((member, i) => (
+                <Tr key={i + member.address}>
+                  <Td>
+                    <Truncate
+                      clickToCopy
+                      text={member.address}
+                      headLength={12}
+                      tailLength={20}
+                      tooltipProps={{ maxW: 450 }}
+                    />
+                  </Td>
+                  <Td>
+                    <HStack spacing={4}>
+                      <FormControl isInvalid={!!errors.members?.[i]?.weight}>
+                        <NumberInput
+                          type="number"
+                          min={0}
+                          ref={form.register(`members.${i}.weight`, {
+                            valueAsNumber: true,
+                          })}
+                          onChange={(_, val) => setValue(`members.${i}.weight`, val)}
+                          value={member.weight}
+                        />
+                      </FormControl>
+                      <DeleteButton onClick={() => remove(i)} />
+                    </HStack>
+                  </Td>
                 </Tr>
-              </Thead>
-              <Tbody>
-                {controlledMemberFields.map((member, i) => (
-                  <Tr key={i + member.address}>
-                    <Td>
-                      <Truncate
-                        clickToCopy
-                        text={member.address}
-                        headLength={12}
-                        tailLength={20}
-                        tooltipProps={{ maxW: 450 }}
-                      />
-                    </Td>
-                    <Td>
-                      <HStack spacing={4}>
-                        <FormControl isInvalid={!!errors.members?.[i]?.weight}>
-                          <NumberInput
-                            type="number"
-                            min={0}
-                            ref={form.register(`members.${i}.weight`, {
-                              valueAsNumber: true,
-                            })}
-                            onChange={(_, val) => setValue(`members.${i}.weight`, val)}
-                            value={member.weight}
-                          />
-                        </FormControl>
-                        <DeleteButton onClick={() => remove(i)} />
-                      </HStack>
-                    </Td>
-                  </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </TableContainer>
+              ))}
+            </Tbody>
+          </Table>
         )}
-        <FormSubmitHiddenButton btnText={btnText} />
+        <FormSubmitHiddenButton />
       </Form>
     </FormCard>
   )

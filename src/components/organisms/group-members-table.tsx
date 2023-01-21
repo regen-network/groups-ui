@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 
 import type { MemberFormValues, UIGroupMember } from 'types'
 import { formatDate } from 'util/date'
-import { defaultMemberFormValues } from 'util/form.constants'
+import { defaultMemberFormValues } from 'util/form.defaults'
 import { isBech32Address } from 'util/validation'
 
 import { toMemberFormValues } from 'api/group.utils'
@@ -12,30 +12,29 @@ import { AnimatePresence, FadeIn } from '@/animations'
 import {
   Box,
   Button,
+  DeleteButton,
   Flex,
   Input,
+  NumberInput,
   Table,
+  TableContainer,
   Tbody,
   Td,
   Th,
   Thead,
   Tooltip,
   Tr,
-} from '@/atoms/chakra-components'
-import { DeleteButton } from '@/atoms/delete-button'
-import { NumberInput } from '@/atoms/number-input'
-import { TableContainer } from '@/atoms/table-container'
-import { UndoButton } from '@/atoms/undo-button'
+  UndoButton,
+} from '@/atoms'
 import { TableTitlebar } from '@/molecules/table-titlebar'
 import { Truncate } from '@/molecules/truncate'
 
-export const GroupMembersTable = ({
-  members = [],
-  onSave,
-}: {
+export type GroupMembersTableProps = {
   members: UIGroupMember[]
   onSave: (vals: MemberFormValues[]) => Promise<boolean>
-}) => {
+}
+
+export const GroupMembersTable = ({ members = [], onSave }: GroupMembersTableProps) => {
   const [isEdit, setEdit] = useBoolean(false)
   const [submitting, setSubmitting] = useState(false)
   const [newMemberAddr, setNewMemberAddr] = useState('')

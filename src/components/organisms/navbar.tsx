@@ -1,14 +1,7 @@
+import { ROUTE_PATH } from 'routes'
 import { useColorMode, useColorModeValue } from 'hooks/chakra-hooks'
 
-import {
-  Box,
-  Button,
-  Container,
-  Flex,
-  HStack,
-  IconButton,
-} from '@/atoms/chakra-components'
-import { RouteLink } from '@/atoms/route-link'
+import { Box, Button, Container, Flex, HStack, IconButton, RouteLink } from '@/atoms'
 
 import { ChainSelect } from './chain-select'
 
@@ -28,7 +21,7 @@ export const Navbar = () => {
             fontSize="4xl"
             variant="ghost"
             as={RouteLink}
-            to="/"
+            to={ROUTE_PATH.home}
             icon={<GroupsIcon />}
           />
           <Flex flex={1} justifyContent="flex-end">

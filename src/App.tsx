@@ -1,6 +1,6 @@
-import { Routes } from 'routes'
 import { useSnapshot } from 'valtio'
 
+import { Routes } from 'routes'
 import { useKeplr } from 'hooks/use-keplr'
 import { Wallet } from 'store/wallet.store'
 

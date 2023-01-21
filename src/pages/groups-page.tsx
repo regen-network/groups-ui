@@ -1,9 +1,8 @@
+import { ROUTE_PATH } from 'routes'
 import { useAdminGroups, useMemberGroups } from 'hooks/use-query'
 import { Wallet } from 'store/wallet.store'
 
-import { Button, Flex, Heading } from '@/atoms/chakra-components'
-import { PageContainer } from '@/atoms/page-container'
-import { RouteLink } from '@/atoms/route-link'
+import { Button, Flex, Heading, PageContainer, RouteLink } from '@/atoms'
 import { MyGroupsTable } from '@/organisms/my-groups-table'
 
 export default function Groups() {
@@ -15,7 +14,7 @@ export default function Groups() {
       <Flex flexDir="column" w="100%" gap={3}>
         <Flex justify="space-between" mb={8}>
           <Heading>Groups</Heading>
-          <Button size="large" px={4} as={RouteLink} to="/new">
+          <Button size="large" px={4} as={RouteLink} to={ROUTE_PATH.groupCreate}>
             Create Group
           </Button>
         </Flex>

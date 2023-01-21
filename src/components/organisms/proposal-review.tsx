@@ -7,12 +7,12 @@ import type {
   ProposalStakeFormValues,
   ProposalTextFormValues,
 } from 'types'
+import { SPACING } from 'util/constants'
 import { formatFee } from 'util/helpers'
-import { SPACING } from 'util/style.constants'
 
 import { Chain } from 'store/chain.store'
 
-import { Heading, Stack, Text } from '@/atoms/chakra-components'
+import { Heading, Stack, Text } from '@/atoms'
 import { FormCard } from '@/molecules/form-card'
 import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 import { ReviewItem } from '@/molecules/review-item'
@@ -26,11 +26,15 @@ export const ProposalReview = (props: {
   const {
     values: { actions, title, description },
   } = props
-  // useFormFooter({ onPrev: props.onPrev })
   return (
     <Stack spacing={8}>
       <FormCard>
-        <form onSubmit={() => props.onSubmit()}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            props.onSubmit()
+          }}
+        >
           <Stack spacing={SPACING.formStack}>
             <Stack spacing={8}>
               <Heading>{title}</Heading>
@@ -38,7 +42,7 @@ export const ProposalReview = (props: {
             </Stack>
             <ReviewItem label="Group:">{props.groupName}</ReviewItem>
           </Stack>
-          <FormSubmitHiddenButton onPrev={props.onPrev} />
+          <FormSubmitHiddenButton />
         </form>
       </FormCard>
       {actions.map((action, i) => {

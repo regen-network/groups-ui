@@ -2,7 +2,7 @@ import { Step, Steps } from 'chakra-ui-steps'
 
 import { useColorModeValue } from 'hooks/chakra-hooks'
 
-import { Box, Container } from '@/atoms/chakra-components'
+import { Box, Container } from '@/atoms'
 
 export const PageStepper = (props: { activeStep: number; steps: string[] }) => {
   return (

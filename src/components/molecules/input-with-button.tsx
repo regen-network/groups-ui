@@ -1,11 +1,4 @@
-import {
-  Button,
-  ButtonProps,
-  Flex,
-  forwardRef,
-  Input,
-  InputProps,
-} from '@/atoms/chakra-components'
+import { Button, ButtonProps, Flex, forwardRef, Input, InputProps } from '@/atoms'
 
 /** functions as an `Input`, but `onClick` passed to Button */
 /** `children` show as the button's text */

@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form'
 import type { Meta, StoryFn } from '@storybook/react'
 
-import { Button, Center, Text } from '@/atoms/chakra-components'
+import { Button, Center, Text } from '@/atoms'
 
 import { Form } from '../form'
 import { FormCard } from '../form-card'

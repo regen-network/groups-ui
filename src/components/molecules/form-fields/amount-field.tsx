@@ -1,7 +1,6 @@
 import { useController, useFormContext } from 'react-hook-form'
 
-import { type AmountInputProps, AmountInput } from '@/atoms/amount-input'
-import { Heading, HStack, Text } from '@/atoms/chakra-components'
+import { type AmountInputProps, AmountInput, Heading, HStack, Text } from '@/atoms'
 
 import { type FieldProps, FieldControl } from './field-control'
 

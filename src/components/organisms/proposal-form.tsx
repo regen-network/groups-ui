@@ -6,13 +6,12 @@ import type {
   ProposalStakeFormValues,
   ProposalTextFormValues,
 } from 'types'
-import { defaultStakeFormValues, defaultTextFormValues } from 'util/form.constants'
+import { defaultStakeFormValues, defaultTextFormValues } from 'util/form.defaults'
 import { uuid } from 'util/helpers'
 
 import { useDisclosure } from 'hooks/chakra-hooks'
 
-import { AddActionButton } from '@/atoms/add-action-button'
-import { Flex, Heading, Stack, Text } from '@/atoms/chakra-components'
+import { AddActionButton, Flex, Heading, Stack, Text } from '@/atoms'
 import { EditableDescription, EditableHeading } from '@/molecules/editable'
 import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 import { WithRemoveButton } from '@/molecules/with-remove-button'
@@ -113,11 +112,6 @@ export const ProposalForm = (props: {
   function handleFormError(id: string) {
     setValidForms((prev) => ({ ...prev, [id]: false }))
   }
-
-  // useFormFooter({
-  //   onSubmit: () => handleSubmitAllForms(),
-  //   btnText: 'Save & next',
-  // })
 
   function renderAction(action: ProposalAction) {
     switch (action.type) {

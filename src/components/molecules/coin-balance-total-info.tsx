@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import type { UICoin } from 'types'
 
-import { Box, Heading, HStack } from '@/atoms/chakra-components'
+import { Box, Heading, HStack } from '@/atoms'
 
 import { SelectDropdown } from './select-dropdown'
 

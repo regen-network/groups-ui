@@ -3,7 +3,8 @@ import { atom, useAtom, useSetAtom } from 'jotai'
 
 import { useColorModeValue } from 'hooks/chakra-hooks'
 
-import { Box, Button, Container, HStack, IconButton } from '@/atoms/chakra-components'
+import { AnimatePresence, FadeIn } from '@/animations'
+import { Box, Button, Container, HStack, IconButton } from '@/atoms'
 
 import { IoMdArrowBack, IoMdArrowForward } from 'assets/tsx'
 
@@ -28,14 +29,22 @@ export const FormFooterAtom = atom<FormFooterState>({})
  *   <FormSubmitHiddenButton />
  * </form>
  * ``` */
-export const FormSubmitHiddenButton = ({ btnText, onPrev, onNext }: FormFooterState) => {
+export const FormSubmitHiddenButton = () => {
   const setFooterActions = useSetAtom(FormFooterAtom)
   const submitRef = useRef<HTMLButtonElement>(null)
   useEffect(() => {
-    setFooterActions({ btnText, onPrev, onNext, submitRef })
-    return () => setFooterActions({})
-  }, [btnText, onPrev, onNext, setFooterActions])
+    setFooterActions((prev) => ({ ...prev, submitRef }))
+    return () => setFooterActions((prev) => ({ ...prev, submitRef: undefined }))
+  }, [setFooterActions])
   return <Button hidden type="submit" ref={submitRef} />
+}
+
+export function useFormFooter({ btnText, onPrev, onNext }: FormFooterState): void {
+  const setFooterActions = useSetAtom(FormFooterAtom)
+  useEffect(() => {
+    setFooterActions((prev) => ({ ...prev, btnText, onPrev, onNext }))
+    return () => setFooterActions((prev) => ({ submitRef: prev.submitRef }))
+  }, [btnText, onPrev, onNext, setFooterActions])
 }
 
 export const FormFooter = ({ isSubmitting }: { isSubmitting?: boolean }) => {
@@ -67,34 +76,39 @@ export const FormFooter = ({ isSubmitting }: { isSubmitting?: boolean }) => {
     >
       <Container maxW="container.xl">
         <HStack my={2} justify={hasNavButtons ? 'space-between' : 'flex-end'}>
-          {hasNavButtons && (
+          <AnimatePresence mode="wait">
             <HStack gap={1}>
               {!!onPrev && (
-                <IconButton
-                  size="lg"
-                  aria-label="Go back"
-                  variant="outline"
-                  disabled={isSubmitting}
-                  icon={<IoMdArrowBack />}
-                  onClick={onPrev}
-                />
+                <FadeIn key="back-btn">
+                  <IconButton
+                    size="lg"
+                    aria-label="Go back"
+                    variant="outline"
+                    disabled={isSubmitting}
+                    icon={<IoMdArrowBack />}
+                    onClick={onPrev}
+                  />
+                </FadeIn>
               )}
               {!!onNext && (
-                <IconButton
-                  size="lg"
-                  aria-label="Go Forward"
-                  variant="outline"
-                  disabled={isSubmitting}
-                  icon={<IoMdArrowForward />}
-                  onClick={onNext}
-                />
+                <FadeIn key="forward-btn">
+                  <IconButton
+                    size="lg"
+                    aria-label="Go Forward"
+                    variant="outline"
+                    disabled={isSubmitting}
+                    icon={<IoMdArrowForward />}
+                    onClick={onNext}
+                  />
+                </FadeIn>
               )}
             </HStack>
-          )}
+          </AnimatePresence>
           <Button
             aria-label="Submit"
             size="lg"
             isLoading={isSubmitting}
+            minW="60"
             onClick={(e) => {
               e.preventDefault()
               // NOTE: For this to work, there needs to be a
