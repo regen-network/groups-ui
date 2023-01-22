@@ -4,7 +4,7 @@ import { useOutlet } from 'react-router-dom'
 import { useColorModeValue } from 'hooks/chakra-hooks'
 import { useAppLocation } from 'hooks/react-router'
 
-import { AnimatePresence, PopUpFade } from '@/animations'
+import { AnimatePresence, motion } from '@/animations'
 import { Flex } from '@/atoms'
 import { Loading } from '@/molecules/loading'
 import { Navbar } from '@/organisms/navbar'
@@ -29,7 +29,7 @@ export const RootLayout = () => {
     >
       <Navbar />
       <AnimatePresence mode="wait">
-        <PopUpFade
+        <motion.div
           key={pathname}
           style={{
             display: 'flex',
@@ -38,9 +38,13 @@ export const RootLayout = () => {
             flexGrow: 1,
             overflowY: 'auto',
           }}
+          initial={{ opacity: 0, scale: 0.99, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.99, y: 10 }}
+          transition={{ duration: 0.2 }}
         >
           <FrozenOutlet />
-        </PopUpFade>
+        </motion.div>
       </AnimatePresence>
     </Flex>
   )

@@ -9,13 +9,12 @@ export const SPACING = {
   formWidth: 560,
 }
 
-type EnabledAction = {
+export const ENABLED_ACTIONS: Array<{
   type: ProposalAction['type']
   label: string
   tooltip: string
   icon: IconType
-}
-export const ENABLED_ACTIONS: EnabledAction[] = [
+}> = [
   {
     type: 'text',
     label: 'Text Proposal',

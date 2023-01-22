@@ -1,25 +1,20 @@
-import type { ReactNode } from 'react'
+import { type Ref, forwardRef } from 'react'
 
-import { motion } from './framer-motion'
+import { type MotionProps, motion } from './framer-motion'
+
+type Props = MotionProps & { fromRight?: boolean }
 
 /** slide in - default from left */
-export const HorizontalSlide = ({
-  children,
-  fromRight = false,
-}: {
-  children: ReactNode
-  fromRight?: boolean
-}) => {
+export const HorizontalSlide = forwardRef(({ fromRight, ...passedProps }: Props, ref) => {
   const offset = 20
-  return (
-    <motion.div
-      style={{ width: '100%' }}
-      initial={{ opacity: 0, x: fromRight ? offset : -offset }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: fromRight ? offset : -offset }}
-      transition={{ duration: 0.2 }}
-    >
-      {children}
-    </motion.div>
-  )
-}
+  const props: MotionProps = {
+    style: { width: '100%' },
+    initial: { opacity: 0, x: fromRight ? offset : -offset },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: fromRight ? offset : -offset },
+    transition: { duration: 0.2 },
+    ...passedProps,
+  }
+  return <motion.div ref={ref as Ref<HTMLDivElement>} {...props} />
+})
+HorizontalSlide.displayName = 'HorizontalSlide'

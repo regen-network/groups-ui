@@ -1,1 +1,7 @@
-export { type MotionStyle, AnimatePresence, motion } from 'framer-motion'
+export {
+  type MotionProps,
+  type MotionStyle,
+  AnimatePresence,
+  LayoutGroup,
+  motion,
+} from 'framer-motion'

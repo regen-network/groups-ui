@@ -9,6 +9,7 @@ import { valid } from 'util/validation/zod'
 
 import { useZodForm } from 'hooks/use-zod-form'
 
+import { AnimatePresence, FadeInTr, motion } from '@/animations'
 import {
   DeleteButton,
   Flex,
@@ -16,7 +17,6 @@ import {
   HStack,
   NumberInput,
   Table,
-  Tbody,
   Td,
   Th,
   Thead,
@@ -34,7 +34,6 @@ import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 import { InputWithButton } from '@/molecules/input-with-button'
 import { Truncate } from '@/molecules/truncate'
 
-/** @see @haveanicedavid/cosmos-groups-ts/types/proto/cosmos/group/v1/types */
 const schema = z.object({
   admin: valid.admin,
   name: valid.name,
@@ -136,6 +135,7 @@ export const GroupForm = ({
             <InputWithButton
               name="memberAddr"
               value={memberAddr}
+              fontSize="sm"
               onChange={(e) => {
                 if (errors.members) {
                   form.clearErrors('members')
@@ -148,46 +148,61 @@ export const GroupForm = ({
             </InputWithButton>
           </FieldControl>
         </Flex>
+        {/* The form logic makes it impractical to pull the following out, but
+        should do so if we repeat this functionality elsewhere */}
         {controlledMemberFields.length > 0 && (
-          <Table size="sm">
-            <Thead>
-              <Tr>
-                <Th>Accounts added</Th>
-                <Th>Weight</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {controlledMemberFields.map((member, i) => (
-                <Tr key={i + member.address}>
-                  <Td>
-                    <Truncate
-                      clickToCopy
-                      text={member.address}
-                      headLength={12}
-                      tailLength={20}
-                      tooltipProps={{ maxW: 450 }}
-                    />
-                  </Td>
-                  <Td>
-                    <HStack spacing={4}>
-                      <FormControl isInvalid={!!errors.members?.[i]?.weight}>
-                        <NumberInput
-                          type="number"
-                          min={0}
-                          ref={form.register(`members.${i}.weight`, {
-                            valueAsNumber: true,
-                          })}
-                          onChange={(_, val) => setValue(`members.${i}.weight`, val)}
-                          value={member.weight}
-                        />
-                      </FormControl>
-                      <DeleteButton onClick={() => remove(i)} />
-                    </HStack>
-                  </Td>
+          <motion.div layout style={{ overflow: 'hidden' }}>
+            <Table>
+              <Thead>
+                <Tr sx={{ '& > th': { border: 'none', pb: 0 } }}>
+                  <Th pl={0}>Accounts added</Th>
+                  <Th>Weight</Th>
                 </Tr>
-              ))}
-            </Tbody>
-          </Table>
+              </Thead>
+              <motion.tbody layout>
+                <AnimatePresence mode="popLayout">
+                  {controlledMemberFields.map((member, i) => {
+                    const isLast = i === controlledMemberFields.length - 1
+                    return (
+                      <FadeInTr
+                        layout
+                        key={member.address}
+                        transition={{ type: 'spring' }}
+                      >
+                        <Td pl={0} pr={2} borderWidth={isLast ? 0 : undefined}>
+                          <Truncate
+                            clickToCopy
+                            text={member.address}
+                            headLength={17}
+                            tailLength={18}
+                            tooltipProps={{ maxW: 450 }}
+                          />
+                        </Td>
+                        <Td pr={0} pl={3} borderWidth={isLast ? 0 : undefined}>
+                          <HStack spacing={4}>
+                            <FormControl isInvalid={!!errors.members?.[i]?.weight}>
+                              <NumberInput
+                                type="number"
+                                min={0}
+                                ref={form.register(`members.${i}.weight`, {
+                                  valueAsNumber: true,
+                                })}
+                                onChange={(_, val) =>
+                                  setValue(`members.${i}.weight`, !isNaN(val) ? val : 0)
+                                }
+                                value={member.weight}
+                              />
+                            </FormControl>
+                            <DeleteButton onClick={() => remove(i)} />
+                          </HStack>
+                        </Td>
+                      </FadeInTr>
+                    )
+                  })}
+                </AnimatePresence>
+              </motion.tbody>
+            </Table>
+          </motion.div>
         )}
         <FormSubmitHiddenButton />
       </Form>

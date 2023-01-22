@@ -1,43 +1,22 @@
-import type { ReactNode } from 'react'
+import { type Ref, forwardRef } from 'react'
 
-import { type MotionStyle, motion } from './framer-motion'
+import { type MotionProps, motion } from './framer-motion'
 
-export const FadeIn = ({
-  children,
-  style,
-}: {
-  children: ReactNode
-  style?: MotionStyle
-}) => {
-  return (
-    <motion.div
-      style={style}
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.2 }}
-    >
-      {children}
-    </motion.div>
-  )
+const fadeInProps: MotionProps = {
+  initial: { opacity: 0, scale: 0.95 },
+  animate: { opacity: 1, scale: 1 },
+  exit: { opacity: 0, scale: 0.95 },
+  transition: { duration: 0.2 },
 }
 
-export const FadeInTR = ({
-  children,
-  style,
-}: {
-  children: ReactNode
-  style?: MotionStyle
-}) => {
-  return (
-    <motion.tr
-      style={style}
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.2 }}
-    >
-      {children}
-    </motion.tr>
-  )
-}
+export const FadeIn = forwardRef((passedProps: MotionProps, ref) => {
+  const props = { ...fadeInProps, ...passedProps }
+  return <motion.div {...props} ref={ref as Ref<HTMLDivElement>} />
+})
+FadeIn.displayName = 'FadeIn'
+
+export const FadeInTr = forwardRef((passedProps: MotionProps, ref) => {
+  const props = { ...fadeInProps, ...passedProps }
+  return <motion.tr {...props} ref={ref as Ref<HTMLTableRowElement>} />
+})
+FadeInTr.displayName = 'FadeInTr'
