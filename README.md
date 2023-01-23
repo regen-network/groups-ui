@@ -60,7 +60,6 @@ This project is organized by [Atomic Design](https://bradfrost.com/blog/post/ato
  ┃ ┣ 📂atoms - elements which can't be reduced to something simpler
  ┃ ┃ ┗ 📜index.ts
  ┃ ┣ 📂molecules - collection of atoms
- ┃ ┃ ┗ 📜index.ts
  ┃ ┣ 📂organisms - more complex elements made up of atoms, molecules, and (sometimes) other organisms
  ┃ ┗ 📂templates - viewport positioning and layout
  ┗ 📂pages - implementations of templates
@@ -69,7 +68,7 @@ This project is organized by [Atomic Design](https://bradfrost.com/blog/post/ato
 Some relevant notes / Highlights:
 
 - Outer padding and margin should be set by parents components - ie, an `Atom` should not have `margin` set on the outer element - instead, it would be set by its parent component
-- `Atoms` and `Molecules` have `index.ts` barrel files for convenience (ie `import { Box, Button } from '@/atoms'`), but `Organisms`, `Templates`, and `Pages` do not. This is to avoid circular imports which can impact code splitting
+- `Atoms` have `index.ts` barrel files for convenience (ie `import { Box, Button } from '@/atoms'`), but`Molecules`, `Organisms`, `Templates`, and `Pages` do not. This is to avoid circular imports which can impact code splitting
 
 ## Types
 
