@@ -77,8 +77,11 @@ export const GroupTemplate = ({
             <Tbody>
               <Tr>
                 <Td>
-                  <HStack align="stretch" width="full">
-                    <ProposalActionButtons groupId={group.id.toString()} />
+                  <HStack>
+                    <ProposalActionButtons
+                      groupId={group.id.toString()}
+                      btnProps={{ flex: 1 }}
+                    />
                   </HStack>
                 </Td>
               </Tr>

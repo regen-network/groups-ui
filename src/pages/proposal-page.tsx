@@ -28,7 +28,7 @@ import { IoMdArrowBack } from 'assets/tsx'
 //   )
 // }
 
-export default function ProposalDetails() {
+export default function ProposalPage() {
   const { proposalId, groupId } = useParams()
   const { data: group, isLoading: isLoadingGroup } = useGroup(groupId)
   const { data: proposal, isLoading: isLoadingProposal } = useProposal(proposalId)

@@ -4,7 +4,7 @@ import { useOutlet } from 'react-router-dom'
 import { useColorModeValue } from 'hooks/chakra-hooks'
 import { useAppLocation } from 'hooks/react-router'
 
-import { AnimatePresence, motion } from '@/animations'
+import { AnimatePresence, motion, MOTIONS } from '@/animations'
 import { Flex } from '@/atoms'
 import { Loading } from '@/molecules/loading'
 import { Navbar } from '@/organisms/navbar'
@@ -24,7 +24,8 @@ export const RootLayout = () => {
       flexDir="column"
       h="100vh"
       w="100vw"
-      overflowY="hidden"
+      overflowY="auto"
+      overflow="overlay"
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
       <Navbar />
@@ -36,12 +37,8 @@ export const RootLayout = () => {
             flexDirection: 'column',
             flex: 1,
             flexGrow: 1,
-            overflowY: 'auto',
           }}
-          initial={{ opacity: 0, scale: 0.99, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.99, y: 10 }}
-          transition={{ duration: 0.2 }}
+          {...MOTIONS.pageTransition}
         >
           <FrozenOutlet />
         </motion.div>

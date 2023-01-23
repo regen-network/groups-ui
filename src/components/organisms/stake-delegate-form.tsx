@@ -58,7 +58,7 @@ export const DelegateForm = (props: {
         denom={getFeeDenom(fee)}
       />
       <FeeDisplayField />
-      <FormSubmitHiddenButton />
+      <FormSubmitHiddenButton id={props.formId} onSubmit={props.onSubmit} />
     </Form>
   )
 }

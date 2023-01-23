@@ -42,7 +42,7 @@ export const ProposalReview = (props: {
             </Stack>
             <ReviewItem label="Group:">{props.groupName}</ReviewItem>
           </Stack>
-          <FormSubmitHiddenButton />
+          <FormSubmitHiddenButton id="proposal-review" />
         </form>
       </FormCard>
       {actions.map((action, i) => {

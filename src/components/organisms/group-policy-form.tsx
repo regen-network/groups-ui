@@ -115,8 +115,7 @@ export const GroupPolicyForm = ({
             </Text>
           </Flex>
         </NumberField>
-
-        <FormSubmitHiddenButton />
+        <FormSubmitHiddenButton id="group-policy-form" />
       </Form>
     </FormCard>
   )

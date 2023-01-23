@@ -2,7 +2,7 @@ import type { IconType } from 'react-icons'
 
 import { useColorModeValue } from 'hooks/chakra-hooks'
 
-import { Box, Card, CardBody, Flex, InfoTooltip, Text } from '@/atoms'
+import { BaseCard, Box, CardBody, Flex, InfoTooltip, Text } from '@/atoms'
 
 export const ActionButton = (props: {
   label: string
@@ -19,7 +19,7 @@ export const ActionButton = (props: {
     svg: useColorModeValue('blue.600', 'blue.500'),
   }
   return (
-    <Card
+    <BaseCard
       direction={{ base: 'column', sm: 'row' }}
       as={'button'}
       onClick={props.onClick}
@@ -51,6 +51,6 @@ export const ActionButton = (props: {
           {props.tooltipText && <InfoTooltip label={props.tooltipText} />}
         </Flex>
       </CardBody>
-    </Card>
+    </BaseCard>
   )
 }

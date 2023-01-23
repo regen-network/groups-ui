@@ -9,7 +9,7 @@ import { valid } from 'util/validation/zod'
 
 import { useZodForm } from 'hooks/use-zod-form'
 
-import { AnimatePresence, FadeInTr, motion } from '@/animations'
+import { AnimatePresence, motion, MOTIONS } from '@/animations'
 import {
   DeleteButton,
   Flex,
@@ -164,10 +164,11 @@ export const GroupForm = ({
                   {controlledMemberFields.map((member, i) => {
                     const isLast = i === controlledMemberFields.length - 1
                     return (
-                      <FadeInTr
+                      <motion.tr
+                        {...MOTIONS.fadeIn}
                         layout
-                        key={member.address}
                         transition={{ type: 'spring' }}
+                        key={member.address}
                       >
                         <Td pl={0} pr={2} borderWidth={isLast ? 0 : undefined}>
                           <Truncate
@@ -196,7 +197,7 @@ export const GroupForm = ({
                             <DeleteButton onClick={() => remove(i)} />
                           </HStack>
                         </Td>
-                      </FadeInTr>
+                      </motion.tr>
                     )
                   })}
                 </AnimatePresence>
@@ -204,7 +205,7 @@ export const GroupForm = ({
             </Table>
           </motion.div>
         )}
-        <FormSubmitHiddenButton />
+        <FormSubmitHiddenButton id="group-form" />
       </Form>
     </FormCard>
   )

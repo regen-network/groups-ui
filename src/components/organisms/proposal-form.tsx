@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { omit } from 'remeda'
 
 import type {
@@ -11,6 +11,7 @@ import { uuid } from 'util/helpers'
 
 import { useDisclosure } from 'hooks/chakra-hooks'
 
+import { AnimatePresence, FadeIn, motion } from '@/animations'
 import { AddActionButton, Flex, Heading, Stack, Text } from '@/atoms'
 import { EditableDescription, EditableHeading } from '@/molecules/editable'
 import { FormSubmitHiddenButton } from '@/molecules/form-footer'
@@ -141,10 +142,15 @@ export const ProposalForm = (props: {
   return (
     <>
       <Stack spacing={3}>
-        <form onSubmit={() => triggerSubmitAllForms()}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            triggerSubmitAllForms()
+          }}
+        >
           <EditableHeading value={title} onSave={setTitle} />
           <EditableDescription value={description} onSave={setDescription} />
-          <FormSubmitHiddenButton />
+          <FormSubmitHiddenButton id="submit-all-forms" />
         </form>
 
         <Flex align="baseline" pb={3}>
@@ -153,20 +159,24 @@ export const ProposalForm = (props: {
           </Heading>
           <Text ml={2}>{props.groupName}</Text>
         </Flex>
-        {actions.map((action) => {
-          return (
-            <Fragment key={`action-form-${action.id}`}>
-              <WithRemoveButton
-                hideBtn={actions.length <= 1}
-                label="remove action"
-                onClick={() => handleRemoveAction(action)}
-              >
-                {renderAction(action)}
-              </WithRemoveButton>
-              <AddActionButton onClick={onOpen} />
-            </Fragment>
-          )
-        })}
+        <motion.div layout style={{ overflow: 'visible' }}>
+          <AnimatePresence mode="popLayout">
+            <Stack spacing={4}>
+              {actions.map((action) => (
+                <FadeIn key={`action-form-${action.id}`} layout>
+                  <WithRemoveButton
+                    hideBtn={actions.length <= 1}
+                    label="remove action"
+                    onClick={() => handleRemoveAction(action)}
+                  >
+                    {renderAction(action)}
+                  </WithRemoveButton>
+                  <AddActionButton aria-label="New action" onClick={onOpen} />
+                </FadeIn>
+              ))}
+            </Stack>
+          </AnimatePresence>
+        </motion.div>
       </Stack>
       <ProposalActionDrawer
         isOpen={isOpen}

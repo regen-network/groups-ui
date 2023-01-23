@@ -2,19 +2,27 @@ import { ENABLED_ACTIONS } from 'util/constants'
 
 import { ROUTE_PATH } from 'routes'
 
-import { Button, RouteLink } from '@/atoms'
+import { type ButtonProps, Button, RouteLink } from '@/atoms'
 
-export const ProposalActionButtons = ({ groupId }: { groupId: string }) => {
+export const ProposalActionButtons = ({
+  groupId,
+  btnProps,
+}: {
+  groupId: string
+  btnProps?: ButtonProps
+}) => {
   return (
     <>
-      {ENABLED_ACTIONS.map((a, i) => (
+      {ENABLED_ACTIONS.map(({ type, label, icon: Icon }, i) => (
         <Button
-          key={'proposal-actioon-' + i}
+          {...btnProps}
+          key={'proposal-action-' + i}
           as={RouteLink}
           to={ROUTE_PATH.proposalCreate(groupId)}
-          state={{ newProposalType: a.type }}
+          state={{ newProposalType: type }}
+          leftIcon={<Icon />}
         >
-          {a.label}
+          {label}
         </Button>
       ))}
     </>

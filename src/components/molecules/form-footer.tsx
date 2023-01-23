@@ -10,7 +10,9 @@ import { IoMdArrowBack, IoMdArrowForward } from 'assets/tsx'
 
 type FormFooterState = {
   btnText?: string
-  submitRef?: React.RefObject<HTMLButtonElement>
+  submitRefs?: {
+    [id: string]: React.RefObject<HTMLButtonElement>
+  }
   onPrev?: () => void
   onNext?: () => void
 }
@@ -29,13 +31,29 @@ export const FormFooterAtom = atom<FormFooterState>({})
  *   <FormSubmitHiddenButton />
  * </form>
  * ``` */
-export const FormSubmitHiddenButton = () => {
+export const FormSubmitHiddenButton = ({
+  id,
+}: {
+  id: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onSubmit?: (...args: any[]) => void
+}) => {
   const setFooterActions = useSetAtom(FormFooterAtom)
   const submitRef = useRef<HTMLButtonElement>(null)
   useEffect(() => {
-    setFooterActions((prev) => ({ ...prev, submitRef }))
-    return () => setFooterActions((prev) => ({ ...prev, submitRef: undefined }))
-  }, [setFooterActions])
+    setFooterActions((state) => ({
+      ...state,
+      submitRefs: { ...state.submitRefs, [id]: submitRef },
+    }))
+    return () => {
+      // remove ref from footer state on button unmount
+      setFooterActions((state) => {
+        const submitRefs = { ...state.submitRefs }
+        delete submitRefs[id]
+        return { ...state, submitRefs }
+      })
+    }
+  }, [setFooterActions, id])
   return <Button hidden type="submit" ref={submitRef} />
 }
 
@@ -43,12 +61,12 @@ export function useFormFooter({ btnText, onPrev, onNext }: FormFooterState): voi
   const setFooterActions = useSetAtom(FormFooterAtom)
   useEffect(() => {
     setFooterActions((prev) => ({ ...prev, btnText, onPrev, onNext }))
-    return () => setFooterActions((prev) => ({ submitRef: prev.submitRef }))
+    return () => setFooterActions((prev) => ({ submitRefs: prev.submitRefs }))
   }, [btnText, onPrev, onNext, setFooterActions])
 }
 
 export const FormFooter = ({ isSubmitting }: { isSubmitting?: boolean }) => {
-  const [{ onNext, onPrev, btnText, submitRef }, setFooterActions] =
+  const [{ onNext, onPrev, btnText, submitRefs }, setFooterActions] =
     useAtom(FormFooterAtom)
   const hasNavButtons = Boolean(onPrev || onNext)
   const bg = useColorModeValue('white', 'gray.800')
@@ -60,7 +78,13 @@ export const FormFooter = ({ isSubmitting }: { isSubmitting?: boolean }) => {
     return () => setFooterActions({})
   }, [setFooterActions])
 
-  if (!submitRef) return null
+  function handleSubmitAll() {
+    if (!submitRefs) return
+    // loop through stored refs and click them all
+    Object.values(submitRefs).forEach((ref) => ref.current?.click())
+  }
+
+  if (!submitRefs) return null
   return (
     <Box
       bg={bg}
@@ -111,8 +135,7 @@ export const FormFooter = ({ isSubmitting }: { isSubmitting?: boolean }) => {
             minW="60"
             onClick={(e) => {
               e.preventDefault()
-              // NOTE: For this to work, there needs to be a
-              submitRef.current?.click()
+              handleSubmitAll()
             }}
           >
             {btnText || 'Submit'}

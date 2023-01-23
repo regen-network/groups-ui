@@ -3,6 +3,7 @@ import type {
   ProposalAction,
   ProposalSDKType,
   ProposalStakeFormValues,
+  ProposalStatusType,
   ProposalTextFormValues,
   UIProposal,
 } from 'types'
@@ -111,8 +112,14 @@ function stakeValuesToMsg(values: ProposalStakeFormValues, data: ProposalData) {
   throwError('Unknown stake type')
 }
 
-// copy-pasted from the SDK `ProposalStatus` enum - vite doesn't handle enums well
-export const ProposalStatus = {
+/**
+ * TODO: the generated `ProposalStatus` enum returns number values, but the
+ * actual API response is the keys of those values. We also can't import that
+ * enum directly because of a combo of vite and the generated code - this is a
+ * copy-pasted version of the enum from the SDK, converted to a normal object,
+ * used to generate an equivalent a second object with the correct values
+ */
+const GeneratedProposalStatus: typeof ProposalStatusType = {
   /** PROPOSAL_STATUS_UNSPECIFIED - An empty value is invalid and not allowed. */
   PROPOSAL_STATUS_UNSPECIFIED: 0,
   /** PROPOSAL_STATUS_SUBMITTED - Initial status of a proposal when submitted. */
@@ -138,4 +145,12 @@ export const ProposalStatus = {
    */
   PROPOSAL_STATUS_WITHDRAWN: 5,
   UNRECOGNIZED: -1,
-} as const
+}
+
+export const ProposalStatus: typeof ProposalStatusType = Object.keys(
+  GeneratedProposalStatus,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+).reduce((acc: any, key: string) => {
+  acc[key] = key
+  return acc
+}, {} as typeof ProposalStatusType)

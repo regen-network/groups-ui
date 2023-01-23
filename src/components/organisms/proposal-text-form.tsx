@@ -8,6 +8,7 @@ import { useZodForm } from 'hooks/use-zod-form'
 import { Form } from '@/molecules/form'
 import { FormCard } from '@/molecules/form-card'
 import { FeeDisplayField, TextareaField } from '@/molecules/form-fields'
+import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 
 const schema = z.object({
   text: valid.description,
@@ -35,6 +36,7 @@ export const ProposalTextForm = (props: {
       >
         <TextareaField required name="text" label="Proposal Text" />
         <FeeDisplayField />
+        <FormSubmitHiddenButton id={props.formId} />
       </Form>
     </FormCard>
   )

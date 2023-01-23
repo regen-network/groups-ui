@@ -27,46 +27,7 @@ import {
 } from '@/atoms'
 import { TableTitlebar } from '@/molecules/table-titlebar'
 
-type Props = {
-  proposals: UIProposal[]
-  onExecute?: (proposal: UIProposal) => void
-  title?: string
-}
-
 const FIRST_COL_WIDTH = '7rem'
-
-export const GroupProposalsTable = ({ proposals, onExecute, title }: Props) => {
-  function renderProposal(proposal: UIProposal, i: number) {
-    const key = 'row-' + i + proposal.id.toString()
-    const baseProps = { key, proposal }
-    switch (proposal.status) {
-      case ProposalStatus.PROPOSAL_STATUS_ACCEPTED:
-        return <ExecuteRow {...baseProps} onExecute={onExecute} />
-      default:
-        return <Row {...baseProps} />
-    }
-  }
-  return (
-    <TableContainer>
-      {title && <TableTitlebar title={title} />}
-      {proposals.length > 0 ? (
-        <Table size="lg" variant="striped">
-          <Thead>
-            <Tr>
-              <Th w={FIRST_COL_WIDTH}>Date</Th>
-              <Th>Name</Th>
-            </Tr>
-          </Thead>
-          <Tbody>{proposals.map(renderProposal)}</Tbody>
-        </Table>
-      ) : (
-        <Center minH="7rem">
-          <Heading size="md">Nothing to show</Heading>
-        </Center>
-      )}
-    </TableContainer>
-  )
-}
 
 const Row = ({ proposal, children }: { children?: ReactNode; proposal: UIProposal }) => {
   const { groupId } = useParams()
@@ -137,4 +98,45 @@ function getBadgeInfo(proposal: UIProposal): {
     default:
       return { colorScheme: 'gray', text: 'Unknown' }
   }
+}
+
+export const GroupProposalsTable = ({
+  proposals,
+  onExecute,
+  title,
+}: {
+  proposals: UIProposal[]
+  onExecute?: (proposal: UIProposal) => void
+  title?: string
+}) => {
+  function renderProposal(proposal: UIProposal, i: number) {
+    const key = 'row-' + i + proposal.id.toString()
+    const baseProps = { key, proposal }
+    switch (proposal.status) {
+      case ProposalStatus.PROPOSAL_STATUS_ACCEPTED:
+        return <ExecuteRow {...baseProps} onExecute={onExecute} />
+      default:
+        return <Row {...baseProps} />
+    }
+  }
+  return (
+    <TableContainer>
+      {title && <TableTitlebar title={title} />}
+      {proposals.length > 0 ? (
+        <Table size="lg" variant="striped">
+          <Thead>
+            <Tr>
+              <Th w={FIRST_COL_WIDTH}>Date</Th>
+              <Th>Name</Th>
+            </Tr>
+          </Thead>
+          <Tbody>{proposals.map(renderProposal)}</Tbody>
+        </Table>
+      ) : (
+        <Center minH="7rem">
+          <Heading size="md">Nothing to show</Heading>
+        </Center>
+      )}
+    </TableContainer>
+  )
 }

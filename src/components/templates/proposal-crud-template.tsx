@@ -39,8 +39,6 @@ export const ProposalCRUDTemplate = (props: {
   const [priorStep, setPriorStep] = useState(0)
   const [newProposalId, setNewProposalId] = useState<string>()
 
-  console.log('props.initial :>> ', props.initialProposalFormValues)
-
   function handlePrev() {
     setPriorStep(activeStep)
     prevStep()

@@ -24,6 +24,7 @@ export {
   AlertIcon,
   AlertTitle,
   Badge,
+  Card as BaseCard,
   Box,
   Button,
   ButtonGroup,

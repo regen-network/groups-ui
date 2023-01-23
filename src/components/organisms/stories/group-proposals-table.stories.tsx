@@ -19,8 +19,8 @@ const Template: StoryFn<typeof GroupProposalsTable> = (args) => {
 
 const nums = [1, 2, 3, 4]
 const accepted = nums.map((i) => mockProposal(i, ProposalStatus.PROPOSAL_STATUS_ACCEPTED))
-const rejected = [5, 6].map((i) =>
-  mockProposal(i, ProposalStatus.PROPOSAL_STATUS_REJECTED),
+const submitted = [5, 6].map((i) =>
+  mockProposal(i, ProposalStatus.PROPOSAL_STATUS_SUBMITTED),
 )
 
 const combined = [
@@ -39,9 +39,9 @@ Component.args = {
   title: 'Ready to execute',
 }
 
-export const Rejected = Template.bind({})
-Rejected.args = {
-  proposals: rejected,
+export const Submitted = Template.bind({})
+Submitted.args = {
+  proposals: submitted,
   title: 'Rejected',
 }
 

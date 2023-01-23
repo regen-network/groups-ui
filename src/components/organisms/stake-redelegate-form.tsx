@@ -66,7 +66,7 @@ export const RedelegateForm = (props: {
         denom={getFeeDenom(fee)}
       />
       <FeeDisplayField />
-      <FormSubmitHiddenButton />
+      <FormSubmitHiddenButton id={props.formId} />
     </Form>
   )
 }
