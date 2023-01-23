@@ -18,10 +18,12 @@ const horizontalSlide = (fromRight = false): MotionProps => {
 }
 
 const PAGE_OFFSET = 10
+const PAGE_SCALE = 0.98
+const PAGE_HEIGHT = '95%'
 const pageTransition: MotionProps = {
-  initial: { opacity: 0, scale: 0.98, height: '95%', y: 10 },
+  initial: { opacity: 0, scale: PAGE_SCALE, height: PAGE_HEIGHT, y: PAGE_OFFSET },
   animate: { opacity: 1, scale: 1, height: 'auto', y: 0 },
-  exit: { opacity: 0, scale: 0.98, height: '95%', y: 10 },
+  exit: { opacity: 0, scale: PAGE_SCALE, height: PAGE_HEIGHT, y: PAGE_OFFSET },
   transition: { duration: 0.2, type: 'tween' },
 }
 
