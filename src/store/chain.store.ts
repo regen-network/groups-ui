@@ -11,7 +11,7 @@ import { bootstrapKeplr } from './wallet.store'
 export const LOCALSTORAGE_CHAIN_KEY = 'active-chain'
 
 const savedChain = localStorage.getItem(LOCALSTORAGE_CHAIN_KEY)
-const defaultChain = allChainsArray.find((c) => c.chainId === 'cosmoswithgroups')
+const defaultChain = allChainsArray[0]
 
 type ChainStore = {
   active: ChainInfo
