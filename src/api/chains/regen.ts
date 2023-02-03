@@ -16,7 +16,7 @@ const REGEN: AppCurrency = {
  */
 const currencies: AppCurrency[] = [REGEN]
 
-const redwoodBasePath = 'https://redwood.regen.network'
+const redwoodBasePath = 'http://redwood.regen.network'
 
 /**
  * @see https://github.com/cosmos/chain-registry/blob/master/regen/chain.json
