@@ -53,7 +53,7 @@ export default function ProposalPage() {
             {group?.metadata.name}
           </Button>
         </div>
-        <Card variant="elevated">
+        <Card>
           <Flex>
             <CardBody>
               <Stack>

@@ -1,6 +1,6 @@
 # Cosmos Groups UI
 
-UI for Cosmos groups module
+[Regen network](https://www.regen.network/) UI for Cosmos groups module
 
 # Local Setup
 
@@ -80,7 +80,7 @@ Ledger calls & typescript types are generated using [telescope](https://github.c
 ## Library Resources
 
 - [Chakra](https://chakra-ui.com/) - UI Components
-- [Valtio](https://valtio.pmnd.rs/) - global state
+- [Valtio](https://valtio.pmnd.rs/) and [Jotai](https://jotai.org/) - global state
 - [React Query](https://tanstack.com/query/v4) - API calls / Query caching
 - [Zod](https://github.com/colinhacks/zod) - form validation
 
