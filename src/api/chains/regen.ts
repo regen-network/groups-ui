@@ -4,6 +4,9 @@ import { Bech32Address } from 'util/bech32'
 
 const { VITE_PROXY_URL } = import.meta.env
 
+// TODO !important - this should be an .env file on netlify
+const PROXY = VITE_PROXY_URL || 'https://regen-registry-server-staging.herokuapp.com'
+
 const REGEN: AppCurrency = {
   coinDenom: 'regen',
   coinMinimalDenom: 'uregen',
