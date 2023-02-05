@@ -2,6 +2,8 @@ import type { AppCurrency, ChainInfo } from '@keplr-wallet/types'
 
 import { Bech32Address } from 'util/bech32'
 
+const { VITE_PROXY_URL } = import.meta.env
+
 const REGEN: AppCurrency = {
   coinDenom: 'regen',
   coinMinimalDenom: 'uregen',
@@ -16,16 +18,14 @@ const REGEN: AppCurrency = {
  */
 const currencies: AppCurrency[] = [REGEN]
 
-const redwoodBasePath = 'http://redwood.regen.network'
-
 /**
  * @see https://github.com/cosmos/chain-registry/blob/master/regen/chain.json
  */
 export const regenTestnet: ChainInfo = {
-  rpc: `${redwoodBasePath}:26657/`,
-  rest: `${redwoodBasePath}:1317/`,
+  rpc: `${VITE_PROXY_URL}/ledger`,
+  rest: `${VITE_PROXY_URL}/ledger-rest`,
   chainId: 'regen-redwood-1',
-  chainName: 'Regen Redwood',
+  chainName: 'Regen Redwood Testnet',
   stakeCurrency: REGEN,
   bip44: {
     coinType: 118,
