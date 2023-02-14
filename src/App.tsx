@@ -13,11 +13,11 @@ export default function App() {
   const snap = useSnapshot(Wallet)
 
   switch (snap.keplrStatus) {
+    case 'ready':
+      return <Routes />
     case 'loading':
     case 'initialized':
       return <Loading />
-    case 'ready':
-      return <Routes />
     case 'uninstalled':
       return <InstallKeplr />
     case 'rejected':
