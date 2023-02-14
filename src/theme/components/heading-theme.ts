@@ -8,6 +8,7 @@ export const HeadingTheme: ComponentStyleConfig = {
   },
   variants: {
     label: {
+      fontSize: 'sm',
       textTransform: 'uppercase',
       letterSpacing: '1px',
       fontWeight: 800,
