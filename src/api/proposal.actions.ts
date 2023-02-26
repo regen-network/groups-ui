@@ -35,6 +35,18 @@ export async function fetchProposalbyId(
     throwError(error)
   }
 }
+export async function fetchVotesByProposal(proposalId?: string) {
+  if (!Query.groups) throwError('Wallet not initialized')
+  if (!proposalId) throwError('Proposal ID is required')
+  try {
+    const { votes } = await Query.groups.votesByProposal({
+      proposalId: Long.fromString(proposalId),
+    })
+    return votes
+  } catch (error) {
+    handleError(error)
+  }
+}
 
 export async function createProposal({
   actions,
