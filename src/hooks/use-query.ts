@@ -8,7 +8,11 @@ import {
 } from 'api/group.actions'
 import { fetchGroupMembers } from 'api/member.actions'
 import { fetchGroupPolicies } from 'api/policy.actions'
-import { fetchProposalbyId, fetchProposalsByGroupPolicy } from 'api/proposal.actions'
+import {
+  fetchProposalbyId,
+  fetchProposalsByGroupPolicy,
+  fetchVotesByProposal,
+} from 'api/proposal.actions'
 import { fetchValidators } from 'api/staking.actions'
 import { Chain } from 'store/chain.store'
 
@@ -89,5 +93,13 @@ export function useBalances(address?: string) {
     queryKey: ['balances', address],
     queryFn: () => fetchAllBalances(address),
     enabled: !!address,
+  })
+}
+
+export function useProposalVotes(proposalId?: string) {
+  return useQuery({
+    queryKey: ['proposalVotes', proposalId],
+    queryFn: () => fetchVotesByProposal(proposalId),
+    enabled: !!proposalId,
   })
 }

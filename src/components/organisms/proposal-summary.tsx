@@ -2,7 +2,20 @@ import type { UIGroup, UIProposal } from 'types'
 
 import { useColorModeValue } from 'hooks/chakra-hooks'
 
-import { Button, Card, CardBody, Flex, Heading, SimpleGrid, Stack, Text } from '@/atoms'
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Center,
+  Flex,
+  Heading,
+  SimpleGrid,
+  Stack,
+  Text,
+} from '@/atoms'
+
+import { VotesGraph } from './votes-graph'
 
 export const ProposalSummary = ({
   group,
@@ -27,6 +40,11 @@ export const ProposalSummary = ({
               <Heading size="md">Voting Group:</Heading>
               <Text ml={2}>{group.metadata.name}</Text>
             </Flex>
+            <Center>
+              <Box maxW={220}>
+                <VotesGraph />
+              </Box>
+            </Center>
             <SimpleGrid columns={2} gap={3} columnGap={4}>
               <Button colorScheme="green" variant="outline">
                 Yes

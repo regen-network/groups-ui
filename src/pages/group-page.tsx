@@ -23,9 +23,6 @@ export default function GroupPage() {
   const { data: balances } = useBalances(groupPolicy?.address)
   const derivedProposals = useDerivedProposals(proposals)
 
-  console.log('proposals :>> ', proposals)
-  console.log('derivedProposals :>> ', derivedProposals)
-
   if (isLoadingGoup || isLoadingProposals) return <Loading />
   if (!group) {
     handleError('Group not found')
