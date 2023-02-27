@@ -1,8 +1,7 @@
 import Long from 'long'
 
 import type { ProposalStatusType, UIProposal } from 'types'
-
-import { ProposalStatus } from 'api/proposal.utils'
+import { ProposalStatus } from 'util/enums'
 
 const baseDate = new Date('2021-07-01T00:00:00Z')
 // User2 from dev setup

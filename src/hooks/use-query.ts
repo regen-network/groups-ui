@@ -103,3 +103,13 @@ export function useProposalVotes(proposalId?: string) {
     enabled: !!proposalId,
   })
 }
+
+/** This functions, but doesn't seem needed. Leaving for now */
+// export function useUserVotes() {
+//   const userAddress = Wallet.account?.address
+//   return useQuery({
+//     queryKey: ['addressVotes', userAddress],
+//     queryFn: () => fetchVotesByAddress(userAddress),
+//     enabled: !!userAddress,
+//   })
+// }

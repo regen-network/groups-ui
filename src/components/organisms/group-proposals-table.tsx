@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom'
 
 import { UIProposal } from 'types'
 import { formatDate } from 'util/date'
+import { ProposalStatus } from 'util/enums'
 
 import { ROUTE_PATH } from 'routes'
-import { ProposalStatus } from 'api/proposal.utils'
 
 import {
   type BadgeProps,

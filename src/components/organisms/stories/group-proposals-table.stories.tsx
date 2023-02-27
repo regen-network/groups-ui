@@ -1,7 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/react'
 import { mockProposal } from 'tests/mocks'
 
-import { ProposalStatus } from 'api/proposal.utils'
+import { ProposalStatus } from 'util/enums'
 
 import { GroupProposalsTable } from '../group-proposals-table'
 
