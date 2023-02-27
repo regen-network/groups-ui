@@ -4,10 +4,12 @@ import type { TextProposalFormValues as ProposalTextFormValues } from '@/organis
 import type { ClaimFormValues } from '@/organisms/stake-claim-form'
 import type { DelegateFormValues } from '@/organisms/stake-delegate-form'
 import type { RedelegateFormValues } from '@/organisms/stake-redelegate-form'
-
 export type {
   ProposalSDKType,
   ProposalStatus as ProposalStatusType,
+  Vote,
+  VoteOption as VoteOptionType,
+  VoteSDKType,
 } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/types'
 
 export type UIProposalMetadata = {

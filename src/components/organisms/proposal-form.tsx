@@ -148,8 +148,11 @@ export const ProposalForm = (props: {
             triggerSubmitAllForms()
           }}
         >
-          <EditableHeading value={title} onSave={setTitle} />
-          <EditableDescription value={description} onSave={setDescription} />
+          <EditableHeading value={title} onSave={(title) => setTitle(title.trim())} />
+          <EditableDescription
+            value={description}
+            onSave={(description) => setDescription(description.trim())}
+          />
           <FormSubmitHiddenButton id="submit-all-forms" />
         </form>
 

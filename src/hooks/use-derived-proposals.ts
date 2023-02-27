@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { UIProposal } from 'types'
-
-import { ProposalStatus } from 'api/proposal.utils'
+import { ProposalStatus } from 'util/enums'
 
 export function useDerivedProposals(proposals?: UIProposal[]) {
   const [accepted, setAccepted] = useState<UIProposal[]>([])

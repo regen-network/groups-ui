@@ -1,13 +1,19 @@
 import Long from 'long'
 
-import type { ProposalAction, UIProposal, UIProposalMetadata } from 'types'
+import type {
+  ProposalAction,
+  UIProposal,
+  UIProposalMetadata,
+  VoteOptionType,
+} from 'types'
 import { handleError, throwError } from 'util/errors'
 
 import { Query } from 'store/query.store'
-import { signAndBroadcast } from 'store/wallet.store'
+import { signAndBroadcast, Wallet } from 'store/wallet.store'
 
+import { GroupMsgWithTypeUrl } from './cosmosgroups'
 import { msgSubmitProposal } from './proposal.messages'
-import { proposalActionsToMsgs, toUIProposal } from './proposal.utils'
+import { proposalActionsToMsgs, toUIProposal, toUIVote } from './proposal.utils'
 
 export async function fetchProposalsByGroupPolicy(address?: string) {
   if (!Query.groups) throwError('Wallet not initialized')
@@ -42,11 +48,22 @@ export async function fetchVotesByProposal(proposalId?: string) {
     const { votes } = await Query.groups.votesByProposal({
       proposalId: Long.fromString(proposalId),
     })
-    return votes
+    return votes.map(toUIVote)
   } catch (error) {
     handleError(error)
   }
 }
+
+// export async function fetchVotesByAddress(address?: string) {
+//   if (!Query.groups) throwError('Wallet not initialized')
+//   if (!address) throwError('Address cannot be empty')
+//   try {
+//     const { votes } = await Query.groups.votesByVoter({ voter: address })
+//     return votes
+//   } catch (error) {
+//     handleError(error)
+//   }
+// }
 
 export async function createProposal({
   actions,
@@ -84,7 +101,32 @@ export async function createProposal({
     }
     if (!proposalId) throwError('No data returned from transaction')
     return { ...data, proposalId }
-  } catch (error) {
-    handleError(error)
+  } catch (err) {
+    handleError(err)
+  }
+}
+
+export async function voteOnProposal({
+  option,
+  proposalId,
+}: {
+  option: VoteOptionType
+  proposalId: string
+}) {
+  if (!Wallet.account?.address) throwError('Wallet not initialized')
+  try {
+    const msg = GroupMsgWithTypeUrl.vote({
+      option,
+      proposalId: Long.fromString(proposalId),
+      voter: Wallet.account.address,
+      exec: 0, // EXEC_UNSPECIFIED
+      metadata: '',
+    })
+    const data = await signAndBroadcast([msg])
+    if (!data) throwError('No data returned from vote')
+    console.log('vote data :>> ', data)
+    return data
+  } catch (err) {
+    handleError(err)
   }
 }
