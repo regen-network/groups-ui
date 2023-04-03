@@ -124,7 +124,6 @@ export async function voteOnProposal({
     })
     const data = await signAndBroadcast([msg])
     if (!data) throwError('No data returned from vote')
-    console.log('vote data :>> ', data)
     return data
   } catch (err) {
     handleError(err)
