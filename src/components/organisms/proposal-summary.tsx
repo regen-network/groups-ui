@@ -34,7 +34,6 @@ export const ProposalSummary = ({
   const cardBgDark = useColorModeValue('gray.100', 'gray.700')
   const votingClosed =
     new Date(proposal.votingPeriodEnd || new Date()).getTime() < new Date().getTime()
-  console.log('proposal :>> ', proposal)
   return (
     <Card>
       <Flex>
