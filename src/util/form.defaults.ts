@@ -5,7 +5,6 @@ import type {
   GroupPolicyFormValues,
   MemberFormValues,
   ProposalStakeFormValues,
-  ProposalTextFormValues,
   RedelegateFormValues,
 } from 'types'
 
@@ -59,8 +58,4 @@ export const defaultClaimFormValues: ClaimFormValues = {
 export const defaultStakeFormValues: ProposalStakeFormValues = {
   // `delegate` is the default stake type - copying here to avoid confusing naming
   ...defaultDelegateFormValues,
-}
-
-export const defaultTextFormValues: ProposalTextFormValues = {
-  text: '',
 }

@@ -4,6 +4,8 @@ import { ROUTE_PATH } from 'routes'
 
 import { type ButtonProps, Button, RouteLink } from '@/atoms'
 
+import { ImFileText2 } from 'assets/tsx'
+
 export const ProposalActionButtons = ({
   groupId,
   btnProps,
@@ -11,9 +13,19 @@ export const ProposalActionButtons = ({
   groupId: string
   btnProps?: ButtonProps
 }) => {
+  const actions = [
+    // we want a 'text proposal' create button on proposal page, but it isn't available elsewhere
+    {
+      type: 'text',
+      label: 'Text Proposal',
+      tooltip: 'Create a "text" proposal',
+      icon: ImFileText2,
+    },
+    ...ENABLED_ACTIONS,
+  ]
   return (
     <>
-      {ENABLED_ACTIONS.map(({ type, label, icon: Icon }, i) => (
+      {actions.map(({ type, label, icon: Icon }, i) => (
         <Button
           {...btnProps}
           key={'proposal-action-' + i}

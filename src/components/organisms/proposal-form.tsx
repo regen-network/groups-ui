@@ -1,12 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { omit } from 'remeda'
 
-import type {
-  ProposalAction,
-  ProposalStakeFormValues,
-  ProposalTextFormValues,
-} from 'types'
-import { defaultStakeFormValues, defaultTextFormValues } from 'util/form.defaults'
+import type { ProposalAction, ProposalStakeFormValues } from 'types'
+import { defaultStakeFormValues } from 'util/form.defaults'
 import { uuid } from 'util/helpers'
 
 import { useDisclosure } from 'hooks/chakra-hooks'
@@ -18,7 +14,6 @@ import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 import { WithRemoveButton } from '@/molecules/with-remove-button'
 import { ProposalActionDrawer } from '@/organisms/proposal-action-drawer'
 import { ProposalStakeForm } from '@/organisms/proposal-stake-form'
-import { ProposalTextForm } from '@/organisms/proposal-text-form'
 
 export type ProposalFormValues = {
   title: string
@@ -36,7 +31,7 @@ export const ProposalForm = (props: {
   // should be fine here as the values passed shouldn't change within the
   // lifecycle of this component. Probably a better way to handle this though -
   // possible refactor
-  const { defaultValues } = props
+  const { defaultValues, onSubmit } = props
   const [actions, setActions] = useState<ProposalAction[]>(defaultValues.actions)
   const [validForms, setValidForms] = useState<{ [id: string]: boolean }>({})
   const [title, setTitle] = useState(defaultValues.title)
@@ -45,21 +40,28 @@ export const ProposalForm = (props: {
   const valid = Object.values(validForms)
   const allFormsValid = valid.length > 0 && valid.every(Boolean)
 
+  const submit = useCallback(() => {
+    onSubmit({ title, description, actions })
+  }, [actions, description, onSubmit, title])
+
   useEffect(() => {
     // watch for new actions and make sure their ID is referenced
-    actions.forEach((action) => {
-      if (!(action.id in validForms)) {
-        setValidForms({ ...validForms, [action.id]: false })
-      }
-    })
+    if (actions) {
+      actions.forEach((action) => {
+        if (!(action.id in validForms)) {
+          setValidForms({ ...validForms, [action.id]: false })
+        }
+      })
+    }
   }, [actions, validForms])
 
   useEffect(() => {
     // see: comment in `handleSubmitAllForms`
     if (allFormsValid) {
-      props.onSubmit({ title, description, actions })
+      // props.onSubmit({ title, description, actions })
+      submit()
     }
-  }, [actions, description, props, title, allFormsValid])
+  }, [allFormsValid, submit])
 
   function handleNewAction(actionType: ProposalAction['type']) {
     const id = uuid()
@@ -70,8 +72,8 @@ export const ProposalForm = (props: {
       case 'stake':
         setActions([...actions, { id, type: 'stake', values: defaultStakeFormValues }])
         break
-      case 'text':
-        setActions([...actions, { id, type: 'text', values: defaultTextFormValues }])
+        // case 'text':
+        //   setActions([...actions, { id, type: 'text', values: defaultTextFormValues }])
         break
       default:
         break
@@ -80,6 +82,9 @@ export const ProposalForm = (props: {
   }
 
   function triggerSubmitAllForms() {
+    if (actions.length === 0) {
+      submit()
+    }
     // A bit hacky - programmatically grabbing all forms based on the ID we
     // create and calling `requestSubmit` to trigger their respective `onSubmit`
     // and `onError` handlers - which then trigger `updateActionValues` or
@@ -125,18 +130,34 @@ export const ProposalForm = (props: {
             onError={() => handleFormError(action.id)}
           />
         )
-      case 'text':
-        return (
-          <ProposalTextForm
-            defaultValues={action.values as ProposalTextFormValues}
-            formId={action.id}
-            onSubmit={(data) => updateActionValues(action.id, data)}
-            onError={() => handleFormError(action.id)}
-          />
-        )
+      // TODO add other message types
       default:
         return null
     }
+  }
+
+  function renderActions(actions: ProposalAction[]) {
+    if (actions.length === 0) {
+      return (
+        <FadeIn key={`action-form-no-actions`} layout>
+          <Text fontSize="sm" align="center" color="gray.500">
+            Add an action to your proposal
+          </Text>
+          <AddActionButton aria-label="New action" onClick={onOpen} />
+        </FadeIn>
+      )
+    }
+    return actions.map((action) => (
+      <FadeIn key={`action-form-${action.id}`} layout>
+        <WithRemoveButton
+          label="remove action"
+          onClick={() => handleRemoveAction(action)}
+        >
+          {renderAction(action)}
+        </WithRemoveButton>
+        <AddActionButton aria-label="New action" onClick={onOpen} />
+      </FadeIn>
+    ))
   }
 
   return (
@@ -164,20 +185,7 @@ export const ProposalForm = (props: {
         </Flex>
         <motion.div layout style={{ overflow: 'visible' }}>
           <AnimatePresence mode="popLayout">
-            <Stack spacing={4}>
-              {actions.map((action) => (
-                <FadeIn key={`action-form-${action.id}`} layout>
-                  <WithRemoveButton
-                    hideBtn={actions.length <= 1}
-                    label="remove action"
-                    onClick={() => handleRemoveAction(action)}
-                  >
-                    {renderAction(action)}
-                  </WithRemoveButton>
-                  <AddActionButton aria-label="New action" onClick={onOpen} />
-                </FadeIn>
-              ))}
-            </Stack>
+            <Stack spacing={4}>{renderActions(actions)}</Stack>
           </AnimatePresence>
         </motion.div>
       </Stack>

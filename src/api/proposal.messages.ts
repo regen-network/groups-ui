@@ -1,5 +1,3 @@
-import { cosmos } from '@haveanicedavid/cosmos-groups-ts'
-
 // import { Exec } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/tx'
 import type { Any } from 'types'
 
@@ -25,19 +23,4 @@ export function msgSubmitProposal({
     proposers,
     metadata,
   })
-}
-
-export function msgTextProposal({
-  title,
-  description,
-}: {
-  title: string
-  description: string
-}): Any {
-  const value = cosmos.gov.v1beta1.TextProposal.encode({ title, description }).finish()
-  // doesn't seem to be a `withTypeUrl` method for gov
-  return {
-    value,
-    typeUrl: '/cosmos.gov.v1beta1.TextProposal',
-  }
 }
