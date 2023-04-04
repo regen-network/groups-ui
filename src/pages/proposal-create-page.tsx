@@ -3,7 +3,7 @@ import { useSnapshot } from 'valtio'
 
 import type { ProposalAction, ProposalFormValues } from 'types'
 import { handleError, throwError } from 'util/errors'
-import { defaultDelegateFormValues, defaultTextFormValues } from 'util/form.defaults'
+import { defaultDelegateFormValues } from 'util/form.defaults'
 import { getFeeDenom, uuid } from 'util/helpers'
 
 import { createProposal } from 'api/proposal.actions'
@@ -35,14 +35,14 @@ export default function ProposalCreate() {
     return null
   }
 
-  function getInitialFormAction(): ProposalAction {
+  function getInitialFormAction(): ProposalAction | null {
     const id = uuid()
     switch (state?.newProposalType) {
-      case 'text':
-        return { id, type: 'text', values: defaultTextFormValues }
       case 'stake':
-      default:
         return { id, type: 'stake', values: defaultDelegateFormValues }
+      default:
+      case 'text':
+        return null
     }
   }
 
@@ -74,12 +74,14 @@ export default function ProposalCreate() {
     }
   }
 
+  const initialAction = getInitialFormAction()
+
   return (
     <ProposalCRUDTemplate
       initialProposalFormValues={{
-        actions: [getInitialFormAction()],
+        actions: initialAction ? [initialAction] : [],
         title: `Proposal ${proposals ? proposals.length + 1 : 'Title'}`,
-        description: `Proposal ${proposals ? proposals.length + 1 : ''} Description`,
+        description: 'Add a description or a text proposal here',
       }}
       groupName={group.metadata.name}
       groupId={group.id.toString()}

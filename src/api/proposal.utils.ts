@@ -3,14 +3,12 @@ import type {
   ProposalAction,
   ProposalSDKType,
   ProposalStakeFormValues,
-  ProposalTextFormValues,
   UIProposal,
   Vote,
   VoteSDKType,
 } from 'types'
 import { throwError } from 'util/errors'
 
-import { msgTextProposal } from './proposal.messages'
 import {
   msgStakingDelegate,
   msgStakingRedelegate,
@@ -32,9 +30,6 @@ export function proposalActionsToMsgs(
   return actions.map(({ values }) => {
     if (isStakeProposal(values)) {
       return stakeValuesToMsg(values, data) as unknown as Any // TODO
-    }
-    if (isTextProposal(values)) {
-      return msgTextProposal({ title: data.title, description: data.description })
     }
     throwError(`Unknown proposal action: ${JSON.stringify(values, null, 2)}`)
   })
@@ -90,12 +85,6 @@ function isStakeProposal(
   values: ProposalAction['values'],
 ): values is ProposalStakeFormValues {
   return 'stakeType' in values
-}
-
-function isTextProposal(
-  values: ProposalAction['values'],
-): values is ProposalTextFormValues {
-  return !isStakeProposal(values) && 'text' in values
 }
 
 function stakeValuesToMsg(values: ProposalStakeFormValues, data: ProposalData) {

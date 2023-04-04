@@ -1,12 +1,7 @@
 import { Fragment } from 'react'
 import { useSnapshot } from 'valtio'
 
-import type {
-  ProposalAction,
-  ProposalFormValues,
-  ProposalStakeFormValues,
-  ProposalTextFormValues,
-} from 'types'
+import type { ProposalAction, ProposalFormValues, ProposalStakeFormValues } from 'types'
 import { SPACING } from 'util/constants'
 import { formatFee } from 'util/helpers'
 
@@ -56,8 +51,6 @@ function renderAction(action: ProposalAction) {
   switch (action.type) {
     case 'stake':
       return <StakeReview values={action.values as ProposalStakeFormValues} />
-    case 'text':
-      return <TextReview values={action.values as ProposalTextFormValues} />
     default:
       return null
   }
@@ -79,18 +72,6 @@ const StakeReview = ({ values }: { values: ProposalStakeFormValues }) => {
           <ReviewItem label="To validator">{values.toValidator}</ReviewItem>
         )}
         <ReviewItem label="Amount">{values.amount}</ReviewItem>
-        <ReviewItem label="Transaction Fee">{formatFee(fee)}</ReviewItem>
-      </Stack>
-    </FormCard>
-  )
-}
-
-const TextReview = ({ values }: { values: ProposalTextFormValues }) => {
-  const { fee } = useSnapshot(Chain)
-  return (
-    <FormCard title="Text">
-      <Stack spacing={SPACING.formStack}>
-        <ReviewItem label="Proposal Text">{values.text}</ReviewItem>
         <ReviewItem label="Transaction Fee">{formatFee(fee)}</ReviewItem>
       </Stack>
     </FormCard>
