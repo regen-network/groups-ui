@@ -24,7 +24,7 @@ export type ProposalAction = {
   /** for handling add / remove behavior + passing to nested forms for submit handler */
   id: string
   type: 'stake' | 'text' // | 'spend' // TODO: add other event types
-  values: ProposalStakeFormValues // TODO other types
+  values: ProposalStakeFormValues // TODO types for other form actions
 }
 
 export type ProposalStakeType = 'delegate' | 'redelegate' | 'undelegate' | 'claim'

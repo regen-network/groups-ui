@@ -54,17 +54,6 @@ export async function fetchVotesByProposal(proposalId?: string) {
   }
 }
 
-// export async function fetchVotesByAddress(address?: string) {
-//   if (!Query.groups) throwError('Wallet not initialized')
-//   if (!address) throwError('Address cannot be empty')
-//   try {
-//     const { votes } = await Query.groups.votesByVoter({ voter: address })
-//     return votes
-//   } catch (error) {
-//     handleError(error)
-//   }
-// }
-
 export async function createProposal({
   actions,
   denom,
