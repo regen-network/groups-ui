@@ -57,10 +57,7 @@ export const ProposalForm = (props: {
 
   useEffect(() => {
     // see: comment in `handleSubmitAllForms`
-    if (allFormsValid) {
-      // props.onSubmit({ title, description, actions })
-      submit()
-    }
+    if (allFormsValid) submit()
   }, [allFormsValid, submit])
 
   function handleNewAction(actionType: ProposalAction['type']) {
@@ -72,9 +69,7 @@ export const ProposalForm = (props: {
       case 'stake':
         setActions([...actions, { id, type: 'stake', values: defaultStakeFormValues }])
         break
-        // case 'text':
-        //   setActions([...actions, { id, type: 'text', values: defaultTextFormValues }])
-        break
+      // TODO add other actions here
       default:
         break
     }
@@ -82,9 +77,8 @@ export const ProposalForm = (props: {
   }
 
   function triggerSubmitAllForms() {
-    if (actions.length === 0) {
-      submit()
-    }
+    // if there are no actions, submit title & description
+    if (actions.length === 0) submit()
     // A bit hacky - programmatically grabbing all forms based on the ID we
     // create and calling `requestSubmit` to trigger their respective `onSubmit`
     // and `onError` handlers - which then trigger `updateActionValues` or

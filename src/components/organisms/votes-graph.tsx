@@ -1,11 +1,5 @@
 import { Doughnut } from 'react-chartjs-2'
-import {
-  ArcElement,
-  Chart as ChartJS,
-  DoughnutController,
-  // Legend,
-  Tooltip,
-} from 'chart.js'
+import { ArcElement, Chart as ChartJS, DoughnutController, Tooltip } from 'chart.js'
 
 ChartJS.register(DoughnutController, ArcElement, Tooltip)
 

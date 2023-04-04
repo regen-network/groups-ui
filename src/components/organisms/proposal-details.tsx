@@ -23,7 +23,6 @@ export const ProposalDetails = ({ proposal }: { proposal: UIProposal }) => {
         <CardBody>
           <Stack direction="column" spacing={8}>
             <Detail label="Proposer" text={proposal.proposers[0]} />
-            {/* <Detail label="Height" text={'TODO - not in proposal data'} /> */}
             {proposal.submitTime && (
               <Detail
                 label="Submit Time"

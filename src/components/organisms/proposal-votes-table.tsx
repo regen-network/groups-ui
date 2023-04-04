@@ -13,8 +13,8 @@ export const ProposalVotesTable = ({
   votes: Vote[]
   groupMembers: UIGroupMember[]
 }) => {
-  /** votes don't include `weight` by default - if other components need a
-   * similar data structure, might make sense to extract this */
+  // votes don't include `weight` by default - if other components need a
+  // similar data structure, might make sense to extract this
   const weightMap = useMemo(() => {
     return groupMembers.reduce((map: { [key: string]: string }, { member }) => {
       map[member.address] = member.weight
@@ -25,7 +25,11 @@ export const ProposalVotesTable = ({
   return (
     <TableContainer>
       <TableTitlebar title="Votes" />
-      {votes.length > 0 ? (
+      {votes.length === 0 ? (
+        <Center h={40}>
+          <Heading size="lg">No votes</Heading>
+        </Center>
+      ) : (
         <Table variant="striped" size="lg">
           <Thead>
             <Tr>
@@ -39,7 +43,6 @@ export const ProposalVotesTable = ({
             {votes.map((vote, i) => (
               <Tr key={i + vote.voter}>
                 <Td>{vote.option}</Td>
-                {/* <Td>{vote.option}</Td> */}
                 <Td>{weightMap[vote.voter]}</Td>
                 <Td>
                   <Truncate
@@ -53,10 +56,6 @@ export const ProposalVotesTable = ({
             ))}
           </Tbody>
         </Table>
-      ) : (
-        <Center h={40}>
-          <Heading size="lg">No votes</Heading>
-        </Center>
       )}
     </TableContainer>
   )
