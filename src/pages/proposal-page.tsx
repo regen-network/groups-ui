@@ -5,7 +5,13 @@ import { throwError } from 'util/errors'
 
 import { ROUTE_PATH } from 'routes'
 import { voteOnProposal } from 'api/proposal.actions'
-import { useGroup, useGroupMembers, useProposal, useProposalVotes } from 'hooks/use-query'
+import {
+  useGroup,
+  useGroupMembers,
+  useProposal,
+  useProposalVotes,
+  useUserVotes,
+} from 'hooks/use-query'
 import { useTxToasts } from 'hooks/use-toasts'
 
 import { Button, PageContainer, RouteLink, Stack } from '@/atoms'
@@ -28,7 +34,14 @@ export default function ProposalPage() {
     refetch: refetchVotes,
   } = useProposalVotes(proposalId)
 
-  if (isLoadingProposal || isLoadingGroup || isLoadingVotes) return <Loading />
+  const {
+    data: userVotes,
+    refetch: refetchUserVotes,
+    isLoading: isLoadingUserVotes,
+  } = useUserVotes()
+
+  if (isLoadingProposal || isLoadingGroup || isLoadingVotes || isLoadingUserVotes)
+    return <Loading />
   if (!groupId || !proposal || !group) {
     redirect(groupId ? ROUTE_PATH.group(groupId) : ROUTE_PATH.groups)
     return null
@@ -37,14 +50,18 @@ export default function ProposalPage() {
   async function handleVote(option: VoteOptionType) {
     if (!proposalId) throwError('Proposal ID is required to cast vote')
     try {
-      const data = await voteOnProposal({ proposalId, option })
+      await voteOnProposal({ proposalId, option })
       toastSuccess('Vote cast successfully')
       refetchVotes()
-      console.log('data in handleVote:>> ', data)
+      refetchUserVotes()
     } catch (err) {
       toastErr(err)
     }
   }
+
+  const userVote = userVotes
+    ? userVotes.find((v) => v.proposalId.toString() === proposalId)
+    : undefined
 
   return (
     <PageContainer>
@@ -59,7 +76,12 @@ export default function ProposalPage() {
             {group?.metadata.name}
           </Button>
         </div>
-        <ProposalSummary proposal={proposal} group={group} onVote={handleVote} />
+        <ProposalSummary
+          proposal={proposal}
+          group={group}
+          onVote={handleVote}
+          userVote={userVote}
+        />
         <ProposalDetails proposal={proposal} />
         <ProposalVotesTable votes={votes || []} groupMembers={groupMembers || []} />
       </Stack>

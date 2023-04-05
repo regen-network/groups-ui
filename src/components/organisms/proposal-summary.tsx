@@ -1,5 +1,6 @@
-import type { UIGroup, UIProposal, VoteOptionType } from 'types'
+import type { UIGroup, UIProposal, Vote, VoteOptionType } from 'types'
 import { formatDate } from 'util/date'
+import { VoteOption } from 'util/enums'
 
 import { useColorModeValue } from 'hooks/chakra-hooks'
 
@@ -21,12 +22,14 @@ import { VotesGraph } from './votes-graph'
 
 export const ProposalSummary = ({
   group,
-  proposal,
   onVote,
+  proposal,
+  userVote,
 }: {
-  proposal: UIProposal
   group: UIGroup
   onVote: (option: VoteOptionType) => void
+  proposal: UIProposal
+  userVote?: Vote
 }) => {
   const cardBgDark = useColorModeValue('gray.100', 'gray.700')
   const votingClosed =
@@ -68,7 +71,14 @@ export const ProposalSummary = ({
             </Center>
             {!votingClosed && (
               <SimpleGrid columns={2} gap={3} columnGap={4}>
-                <VoteButtons onVote={onVote} />
+                <VoteButtons
+                  onVote={onVote}
+                  userVote={
+                    userVote?.option
+                      ? (VoteOption[userVote.option] as unknown as VoteOptionType)
+                      : undefined
+                  }
+                />
               </SimpleGrid>
             )}
           </Stack>
