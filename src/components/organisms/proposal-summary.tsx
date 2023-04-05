@@ -1,13 +1,11 @@
 import type { UIGroup, UIProposal, VoteOptionType } from 'types'
 import { formatDate } from 'util/date'
-import { VoteOption } from 'util/enums'
 
 import { useColorModeValue } from 'hooks/chakra-hooks'
 
 import {
   Badge,
   Box,
-  Button,
   Card,
   CardBody,
   Center,
@@ -17,10 +15,9 @@ import {
   Stack,
   Text,
 } from '@/atoms'
+import { VoteButtons } from '@/molecules/vote-buttons'
 
 import { VotesGraph } from './votes-graph'
-
-import { BsSlashCircle, CheckIcon, CloseIcon, GoThumbsdown } from 'assets/tsx'
 
 export const ProposalSummary = ({
   group,
@@ -71,38 +68,7 @@ export const ProposalSummary = ({
             </Center>
             {!votingClosed && (
               <SimpleGrid columns={2} gap={3} columnGap={4}>
-                <Button
-                  leftIcon={<CheckIcon />}
-                  colorScheme="green"
-                  variant="outline"
-                  onClick={() => onVote(VoteOption.VOTE_OPTION_YES)}
-                >
-                  Vote Yes
-                </Button>
-                <Button
-                  leftIcon={<CloseIcon />}
-                  colorScheme="red"
-                  variant="outline"
-                  onClick={() => onVote(VoteOption.VOTE_OPTION_NO)}
-                >
-                  Vote No
-                </Button>
-                <Button
-                  leftIcon={<BsSlashCircle />}
-                  colorScheme="yellow"
-                  variant="outline"
-                  onClick={() => onVote(VoteOption.VOTE_OPTION_ABSTAIN)}
-                >
-                  Abstain
-                </Button>
-                <Button
-                  leftIcon={<GoThumbsdown />}
-                  colorScheme="orange"
-                  variant="outline"
-                  onClick={() => onVote(VoteOption.VOTE_OPTION_NO_WITH_VETO)}
-                >
-                  Veto
-                </Button>
+                <VoteButtons onVote={onVote} />
               </SimpleGrid>
             )}
           </Stack>

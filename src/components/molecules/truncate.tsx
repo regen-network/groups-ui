@@ -1,7 +1,7 @@
 import { truncate } from 'util/helpers'
 
 import { useClipboard } from 'hooks/chakra-hooks'
-import { useToastCopied } from 'hooks/use-toasts'
+import { useToastBottom } from 'hooks/use-toasts'
 
 import { type TextProps, type TooltipProps, Text, Tooltip } from '@/atoms'
 
@@ -29,10 +29,10 @@ export const Truncate = ({
   })
   const isDisabled = disabled || truncated === text
   const { onCopy } = useClipboard(text)
-  const toastCopied = useToastCopied('Address copied to clipboard!')
+  const { toastInfo } = useToastBottom()
 
   function handleCopy() {
-    toastCopied()
+    toastInfo('Address copied to clipboard!')
     onCopy()
   }
 

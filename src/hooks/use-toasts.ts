@@ -1,11 +1,9 @@
 import { toErrorWithMessage } from 'util/errors'
 
-import type { UseToastOptions } from 'hooks/chakra-hooks'
-
-import { useToast } from './chakra-hooks'
+import { type UseToastOptions, useToast } from './chakra-hooks'
 
 const TOAST_DURATIONS = {
-  short: 1500,
+  short: 2000,
   medium: 3000,
   long: 9000,
 }
@@ -19,8 +17,8 @@ const TX_TOAST_DEFAULTS: UseToastOptions = {
 export function useTxToasts() {
   const toast = useToast()
   return {
-    toastNotify: (title = 'Broadcasting message...', description?: string) => {
-      return toast({
+    toastInfo: (title = 'Broadcasting message...', description?: string) => {
+      toast({
         ...TX_TOAST_DEFAULTS,
         ...(!!description && { description }),
         title,
@@ -28,7 +26,7 @@ export function useTxToasts() {
       })
     },
     toastSuccess: (txHash: string, title = 'Transaction complete!') => {
-      return toast({
+      toast({
         ...TX_TOAST_DEFAULTS,
         title,
         description: 'Transaction hash: ' + txHash,
@@ -37,7 +35,7 @@ export function useTxToasts() {
     },
     toastErr: (err: unknown, title = 'Transaction failed') => {
       const msg = toErrorWithMessage(err).message
-      return toast({
+      toast({
         ...TX_TOAST_DEFAULTS,
         title,
         description: msg,
@@ -48,13 +46,27 @@ export function useTxToasts() {
   }
 }
 
-export function useToastCopied(title = 'Copied to clipboard!') {
+const BOTTOM_TOAST_DEFAULTS: UseToastOptions = {
+  position: 'bottom',
+  duration: TOAST_DURATIONS.short,
+}
+
+export function useToastBottom() {
   const toast = useToast()
-  return () =>
-    toast({
-      title,
-      position: 'bottom',
-      status: 'info',
-      duration: TOAST_DURATIONS.short,
-    })
+  return {
+    toastInfo: (title: string) => {
+      toast({
+        ...BOTTOM_TOAST_DEFAULTS,
+        title,
+        status: 'info',
+      })
+    },
+    toastWarning: (title: string) => {
+      toast({
+        ...BOTTOM_TOAST_DEFAULTS,
+        title,
+        status: 'warning',
+      })
+    },
+  }
 }
