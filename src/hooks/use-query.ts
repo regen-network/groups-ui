@@ -11,10 +11,12 @@ import { fetchGroupPolicies } from 'api/policy.actions'
 import {
   fetchProposalbyId,
   fetchProposalsByGroupPolicy,
+  fetchVotesByAddress,
   fetchVotesByProposal,
 } from 'api/proposal.actions'
 import { fetchValidators } from 'api/staking.actions'
 import { Chain } from 'store/chain.store'
+import { Wallet } from 'store/wallet.store'
 
 export function useGroup(groupId?: string) {
   return useQuery({
@@ -101,5 +103,14 @@ export function useProposalVotes(proposalId?: string) {
     queryKey: ['proposalVotes', proposalId],
     queryFn: () => fetchVotesByProposal(proposalId),
     enabled: !!proposalId,
+  })
+}
+
+export function useUserVotes() {
+  const userAddress = Wallet.account?.address
+  return useQuery({
+    queryKey: ['addressVotes', userAddress],
+    queryFn: () => fetchVotesByAddress(userAddress),
+    enabled: !!userAddress,
   })
 }
