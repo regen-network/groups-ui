@@ -17,7 +17,7 @@ import { ProposalStakeForm } from '@/organisms/proposal-stake-form'
 
 export type ProposalFormValues = {
   title: string
-  description?: string
+  summary: string
   actions: ProposalAction[]
 }
 
@@ -35,14 +35,14 @@ export const ProposalForm = (props: {
   const [actions, setActions] = useState<ProposalAction[]>(defaultValues.actions)
   const [validForms, setValidForms] = useState<{ [id: string]: boolean }>({})
   const [title, setTitle] = useState(defaultValues.title)
-  const [description, setDescription] = useState(defaultValues.description)
+  const [summary, setSummary] = useState(defaultValues.summary)
 
   const valid = Object.values(validForms)
   const allFormsValid = valid.length > 0 && valid.every(Boolean)
 
   const submit = useCallback(() => {
-    onSubmit({ title, description, actions })
-  }, [actions, description, onSubmit, title])
+    onSubmit({ title, summary, actions })
+  }, [actions, summary, onSubmit, title])
 
   useEffect(() => {
     // watch for new actions and make sure their ID is referenced
@@ -165,8 +165,8 @@ export const ProposalForm = (props: {
         >
           <EditableHeading value={title} onSave={(title) => setTitle(title.trim())} />
           <EditableDescription
-            value={description}
-            onSave={(description) => setDescription(description.trim())}
+            value={summary}
+            onSave={(description) => setSummary(description.trim())}
           />
           <FormSubmitHiddenButton id="submit-all-forms" />
         </form>

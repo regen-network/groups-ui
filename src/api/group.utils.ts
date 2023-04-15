@@ -6,6 +6,7 @@ import type {
   UIGroupMetadata,
   UIGroupWithMembers,
 } from 'types'
+import { toDate } from 'util/date'
 
 import { fetchGroupMembers } from './member.actions'
 
@@ -24,7 +25,7 @@ export function toUIGroup(group: GroupInfoSDKType): UIGroup {
   return {
     metadata,
     admin: group.admin,
-    createdAt: group.created_at,
+    createdAt: group.created_at ? toDate(group.created_at) : undefined,
     id: group.id,
     totalWeight: group.total_weight,
     version: group.version,
@@ -49,6 +50,6 @@ export function toMemberFormValues({ member }: UIGroupMember): MemberFormValues 
   return {
     address: member.address,
     weight: parseInt(member.weight),
-    addedAt: new Date(member.addedAt),
+    addedAt: member.addedAt ? toDate(member.addedAt) : undefined,
   }
 }

@@ -19,7 +19,7 @@ export const ProposalReview = (props: {
   onSubmit: () => void
 }) => {
   const {
-    values: { actions, title, description },
+    values: { actions, title, summary: description },
   } = props
   return (
     <Stack spacing={8}>

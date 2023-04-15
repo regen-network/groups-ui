@@ -1,3 +1,7 @@
+import {
+  Timestamp,
+  TimestampSDKType,
+} from '@haveanicedavid/regen-ts/types/codegen/google/protobuf/timestamp'
 import dayjs from 'dayjs'
 import Long from 'long'
 
@@ -12,12 +16,27 @@ export const DATE_FORMATS = {
   long: 'MMM D YYYY, h:mm:ss a',
 } as const
 
+export function isTimestamp(value: unknown): value is Timestamp {
+  return (
+    (value as Timestamp)?.seconds !== undefined &&
+    (value as Timestamp)?.nanos !== undefined
+  )
+}
+
+export function toDate(date: Timestamp | TimestampSDKType | Date | string): Date {
+  if (isTimestamp(date)) {
+    return new Date(date.seconds.toNumber() * 1000)
+  }
+  return new Date(date)
+}
+
 export function formatDate(
-  date: Date | string | undefined,
+  date: Date | Timestamp | string | undefined,
   format: keyof typeof DATE_FORMATS = 'default',
 ) {
   if (!date) return '-'
-  return dayjs(date).format(DATE_FORMATS[format])
+  const _date = isTimestamp(date) ? date.seconds.toString() : date
+  return dayjs(_date).format(DATE_FORMATS[format])
 }
 
 export function daysToSeconds(days: number): number {

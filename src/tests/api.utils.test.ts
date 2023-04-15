@@ -8,6 +8,7 @@ import { toUIGroup } from 'api/group.utils'
 // TODO: move these to reusable stubs
 const date = new Date(2022, 1, 1)
 const dateStr = date.toISOString()
+const dateTime = date.getTime()
 
 const metadata: UIGroupMetadata = {
   name: 'bob',
@@ -18,7 +19,7 @@ const metadata: UIGroupMetadata = {
 
 const stubGroup: GroupInfoSDKType = {
   admin: 'cosmos106ljn6kds9vegaux0w4jnend97fdm50yec59vq',
-  created_at: date,
+  created_at: { nanos: 0, seconds: Long.fromNumber(dateTime) },
   id: Long.fromString('st123r'),
   metadata: JSON.stringify(metadata),
   total_weight: '2',

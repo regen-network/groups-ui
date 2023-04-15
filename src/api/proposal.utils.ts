@@ -7,6 +7,7 @@ import type {
   Vote,
   VoteSDKType,
 } from 'types'
+import { toDate } from 'util/date'
 import { throwError } from 'util/errors'
 
 import {
@@ -20,7 +21,7 @@ type ProposalData = {
   denom: string
   groupPolicyAddress: string
   title: string
-  description: string
+  summary: string
 }
 
 export function proposalActionsToMsgs(
@@ -55,13 +56,17 @@ export function toUIProposal(sdkProposal: ProposalSDKType): UIProposal {
     // Identical enum - see above
     status: sdkProposal.status as unknown as UIProposal['status'],
     ...(!!final_tally_result && {
-      abstainCount: final_tally_result.abstain_count,
-      noCount: final_tally_result.no_count,
-      noWithVetoCount: final_tally_result.no_with_veto_count,
-      yesCount: final_tally_result.yes_count,
+      finalTallyResult: {
+        abstainCount: final_tally_result.abstain_count,
+        noCount: final_tally_result.no_count,
+        noWithVetoCount: final_tally_result.no_with_veto_count,
+        yesCount: final_tally_result.yes_count,
+      },
     }),
-    submitTime: sdkProposal.submit_time,
-    votingPeriodEnd: sdkProposal.voting_period_end,
+    submitTime: sdkProposal.submit_time ? toDate(sdkProposal.submit_time) : undefined,
+    votingPeriodEnd: sdkProposal.voting_period_end
+      ? toDate(sdkProposal.voting_period_end)
+      : undefined,
   }
 }
 
@@ -74,7 +79,7 @@ export function toUIVote({
 }: VoteSDKType): Vote {
   return {
     metadata,
-    option,
+    option: option as unknown as Vote['option'],
     proposalId: proposal_id,
     voter,
     submitTime: submit_time,
