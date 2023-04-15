@@ -11,10 +11,11 @@ export function mockProposal(
   i: number,
   status: ProposalStatusType = ProposalStatus.PROPOSAL_STATUS_SUBMITTED,
 ): UIProposal {
+  const d = new Date(baseDate.getTime() + i * 1000)
   return {
     status,
     id: new Long(i),
-    submitTime: new Date(baseDate.getTime() + i * 1000),
+    submitTime: d,
     executorResult: 'TODO' as never,
     groupPolicyAddress: 'TODO',
     groupPolicyVersion: Long.fromNumber(i),
@@ -23,7 +24,7 @@ export function mockProposal(
     proposers: [DEFAULT_ADDRESS],
     metadata: {
       title: `Proposal ${i}`,
-      description: `Proposal ${i} description`,
+      summary: `Proposal ${i} summary`,
     },
   }
 }

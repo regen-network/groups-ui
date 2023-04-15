@@ -49,7 +49,7 @@ export default function ProposalCreate() {
   async function handleSubmit({
     actions,
     title,
-    description,
+    summary,
   }: ProposalFormValues): Promise<string | null> {
     try {
       if (!fee || !account?.address) {
@@ -58,9 +58,11 @@ export default function ProposalCreate() {
       // TODO: should this be a react-query mutation?
       const data = await createProposal({
         actions,
+        title,
+        summary,
         denom: getFeeDenom(fee),
         groupPolicyAddress: groupPolicy.address,
-        metadata: { title, description },
+        metadata: { title, summary },
         proposers: [account.address],
       })
       if (!data?.proposalId)
@@ -81,7 +83,7 @@ export default function ProposalCreate() {
       initialProposalFormValues={{
         actions: initialAction ? [initialAction] : [],
         title: `Proposal ${proposals ? proposals.length + 1 : 'Title'}`,
-        description: 'Add a description or a text proposal here',
+        summary: 'Add a description or a text proposal here',
       }}
       groupName={group.metadata.name}
       groupId={group.id.toString()}

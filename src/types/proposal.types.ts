@@ -1,4 +1,4 @@
-import type { Proposal } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/types'
+import type { Proposal } from '@haveanicedavid/regen-ts/types/codegen/cosmos/group/v1/types'
 
 import type { ClaimFormValues } from '@/organisms/stake-claim-form'
 import type { DelegateFormValues } from '@/organisms/stake-delegate-form'
@@ -9,14 +9,18 @@ export type {
   Vote,
   VoteOption as VoteOptionType,
   VoteSDKType,
-} from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/types'
+} from '@haveanicedavid/regen-ts/types/codegen/cosmos/group/v1/types'
 
+/** TODO: in v0.47, this data will live directly on a proposal */
 export type UIProposalMetadata = {
   title: string
-  description?: string
+  summary: string
 }
 
-export interface UIProposal extends Omit<Proposal, 'metadata'> {
+export interface UIProposal
+  extends Omit<Proposal, 'votingPeriodEnd' | 'submitTime' | 'metadata'> {
+  votingPeriodEnd?: Date
+  submitTime?: Date
   metadata: UIProposalMetadata
 }
 

@@ -30,7 +30,6 @@ export const GroupPolicyTable = ({ policies }: { policies: UIGroupPolicyInfo[] }
           </Tr>
         </Thead>
         <Tbody>
-          {/* {policies.map((p, i) => ( */}
           <Tr>
             <Td>{formatDate(p.createdAt)}</Td>
             <Td>{formatVotingPeriod(p)}</Td>
@@ -43,7 +42,6 @@ export const GroupPolicyTable = ({ policies }: { policies: UIGroupPolicyInfo[] }
               <Truncate clickToCopy tailLength={tailSize} text={p.admin} />
             </Td>
           </Tr>
-          {/* ))} */}
         </Tbody>
       </Table>
     </TableContainer>

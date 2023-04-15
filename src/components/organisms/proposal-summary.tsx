@@ -32,8 +32,8 @@ export const ProposalSummary = ({
   userVote?: Vote
 }) => {
   const cardBgDark = useColorModeValue('gray.100', 'gray.700')
-  const votingClosed =
-    new Date(proposal.votingPeriodEnd || new Date()).getTime() < new Date().getTime()
+  const now = new Date()
+  const votingClosed = new Date(proposal.votingPeriodEnd || now).getTime() < now.getTime()
   return (
     <Card>
       <Flex>
@@ -49,7 +49,7 @@ export const ProposalSummary = ({
               </Badge>
             </Stack>
             <Heading>{proposal.metadata.title}</Heading>
-            <Text>{proposal.metadata.description || '-'}</Text>
+            <Text>{proposal.metadata.summary}</Text>
           </Stack>
         </CardBody>
         <CardBody bg={cardBgDark} borderRightRadius="lg">

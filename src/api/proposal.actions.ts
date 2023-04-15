@@ -60,24 +60,30 @@ export async function createProposal({
   groupPolicyAddress,
   metadata,
   proposers,
+  summary,
+  title,
 }: {
   actions: ProposalAction[]
   denom: string
   groupPolicyAddress: string
   metadata: UIProposalMetadata
   proposers: string[]
+  summary: string
+  title: string
 }) {
   try {
     const messages = proposalActionsToMsgs(actions, {
       denom,
-      description: metadata.description || '',
-      title: metadata.title,
+      summary,
+      title,
       groupPolicyAddress,
     })
     const submitMsg = msgSubmitProposal({
       groupPolicyAddress,
       messages,
       proposers,
+      summary,
+      title,
       metadata: JSON.stringify(metadata),
     })
     const data = await signAndBroadcast([submitMsg])

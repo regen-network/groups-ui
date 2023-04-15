@@ -11,7 +11,7 @@ import { percentStrToNum } from 'util/helpers'
 
 export function toUIGroupPolicy(policyInfo: GroupPolicyInfoSDKType): UIGroupPolicyInfo {
   /* By default, `decisionPolicy` is returned as a golang `Any`, and it seems
-   * easier to manage here than `cosmos-groups-ts` as decision policies can be
+   * easier to manage here than `regen-ts` as decision policies can be
    * proprietary */
   const decisionPolicy =
     policyInfo.decision_policy as unknown as ChainGroupDecisionPolicySDK

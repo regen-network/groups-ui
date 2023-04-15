@@ -1,11 +1,11 @@
 import type {
   GroupMember,
   Member,
-} from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/types'
+} from '@haveanicedavid/regen-ts/types/codegen/cosmos/group/v1/types'
 
 // exports
 
-export type { GroupMemberSDKType } from '@haveanicedavid/cosmos-groups-ts/types/codegen/cosmos/group/v1/types'
+export type { GroupMemberSDKType } from '@haveanicedavid/regen-ts/types/codegen/cosmos/group/v1/types'
 
 export type MemberFormValues = {
   address: string
@@ -14,10 +14,10 @@ export type MemberFormValues = {
   weight: number
 }
 
-export interface UIGroupMember extends GroupMember {
+export interface UIGroupMember extends Omit<GroupMember, 'member'> {
   member: UIMember
 }
 
-interface UIMember extends Member {
-  addedAt: Date
+interface UIMember extends Omit<Member, 'addedAt'> {
+  addedAt?: Date
 }

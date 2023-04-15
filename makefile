@@ -4,7 +4,7 @@ CHAIN_ID=cosmoswithgroups
 CHAIN_HOME=$(HOME)/.simd
 ALICE=cosmos1kdzkazludrnmnzchcxgs6znsjph5ugx4rhljrh
 USER2=cosmos106ljn6kds9vegaux0w4jnend97fdm50yec59vq
-COSMOS_SDK_VERSION=v0.46.x
+COSMOS_SDK_VERSION=v0.46.11
 
 NOW=$(shell date +%s%3)
 UNAME=$(shell uname)

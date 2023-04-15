@@ -1,4 +1,4 @@
-import { cosmos } from '@haveanicedavid/cosmos-groups-ts'
+import { cosmos } from '@haveanicedavid/regen-ts'
 
 import type { Any } from 'types'
 

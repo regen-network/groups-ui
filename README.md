@@ -1,6 +1,23 @@
 # Cosmos Groups UI
 
-[Regen network](https://www.regen.network/) UI for Cosmos groups module
+[Regen network](https://regen.network/) UI for Cosmos groups module
+
+## Table of Contents
+
+- [Cosmos Groups UI](#cosmos-groups-ui)
+  - [Table of Contents](#table-of-contents)
+- [Local Setup](#local-setup)
+  - [Install Cosmos-SDK](#install-cosmos-sdk)
+    - [For Darwin / MacOS:](#for-darwin--macos)
+    - [For Linux (untested)](#for-linux-untested)
+  - [Makefile commands](#makefile-commands)
+  - [Keplr](#keplr)
+  - [IDE](#ide)
+- [Architecture](#architecture)
+  - [Code Structure](#code-structure)
+  - [Types](#types)
+  - [Library Resources](#library-resources)
+  - [Linting](#linting)
 
 # Local Setup
 
@@ -11,9 +28,9 @@
 
 ## Install Cosmos-SDK
 
-`git clone https://github.com/cosmos/cosmos-sdk` and within that directory:
+`git clone https://github.com/cosmos/cosmos-sdk` and **within that directory**:
 
-1. `git checkout v0.46.1` (or current tagged 0.46 release branch)
+1. `git checkout v0.46.11`
 2. `make build`
 
 ### For Darwin / MacOS:
@@ -51,6 +68,8 @@ cp .vscode/settings.suggested.json .vscode/settings.json
 ```
 
 # Architecture
+
+## Code Structure
 
 This project is organized by [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/) principals for UI components:
 
