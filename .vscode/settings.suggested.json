@@ -1,9 +1,15 @@
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "eslint.probe": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
-  "editor.formatOnSave": true,
-  "editor.formatOnPaste": false,
   "editor.codeActionsOnSave": ["source.formatDocument", "source.fixAll.eslint"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": false,
+  "editor.formatOnSave": true,
+  "eslint.probe": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "search.exclude": {
+    "**/*.code-search": true,
+    "**/bower_components": true,
+    "**/node_modules": true,
+    "**/stats.html": true
+  },
   "typescript.preferences.autoImportFileExcludePatterns": [
     "node_modules/@chakra-ui/**/*",
     "node_modules/framer-motion/**/*",

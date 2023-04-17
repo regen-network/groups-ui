@@ -14,7 +14,7 @@ const TextTemplate: StoryFn<typeof EditableDescription> = (args) => (
   <EditableDescription {...args} />
 )
 
-const onSubmit = (value: string) => console.log(value)
+const onSubmit = (value: string) => console.info(value)
 
 export const Heading = HeadingTemplate.bind({})
 Heading.args = { value: 'Editable Heading', onSave: onSubmit }

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { omit } from 'remeda'
 
-import type { ProposalAction, ProposalStakeFormValues } from 'types'
+import type { ProposalAction, ProposalStakeFormValues, UICoin } from 'types'
 import { defaultStakeFormValues } from 'util/form.defaults'
 import { uuid } from 'util/helpers'
 
@@ -24,6 +24,7 @@ export type ProposalFormValues = {
 export const ProposalForm = (props: {
   defaultValues: ProposalFormValues
   groupName: string
+  policyBalances: UICoin[]
   onSubmit: (values: ProposalFormValues) => void
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -120,8 +121,10 @@ export const ProposalForm = (props: {
           <ProposalStakeForm
             defaultValues={action.values as ProposalStakeFormValues}
             formId={action.id}
-            onSubmit={(data) => updateActionValues(action.id, data)}
+            // TODO: maxStakeAmount should probably be dynamic, or set by searching balances for the stake denom
+            maxStakeAmount={props.policyBalances[0].amount}
             onError={() => handleFormError(action.id)}
+            onSubmit={(data) => updateActionValues(action.id, data)}
           />
         )
       // TODO add other message types
