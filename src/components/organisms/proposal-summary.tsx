@@ -25,11 +25,13 @@ export const ProposalSummary = ({
   onVote,
   proposal,
   userVote,
+  votes,
 }: {
   group: UIGroup
   onVote: (option: VoteOptionType) => void
   proposal: UIProposal
   userVote?: Vote
+  votes?: Vote[]
 }) => {
   const cardBgDark = useColorModeValue('gray.100', 'gray.700')
   const now = new Date()
@@ -66,7 +68,7 @@ export const ProposalSummary = ({
             </Text>
             <Center>
               <Box maxW={220}>
-                <VotesGraph />
+                <VotesGraph votes={proposal.finalTallyResult || votes} />
               </Box>
             </Center>
             {!votingClosed && (

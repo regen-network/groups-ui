@@ -6,6 +6,7 @@ import type { RedelegateFormValues } from '@/organisms/stake-redelegate-form'
 export type {
   ProposalSDKType,
   ProposalStatus as ProposalStatusType,
+  TallyResult,
   Vote,
   VoteOption as VoteOptionType,
   VoteSDKType,

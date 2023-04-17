@@ -46,7 +46,7 @@ const eslintConfig = {
   rules: {
     'prettier/prettier': [
       'error',
-      {},
+      { endOfLine: 'auto' },
       {
         usePrettierrc: true,
       },
