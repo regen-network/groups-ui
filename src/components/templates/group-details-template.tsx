@@ -59,7 +59,7 @@ export const GroupDetailsTemplate = ({
         {description && <Text fontSize="larger">{description}</Text>}
         <HStack spacing={3}>
           <Heading variant="label" size="xs">
-            Group Admin
+            Group Admin:
           </Heading>
           <Text>{admin}</Text>
         </HStack>

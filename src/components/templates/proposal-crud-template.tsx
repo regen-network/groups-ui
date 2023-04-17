@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import type { UICoin } from 'types'
 import { SPACING } from 'util/constants'
 
 import { ROUTE_PATH } from 'routes'
@@ -26,6 +27,7 @@ export const ProposalCRUDTemplate = (props: {
   groupId: string
   groupName: string
   initialProposalFormValues: ProposalFormValues
+  policyBalances: UICoin[]
   steps: string[]
   submit: (values: ProposalFormValues) => Promise<string | null>
 }) => {
@@ -70,6 +72,7 @@ export const ProposalCRUDTemplate = (props: {
         return (
           <HorizontalSlide key="step-0" fromRight={priorStep !== 0}>
             <ProposalForm
+              policyBalances={props.policyBalances}
               defaultValues={proposalValues}
               groupName={props.groupName}
               onSubmit={handleSave}

@@ -8,7 +8,12 @@ import { getFeeDenom, uuid } from 'util/helpers'
 
 import { createProposal } from 'api/proposal.actions'
 import { useAppLocation } from 'hooks/react-router'
-import { useGroup, useGroupPolicies, useGroupProposals } from 'hooks/use-query'
+import {
+  useBalances,
+  useGroup,
+  useGroupPolicies,
+  useGroupProposals,
+} from 'hooks/use-query'
 import { useTxToasts } from 'hooks/use-toasts'
 import { Chain } from 'store/chain.store'
 import { Wallet } from 'store/wallet.store'
@@ -28,6 +33,7 @@ export default function ProposalCreate() {
   const { data: groupPolicies } = useGroupPolicies(groupId)
   const { data: proposals, isLoading: isLoadingProposals } = useGroupProposals(groupId)
   const [groupPolicy] = groupPolicies || []
+  const { data: policyBalances } = useBalances(groupPolicy?.address)
 
   if (isLoadingGroup || isLoadingProposals) return <Loading />
   if (!group || !groupPolicy) {
@@ -80,15 +86,16 @@ export default function ProposalCreate() {
 
   return (
     <ProposalCRUDTemplate
+      policyBalances={policyBalances || []}
+      groupId={group.id.toString()}
+      groupName={group.metadata.name}
       initialProposalFormValues={{
         actions: initialAction ? [initialAction] : [],
         title: `Proposal ${proposals ? proposals.length + 1 : 'Title'}`,
         summary: 'Add a description or a text proposal here',
       }}
-      groupName={group.metadata.name}
-      groupId={group.id.toString()}
-      submit={handleSubmit}
       steps={steps}
+      submit={handleSubmit}
     />
   )
 }

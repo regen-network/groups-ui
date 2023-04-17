@@ -21,13 +21,15 @@ const stakeOptions: { label: string; value: ProposalStakeType }[] = [
 export const ProposalStakeForm = ({
   defaultValues,
   formId,
-  onSubmit,
+  maxStakeAmount,
   onError,
+  onSubmit,
 }: {
   defaultValues: ProposalStakeFormValues
   formId: string
-  onSubmit: (values: ProposalStakeFormValues) => void
+  maxStakeAmount: string
   onError: () => void
+  onSubmit: (values: ProposalStakeFormValues) => void
 }) => {
   const [stakeType, setStakeType] = useState<ProposalStakeType>('delegate')
   function renderForm() {
@@ -35,7 +37,7 @@ export const ProposalStakeForm = ({
       formId,
       onSubmit,
       onError,
-      maxAmount: '1000',
+      maxAmount: maxStakeAmount,
     }
     switch (stakeType) {
       case 'claim':
