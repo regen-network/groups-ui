@@ -81,6 +81,7 @@ export default function ProposalPage() {
           group={group}
           onVote={handleVote}
           userVote={userVote}
+          votes={votes}
         />
         <ProposalDetails proposal={proposal} />
         <ProposalVotesTable votes={votes || []} groupMembers={groupMembers || []} />
