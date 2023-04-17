@@ -7,6 +7,7 @@ import type {
   VoteOptionType,
 } from 'types'
 import { logError, throwError } from 'util/errors'
+import { isJson } from 'util/validation'
 
 import { Query } from 'store/query.store'
 import { signAndBroadcast, Wallet } from 'store/wallet.store'
@@ -20,7 +21,7 @@ export async function fetchProposalsByGroupPolicy(address?: string) {
   if (!address) throwError('Address is required')
   try {
     const { proposals } = await Query.groups.proposalsByGroupPolicy({ address })
-    return proposals.map(toUIProposal)
+    return Promise.all(proposals.map(toUIProposal))
   } catch (error) {
     throwError(error)
   }
@@ -89,10 +90,12 @@ export async function createProposal({
     const data = await signAndBroadcast([submitMsg])
     if (!data) throwError('No data returned from transaction')
     let proposalId: string | undefined
-    if (data.rawLog) {
+    if (data.rawLog && isJson(data.rawLog)) {
       const [raw] = JSON.parse(data.rawLog)
       const idRaw = raw.events[0].attributes[0].value
-      proposalId = String(JSON.parse(idRaw))
+      if (isJson(idRaw)) {
+        proposalId = String(JSON.parse(idRaw))
+      }
     }
     if (!proposalId) throwError('No data returned from transaction')
     return { ...data, proposalId }

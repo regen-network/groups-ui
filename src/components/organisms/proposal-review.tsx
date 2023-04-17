@@ -1,5 +1,4 @@
 import { Fragment } from 'react'
-import { useSnapshot } from 'valtio'
 
 import type {
   ProposalAction,
@@ -8,9 +7,6 @@ import type {
   ProposalStakeFormValues,
 } from 'types'
 import { SPACING } from 'util/constants'
-import { formatFee } from 'util/helpers'
-
-import { Chain } from 'store/chain.store'
 
 import { Heading, Stack, Text } from '@/atoms'
 import { FormCard } from '@/molecules/form-card'
@@ -86,7 +82,6 @@ const SendReview = ({
   groupPolicyAddress: string
   values: ProposalSendFormValues
 }) => {
-  const { fee } = useSnapshot(Chain)
   return (
     <FormCard title="Send">
       <Stack spacing={SPACING.formStack}>
@@ -116,7 +111,6 @@ const StakeReview = ({
   groupPolicyAddress: string
   values: ProposalStakeFormValues
 }) => {
-  const { fee } = useSnapshot(Chain)
   return (
     <FormCard title="Stake">
       <Stack spacing={SPACING.formStack}>

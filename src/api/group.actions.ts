@@ -2,6 +2,7 @@ import Long from 'long'
 
 import type { GroupWithPolicyFormValues, UIGroup } from 'types'
 import { throwError } from 'util/errors'
+import { isJson } from 'util/validation'
 
 import { Query } from 'store/query.store'
 import { signAndBroadcast } from 'store/wallet.store'
@@ -14,10 +15,12 @@ export async function createGroupWithPolicy(values: GroupWithPolicyFormValues) {
     const msg = msgCreateGroupWithPolicy(values)
     const data = await signAndBroadcast([msg])
     let groupId
-    if (data.rawLog) {
+    if (data.rawLog && isJson(data.rawLog)) {
       const [raw] = JSON.parse(data.rawLog)
       const idRaw = raw.events[0].attributes[0].value
-      groupId = JSON.parse(idRaw)
+      if (idRaw && isJson(idRaw)) {
+        groupId = String(JSON.parse(idRaw))
+      }
     }
     return { ...data, groupId }
   } catch (error) {
@@ -57,8 +60,7 @@ export async function fetchGroupsByMember(address?: string): Promise<UIGroup[]> 
       address,
       // pagination: PageRequest.encode({key}).finish(),
     })
-    const UIGroups = groups.map(toUIGroup)
-    return UIGroups
+    return Promise.all(groups.map(toUIGroup))
   } catch (error) {
     throwError(error)
   }
@@ -71,7 +73,7 @@ export async function fetchGroupsByAdmin(admin?: string): Promise<UIGroup[]> {
     const { groups } = await Query.groups.groupsByAdmin({
       admin,
     })
-    return groups.map(toUIGroup)
+    return Promise.all(groups.map(toUIGroup))
   } catch (error) {
     throwError(error)
   }

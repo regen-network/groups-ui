@@ -12,6 +12,8 @@ const CHAIN_ITEMS = allChainsArray.map(({ chainId, chainName }) => ({
 
 export const ChainSelect = () => {
   const { active } = useSnapshot(Chain)
+  // we only want to show this if there are multiple chains
+  if (CHAIN_ITEMS.length <= 1) return null
 
   return (
     <SelectDropdown
