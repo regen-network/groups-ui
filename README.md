@@ -1,13 +1,13 @@
-# Cosmos Groups UI
+# Regen Groups UI
 
 [Regen network](https://regen.network/) UI for Cosmos groups module
 
 ## Table of Contents
 
-- [Cosmos Groups UI](#cosmos-groups-ui)
+- [Regen Groups UI](#regen-groups-ui)
   - [Table of Contents](#table-of-contents)
 - [Local Setup](#local-setup)
-  - [Install Cosmos-SDK](#install-cosmos-sdk)
+  - [Install Regen Ledger](#install-regen-ledger)
     - [For Darwin / MacOS:](#for-darwin--macos)
     - [For Linux (untested)](#for-linux-untested)
   - [Makefile commands](#makefile-commands)
@@ -26,26 +26,26 @@
 3. `yarn dev` to run the repo
 4. (optional) `yarn storybook` to
 
-## Install Cosmos-SDK
+## Install Regen Ledger
 
-`git clone https://github.com/cosmos/cosmos-sdk` and **within that directory**:
+`git clone https://github.com/regen-network/regen-ledger/` and **within that directory**:
 
-1. `git checkout v0.46.11`
-2. `make build`
+1. `make build` - build ledger locally
+2. `mv build/regen build/regenlocal` - rename to `regenlocal` to avoid conflicts with the `regen` binary
 
 ### For Darwin / MacOS:
 
-3. `sudo mv build/simd $GOPATH/bin`
-4. `sudo ln -s $GOPATH/bin/simd /usr/local/bin/simd`
+3. `sudo mv build/regenlocal $GOPATH/bin`
+4. `sudo ln -s $GOPATH/bin/regenlocal /usr/local/bin/regenlocal`
 
 ### For Linux (untested)
 
-3. `sudo mv build/simd $HOME/go/bin`
+3. `sudo mv build/regenlocal $HOME/go/bin`
 
 ## Makefile commands
 
 1. `make local-clean` - wipe prior local data
-2. `make local-init` - set up local user wallets / accounts, seed funds
+2. `make local-init` - set up local ledger, user wallets / accounts, seed funds
 3. `make local-start` - run local node
 4. `make bank-send` - send funds to the wallet address listed below
 
@@ -53,7 +53,7 @@
 
 You'll need to import generated wallet info into Keplr in order to test features:
 
-(from `USER2` in the makefile)
+(from `USER` in the makefile)
 
 ```
 high return silly coyote skin trumpet stock bicycle enjoy common exact sure
