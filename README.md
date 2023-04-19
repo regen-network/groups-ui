@@ -8,8 +8,6 @@
   - [Table of Contents](#table-of-contents)
 - [Local Setup](#local-setup)
   - [Install Regen Ledger](#install-regen-ledger)
-    - [For Darwin / MacOS:](#for-darwin--macos)
-    - [For Linux (untested)](#for-linux-untested)
   - [Makefile commands](#makefile-commands)
   - [Keplr](#keplr)
   - [IDE](#ide)
@@ -24,27 +22,17 @@
 1. `yarn install`
 2. copy over the config `cp .env.local.example .env.local`
 3. `yarn dev` to run the repo
-4. (optional) `yarn storybook` to
+4. (optional) `yarn storybook` to see component examples
 
 ## Install Regen Ledger
 
-`git clone https://github.com/regen-network/regen-ledger/` and **within that directory**:
-
-1. `make build` - build ledger locally
-2. `mv build/regen build/regenlocal` - rename to `regenlocal` to avoid conflicts with the `regen` binary
-
-### For Darwin / MacOS:
-
-3. `sudo mv build/regenlocal $GOPATH/bin`
-4. `sudo ln -s $GOPATH/bin/regenlocal /usr/local/bin/regenlocal`
-
-### For Linux (untested)
-
-3. `sudo mv build/regenlocal $HOME/go/bin`
+`make install-local-ledger` - this will install the regen ledger binary to `local-ledger/regen` in order to be used by other makefile commands. Note: this will wipe any existing local regen ledger data
 
 ## Makefile commands
 
-1. `make local-clean` - wipe prior local data
+Run the following in order for initial project setup, then re-run to wipe local ledger data
+
+1. `make local-clean` - wipe prior local ledger data
 2. `make local-init` - set up local ledger, user wallets / accounts, seed funds
 3. `make local-start` - run local node
 4. `make bank-send` - send funds to the wallet address listed below
