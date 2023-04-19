@@ -5,13 +5,12 @@ const tsconfigPaths = require('vite-tsconfig-paths').default
 module.exports = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
+    '@chakra-ui/storybook-addon',
     '@storybook/addon-essentials',
     '@storybook/addon-links',
     '@storybook/addon-interactions',
     'storybook-addon-react-router-v6',
-    // '@chakra-ui/storybook-addon', // TODO: Add this back in when it's fixed
   ],
-
   framework: {
     name: '@storybook/react-vite',
     options: {},
@@ -19,5 +18,8 @@ module.exports = {
   core: {},
   features: {
     emotionAlias: false,
+  },
+  docs: {
+    autodocs: true,
   },
 }
