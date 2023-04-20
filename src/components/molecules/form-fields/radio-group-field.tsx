@@ -1,6 +1,11 @@
 import { useController, useFormContext } from 'react-hook-form'
 
-import { type RadioGroupProps, RadioGroup } from '@/atoms'
+import {
+  type RadioGroupProps,
+  type RadioProps,
+  type StackProps,
+  RadioGroup,
+} from '@/atoms'
 
 import { type RadioGroupOption, RadioGroupOptions } from '../radio-group-options'
 
@@ -9,15 +14,19 @@ import { type FieldProps, FieldControl } from './field-control'
 type Props = FieldProps & {
   options: RadioGroupOption[]
   radioGroupProps?: Omit<RadioGroupProps, 'children' | keyof FieldProps>
+  spacing?: StackProps['spacing']
+  size?: RadioProps['size']
 }
 
-/** custom radio group field for react hook form */
+/** custom radio group field for react hook form - optionally can be passed `children` which will render within the selected radio group option */
 export const RadioGroupField = ({
-  options,
   label,
-  required,
   name,
+  options,
   radioGroupProps,
+  required,
+  size,
+  spacing,
 }: Props) => {
   const { control, getValues } = useFormContext()
   const {
@@ -40,7 +49,12 @@ export const RadioGroupField = ({
         defaultValue={field.value}
         {...radioGroupProps}
       >
-        <RadioGroupOptions options={options} selected={field.value} />
+        <RadioGroupOptions
+          options={options}
+          selected={field.value}
+          spacing={spacing}
+          size={size}
+        />
       </RadioGroup>
     </FieldControl>
   )

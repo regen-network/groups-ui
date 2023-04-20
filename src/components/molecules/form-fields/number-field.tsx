@@ -3,9 +3,14 @@ import { useController, useFormContext } from 'react-hook-form'
 
 import { strToNumOrEmpty } from 'util/helpers'
 
-import { type NumberInputProps, Flex, NumberInput } from '@/atoms'
+import { type NumberInputProps, Flex, NumberInput, Text } from '@/atoms'
 
 import { type FieldProps, FieldControl } from './field-control'
+
+export type NumberFieldProps = FieldProps & {
+  numberInputProps?: NumberInputProps
+  children?: ReactNode
+}
 
 /** `NumberInput` with controls for react-hook-form */
 /** optionally accepts `children` which will be rendered beside the input */
@@ -13,7 +18,7 @@ export const NumberField = ({
   children,
   numberInputProps,
   ...fieldProps
-}: FieldProps & { numberInputProps?: NumberInputProps; children?: ReactNode }) => {
+}: NumberFieldProps) => {
   const { name, required } = fieldProps
   const { control, getValues } = useFormContext()
   const {
@@ -40,5 +45,20 @@ export const NumberField = ({
         {children}
       </Flex>
     </FieldControl>
+  )
+}
+
+export const NumberFieldWithSideLabel = ({
+  sideLabel,
+  ...numberFieldProps
+}: NumberFieldProps & { sideLabel: string }) => {
+  return (
+    <NumberField {...numberFieldProps}>
+      <Flex align="center" minW="50%">
+        <Text ml={5} fontWeight="bold">
+          {sideLabel}
+        </Text>
+      </Flex>
+    </NumberField>
   )
 }

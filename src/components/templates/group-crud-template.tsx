@@ -55,7 +55,7 @@ export function GroupCRUDTemplate({
   const [submitting, setSubmitting] = useState(false)
   const [priorStep, setPriorStep] = useState(0)
 
-  const { threshold, votingWindow, percentage } = initialPolicyFormValues
+  const { threshold, votingWindow, percentage, policyType } = initialPolicyFormValues
 
   function handleGroupSubmit(values: GroupFormValues) {
     setGroupValues(values)
@@ -99,7 +99,7 @@ export function GroupCRUDTemplate({
           <HorizontalSlide key="step-1">
             <GroupPolicyForm
               onSubmit={handleSubmit}
-              defaultValues={{ threshold, votingWindow, percentage }}
+              defaultValues={{ threshold, votingWindow, percentage, policyType }}
             />
           </HorizontalSlide>
         )

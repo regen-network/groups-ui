@@ -17,6 +17,7 @@ export function msgCreateGroupWithPolicy(values: GroupWithPolicyFormValues) {
     policyAsAdmin,
     percentage,
     threshold,
+    policyType,
     votingWindow,
   } = values
   return GroupMsgWithTypeUrl.createGroupWithPolicy({
@@ -24,6 +25,7 @@ export function msgCreateGroupWithPolicy(values: GroupWithPolicyFormValues) {
     groupPolicyMetadata: '',
     groupPolicyAsAdmin: policyAsAdmin === 'true',
     decisionPolicy: encodeDecisionPolicy({
+      policyType,
       percentage: clearEmptyStr(percentage),
       threshold: clearEmptyStr(threshold),
       votingWindow: votingWindow,
