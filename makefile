@@ -30,7 +30,7 @@ endif
 install-local-ledger:
 	rm -rf local-ledger
 	git clone --depth 1 --branch $(LEDGER_BRANCH) https://github.com/regen-network/regen-ledger.git local-ledger/temp
-	cd local-ledger/temp && yarn install && make build
+	cd local-ledger/temp && make build
 	mv local-ledger/temp/build/regen local-ledger/regen
 	rm -rf local-ledger/temp
 
@@ -62,11 +62,6 @@ local-init: local-clean local-keys
 .PHONY: local-start
 local-start:
 	$(LEDGER) start --home $(CHAIN_HOME) --log_level debug
-
-# .PHONY: query-balance
-# query-balance:
-# 	$(LEDGER) q bank balances $(GENESIS_ACCT_ADDR) --chain-id $(CHAIN_ID) --home $(CHAIN_HOME)
-# 	$(LEDGER) q bank balances $(USER_ADDR) --chain-id $(CHAIN_ID) --home $(CHAIN_HOME)
 
 .PHONY: keys-list
 keys-list:
