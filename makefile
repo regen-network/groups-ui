@@ -1,10 +1,13 @@
-# Most of this file is copied from the prior groups work - probably room to clean some of this up
-MONIKER=cosmoswithgroups1
-CHAIN_ID=cosmoswithgroups
-CHAIN_HOME=$(HOME)/.simd
-ALICE=cosmos1kdzkazludrnmnzchcxgs6znsjph5ugx4rhljrh
-USER2=cosmos106ljn6kds9vegaux0w4jnend97fdm50yec59vq
-COSMOS_SDK_VERSION=v0.46.11
+CHAIN_HOME=$(shell pwd)/local-ledger/.regen
+CHAIN_ID=regenlocal
+COIN_DENOM=uregen
+GENESIS_ACCT_ADDR=regen1kdzkazludrnmnzchcxgs6znsjph5ugx4u45w4n
+GENESIS_ACCT_NAME=alice
+LEDGER=$(shell pwd)/local-ledger/regen
+LEDGER_BRANCH=v5.1.0
+MONIKER=regenlocal1
+USER_ADDR=regen106ljn6kds9vegaux0w4jnend97fdm50yx6le6y
+USER_NAME=user1
 
 NOW=$(shell date +%s%3)
 UNAME=$(shell uname)
@@ -23,32 +26,30 @@ ifeq ($(UNAME), Darwin) # MacOS
 	base64=base64
 endif
 
-.PHONY: help
-help:
-ifeq ($(UNAME), Linux)
-	@echo "git clone https://github.com/cosmos/cosmos-sdk -> git checkout $(COSMOS_SDK_VERSION) -> make build -> mv build/simd $HOME/go/bin/"
-endif
-ifeq ($(UNAME), Darwin) # macOS
-	@echo "git clone https://github.com/cosmos/cosmos-sdk -> git checkout $(COSMOS_SDK_VERSION) -> make build -> echo $GOPATH/bin sudo mv build/simd /usr/local/go/bin/ -> ln -s /usr/local/go/bin/simd /usr/local/bin/simd"
-endif
+.PHONY: install-local-ledger
+install-local-ledger:
+	rm -rf local-ledger
+	git clone --depth 1 --branch $(LEDGER_BRANCH) https://github.com/regen-network/regen-ledger.git local-ledger/temp
+	cd local-ledger/temp && make build
+	mv local-ledger/temp/build/regen local-ledger/regen
+	rm -rf local-ledger/temp
 
 .PHONY: local-clean
 local-clean:
-	rm -rf $(CHAIN_HOME) && rm -rf $(HOME)/.simapp
+	rm -rf $(CHAIN_HOME) && rm -rf $(HOME)/.regenlocal
 
 .PHONY: local-keys
 local-keys:
-	simd keys show alice --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME) > /dev/null 2>&1 || (sleep 1; echo "earn noble employ useful space craft staff blast exact pluck siren physical biology short suit oval open legend humble pill series devote wealth hungry") | simd keys add alice --recover --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)
-	simd keys show bob --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME) > /dev/null 2>&1 || (sleep 1; echo "lawn pigeon use festival elder trust wish rose law family about web fiber jealous daughter vote history grant quarter fetch soft poem aware truly") | simd keys add bob --recover --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)
-	simd keys show user1 --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME) > /dev/null 2>&1 || (sleep 1; echo "hello turn increase august raw toss hurdle craft baby arrow aware shield maple net six math chase debris chase wet benefit rent segment beauty") | simd keys add user1 --recover --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)
-	simd keys show user2 --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME) > /dev/null 2>&1 || (sleep 1; echo "high return silly coyote skin trumpet stock bicycle enjoy common exact sure") | simd keys add user2 --recover --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)
+	$(LEDGER) keys show $(GENESIS_ACCT_NAME) --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME) > /dev/null 2>&1 || (sleep 1; echo "earn noble employ useful space craft staff blast exact pluck siren physical biology short suit oval open legend humble pill series devote wealth hungry") | $(LEDGER) keys add $(GENESIS_ACCT_NAME) --recover --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)
+	$(LEDGER) keys show $(USER_NAME) --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME) > /dev/null 2>&1 || (sleep 1; echo "high return silly coyote skin trumpet stock bicycle enjoy common exact sure") | $(LEDGER) keys add $(USER_NAME) --recover --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)
 
 .PHONY: local-init
 local-init: local-clean local-keys
-	simd init $(MONIKER) --chain-id $(CHAIN_ID) --home $(CHAIN_HOME)
-	simd add-genesis-account alice 10000000000000000000000001stake --home $(CHAIN_HOME) --keyring-backend test
-	simd gentx alice 1000000000stake --chain-id $(CHAIN_ID) --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)
-	simd collect-gentxs --home $(CHAIN_HOME)
+	$(LEDGER) init $(MONIKER) --chain-id $(CHAIN_ID) --home $(CHAIN_HOME)
+	$(sed) "s/stake/$(COIN_DENOM)/" $(CHAIN_HOME)/config/genesis.json
+	$(LEDGER) add-genesis-account $(GENESIS_ACCT_NAME) 10000000000000000000000001$(COIN_DENOM) --home $(CHAIN_HOME) --keyring-backend test
+	$(LEDGER) gentx $(GENESIS_ACCT_NAME) 1000000000$(COIN_DENOM) --chain-id $(CHAIN_ID) --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)
+	$(LEDGER) collect-gentxs --home $(CHAIN_HOME)
 	$(sed) "s/prometheus = false/prometheus = true/" $(CHAIN_HOME)/config/config.toml
 	$(sed) "s/cors_allowed_origins = \[\]/cors_allowed_origins = [\"*\"]/" $(CHAIN_HOME)/config/config.toml
 	$(sed) "s/laddr = \"tcp:\/\/127.0.0.1:26657\"/laddr = \"tcp:\/\/0.0.0.0:26657\"/" $(CHAIN_HOME)/config/config.toml
@@ -56,104 +57,16 @@ local-init: local-clean local-keys
 	$(sed) "s/swagger = false/swagger = true/" $(CHAIN_HOME)/config/app.toml
 	$(sed) "s/enabled-unsafe-cors = false/enabled-unsafe-cors = true/" $(CHAIN_HOME)/config/app.toml
 	$(sed) "s/enable-unsafe-cors = false/enable-unsafe-cors = true/" $(CHAIN_HOME)/config/app.toml
+	$(sed) "s/minimum-gas-prices = \"\"/minimum-gas-prices = \"0.0$(COIN_DENOM)\"/" $(CHAIN_HOME)/config/app.toml
 
 .PHONY: local-start
 local-start:
-	simd start --home $(CHAIN_HOME) --log_level debug
-
-.PHONY: query-balance
-query-balance:
-	simd q bank balances $(ALICE) --chain-id $(CHAIN_ID) --home $(CHAIN_HOME)
-	simd q bank balances $(USER2) --chain-id $(CHAIN_ID) --home $(CHAIN_HOME)
+	$(LEDGER) start --home $(CHAIN_HOME) --log_level debug
 
 .PHONY: keys-list
 keys-list:
-	simd keys list --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)
+	$(LEDGER) keys list --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)
 
 .PHONY: bank-send
 bank-send:
-	simd tx bank send $(ALICE) $(USER2) 1000000000000000stake --chain-id $(CHAIN_ID) --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)
-
-# .PHONY: create-validator
-# create-validator:
-# 	simd tx staking create-validator \
-#   --amount=1000000stake \
-#   --pubkey=$(simd tendermint show-validator) \
-#   --moniker="mock-validator" \
-#   --website="https://myweb.site" \
-#   --details="description of your validator" \
-#   --chain-id=$(CHAIN_ID) \
-#   --commission-rate="0.10" \
-#   --commission-max-rate="0.20" \
-#   --commission-max-change-rate="0.01" \
-#   --min-self-delegation="1" \
-#   --gas="auto" \
-#   --gas-adjustment="1.2" \
-#   --gas-prices="0.025stake" \
-#   --from=mykey
-
-
-# .PHONY: create-group
-# create-group:
-# 	simd tx group create-group $(USER2) $$(echo '{"name": "bla1", "description": "blabbl", "created": $(NOW), "lastEdited": $(NOW), "linkToForum": "", "other": "blabla"}' | $(base64)) \
-# 		./testdata/members.json --chain-id $(CHAIN_ID) --keyring-backend test --keyring-dir $(CHAIN_HOME)
-
-# .PHONY: create-group-with-policy
-# create-group-with-policy:
-# 	# USER2 should have some coins to pay fee
-# 	simd tx group create-group-with-policy $(USER2) \
-#  		$$(echo '{"name": "bla1", "description": "blabbl", "created": $(NOW), "lastEdited": $(NOW), "linkToForum": "", "other": "blabla"}' | $(base64)) \
-# 		'' ./testdata/members.json \
-# 		'{"@type":"/cosmos.group.v1.PercentageDecisionPolicy", "percentage":"1", "windows": {"voting_period": "120h"}}' \
-# 		 --chain-id $(CHAIN_ID) --keyring-backend test --keyring-dir $(CHAIN_HOME)
-
-# .PHONY: create-group-policy
-# create-group-policy:
-# 	@read -p "Group ID:" groupId; \
-# 	simd tx group create-group-policy $(USER2) $$groupId '' --chain-id $(CHAIN_ID) \
-#     	'{"@type":"/cosmos.group.v1.ThresholdDecisionPolicy", "threshold":"1", "windows": {"voting_period": "120h"}}'
-
-# .PHONY: query-group-proposals-by-group-policy
-# query-group-proposals-by-group-policy:
-# 	@read -p "Group Policy Address:" address; \
-# 	simd q group proposals-by-group-policy $$address
-
-# .PHONY: query-group-policies
-# query-group-policies:
-# 	@read -p "Group ID:" groupId; \
-# 	simd q group group-policies-by-group $$groupId
-
-# .PHONY: query-group-proposal
-# query-group-proposal:
-# 	@read -p "Proposal ID:" proposalId; \
-# 	simd q group proposal $$proposalId
-
-# .PHONY: submit-bank-send-proposal
-# submit-bank-send-proposal:
-# 	simd tx group submit-proposal ./testdata/proposals/bank-send-proposal.json --chain-id $(CHAIN_ID)
-
-# .PHONY: submit-text-proposal
-# submit-text-proposal:
-# 	simd tx group submit-proposal ./testdata/proposals/text-proposal.json --chain-id $(CHAIN_ID)
-
-# .PHONY: update-group-metadata
-# update-group-metadata:
-# 	simd tx group update-group-metadata $(USER2) 2 $$(echo '{"name": "bla1", "description": "blabbl", "created": $(NOW), "lastEdited": $(NOW), "linkToForum": "", "other": "blabla"}' | base64 -w 0) --home $(CHAIN_HOME) --chain-id $(CHAIN_ID) --keyring-backend test --keyring-dir $(CHAIN_HOME)
-
-# .PHONY: query-groups
-# query-groups:
-# 	simd q group groups-by-admin $(USER2)
-
-# .PHONY: vote
-# vote:
-# 	@read -p "Proposal ID:" proposalId; \
-# 	read -p "Voter Address:" voter; \
-# 	read -p "Vote Option (VOTE_OPTION_UNSPECIFIED|VOTE_OPTION_NO|VOTE_OPTION_YES|VOTE_OPTION_ABSTAIN|VOTE_OPTION_NO_WITH_VETO):" option; \
-# 	read -p "Metadata" metadata; \
-# 	simd tx group vote $$proposalId $$voter $$option $$metadata --chain-id $(CHAIN_ID)
-
-# .PHONY: query-votes
-# query-votes:
-# 	@read -p "Proposal ID:" proposalId; \
-# 	read -p "Voter Address:" voter; \
-# 	simd q group vote $$proposalId $$voter
+	$(LEDGER) tx bank send $(GENESIS_ACCT_ADDR) $(USER_ADDR) 1000000000000000$(COIN_DENOM) --chain-id $(CHAIN_ID) --home $(CHAIN_HOME) --keyring-backend test --keyring-dir $(CHAIN_HOME)

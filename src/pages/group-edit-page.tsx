@@ -57,6 +57,7 @@ export default function GroupEdit() {
     percentage: isPercentagePolicy(policy.decisionPolicy)
       ? percentStrToNum(policy.decisionPolicy.percentage)
       : undefined,
+    policyType: isThresholdPolicy(decisionPolicy) ? 'threshold' : 'percentage',
   }
 
   const initialValues = {
@@ -112,6 +113,7 @@ export default function GroupEdit() {
             msgUpdateDecisionPolicy({
               admin: group.admin,
               policyAddress: policy.address,
+              policyType: values.policyType,
               votingWindow: values.votingWindow,
               percentage: clearEmptyStr(values.percentage),
               threshold: clearEmptyStr(values.threshold),

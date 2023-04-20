@@ -29,6 +29,8 @@ export const DEFAULT_MEMBER_WEIGHT = 1
 
 export const defaultGroupPolicyFormValues: GroupPolicyFormValues = {
   votingWindow: DEFAULT_VOTING_WINDOW,
+  policyType: 'threshold',
+  percentage: 51,
 }
 
 export const defaultDelegateFormValues: DelegateFormValues = {

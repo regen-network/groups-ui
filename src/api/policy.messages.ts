@@ -1,3 +1,4 @@
+import { GroupPolicyFormValues } from 'types'
 import { daysToDuration, secondsToDuration } from 'util/date'
 import { throwError } from 'util/errors'
 import { numToPercentStr } from 'util/helpers'
@@ -9,20 +10,23 @@ export function msgUpdateDecisionPolicy({
   policyAddress,
   percentage,
   threshold,
+  policyType,
   votingWindow,
 }: {
   admin: string
-  policyAddress: string
-  votingWindow: number
   percentage?: number
+  policyAddress: string
+  policyType: GroupPolicyFormValues['policyType']
   threshold?: number
+  votingWindow: number
 }) {
   return GroupMsgWithTypeUrl.updateGroupPolicyDecisionPolicy({
     admin,
     decisionPolicy: encodeDecisionPolicy({
-      votingWindow,
       percentage,
+      policyType,
       threshold,
+      votingWindow,
     }),
     groupPolicyAddress: policyAddress,
   })
@@ -33,6 +37,7 @@ export function msgUpdateDecisionPolicy({
  * msgCompoer expects values */
 export function encodeDecisionPolicy({
   votingWindow,
+  policyType,
   threshold,
   percentage,
 }: {
@@ -42,12 +47,14 @@ export function encodeDecisionPolicy({
   threshold?: number
   /** percentage expressed as an integer string, ie `51` == 51% | '0.51'` */
   percentage?: number
+  policyType: GroupPolicyFormValues['policyType']
 }) {
   const windows = {
     minExecutionPeriod: secondsToDuration(1),
     votingPeriod: daysToDuration(votingWindow),
   }
-  if (percentage) {
+  if (policyType === 'percentage') {
+    if (!percentage) throwError('Must provide percentage value')
     return {
       typeUrl: '/cosmos.group.v1.PercentageDecisionPolicy',
       value: groupV1.PercentageDecisionPolicy.encode({
@@ -55,13 +62,16 @@ export function encodeDecisionPolicy({
         windows,
       }).finish(),
     }
-  }
-  if (!threshold) throwError('Must provide threshold or percentage')
-  return {
-    typeUrl: '/cosmos.group.v1.ThresholdDecisionPolicy',
-    value: groupV1.ThresholdDecisionPolicy.encode({
-      threshold: threshold.toString(),
-      windows,
-    }).finish(),
+  } else if (policyType === 'threshold') {
+    if (!threshold) throwError('Must provide threshold value')
+    return {
+      typeUrl: '/cosmos.group.v1.ThresholdDecisionPolicy',
+      value: groupV1.ThresholdDecisionPolicy.encode({
+        threshold: threshold.toString(),
+        windows,
+      }).finish(),
+    }
+  } else {
+    throwError('Invalid policy type: ' + policyType)
   }
 }
