@@ -2,6 +2,7 @@ import type {
   Any,
   ProposalAction,
   ProposalSDKType,
+  ProposalSendFormValues,
   ProposalStakeFormValues,
   UIProposal,
   Vote,
@@ -10,6 +11,7 @@ import type {
 import { toDate } from 'util/date'
 import { throwError } from 'util/errors'
 
+import { msgSend } from './bank.messages'
 import {
   msgStakingDelegate,
   msgStakingRedelegate,
@@ -29,6 +31,9 @@ export function proposalActionsToMsgs(
   data: ProposalData,
 ): Any[] {
   return actions.map(({ values }) => {
+    if (isSendProposal(values)) {
+      return sendValuesToMsg(values, data) as unknown as Any // TODO
+    }
     if (isStakeProposal(values)) {
       return stakeValuesToMsg(values, data) as unknown as Any // TODO
     }
@@ -84,6 +89,22 @@ export function toUIVote({
     voter,
     submitTime: submit_time,
   }
+}
+
+function isSendProposal(
+  values: ProposalAction['values'],
+): values is ProposalSendFormValues {
+  return 'sendType' in values
+}
+
+function sendValuesToMsg(values: ProposalSendFormValues, data: ProposalData) {
+  const sendInfo = {
+    fromAddress: data.groupPolicyAddress, // TODO: should this be a different address?
+    toAddress: values.toAddress,
+    amount: values.amount,
+    denom: data.denom,
+  }
+  return msgSend(sendInfo)
 }
 
 function isStakeProposal(

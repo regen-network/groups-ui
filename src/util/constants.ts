@@ -21,4 +21,10 @@ export const ENABLED_ACTIONS: Array<{
     tooltip: 'Create a "stake" proposal',
     icon: CgListTree,
   },
+  {
+    type: 'send',
+    label: 'Send',
+    tooltip: 'Create a "send" proposal',
+    icon: CgListTree,
+  },
 ]
