@@ -5,6 +5,7 @@ dist-ssr
 *.local
 node_modules/*
 stats.html
+local-ledger
 
 ### VisualStudioCode ###
 .vscode/**/*

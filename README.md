@@ -1,15 +1,13 @@
-# Cosmos Groups UI
+# Regen Groups UI
 
 [Regen network](https://regen.network/) UI for Cosmos groups module
 
 ## Table of Contents
 
-- [Cosmos Groups UI](#cosmos-groups-ui)
+- [Regen Groups UI](#regen-groups-ui)
   - [Table of Contents](#table-of-contents)
 - [Local Setup](#local-setup)
-  - [Install Cosmos-SDK](#install-cosmos-sdk)
-    - [For Darwin / MacOS:](#for-darwin--macos)
-    - [For Linux (untested)](#for-linux-untested)
+  - [Install Regen Ledger](#install-regen-ledger)
   - [Makefile commands](#makefile-commands)
   - [Keplr](#keplr)
   - [IDE](#ide)
@@ -24,28 +22,18 @@
 1. `yarn install`
 2. copy over the config `cp .env.local.example .env.local`
 3. `yarn dev` to run the repo
-4. (optional) `yarn storybook` to
+4. (optional) `yarn storybook` to see component examples
 
-## Install Cosmos-SDK
+## Install Regen Ledger
 
-`git clone https://github.com/cosmos/cosmos-sdk` and **within that directory**:
-
-1. `git checkout v0.46.11`
-2. `make build`
-
-### For Darwin / MacOS:
-
-3. `sudo mv build/simd $GOPATH/bin`
-4. `sudo ln -s $GOPATH/bin/simd /usr/local/bin/simd`
-
-### For Linux (untested)
-
-3. `sudo mv build/simd $HOME/go/bin`
+`make install-local-ledger` - this will install the regen ledger binary to `local-ledger/regen` in order to be used by other makefile commands. Note: this will wipe any existing local regen ledger data
 
 ## Makefile commands
 
-1. `make local-clean` - wipe prior local data
-2. `make local-init` - set up local user wallets / accounts, seed funds
+Run the following in order for initial project setup, then re-run to wipe local ledger data
+
+1. `make local-clean` - wipe prior local ledger data
+2. `make local-init` - set up local ledger, user wallets / accounts, seed funds
 3. `make local-start` - run local node
 4. `make bank-send` - send funds to the wallet address listed below
 
@@ -53,7 +41,7 @@
 
 You'll need to import generated wallet info into Keplr in order to test features:
 
-(from `USER2` in the makefile)
+(from `USER` in the makefile)
 
 ```
 high return silly coyote skin trumpet stock bicycle enjoy common exact sure
