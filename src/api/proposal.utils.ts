@@ -99,7 +99,7 @@ function isSendProposal(
 
 function sendValuesToMsg(values: ProposalSendFormValues, data: ProposalData) {
   const sendInfo = {
-    fromAddress: data.groupPolicyAddress, // TODO: should this be a different address?
+    fromAddress: data.groupPolicyAddress,
     toAddress: values.toAddress,
     amount: values.amount,
     denom: data.denom,
@@ -119,7 +119,7 @@ function stakeValuesToMsg(values: ProposalStakeFormValues, data: ProposalData) {
       amount: values.amount,
       validatorAddress: values.validator,
       denom: data.denom,
-      delegatorAddress: data.groupPolicyAddress, // TODO: should this be a different address?
+      delegatorAddress: data.groupPolicyAddress,
     }
     return values.stakeType === 'delegate'
       ? msgStakingDelegate(delegateInfo)
