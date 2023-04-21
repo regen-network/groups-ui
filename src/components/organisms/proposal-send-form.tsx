@@ -1,60 +1,65 @@
-import { useSnapshot } from 'valtio'
-import { z } from 'zod'
+import { useState } from 'react'
 
+import type { ProposalSendFormValues, ProposalSendType } from 'types'
 import { SPACING } from 'util/constants'
-import { getFeeDenom } from 'util/helpers'
-import { valid } from 'util/validation/zod'
 
-import { useZodForm } from 'hooks/use-zod-form'
-import { Chain } from 'store/chain.store'
-
-import { Stack } from '@/atoms'
-import { Form } from '@/molecules/form'
+import { FormControl, FormLabel, RadioGroup, Stack } from '@/atoms'
 import { FormCard } from '@/molecules/form-card'
-import { AmountField, FeeDisplayField, InputField } from '@/molecules/form-fields'
-import { FormSubmitHiddenButton } from '@/molecules/form-footer'
+import { RadioGroupOptions } from '@/molecules/radio-group-options'
 
-const schema = z.object({
-  toAddress: valid.bech32Address,
-  amount: valid.amount,
-})
+import { type SingleFormValues, SingleForm } from './send-single-form'
 
-export type ProposalSendFormValues = z.infer<typeof schema>
+const sendOptions: { label: string; value: ProposalSendType }[] = [
+  { label: 'Single', value: 'single' },
+  // { label: 'Multiple', value: 'multi' }, // TODO
+]
 
-export const ProposalSendForm = (props: {
+export const ProposalSendForm = ({
+  defaultValues,
+  formId,
+  maxAmount,
+  onError,
+  onSubmit,
+}: {
   defaultValues: ProposalSendFormValues
   formId: string
   maxAmount: string
-  onSubmit: (data: ProposalSendFormValues) => void
   onError: () => void
+  onSubmit: (values: ProposalSendFormValues) => void
 }) => {
-  const { fee } = useSnapshot(Chain)
-  const form = useZodForm({
-    schema,
-    defaultValues: {
-      ...props.defaultValues,
-    },
-  })
+  const [sendType, setSendType] = useState<ProposalSendType>('single')
+  function renderForm() {
+    const baseProps = {
+      formId,
+      onSubmit,
+      onError,
+      maxAmount,
+    }
+    switch (sendType) {
+      case 'single':
+      default:
+        return (
+          <SingleForm
+            {...baseProps}
+            key={formId + '-single'} // force re-render when toggling between forms
+            defaultValues={defaultValues as SingleFormValues}
+          />
+        )
+    }
+  }
   return (
     <FormCard title="Send">
       <Stack spacing={SPACING.formStack}>
-        <Form
-          id={props.formId}
-          form={form}
-          onSubmit={props.onSubmit}
-          onError={props.onError}
-        >
-          <InputField required name="to-address" label="To Address" />
-          <AmountField
-            required
-            name="amount"
-            label="Amount"
-            maxValue={props.maxAmount}
-            denom={getFeeDenom(fee)}
-          />
-          <FeeDisplayField />
-          <FormSubmitHiddenButton id={props.formId} onSubmit={props.onSubmit} />
-        </Form>
+        {/*<FormControl>*/}
+        {/*  <FormLabel>Type</FormLabel>*/}
+        {/*  <RadioGroup*/}
+        {/*    onChange={(val) => setSendType(val as ProposalSendType)}*/}
+        {/*    defaultValue={sendType}*/}
+        {/*  >*/}
+        {/*    <RadioGroupOptions options={sendOptions} selected={sendType} />*/}
+        {/*  </RadioGroup>*/}
+        {/*</FormControl>*/}
+        {renderForm()}
       </Stack>
     </FormCard>
   )

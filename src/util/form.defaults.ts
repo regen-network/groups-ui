@@ -35,6 +35,7 @@ export const defaultGroupPolicyFormValues: GroupPolicyFormValues = {
 export const defaultSendFormValues: ProposalSendFormValues = {
   toAddress: '',
   amount: '',
+  sendType: 'single',
 }
 
 export const defaultDelegateFormValues: DelegateFormValues = {

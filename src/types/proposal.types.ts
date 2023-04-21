@@ -1,6 +1,6 @@
 import type { Proposal } from '@haveanicedavid/regen-ts/types/codegen/cosmos/group/v1/types'
 
-import type { ProposalSendFormValues } from '@/organisms/proposal-send-form'
+import type { SingleFormValues } from '@/organisms/send-single-form'
 import type { ClaimFormValues } from '@/organisms/stake-claim-form'
 import type { DelegateFormValues } from '@/organisms/stake-delegate-form'
 import type { RedelegateFormValues } from '@/organisms/stake-redelegate-form'
@@ -33,6 +33,10 @@ export type ProposalAction = {
   values: ProposalSendFormValues | ProposalStakeFormValues // TODO: types for other form actions
 }
 
+export type ProposalSendType = 'single' // TODO: "multi" send
+
+export type ProposalSendFormValues = SingleFormValues // TODO: "multi" send
+
 export type ProposalStakeType = 'delegate' | 'redelegate' | 'undelegate' | 'claim'
 
 export type ProposalStakeFormValues =
@@ -41,6 +45,6 @@ export type ProposalStakeFormValues =
   | RedelegateFormValues
 
 // Re-export for convenience
-export type { ProposalSendFormValues }
+export type { SingleFormValues }
 export type { ClaimFormValues, DelegateFormValues, RedelegateFormValues }
 export type { ProposalFormValues } from '@/organisms/proposal-form'

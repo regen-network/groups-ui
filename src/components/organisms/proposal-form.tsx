@@ -130,6 +130,7 @@ export const ProposalForm = (props: {
           <ProposalSendForm
             defaultValues={action.values as ProposalSendFormValues}
             formId={action.id}
+            // TODO: maxAmount should probably be dynamic, or set by searching balances
             maxAmount={props.policyBalances[0]?.amount}
             onError={() => handleFormError(action.id)}
             onSubmit={(data) => updateActionValues(action.id, data)}
