@@ -11,6 +11,7 @@ import type {
 } from 'types'
 import { toDate } from 'util/date'
 import { throwError } from 'util/errors'
+import { validateGroupProposalMetadata } from 'util/metadata'
 
 import { msgSend } from './bank.messages'
 import {
@@ -44,11 +45,11 @@ export function proposalActionsToMsgs(
 
 export function toUIProposal(sdkProposal: ProposalSDKType): UIProposal {
   const { final_tally_result } = sdkProposal
-  // TODO - add AJV validation and error handling / filtering for invalid metadata
   let metadata: UIProposalMetadata
   if (sdkProposal.metadata) {
     try {
       metadata = JSON.parse(sdkProposal.metadata)
+      validateGroupProposalMetadata(metadata)
     } catch (e) {
       metadata = {
         title: `Proposal #${sdkProposal.id}`,
