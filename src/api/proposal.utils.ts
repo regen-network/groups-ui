@@ -58,7 +58,7 @@ export function toUIProposal(sdkProposal: ProposalSDKType): UIProposal {
     }
   } else {
     metadata = {
-      title: '',
+      title: `Proposal #${sdkProposal.id}`,
       summary: '',
     }
   }

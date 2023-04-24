@@ -26,7 +26,7 @@ export function toUIGroup(group: GroupInfoSDKType): UIGroup {
     }
   } else {
     metadata = {
-      name: '',
+      name: `Group #${group.id}`,
       updatedAt: '',
     }
   }
