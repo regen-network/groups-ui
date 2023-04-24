@@ -86,7 +86,6 @@ const SendReview = ({
   values: ProposalSendFormValues
 }) => {
   const { fee } = useSnapshot(Chain)
-  console.log('groupPolicyAddress', groupPolicyAddress)
   return (
     <FormCard title="Send">
       <Stack spacing={SPACING.formStack}>
