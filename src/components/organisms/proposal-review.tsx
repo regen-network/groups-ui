@@ -7,6 +7,7 @@ import type {
   ProposalSendFormValues,
   ProposalStakeFormValues,
 } from 'types'
+import { truncateAddress } from 'util/address'
 import { SPACING } from 'util/constants'
 import { formatFee } from 'util/helpers'
 
@@ -90,7 +91,9 @@ const SendReview = ({
     <FormCard title="Send">
       <Stack spacing={SPACING.formStack}>
         <ReviewItem label="Type">{values.sendType}</ReviewItem>
-        <ReviewItem label="From Address">{groupPolicyAddress}</ReviewItem>
+        <ReviewItem label="From Address">
+          {truncateAddress(groupPolicyAddress)}
+        </ReviewItem>
         {'toAddress' in values && (
           <ReviewItem label="To Address">{values.toAddress}</ReviewItem>
         )}
@@ -114,7 +117,7 @@ const StakeReview = ({
     <FormCard title="Stake">
       <Stack spacing={SPACING.formStack}>
         <ReviewItem label="Type">{values.stakeType}</ReviewItem>
-        <ReviewItem label="Delegator">{groupPolicyAddress}</ReviewItem>
+        <ReviewItem label="Delegator">{truncateAddress(groupPolicyAddress)}</ReviewItem>
         {'validator' in values && (
           <ReviewItem label="Validator">{values.validator}</ReviewItem>
         )}
