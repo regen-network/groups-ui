@@ -9,8 +9,7 @@ const groupMetadataSchema = {
     name: { type: 'string' },
     updatedAt: { type: 'string' },
   },
-  required: ['name', 'updatedAt'],
-  additionalProperties: false,
+  required: ['name'],
 }
 
 export function validateGroupMetadata(metadata: UIGroupMetadata) {
@@ -25,8 +24,7 @@ const groupProposalMetadataSchema = {
     title: { type: 'string' },
     summary: { type: 'string' },
   },
-  required: ['title', 'summary'],
-  additionalProperties: false,
+  required: ['title'],
 }
 
 export function validateGroupProposalMetadata(metadata: UIProposalMetadata) {
