@@ -3,7 +3,7 @@ import { useSnapshot } from 'valtio'
 
 import type { ProposalAction, ProposalFormValues } from 'types'
 import { handleError, throwError } from 'util/errors'
-import { defaultDelegateFormValues } from 'util/form.defaults'
+import { defaultDelegateFormValues, defaultSendFormValues } from 'util/form.defaults'
 import { getFeeDenom, uuid } from 'util/helpers'
 
 import { createProposal } from 'api/proposal.actions'
@@ -44,6 +44,8 @@ export default function ProposalCreate() {
   function getInitialFormAction(): ProposalAction | null {
     const id = uuid()
     switch (state?.newProposalType) {
+      case 'send':
+        return { id, type: 'send', values: defaultSendFormValues }
       case 'stake':
         return { id, type: 'stake', values: defaultDelegateFormValues }
       default:

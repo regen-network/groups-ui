@@ -16,15 +16,15 @@ export const ENABLED_ACTIONS: Array<{
   icon: IconType
 }> = [
   {
-    type: 'stake',
-    label: 'Stake',
-    tooltip: 'Create a "stake" proposal',
-    icon: CgListTree,
-  },
-  {
     type: 'send',
     label: 'Send',
     tooltip: 'Create a "send" proposal',
+    icon: CgListTree,
+  },
+  {
+    type: 'stake',
+    label: 'Stake',
+    tooltip: 'Create a "stake" proposal',
     icon: CgListTree,
   },
 ]
