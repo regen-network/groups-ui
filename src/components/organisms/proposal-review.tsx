@@ -7,7 +7,6 @@ import type {
   ProposalSendFormValues,
   ProposalStakeFormValues,
 } from 'types'
-import { truncateAddress } from 'util/address'
 import { SPACING } from 'util/constants'
 import { formatFee } from 'util/helpers'
 
@@ -17,6 +16,7 @@ import { Heading, Stack, Text } from '@/atoms'
 import { FormCard } from '@/molecules/form-card'
 import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 import { ReviewItem } from '@/molecules/review-item'
+import { Truncate } from '@/molecules/truncate'
 
 export const ProposalReview = (props: {
   values: ProposalFormValues
@@ -92,7 +92,12 @@ const SendReview = ({
       <Stack spacing={SPACING.formStack}>
         <ReviewItem label="Type">{values.sendType}</ReviewItem>
         <ReviewItem label="From Address">
-          {truncateAddress(groupPolicyAddress)}
+          <Truncate
+            clickToCopy
+            headLength={18}
+            tailLength={18}
+            text={groupPolicyAddress}
+          />
         </ReviewItem>
         {'toAddress' in values && (
           <ReviewItem label="To Address">{values.toAddress}</ReviewItem>
@@ -117,7 +122,14 @@ const StakeReview = ({
     <FormCard title="Stake">
       <Stack spacing={SPACING.formStack}>
         <ReviewItem label="Type">{values.stakeType}</ReviewItem>
-        <ReviewItem label="Delegator">{truncateAddress(groupPolicyAddress)}</ReviewItem>
+        <ReviewItem label="Delegator">
+          <Truncate
+            clickToCopy
+            headLength={18}
+            tailLength={18}
+            text={groupPolicyAddress}
+          />
+        </ReviewItem>
         {'validator' in values && (
           <ReviewItem label="Validator">{values.validator}</ReviewItem>
         )}
