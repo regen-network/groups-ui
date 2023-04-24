@@ -37,6 +37,8 @@ const boolStr = z.union([z.literal('true'), z.literal('false')])
 const url = z.string().url('Must be a valid URL')
 const positiveNumStrRegex = /^[+]?([.]\d+|\d+[.]?\d*)$/
 const amount = z.string().regex(positiveNumStrRegex, 'Must be a positive number')
+const denomStrRegex = /^[a-zA-Z][a-zA-Z0-9/:._-]{2,127}$/
+const denom = z.string().regex(denomStrRegex, 'Must be a valid denomination')
 
 // unions
 
@@ -59,6 +61,7 @@ export const valid = {
   admin,
   amount,
   bech32Address,
+  denom,
   emptyStr,
   boolStr,
   name,

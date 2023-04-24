@@ -1,8 +1,13 @@
 import { useCallback, useEffect, useState } from 'react'
 import { omit } from 'remeda'
 
-import type { ProposalAction, ProposalStakeFormValues, UICoin } from 'types'
-import { defaultStakeFormValues } from 'util/form.defaults'
+import type {
+  ProposalAction,
+  ProposalSendFormValues,
+  ProposalStakeFormValues,
+  UICoin,
+} from 'types'
+import { defaultSendFormValues, defaultStakeFormValues } from 'util/form.defaults'
 import { uuid } from 'util/helpers'
 
 import { useDisclosure } from 'hooks/chakra-hooks'
@@ -13,6 +18,7 @@ import { EditableDescription, EditableHeading } from '@/molecules/editable'
 import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 import { WithRemoveButton } from '@/molecules/with-remove-button'
 import { ProposalActionDrawer } from '@/organisms/proposal-action-drawer'
+import { ProposalSendForm } from '@/organisms/proposal-send-form'
 import { ProposalStakeForm } from '@/organisms/proposal-stake-form'
 
 export type ProposalFormValues = {
@@ -67,6 +73,9 @@ export const ProposalForm = (props: {
     // actions in a single proposal. IDs are passed to the downstream `<form>`
     // elements so they can be manually submitted (see: `handleSubmitAllForms`)
     switch (actionType) {
+      case 'send':
+        setActions([...actions, { id, type: 'send', values: defaultSendFormValues }])
+        break
       case 'stake':
         setActions([...actions, { id, type: 'stake', values: defaultStakeFormValues }])
         break
@@ -116,13 +125,24 @@ export const ProposalForm = (props: {
 
   function renderAction(action: ProposalAction) {
     switch (action.type) {
+      case 'send':
+        return (
+          <ProposalSendForm
+            defaultValues={action.values as ProposalSendFormValues}
+            formId={action.id}
+            // TODO: maxAmount should probably be dynamic, or set by searching balances
+            maxAmount={props.policyBalances[0]?.amount}
+            onError={() => handleFormError(action.id)}
+            onSubmit={(data) => updateActionValues(action.id, data)}
+          />
+        )
       case 'stake':
         return (
           <ProposalStakeForm
             defaultValues={action.values as ProposalStakeFormValues}
             formId={action.id}
             // TODO: maxStakeAmount should probably be dynamic, or set by searching balances for the stake denom
-            maxStakeAmount={props.policyBalances[0].amount}
+            maxStakeAmount={props.policyBalances[0]?.amount}
             onError={() => handleFormError(action.id)}
             onSubmit={(data) => updateActionValues(action.id, data)}
           />

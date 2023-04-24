@@ -4,6 +4,7 @@ import type {
   GroupFormValues,
   GroupPolicyFormValues,
   MemberFormValues,
+  ProposalSendFormValues,
   ProposalStakeFormValues,
   RedelegateFormValues,
 } from 'types'
@@ -29,6 +30,12 @@ export const DEFAULT_MEMBER_WEIGHT = 1
 
 export const defaultGroupPolicyFormValues: GroupPolicyFormValues = {
   votingWindow: DEFAULT_VOTING_WINDOW,
+}
+
+export const defaultSendFormValues: ProposalSendFormValues = {
+  toAddress: '',
+  amount: '',
+  sendType: 'single',
 }
 
 export const defaultDelegateFormValues: DelegateFormValues = {
