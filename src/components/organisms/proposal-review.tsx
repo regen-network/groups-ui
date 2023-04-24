@@ -47,7 +47,11 @@ export const ProposalReview = (props: {
         </form>
       </FormCard>
       {actions.map((action, i) => {
-        return <Fragment key={'review-action-' + i}>{renderAction(action, props.groupPolicyAddress)}</Fragment>
+        return (
+          <Fragment key={'review-action-' + i}>
+            {renderAction(action, props.groupPolicyAddress)}
+          </Fragment>
+        )
       })}
     </Stack>
   )
@@ -56,17 +60,33 @@ export const ProposalReview = (props: {
 function renderAction(action: ProposalAction, groupPolicyAddress: string) {
   switch (action.type) {
     case 'send':
-      return <SendReview groupPolicyAddress={groupPolicyAddress} values={action.values as ProposalSendFormValues} />
+      return (
+        <SendReview
+          groupPolicyAddress={groupPolicyAddress}
+          values={action.values as ProposalSendFormValues}
+        />
+      )
     case 'stake':
-      return <StakeReview groupPolicyAddress={groupPolicyAddress} values={action.values as ProposalStakeFormValues} />
+      return (
+        <StakeReview
+          groupPolicyAddress={groupPolicyAddress}
+          values={action.values as ProposalStakeFormValues}
+        />
+      )
     default:
       return null
   }
 }
 
-const SendReview = ({ groupPolicyAddress, values }: { groupPolicyAddress: string, values: ProposalSendFormValues }) => {
+const SendReview = ({
+  groupPolicyAddress,
+  values,
+}: {
+  groupPolicyAddress: string
+  values: ProposalSendFormValues
+}) => {
   const { fee } = useSnapshot(Chain)
-  console.log("groupPolicyAddress", groupPolicyAddress)
+  console.log('groupPolicyAddress', groupPolicyAddress)
   return (
     <FormCard title="Send">
       <Stack spacing={SPACING.formStack}>
@@ -83,7 +103,13 @@ const SendReview = ({ groupPolicyAddress, values }: { groupPolicyAddress: string
   )
 }
 
-const StakeReview = ({ groupPolicyAddress, values }: { groupPolicyAddress: string, values: ProposalStakeFormValues }) => {
+const StakeReview = ({
+  groupPolicyAddress,
+  values,
+}: {
+  groupPolicyAddress: string
+  values: ProposalStakeFormValues
+}) => {
   const { fee } = useSnapshot(Chain)
   return (
     <FormCard title="Stake">
