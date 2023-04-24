@@ -5,7 +5,7 @@ import type {
   GroupPolicyFormValues,
   GroupWithPolicyFormValues,
 } from 'types'
-import { handleError, throwError } from 'util/errors'
+import { logError, throwError } from 'util/errors'
 import { DEFAULT_MEMBER_WEIGHT, DEFAULT_VOTING_WINDOW } from 'util/form.defaults'
 import { clearEmptyStr, percentStrToNum } from 'util/helpers'
 
@@ -127,7 +127,7 @@ export default function GroupEdit() {
       toastSuccess(transactionHash)
       return true
     } catch (err) {
-      handleError(err)
+      logError(err)
       toastErr(err, 'Editing group')
       return false
     }

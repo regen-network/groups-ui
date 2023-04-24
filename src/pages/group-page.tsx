@@ -1,6 +1,6 @@
 import { redirect, useParams } from 'react-router-dom'
 
-import { handleError } from 'util/errors'
+import { logError } from 'util/errors'
 
 import { useDerivedProposals } from 'hooks/use-derived-proposals'
 import {
@@ -25,7 +25,7 @@ export default function GroupPage() {
 
   if (isLoadingGroup || isLoadingProposals) return <Loading />
   if (!group) {
-    handleError('Group not found')
+    logError('Group not found')
     redirect('/')
     return null
   }

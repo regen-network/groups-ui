@@ -5,13 +5,12 @@ import type {
   ProposalSendFormValues,
   ProposalStakeFormValues,
   UIProposal,
-  UIProposalMetadata,
   Vote,
   VoteSDKType,
 } from 'types'
 import { toDate } from 'util/date'
 import { throwError } from 'util/errors'
-import { validateGroupProposalMetadata } from 'util/metadata'
+import { getProposalMetadata } from 'util/validation/metadata'
 
 import { msgSend } from './bank.messages'
 import {
@@ -45,23 +44,6 @@ export function proposalActionsToMsgs(
 
 export function toUIProposal(sdkProposal: ProposalSDKType): UIProposal {
   const { final_tally_result } = sdkProposal
-  let metadata: UIProposalMetadata
-  if (sdkProposal.metadata) {
-    try {
-      metadata = JSON.parse(sdkProposal.metadata)
-      validateGroupProposalMetadata(metadata)
-    } catch (e) {
-      metadata = {
-        title: `Proposal #${sdkProposal.id}`,
-        summary: '',
-      }
-    }
-  } else {
-    metadata = {
-      title: `Proposal #${sdkProposal.id}`,
-      summary: '',
-    }
-  }
   return {
     // executorResult is an enum - currently identical to SDK versions so this
     // should be fine
@@ -75,7 +57,9 @@ export function toUIProposal(sdkProposal: ProposalSDKType): UIProposal {
       typeUrl: msg.type_url,
       value: msg.value,
     })),
-    metadata,
+    metadata: getProposalMetadata(sdkProposal.metadata, {
+      title: `Proposal #${sdkProposal.id}`,
+    }),
     proposers: sdkProposal.proposers,
     // Identical enum - see above
     status: sdkProposal.status as unknown as UIProposal['status'],

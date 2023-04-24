@@ -2,7 +2,7 @@ import { redirect, useParams } from 'react-router-dom'
 import { useSnapshot } from 'valtio'
 
 import type { ProposalAction, ProposalFormValues } from 'types'
-import { handleError, throwError } from 'util/errors'
+import { logError, throwError } from 'util/errors'
 import { defaultDelegateFormValues, defaultSendFormValues } from 'util/form.defaults'
 import { getFeeDenom, uuid } from 'util/helpers'
 
@@ -78,7 +78,7 @@ export default function ProposalCreate() {
       toastSuccess(data.transactionHash, 'Proposal created!')
       return data.proposalId
     } catch (error) {
-      handleError(error)
+      logError(error)
       toastErr(error, 'Proposal could not be created:')
       return null
     }
