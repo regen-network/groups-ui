@@ -1,7 +1,12 @@
 import { Fragment } from 'react'
 import { useSnapshot } from 'valtio'
 
-import type { ProposalAction, ProposalFormValues, ProposalStakeFormValues } from 'types'
+import type {
+  ProposalAction,
+  ProposalFormValues,
+  ProposalSendFormValues,
+  ProposalStakeFormValues,
+} from 'types'
 import { SPACING } from 'util/constants'
 import { formatFee } from 'util/helpers'
 
@@ -49,11 +54,31 @@ export const ProposalReview = (props: {
 
 function renderAction(action: ProposalAction) {
   switch (action.type) {
+    case 'send':
+      return <SendReview values={action.values as ProposalSendFormValues} />
     case 'stake':
       return <StakeReview values={action.values as ProposalStakeFormValues} />
     default:
       return null
   }
+}
+
+const SendReview = ({ values }: { values: ProposalSendFormValues }) => {
+  const { fee } = useSnapshot(Chain)
+  return (
+    <FormCard title="Send">
+      <Stack spacing={SPACING.formStack}>
+        <ReviewItem label="Type">{values.sendType}</ReviewItem>
+        {/*TODO: how to best pass down from address...?*/}
+        {'toAddress' in values && (
+          <ReviewItem label="To Address">{values.toAddress}</ReviewItem>
+        )}
+        {/*TODO: how to best pass down denom...?*/}
+        <ReviewItem label="Amount">{values.amount + ' REGEN'}</ReviewItem>
+        <ReviewItem label="Transaction Fee">{formatFee(fee)}</ReviewItem>
+      </Stack>
+    </FormCard>
+  )
 }
 
 const StakeReview = ({ values }: { values: ProposalStakeFormValues }) => {
