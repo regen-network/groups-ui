@@ -15,7 +15,14 @@ export function toUIGroup(group: GroupInfoSDKType): UIGroup {
   // TODO - add AJV validation and error handling / filtering for invalid metadata
   let metadata: UIGroupMetadata
   if (group.metadata) {
-    metadata = JSON.parse(group.metadata)
+    try {
+      metadata = JSON.parse(group.metadata)
+    } catch (e) {
+      metadata = {
+        name: `Group #${group.id}`,
+        updatedAt: '',
+      }
+    }
   } else {
     metadata = {
       name: '',

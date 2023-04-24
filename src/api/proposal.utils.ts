@@ -5,6 +5,7 @@ import type {
   ProposalSendFormValues,
   ProposalStakeFormValues,
   UIProposal,
+  UIProposalMetadata,
   Vote,
   VoteSDKType,
 } from 'types'
@@ -43,6 +44,23 @@ export function proposalActionsToMsgs(
 
 export function toUIProposal(sdkProposal: ProposalSDKType): UIProposal {
   const { final_tally_result } = sdkProposal
+  // TODO - add AJV validation and error handling / filtering for invalid metadata
+  let metadata: UIProposalMetadata
+  if (sdkProposal.metadata) {
+    try {
+      metadata = JSON.parse(sdkProposal.metadata)
+    } catch (e) {
+      metadata = {
+        title: `Proposal #${sdkProposal.id}`,
+        summary: '',
+      }
+    }
+  } else {
+    metadata = {
+      title: '',
+      summary: '',
+    }
+  }
   return {
     // executorResult is an enum - currently identical to SDK versions so this
     // should be fine
@@ -56,7 +74,7 @@ export function toUIProposal(sdkProposal: ProposalSDKType): UIProposal {
       typeUrl: msg.type_url,
       value: msg.value,
     })),
-    metadata: JSON.parse(sdkProposal.metadata),
+    metadata,
     proposers: sdkProposal.proposers,
     // Identical enum - see above
     status: sdkProposal.status as unknown as UIProposal['status'],
