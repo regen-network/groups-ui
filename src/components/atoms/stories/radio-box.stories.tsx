@@ -1,6 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/react'
 
-import { Heading, Stack, Text } from '../chakra-components'
+import { Heading, Stack, Text } from '@/atoms'
+
 import { RadioBox } from '../radio-box'
 
 export default {
@@ -9,6 +10,9 @@ export default {
   argTypes: {
     selected: {
       type: 'boolean',
+    },
+    description: {
+      type: 'string',
     },
   },
 } as Meta<typeof RadioBox>

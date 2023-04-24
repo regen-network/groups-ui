@@ -19,6 +19,8 @@ export type {
   TooltipProps,
 } from '@chakra-ui/react'
 export {
+  type BoxProps,
+  type StackProps,
   Alert,
   AlertDescription,
   AlertIcon,
