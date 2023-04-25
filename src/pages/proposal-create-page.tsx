@@ -91,6 +91,7 @@ export default function ProposalCreate() {
       policyBalances={policyBalances || []}
       groupId={group.id.toString()}
       groupName={group.metadata.name}
+      groupPolicyAddress={groupPolicy.address}
       initialProposalFormValues={{
         actions: initialAction ? [initialAction] : [],
         title: `Proposal ${proposals ? proposals.length + 1 : 'Title'}`,

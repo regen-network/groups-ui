@@ -26,6 +26,7 @@ const Finished = ({ linkTo }: { linkTo: string }) => (
 export const ProposalCRUDTemplate = (props: {
   groupId: string
   groupName: string
+  groupPolicyAddress: string
   initialProposalFormValues: ProposalFormValues
   policyBalances: UICoin[]
   steps: string[]
@@ -84,6 +85,7 @@ export const ProposalCRUDTemplate = (props: {
           <HorizontalSlide key="step-1">
             <ProposalReview
               groupName={props.groupName}
+              groupPolicyAddress={props.groupPolicyAddress}
               values={proposalValues}
               onPrev={handlePrev}
               onSubmit={handleSubmit}

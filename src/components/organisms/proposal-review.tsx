@@ -1,7 +1,12 @@
 import { Fragment } from 'react'
 import { useSnapshot } from 'valtio'
 
-import type { ProposalAction, ProposalFormValues, ProposalStakeFormValues } from 'types'
+import type {
+  ProposalAction,
+  ProposalFormValues,
+  ProposalSendFormValues,
+  ProposalStakeFormValues,
+} from 'types'
 import { SPACING } from 'util/constants'
 import { formatFee } from 'util/helpers'
 
@@ -11,10 +16,12 @@ import { Heading, Stack, Text } from '@/atoms'
 import { FormCard } from '@/molecules/form-card'
 import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 import { ReviewItem } from '@/molecules/review-item'
+import { Truncate } from '@/molecules/truncate'
 
 export const ProposalReview = (props: {
   values: ProposalFormValues
   groupName: string
+  groupPolicyAddress: string
   onPrev: () => void
   onSubmit: () => void
 }) => {
@@ -41,27 +48,88 @@ export const ProposalReview = (props: {
         </form>
       </FormCard>
       {actions.map((action, i) => {
-        return <Fragment key={'review-action-' + i}>{renderAction(action)}</Fragment>
+        return (
+          <Fragment key={'review-action-' + i}>
+            {renderAction(action, props.groupPolicyAddress)}
+          </Fragment>
+        )
       })}
     </Stack>
   )
 }
 
-function renderAction(action: ProposalAction) {
+function renderAction(action: ProposalAction, groupPolicyAddress: string) {
   switch (action.type) {
+    case 'send':
+      return (
+        <SendReview
+          groupPolicyAddress={groupPolicyAddress}
+          values={action.values as ProposalSendFormValues}
+        />
+      )
     case 'stake':
-      return <StakeReview values={action.values as ProposalStakeFormValues} />
+      return (
+        <StakeReview
+          groupPolicyAddress={groupPolicyAddress}
+          values={action.values as ProposalStakeFormValues}
+        />
+      )
     default:
       return null
   }
 }
 
-const StakeReview = ({ values }: { values: ProposalStakeFormValues }) => {
+const SendReview = ({
+  groupPolicyAddress,
+  values,
+}: {
+  groupPolicyAddress: string
+  values: ProposalSendFormValues
+}) => {
+  const { fee } = useSnapshot(Chain)
+  return (
+    <FormCard title="Send">
+      <Stack spacing={SPACING.formStack}>
+        <ReviewItem label="Type">{values.sendType}</ReviewItem>
+        <ReviewItem label="From Address">
+          <Truncate
+            clickToCopy
+            headLength={18}
+            tailLength={18}
+            text={groupPolicyAddress}
+          />
+        </ReviewItem>
+        {'toAddress' in values && (
+          <ReviewItem label="To Address">{values.toAddress}</ReviewItem>
+        )}
+        {/* TODO(#19): add support for currencies other than staking denom */}
+        <ReviewItem label="Amount">{values.amount + ' REGEN'}</ReviewItem>
+        <ReviewItem label="Transaction Fee">{formatFee(fee)}</ReviewItem>
+      </Stack>
+    </FormCard>
+  )
+}
+
+const StakeReview = ({
+  groupPolicyAddress,
+  values,
+}: {
+  groupPolicyAddress: string
+  values: ProposalStakeFormValues
+}) => {
   const { fee } = useSnapshot(Chain)
   return (
     <FormCard title="Stake">
       <Stack spacing={SPACING.formStack}>
         <ReviewItem label="Type">{values.stakeType}</ReviewItem>
+        <ReviewItem label="Delegator">
+          <Truncate
+            clickToCopy
+            headLength={18}
+            tailLength={18}
+            text={groupPolicyAddress}
+          />
+        </ReviewItem>
         {'validator' in values && (
           <ReviewItem label="Validator">{values.validator}</ReviewItem>
         )}
