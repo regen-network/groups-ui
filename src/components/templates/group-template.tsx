@@ -1,10 +1,11 @@
-import type { UICoin, UIGroup, UIProposal } from 'types'
+import type { UICoin, UIGroup, UIGroupPolicyInfo, UIProposal } from 'types'
 import { formatDate } from 'util/date'
 
 import { ROUTE_PATH } from 'routes'
 
 import {
   Button,
+  Center,
   Flex,
   Heading,
   HStack,
@@ -28,11 +29,13 @@ import { ChatIcon } from 'assets/tsx'
 
 export const GroupTemplate = ({
   group,
+  policies,
   balances,
   onExecute,
   proposals,
 }: {
   group: UIGroup
+  policies?: UIGroupPolicyInfo[]
   balances?: UICoin[]
   onExecute: (proposal: UIProposal) => void
   proposals: {
@@ -72,21 +75,27 @@ export const GroupTemplate = ({
       </Stack>
       <Stack mt={8} spacing={6}>
         <TableContainer>
-          <TableTitlebar noBorder title="Actions" />
-          <Table>
-            <Tbody>
-              <Tr>
-                <Td>
-                  <HStack>
-                    <ProposalActionButtons
-                      groupId={group.id.toString()}
-                      btnProps={{ flex: 1 }}
-                    />
-                  </HStack>
-                </Td>
-              </Tr>
-            </Tbody>
-          </Table>
+          <TableTitlebar title="Actions" />
+          {policies && policies.length > 0 ? (
+            <Table>
+              <Tbody>
+                <Tr>
+                  <Td>
+                    <HStack>
+                      <ProposalActionButtons
+                        groupId={group.id.toString()}
+                        btnProps={{ flex: 1 }}
+                      />
+                    </HStack>
+                  </Td>
+                </Tr>
+              </Tbody>
+            </Table>
+          ) : (
+            <Center minH="7rem">
+              <Heading size="md">Nothing to show</Heading>
+            </Center>
+          )}
         </TableContainer>
         <GroupProposalsTable
           title="Ready to Execute"

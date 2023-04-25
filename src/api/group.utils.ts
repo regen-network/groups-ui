@@ -3,27 +3,20 @@ import type {
   MemberFormValues,
   UIGroup,
   UIGroupMember,
-  UIGroupMetadata,
   UIGroupWithMembers,
 } from 'types'
 import { toDate } from 'util/date'
+import { getGroupMetadata } from 'util/validation'
 
 import { fetchGroupMembers } from './member.actions'
 
 /** Parses chain-group and returns typed metadata */
 export function toUIGroup(group: GroupInfoSDKType): UIGroup {
-  // TODO - add AJV validation and error handling / filtering for invalid metadata
-  let metadata: UIGroupMetadata
-  if (group.metadata) {
-    metadata = JSON.parse(group.metadata)
-  } else {
-    metadata = {
-      name: '',
-      updatedAt: '',
-    }
-  }
   return {
-    metadata,
+    metadata: getGroupMetadata(group.metadata, {
+      name: `Group #${group.id}`,
+      updatedAt: '',
+    }),
     admin: group.admin,
     createdAt: group.created_at ? toDate(group.created_at) : undefined,
     id: group.id,

@@ -3,7 +3,7 @@ import type { SigningStargateClient } from '@cosmjs/stargate'
 import { cosmos, getSigningCosmosClient } from '@haveanicedavid/regen-ts'
 import { proxy } from 'valtio'
 
-import { handleError, throwError } from 'util/errors'
+import { logError, throwError } from 'util/errors'
 
 import { fetchValidators } from 'api/staking.actions'
 
@@ -58,7 +58,7 @@ export async function bootstrapKeplr() {
     fetchValidators()
   } catch (error) {
     Wallet.keplrStatus = 'rejected'
-    handleError(error)
+    logError(error)
   }
 }
 

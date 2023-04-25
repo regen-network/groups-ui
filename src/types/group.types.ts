@@ -1,5 +1,7 @@
 import type { GroupInfo } from '@haveanicedavid/regen-ts/types/codegen/cosmos/group/v1/types'
 
+import { UIGroupMetadata } from 'util/validation'
+
 import type { GroupFormKeys, GroupFormValues } from '@/organisms/group-form'
 import type { GroupPolicyFormValues } from '@/organisms/group-policy-form'
 
@@ -25,10 +27,4 @@ export type UIGroupWithMembers = UIGroup & {
   members: UIGroupMember[]
 }
 
-export type UIGroupMetadata = {
-  name: string
-  description?: string
-  forumLink?: string
-  updatedAt: string
-  other?: string
-}
+export type { UIGroupMetadata }

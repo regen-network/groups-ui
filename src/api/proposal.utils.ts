@@ -10,6 +10,7 @@ import type {
 } from 'types'
 import { toDate } from 'util/date'
 import { throwError } from 'util/errors'
+import { getProposalMetadata } from 'util/validation'
 
 import { msgSend } from './bank.messages'
 import {
@@ -56,7 +57,9 @@ export function toUIProposal(sdkProposal: ProposalSDKType): UIProposal {
       typeUrl: msg.type_url,
       value: msg.value,
     })),
-    metadata: JSON.parse(sdkProposal.metadata),
+    metadata: getProposalMetadata(sdkProposal.metadata, {
+      title: `Proposal #${sdkProposal.id}`,
+    }),
     proposers: sdkProposal.proposers,
     // Identical enum - see above
     status: sdkProposal.status as unknown as UIProposal['status'],

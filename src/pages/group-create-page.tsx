@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import type { GroupWithPolicyFormValues } from 'types'
-import { handleError } from 'util/errors'
+import { logError } from 'util/errors'
 import { defaultGroupFormValues, defaultGroupPolicyFormValues } from 'util/form.defaults'
 
 import { createGroupWithPolicy } from 'api/group.actions'
@@ -21,7 +21,7 @@ export default function GroupCreate() {
       toastSuccess(transactionHash, 'Group created!')
       return true
     } catch (err) {
-      handleError(err)
+      logError(err)
       toastErr(err, 'Group could not be created:')
       return false
     }

@@ -80,7 +80,6 @@ export function useGroupProposals(groupId?: string) {
   const policyIds = policies?.map((p) => p.address) || []
   return useQuery({
     queryKey: ['proposals', groupId],
-    enabled: policyIds.length > 0,
     queryFn: async () => {
       const proposals = await Promise.all(
         policyIds.map(async (address) => await fetchProposalsByGroupPolicy(address)),
