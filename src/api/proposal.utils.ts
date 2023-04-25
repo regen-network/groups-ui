@@ -10,7 +10,7 @@ import type {
 } from 'types'
 import { toDate } from 'util/date'
 import { throwError } from 'util/errors'
-import { getProposalMetadata } from 'util/validation/metadata'
+import { getProposalMetadata } from 'util/validation'
 
 import { msgSend } from './bank.messages'
 import {
