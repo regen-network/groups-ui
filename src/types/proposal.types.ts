@@ -1,5 +1,7 @@
 import type { Proposal } from '@haveanicedavid/regen-ts/types/codegen/cosmos/group/v1/types'
 
+import type { UIProposalMetadata } from 'util/validation'
+
 import type { SingleFormValues } from '@/organisms/send-single-form'
 import type { ClaimFormValues } from '@/organisms/stake-claim-form'
 import type { DelegateFormValues } from '@/organisms/stake-delegate-form'
@@ -12,12 +14,6 @@ export type {
   VoteOption as VoteOptionType,
   VoteSDKType,
 } from '@haveanicedavid/regen-ts/types/codegen/cosmos/group/v1/types'
-
-/** TODO: in v0.47, this data will live directly on a proposal */
-export type UIProposalMetadata = {
-  title: string
-  summary: string
-}
 
 export interface UIProposal
   extends Omit<Proposal, 'votingPeriodEnd' | 'submitTime' | 'metadata'> {
@@ -47,4 +43,6 @@ export type ProposalStakeFormValues =
 // Re-export for convenience
 export type { SingleFormValues }
 export type { ClaimFormValues, DelegateFormValues, RedelegateFormValues }
+/** TODO: in v0.47, this data will live directly on a proposal */
+export type { UIProposalMetadata }
 export type { ProposalFormValues } from '@/organisms/proposal-form'

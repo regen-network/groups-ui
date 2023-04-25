@@ -1,6 +1,6 @@
 import { redirect, useParams } from 'react-router-dom'
 
-import { handleError } from 'util/errors'
+import { logError } from 'util/errors'
 
 import { msgUpdateGroupMembers } from 'api/member.messages'
 import { useGroup, useGroupMembers, useGroupPolicies } from 'hooks/use-query'
@@ -22,7 +22,7 @@ export default function GroupDetailsPage() {
 
   if (loadingGroup || loadingPolicies) return <Loading />
   if (!group || !groupId) {
-    handleError('Missing group or group ID, redirecting')
+    logError('Missing group or group ID, redirecting')
     redirect('/')
     return null
   }
@@ -39,7 +39,7 @@ export default function GroupDetailsPage() {
       refetchMembers()
       return true
     } catch (err) {
-      handleError(err)
+      logError(err)
       toastErr(err, 'Editing group')
       return false
     }

@@ -28,7 +28,7 @@ export function toErrorWithMessage(maybeError: unknown): ErrorWithMessage {
   }
 }
 
-export function handleError(error: unknown): void {
+export function logError(error: unknown): void {
   reportError(toErrorWithMessage(error))
 }
 

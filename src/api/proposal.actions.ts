@@ -6,7 +6,7 @@ import type {
   UIProposalMetadata,
   VoteOptionType,
 } from 'types'
-import { handleError, throwError } from 'util/errors'
+import { logError, throwError } from 'util/errors'
 
 import { Query } from 'store/query.store'
 import { signAndBroadcast, Wallet } from 'store/wallet.store'
@@ -50,7 +50,7 @@ export async function fetchVotesByProposal(proposalId?: string) {
     })
     return votes.map(toUIVote)
   } catch (error) {
-    handleError(error)
+    logError(error)
   }
 }
 
@@ -97,7 +97,7 @@ export async function createProposal({
     if (!proposalId) throwError('No data returned from transaction')
     return { ...data, proposalId }
   } catch (err) {
-    handleError(err)
+    logError(err)
   }
 }
 
@@ -121,7 +121,7 @@ export async function voteOnProposal({
     if (!data) throwError('No data returned from vote')
     return data
   } catch (err) {
-    handleError(err)
+    logError(err)
   }
 }
 
@@ -132,6 +132,6 @@ export async function fetchVotesByAddress(address?: string) {
     const { votes } = await Query.groups.votesByVoter({ voter: address })
     return votes.map(toUIVote)
   } catch (error) {
-    handleError(error)
+    logError(error)
   }
 }
