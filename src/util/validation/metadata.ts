@@ -4,9 +4,9 @@ import { valid } from './zod'
 
 const groupMetadataSchema = z.object({
   name: valid.name,
-  description: valid.description.optional(),
-  updatedAt: z.string(),
-  forumLink: valid.url.optional(),
+  description: valid.description.optional().or(z.literal('')),
+  updatedAt: z.string().optional(),
+  forumLink: valid.url.optional().or(z.literal('')),
   other: z.string().optional(),
 })
 export type UIGroupMetadata = z.infer<typeof groupMetadataSchema>
@@ -20,7 +20,8 @@ export function getGroupMetadata(
   defaults?: UIGroupMetadata,
 ): UIGroupMetadata {
   if (isGroupMetadata(metadata)) return metadata
-  const parsed = JSON.parse(JSON.stringify(metadata))
+  // NOTE: double parsing is required when value is stringified
+  const parsed = JSON.parse(JSON.parse(JSON.stringify(metadata)))
   if (isGroupMetadata(parsed)) return parsed
   return {
     name: '',
@@ -44,7 +45,8 @@ export function getProposalMetadata(
   defaults?: Partial<UIProposalMetadata>,
 ): UIProposalMetadata {
   if (isProposalMetadata(metadata)) return metadata
-  const parsed = JSON.parse(JSON.stringify(metadata))
+  // NOTE: double parsing is required when value is stringified
+  const parsed = JSON.parse(JSON.parse(JSON.stringify(metadata)))
   if (isProposalMetadata(parsed)) return parsed
   return {
     title: '',
