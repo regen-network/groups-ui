@@ -19,8 +19,6 @@ export type {
   TooltipProps,
 } from '@chakra-ui/react'
 export {
-  type BoxProps,
-  type StackProps,
   Alert,
   AlertDescription,
   AlertIcon,
@@ -28,6 +26,7 @@ export {
   Badge,
   Card as BaseCard,
   Box,
+  type BoxProps,
   Button,
   ButtonGroup,
   CardBody,
@@ -76,6 +75,7 @@ export {
   Spacer,
   Spinner,
   Stack,
+  type StackProps,
   styled,
   Table,
   Tbody,
@@ -88,5 +88,5 @@ export {
   Tr,
   VStack,
 } from '@chakra-ui/react'
-export { type ActionMeta, type SingleValue, Select } from 'chakra-react-select'
+export { type ActionMeta, Select, type SingleValue } from 'chakra-react-select'
 export { Step, Steps } from 'chakra-ui-steps'

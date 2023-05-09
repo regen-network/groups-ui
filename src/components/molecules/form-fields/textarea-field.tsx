@@ -2,7 +2,7 @@ import { useController, useFormContext } from 'react-hook-form'
 
 import { Textarea } from '@/atoms'
 
-import { type FieldProps, FieldControl } from './field-control'
+import { FieldControl, type FieldProps } from './field-control'
 
 /** `Textarea` with controls for react-hook-form */
 export const TextareaField = (fieldProps: FieldProps) => {

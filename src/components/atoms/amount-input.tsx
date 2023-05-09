@@ -1,9 +1,9 @@
 import {
-  type InputProps,
   Button,
   forwardRef,
   Input,
   InputGroup,
+  type InputProps,
   InputRightElement,
 } from './chakra-components'
 

@@ -1,6 +1,6 @@
-import { type Ref, forwardRef } from 'react'
+import { forwardRef, type Ref } from 'react'
 
-import { type MotionProps, motion } from './framer-motion'
+import { motion, type MotionProps } from './framer-motion'
 import { MOTIONS } from './motions'
 
 export const FadeIn = forwardRef((passedProps: MotionProps, ref) => {

@@ -3,7 +3,7 @@ import { truncate } from 'util/helpers'
 import { useClipboard } from 'hooks/chakra-hooks'
 import { useToastBottom } from 'hooks/use-toasts'
 
-import { type TextProps, type TooltipProps, Text, Tooltip } from '@/atoms'
+import { Text, type TextProps, Tooltip, type TooltipProps } from '@/atoms'
 
 export const Truncate = ({
   clickToCopy = false,

@@ -1,5 +1,5 @@
-import { type LinkProps as RouteLinkProps, Link as RouteLink } from 'react-router-dom'
-import { type LinkProps as ChakraLinkProps, Link as ChakraLink } from '@chakra-ui/react'
+import { Link as RouteLink, type LinkProps as RouteLinkProps } from 'react-router-dom'
+import { Link as ChakraLink, type LinkProps as ChakraLinkProps } from '@chakra-ui/react'
 
 function isRouteLinkProps(
   props: ChakraLinkProps | RouteLinkProps,

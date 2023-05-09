@@ -1,4 +1,4 @@
-import { type IconButtonProps, IconButton, Tooltip } from './chakra-components'
+import { IconButton, type IconButtonProps, Tooltip } from './chakra-components'
 
 import { RiDeleteBin6Line } from 'assets/tsx'
 

@@ -1,4 +1,4 @@
-import { type AlertProps, Alert, AlertDescription, AlertIcon, AlertTitle } from '@/atoms'
+import { Alert, AlertDescription, AlertIcon, type AlertProps, AlertTitle } from '@/atoms'
 
 export const Notify = (p: AlertProps) => {
   return (

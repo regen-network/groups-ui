@@ -1,6 +1,6 @@
 import {
-  type TableContainerProps,
   TableContainer as ChakraContainer,
+  type TableContainerProps,
 } from '@chakra-ui/react'
 
 import { useColorModeValue } from 'hooks/chakra-hooks'

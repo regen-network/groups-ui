@@ -1,4 +1,4 @@
-import { type CardProps, Card as ChakraCard } from '@chakra-ui/react'
+import { Card as ChakraCard, type CardProps } from '@chakra-ui/react'
 
 import { useColorModeValue } from 'hooks/chakra-hooks'
 

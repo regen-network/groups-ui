@@ -8,8 +8,8 @@ import { ProposalStatus } from 'util/enums'
 import { ROUTE_PATH } from 'routes'
 
 import {
-  type BadgeProps,
   Badge,
+  type BadgeProps,
   Button,
   Center,
   Flex,

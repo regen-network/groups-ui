@@ -7,9 +7,9 @@ import { FormControl, FormLabel, RadioGroup, Stack } from '@/atoms'
 import { FormCard } from '@/molecules/form-card'
 import { RadioGroupOptions } from '@/molecules/radio-group-options'
 
-import { type ClaimFormValues, ClaimForm } from './stake-claim-form'
-import { type DelegateFormValues, DelegateForm } from './stake-delegate-form'
-import { type RedelegateFormValues, RedelegateForm } from './stake-redelegate-form'
+import { ClaimForm, type ClaimFormValues } from './stake-claim-form'
+import { DelegateForm, type DelegateFormValues } from './stake-delegate-form'
+import { RedelegateForm, type RedelegateFormValues } from './stake-redelegate-form'
 
 const stakeOptions: { label: string; value: ProposalStakeType }[] = [
   { label: 'Delegate', value: 'delegate' },

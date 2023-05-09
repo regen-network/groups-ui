@@ -1,8 +1,8 @@
 import { useController, useFormContext } from 'react-hook-form'
 
-import { type AmountInputProps, AmountInput, Heading, HStack, Text } from '@/atoms'
+import { AmountInput, type AmountInputProps, Heading, HStack, Text } from '@/atoms'
 
-import { type FieldProps, FieldControl } from './field-control'
+import { FieldControl, type FieldProps } from './field-control'
 
 type Props = FieldProps & {
   inputProps?: AmountInputProps

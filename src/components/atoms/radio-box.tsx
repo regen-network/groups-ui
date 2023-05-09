@@ -1,12 +1,12 @@
 import { useColorModeValue } from 'hooks/chakra-hooks'
 
 import {
-  type BoxProps,
-  type RadioProps,
   Box,
+  type BoxProps,
   Flex,
   forwardRef,
   Radio,
+  type RadioProps,
 } from './chakra-components'
 
 /** Cusom behavior and styles on a `<Radio /> element */

@@ -10,7 +10,7 @@ import { AnimatePresence, HorizontalSlide } from '@/animations'
 import { Button, Flex, Heading, PageContainer, RouteLink, Stack, Text } from '@/atoms'
 import { FormFooter, useFormFooter } from '@/molecules/form-footer'
 import { PageStepper } from '@/molecules/page-stepper'
-import { type ProposalFormValues, ProposalForm } from '@/organisms/proposal-form'
+import { ProposalForm, type ProposalFormValues } from '@/organisms/proposal-form'
 import { ProposalReview } from '@/organisms/proposal-review'
 
 const Finished = ({ linkTo }: { linkTo: string }) => (

@@ -1,8 +1,8 @@
 import { useController, useFormContext } from 'react-hook-form'
 
-import { type SelectDropdownProps, SelectDropdown } from '../select-dropdown'
+import { SelectDropdown, type SelectDropdownProps } from '../select-dropdown'
 
-import { type FieldProps, FieldControl } from './field-control'
+import { FieldControl, type FieldProps } from './field-control'
 
 type Props = FieldProps &
   Omit<SelectDropdownProps, 'onChange'> & { dropdownLabel: string }

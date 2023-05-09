@@ -3,9 +3,9 @@ import { useController, useFormContext } from 'react-hook-form'
 
 import { strToNumOrEmpty } from 'util/helpers'
 
-import { type NumberInputProps, Flex, NumberInput, Text } from '@/atoms'
+import { Flex, NumberInput, type NumberInputProps, Text } from '@/atoms'
 
-import { type FieldProps, FieldControl } from './field-control'
+import { FieldControl, type FieldProps } from './field-control'
 
 export type NumberFieldProps = FieldProps & {
   numberInputProps?: NumberInputProps
