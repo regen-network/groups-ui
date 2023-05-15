@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { type ThemeConfig, ChakraProvider, extendTheme } from '@chakra-ui/react'
+import { ChakraProvider, extendTheme, type ThemeConfig } from '@chakra-ui/react'
 import { StepsTheme as Steps } from 'chakra-ui-steps'
 
 import { ButtonStyles as Button } from './components/button-theme'

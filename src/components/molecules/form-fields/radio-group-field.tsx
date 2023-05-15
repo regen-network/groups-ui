@@ -1,15 +1,15 @@
 import { useController, useFormContext } from 'react-hook-form'
 
 import {
+  RadioGroup,
   type RadioGroupProps,
   type RadioProps,
   type StackProps,
-  RadioGroup,
 } from '@/atoms'
 
 import { type RadioGroupOption, RadioGroupOptions } from '../radio-group-options'
 
-import { type FieldProps, FieldControl } from './field-control'
+import { FieldControl, type FieldProps } from './field-control'
 
 type Props = FieldProps & {
   options: RadioGroupOption[]

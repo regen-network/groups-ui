@@ -2,7 +2,7 @@ import { ENABLED_ACTIONS } from 'util/constants'
 
 import { ROUTE_PATH } from 'routes'
 
-import { type ButtonProps, Button, RouteLink } from '@/atoms'
+import { Button, type ButtonProps, RouteLink } from '@/atoms'
 
 import { ImFileText2 } from 'assets/tsx'
 

@@ -4,11 +4,11 @@ import { useColorModeValue } from 'hooks/chakra-hooks'
 
 import { AnimatePresence, motion } from '@/animations'
 import {
-  type RadioProps,
-  type StackProps,
   Box,
   Collapse,
   RadioBox,
+  type RadioProps,
+  type StackProps,
   Text,
   VStack,
 } from '@/atoms'

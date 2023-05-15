@@ -1,4 +1,4 @@
-import { type ContainerProps, Container } from './chakra-components'
+import { Container, type ContainerProps } from './chakra-components'
 
 export const PageContainer = ({
   children,

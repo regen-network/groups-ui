@@ -7,7 +7,7 @@ import { FormControl, FormLabel, RadioGroup, Stack } from '@/atoms'
 import { FormCard } from '@/molecules/form-card'
 import { RadioGroupOptions } from '@/molecules/radio-group-options'
 
-import { type SingleFormValues, SingleForm } from './send-single-form'
+import { SingleForm, type SingleFormValues } from './send-single-form'
 
 const sendOptions: { label: string; value: ProposalSendType }[] = [
   { label: 'Single', value: 'single' },

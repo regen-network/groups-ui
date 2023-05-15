@@ -13,8 +13,8 @@ import {
   Text,
 } from '@/atoms'
 import {
-  type GroupMembersTableProps,
   GroupMembersTable,
+  type GroupMembersTableProps,
 } from '@/organisms/group-members-table'
 import { GroupPolicyTable } from '@/organisms/group-policy-table'
 

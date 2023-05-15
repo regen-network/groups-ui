@@ -1,4 +1,4 @@
-import { type IconButtonProps, Center, forwardRef, IconButton } from './chakra-components'
+import { Center, forwardRef, IconButton, type IconButtonProps } from './chakra-components'
 
 import { AiOutlinePlus } from 'assets/tsx'
 

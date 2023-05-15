@@ -2,13 +2,13 @@ import type { ProposalAction } from 'types'
 import { ENABLED_ACTIONS } from 'util/constants'
 
 import {
-  type DrawerProps,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
+  type DrawerProps,
   Stack,
   Text,
 } from '@/atoms'
