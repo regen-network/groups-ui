@@ -101,6 +101,21 @@ export async function createProposal({
   }
 }
 
+export async function executeProposal({ proposalId }: { proposalId: Long }) {
+  if (!Wallet.account?.address) throwError('Wallet not initialized')
+  try {
+    const msg = GroupMsgWithTypeUrl.exec({
+      proposalId,
+      executor: Wallet.account.address,
+    })
+    const data = await signAndBroadcast([msg])
+    if (!data) throwError('No data returned from execution')
+    return data
+  } catch (err) {
+    logError(err)
+  }
+}
+
 export async function voteOnProposal({
   option,
   proposalId,

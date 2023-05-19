@@ -51,7 +51,8 @@ export function encodeDecisionPolicy({
 }) {
   const windows = {
     minExecutionPeriod: secondsToDuration(1),
-    votingPeriod: daysToDuration(votingWindow),
+    // TODO: undo change before merging
+    votingPeriod: secondsToDuration(votingWindow), // daysToDuration(votingWindow),
   }
   if (policyType === 'percentage') {
     if (!percentage) throwError('Must provide percentage value')
