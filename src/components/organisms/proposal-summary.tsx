@@ -1,4 +1,13 @@
-import type { UIGroup, UIProposal, Vote, VoteOptionType } from 'types'
+import { Any } from '@haveanicedavid/regen-ts/types/codegen/google/protobuf/any'
+
+import type {
+  ProposalSendFormValues,
+  ProposalStakeFormValues,
+  UIGroup,
+  UIProposal,
+  Vote,
+  VoteOptionType,
+} from 'types'
 import { formatDate } from 'util/date'
 import { VoteOption } from 'util/enums'
 
@@ -17,6 +26,7 @@ import {
   Text,
 } from '@/atoms'
 import { VoteButtons } from '@/molecules/vote-buttons'
+import { SendReview, StakeReview } from '@/organisms/proposal-review'
 
 import { VotesGraph } from './votes-graph'
 
@@ -52,6 +62,9 @@ export const ProposalSummary = ({
             </Stack>
             <Heading>{proposal.metadata.title}</Heading>
             <Text>{proposal.metadata.summary}</Text>
+            {proposal.messages.map((msg) =>
+              renderMessage(msg, proposal.groupPolicyAddress),
+            )}
           </Stack>
         </CardBody>
         <CardBody bg={cardBgDark} borderRightRadius="lg">
@@ -88,4 +101,29 @@ export const ProposalSummary = ({
       </Flex>
     </Card>
   )
+}
+
+function renderMessage(msg: Any, groupPolicyAddress: string) {
+  if (!msg) return null
+  switch (msg.typeUrl) {
+    case '/cosmos.bank.v1beta1.MsgSend':
+      return (
+        <SendReview
+          groupPolicyAddress={groupPolicyAddress}
+          values={msg as unknown as ProposalSendFormValues}
+        />
+      )
+    case '/cosmos.staking.v1beta1.MsgDelegate':
+    case '/cosmos.staking.v1beta1.MsgBeginRedelegate':
+    case '/cosmos.staking.v1beta1.MsgUndelegate':
+    case '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward':
+      return (
+        <StakeReview
+          groupPolicyAddress={groupPolicyAddress}
+          values={msg as unknown as ProposalStakeFormValues}
+        />
+      )
+    default:
+      return null
+  }
 }

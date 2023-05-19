@@ -79,7 +79,7 @@ function renderAction(action: ProposalAction, groupPolicyAddress: string) {
   }
 }
 
-const SendReview = ({
+export const SendReview = ({
   groupPolicyAddress,
   values,
 }: {
@@ -90,7 +90,7 @@ const SendReview = ({
   return (
     <FormCard title="Send">
       <Stack spacing={SPACING.formStack}>
-        <ReviewItem label="Type">{values.sendType}</ReviewItem>
+        {'sendType' in values && <ReviewItem label="Type">{values.sendType}</ReviewItem>}
         <ReviewItem label="From Address">
           <Truncate
             clickToCopy
@@ -110,7 +110,7 @@ const SendReview = ({
   )
 }
 
-const StakeReview = ({
+export const StakeReview = ({
   groupPolicyAddress,
   values,
 }: {
@@ -121,7 +121,9 @@ const StakeReview = ({
   return (
     <FormCard title="Stake">
       <Stack spacing={SPACING.formStack}>
-        <ReviewItem label="Type">{values.stakeType}</ReviewItem>
+        {'stakeType' in values && (
+          <ReviewItem label="Type">{values.stakeType}</ReviewItem>
+        )}
         <ReviewItem label="Delegator">
           <Truncate
             clickToCopy
