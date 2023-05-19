@@ -1,4 +1,4 @@
-import type { Proposal } from '@haveanicedavid/regen-ts/types/codegen/cosmos/group/v1/types'
+import type { Proposal } from '@regen-network/api/types/codegen/cosmos/group/v1/types'
 
 import type { UIProposalMetadata } from 'util/validation'
 
@@ -13,7 +13,7 @@ export type {
   Vote,
   VoteOption as VoteOptionType,
   VoteSDKType,
-} from '@haveanicedavid/regen-ts/types/codegen/cosmos/group/v1/types'
+} from '@regen-network/api/types/codegen/cosmos/group/v1/types'
 
 export interface UIProposal
   extends Omit<Proposal, 'votingPeriodEnd' | 'submitTime' | 'metadata'> {

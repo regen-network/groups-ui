@@ -1068,10 +1068,17 @@
   resolved "https://registry.yarnpkg.com/@babel/regjsgen/-/regjsgen-0.8.0.tgz#f0ba69b075e1f05fb2825b7fad991e7adbb18310"
   integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.17.8", "@babel/runtime@^7.18.3", "@babel/runtime@^7.18.9", "@babel/runtime@^7.19.4", "@babel/runtime@^7.20.7", "@babel/runtime@^7.21.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.17.8", "@babel/runtime@^7.18.3", "@babel/runtime@^7.18.9", "@babel/runtime@^7.20.7", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7":
   version "7.21.0"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.21.0.tgz#5b55c9d394e5fcf304909a8b00c07dc217b56673"
   integrity sha512-xwII0//EObnq89Ji5AKYQaRYiW/nZ3llSv29d49IuxPhKbtJoLP+9QUUZ4nVragQVtaVGeZrpB+ZtG/Pdy/POw==
+  dependencies:
+    regenerator-runtime "^0.13.11"
+
+"@babel/runtime@^7.19.4", "@babel/runtime@^7.21.0":
+  version "7.21.5"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.21.5.tgz#8492dddda9644ae3bda3b45eabe87382caee7200"
+  integrity sha512-8jI69toZqqcsnqGGqwGS4Qb1VwLOEp4hz+CXPywcvjs60u3B4Pom/U/7rm4W8tMOYEB+E9wgD0mW1l3r8qlI9Q==
   dependencies:
     regenerator-runtime "^0.13.11"
 
@@ -3174,19 +3181,6 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@haveanicedavid/regen-ts@0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@haveanicedavid/regen-ts/-/regen-ts-0.0.3.tgz#82d79e1947910ff0558e581a172403a9d2c3c3d2"
-  integrity sha512-stObwQz0YFo8zbe2/roln3E+PBFmdhb3VAButTvY4tm09cE7aYJhhkZtIvYRvsx41tQKhsLctrrlRXW/Xn+miQ==
-  dependencies:
-    "@babel/runtime" "^7.19.4"
-    "@cosmjs/amino" "0.29.4"
-    "@cosmjs/proto-signing" "0.29.4"
-    "@cosmjs/stargate" "0.29.4"
-    "@cosmjs/tendermint-rpc" "^0.29.4"
-    "@osmonauts/lcd" "^0.11.1"
-    protobufjs "^6.11.2"
-
 "@hookform/resolvers@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-3.1.0.tgz#ff83ef4aa6078173201da131ceea4c3583b67034"
@@ -3857,6 +3851,17 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
+
+"@regen-network/api@../regen-js/packages/api":
+  version "1.0.0-beta1"
+  dependencies:
+    "@babel/runtime" "^7.19.4"
+    "@cosmjs/amino" "0.29.4"
+    "@cosmjs/proto-signing" "0.29.4"
+    "@cosmjs/stargate" "0.29.4"
+    "@cosmjs/tendermint-rpc" "^0.29.4"
+    "@osmonauts/lcd" "^0.11.1"
+    protobufjs "^6.11.2"
 
 "@remix-run/router@1.6.1":
   version "1.6.1"

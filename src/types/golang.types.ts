@@ -18,4 +18,4 @@ export interface Duration {
   nanos: number
 }
 
-export type { Any } from '@haveanicedavid/regen-ts/types/codegen/google/protobuf/any'
+export type { Any } from '@regen-network/api/types/codegen/google/protobuf/any'
