@@ -4,7 +4,7 @@ import { ROUTE_PATH } from 'routes'
 
 import { Button, type ButtonProps, RouteLink } from '@/atoms'
 
-import { ImFileText2 } from 'assets/tsx'
+import { FileTextIcon } from 'assets/tsx'
 
 export const ProposalActionButtons = ({
   groupId,
@@ -19,7 +19,7 @@ export const ProposalActionButtons = ({
       type: 'text',
       label: 'Text Proposal',
       tooltip: 'Create a "text" proposal',
-      icon: ImFileText2,
+      icon: FileTextIcon,
     },
     ...ENABLED_ACTIONS,
   ]

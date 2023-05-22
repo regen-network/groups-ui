@@ -1,6 +1,6 @@
 import { IconButton, type IconButtonProps, Tooltip } from './chakra-components'
 
-import { FaUndoAlt } from 'assets/tsx'
+import { UndoIcon } from 'assets/tsx'
 
 export const UndoButton = ({
   hoverText,
@@ -12,7 +12,7 @@ export const UndoButton = ({
   return (
     <Tooltip label={hoverText} isDisabled={!hoverText}>
       <IconButton {...props} aria-label={props['aria-label'] || 'Delete'}>
-        <FaUndoAlt />
+        <UndoIcon />
       </IconButton>
     </Tooltip>
   )
