@@ -35,7 +35,7 @@ export async function bootstrapKeplr() {
   try {
     await keplr.experimentalSuggestChain(Chain.active)
     await keplr.enable(chainId)
-    const offlineSigner = keplr.getOfflineSigner(chainId)
+    const offlineSigner = keplr.getOfflineSignerOnlyAmino(chainId)
     const [account] = await offlineSigner.getAccounts()
     const signingClient = await getSigningCosmosClient({
       rpcEndpoint: Chain.active.rpc,
