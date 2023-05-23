@@ -1,4 +1,4 @@
-import type { GroupInfo } from '@haveanicedavid/regen-ts/types/codegen/cosmos/group/v1/types'
+import type { GroupInfo } from '@regen-network/api/types/codegen/cosmos/group/v1/types'
 
 import { UIGroupMetadata } from 'util/validation'
 
@@ -9,10 +9,10 @@ import type { UIGroupMember } from './member.types'
 
 // exports
 
-export type { LCDQueryClient as BankQueryClient } from '@haveanicedavid/regen-ts/types/codegen/cosmos/bank/v1beta1/query.lcd'
-export type { LCDQueryClient as GroupQueryClient } from '@haveanicedavid/regen-ts/types/codegen/cosmos/group/v1/query.lcd'
-export type { GroupInfoSDKType } from '@haveanicedavid/regen-ts/types/codegen/cosmos/group/v1/types'
-export type { LCDQueryClient as StakingQueryClient } from '@haveanicedavid/regen-ts/types/codegen/cosmos/staking/v1beta1/query.lcd'
+export type { LCDQueryClient as BankQueryClient } from '@regen-network/api/types/codegen/cosmos/bank/v1beta1/query.lcd'
+export type { LCDQueryClient as GroupQueryClient } from '@regen-network/api/types/codegen/cosmos/group/v1/query.lcd'
+export type { GroupInfoSDKType } from '@regen-network/api/types/codegen/cosmos/group/v1/types'
+export type { LCDQueryClient as StakingQueryClient } from '@regen-network/api/types/codegen/cosmos/staking/v1beta1/query.lcd'
 
 export type { GroupFormKeys, GroupFormValues, GroupInfo, GroupPolicyFormValues }
 

@@ -53,10 +53,14 @@ export function toUIProposal(sdkProposal: ProposalSDKType): UIProposal {
     groupPolicyVersion: sdkProposal.group_policy_version,
     groupVersion: sdkProposal.group_version,
     id: sdkProposal.id,
-    messages: sdkProposal.messages.map((msg) => ({
-      typeUrl: msg.type_url,
-      value: msg.value,
-    })),
+    // TODO(#9): dependent on https://github.com/regen-network/regen-js/issues/71
+    messages: sdkProposal.messages.map(
+      (msg: any) =>
+        ({
+          typeUrl: msg['@type'],
+          value: msg,
+        } as Any),
+    ),
     metadata: getProposalMetadata(sdkProposal.metadata, {
       title: `Proposal #${sdkProposal.id}`,
     }),

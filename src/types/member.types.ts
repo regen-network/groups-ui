@@ -1,11 +1,11 @@
 import type {
   GroupMember,
   Member,
-} from '@haveanicedavid/regen-ts/types/codegen/cosmos/group/v1/types'
+} from '@regen-network/api/types/codegen/cosmos/group/v1/types'
 
 // exports
 
-export type { GroupMemberSDKType } from '@haveanicedavid/regen-ts/types/codegen/cosmos/group/v1/types'
+export type { GroupMemberSDKType } from '@regen-network/api/types/codegen/cosmos/group/v1/types'
 
 export type MemberFormValues = {
   address: string

@@ -1,4 +1,4 @@
-// import { Exec } from '@haveanicedavid/regen-ts/types/codegen/cosmos/group/v1/tx'
+// import { Exec } from '@regen-network/api/types/codegen/cosmos/group/v1/tx'
 import type { Any } from 'types'
 
 import { GroupMsgWithTypeUrl } from './cosmosgroups'
