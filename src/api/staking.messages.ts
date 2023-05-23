@@ -1,4 +1,4 @@
-import { cosmos } from '@haveanicedavid/regen-ts'
+import { cosmos } from '@regen-network/api'
 
 import type { Any } from 'types'
 

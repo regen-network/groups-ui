@@ -5,10 +5,10 @@ import type {
   PercentageDecisionPolicySDKType,
   ThresholdDecisionPolicy,
   ThresholdDecisionPolicySDKType,
-} from '@haveanicedavid/regen-ts/types/codegen/cosmos/group/v1/types'
+} from '@regen-network/api/types/codegen/cosmos/group/v1/types'
 
 // exports
-export type { GroupPolicyInfoSDKType } from '@haveanicedavid/regen-ts/types/codegen/cosmos/group/v1/types'
+export type { GroupPolicyInfoSDKType } from '@regen-network/api/types/codegen/cosmos/group/v1/types'
 
 export type { GroupPolicyInfo }
 
