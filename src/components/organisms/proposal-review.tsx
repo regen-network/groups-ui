@@ -104,7 +104,6 @@ const SendReview = ({
         )}
         {/* TODO(#19): add support for currencies other than staking denom */}
         <ReviewItem label="Amount">{values.amount + ' REGEN'}</ReviewItem>
-        <ReviewItem label="Transaction Fee">{formatFee(fee)}</ReviewItem>
       </Stack>
     </FormCard>
   )
@@ -140,7 +139,6 @@ const StakeReview = ({
           <ReviewItem label="To validator">{values.toValidator}</ReviewItem>
         )}
         <ReviewItem label="Amount">{values.amount}</ReviewItem>
-        <ReviewItem label="Transaction Fee">{formatFee(fee)}</ReviewItem>
       </Stack>
     </FormCard>
   )
