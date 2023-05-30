@@ -1,8 +1,8 @@
-import type { IconType } from 'react-icons'
-
 import type { ProposalAction } from 'types'
 
-import { CgListTree } from 'assets/tsx'
+import { type IconProps } from '@/atoms'
+
+import { ListTreeIcon, SendIcon } from 'assets/tsx'
 
 export const SPACING = {
   formStack: 7,
@@ -13,18 +13,18 @@ export const ENABLED_ACTIONS: Array<{
   type: ProposalAction['type']
   label: string
   tooltip: string
-  icon: IconType
+  icon: (props: IconProps) => JSX.Element
 }> = [
   {
     type: 'send',
     label: 'Send',
     tooltip: 'Create a "send" proposal',
-    icon: CgListTree,
+    icon: SendIcon,
   },
   {
     type: 'stake',
     label: 'Stake',
     tooltip: 'Create a "stake" proposal',
-    icon: CgListTree,
+    icon: ListTreeIcon,
   },
 ]

@@ -18,7 +18,7 @@ import {
 } from '@/organisms/group-members-table'
 import { GroupPolicyTable } from '@/organisms/group-policy-table'
 
-import { IoMdArrowBack } from 'assets/tsx'
+import { BackIcon } from 'assets/tsx'
 
 export const GroupDetailsTemplate = ({
   admin,
@@ -43,7 +43,7 @@ export const GroupDetailsTemplate = ({
         <div>
           <Button
             variant="ghost"
-            leftIcon={<IoMdArrowBack />}
+            leftIcon={<BackIcon />}
             as={RouteLink}
             to={ROUTE_PATH.group(id)}
           >

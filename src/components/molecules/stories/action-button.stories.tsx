@@ -2,7 +2,7 @@ import type { Meta, StoryFn } from '@storybook/react'
 
 import { ActionButton } from '../action-button'
 
-import { ImFileText2 } from 'assets/tsx'
+import { FileTextIcon } from 'assets/tsx'
 
 export default {
   title: 'Molecules/ActionButton',
@@ -14,7 +14,7 @@ const Template: StoryFn<typeof ActionButton> = (args) => <ActionButton {...args}
 export const Component = Template.bind({})
 Component.args = {
   label: 'Text proposal',
-  icon: ImFileText2,
+  icon: FileTextIcon,
   tooltipText: 'Tooltip text',
   onClick: () => void null,
 }
