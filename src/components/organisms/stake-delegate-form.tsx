@@ -8,7 +8,7 @@ import { useZodForm } from 'hooks/use-zod-form'
 import { Chain } from 'store/chain.store'
 
 import { Form } from '@/molecules/form'
-import { AmountField, FeeDisplayField, SelectField } from '@/molecules/form-fields'
+import { AmountField, SelectField } from '@/molecules/form-fields'
 import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 
 const schema = z.object({
@@ -57,7 +57,6 @@ export const DelegateForm = (props: {
         maxValue={props.maxAmount}
         denom={getFeeDenom(fee)}
       />
-      <FeeDisplayField />
       <FormSubmitHiddenButton id={props.formId} onSubmit={props.onSubmit} />
     </Form>
   )

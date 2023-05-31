@@ -1,7 +1,9 @@
 import { redirect, useParams } from 'react-router-dom'
 
+import { UIProposal } from 'types'
 import { logError } from 'util/errors'
 
+import { executeProposal } from 'api/proposal.actions'
 import { useDerivedProposals } from 'hooks/use-derived-proposals'
 import {
   useBalances,
@@ -9,6 +11,7 @@ import {
   useGroupPolicies,
   useGroupProposals,
 } from 'hooks/use-query'
+import { useTxToasts } from 'hooks/use-toasts'
 
 import { Loading } from '@/molecules/loading'
 import { GroupTemplate } from '@/templates/group-template'
@@ -18,6 +21,7 @@ export default function GroupPage() {
   const { data: group, isLoading: isLoadingGroup } = useGroup(groupId)
   const { data: policies } = useGroupPolicies(groupId)
   const { data: proposals, isLoading: isLoadingProposals } = useGroupProposals(groupId)
+  const { toastSuccess, toastErr } = useTxToasts()
 
   const groupPolicy = policies?.[0]
   const { data: balances } = useBalances(groupPolicy?.address)
@@ -30,12 +34,21 @@ export default function GroupPage() {
     return null
   }
 
+  const handleExecute = async (proposal: UIProposal) => {
+    try {
+      const data = await executeProposal({ proposalId: proposal.id })
+      toastSuccess(data?.transactionHash || '')
+    } catch (err) {
+      toastErr(err)
+    }
+  }
+
   return (
     <GroupTemplate
       group={group}
       policies={policies}
       balances={balances}
-      onExecute={(p) => console.log('execute proposal', p)}
+      onExecute={handleExecute}
       proposals={{
         accepted: derivedProposals.accepted,
         history: derivedProposals.other,

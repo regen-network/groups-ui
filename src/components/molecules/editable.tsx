@@ -12,7 +12,7 @@ import {
   Tooltip,
 } from '@/atoms'
 
-import { MdCheck, RiCloseLine } from 'assets/tsx'
+import { CheckIcon, CloseIcon } from 'assets/tsx'
 
 type EditableProps = {
   value?: string
@@ -26,12 +26,12 @@ const EditableControls = () => {
     <ButtonGroup justifyContent="end" size="sm" w="full" spacing={2} mt={2}>
       <IconButton
         aria-label="Save changes"
-        icon={<MdCheck />}
+        icon={<CheckIcon />}
         {...getSubmitButtonProps()}
       />
       <IconButton
         aria-label="Cancel changes"
-        icon={<RiCloseLine />}
+        icon={<CloseIcon />}
         {...getCancelButtonProps()}
       />
     </ButtonGroup>

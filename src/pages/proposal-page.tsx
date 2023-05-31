@@ -20,7 +20,7 @@ import { ProposalDetails } from '@/organisms/proposal-details'
 import { ProposalSummary } from '@/organisms/proposal-summary'
 import { ProposalVotesTable } from '@/organisms/proposal-votes-table'
 
-import { IoMdArrowBack } from 'assets/tsx'
+import { BackIcon } from 'assets/tsx'
 
 export default function ProposalPage() {
   const { toastErr, toastSuccess } = useTxToasts()
@@ -69,7 +69,7 @@ export default function ProposalPage() {
         <div>
           <Button
             variant="ghost"
-            leftIcon={<IoMdArrowBack />}
+            leftIcon={<BackIcon />}
             as={RouteLink}
             to={ROUTE_PATH.group(groupId)}
           >

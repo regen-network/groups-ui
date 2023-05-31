@@ -1,5 +1,4 @@
 import { Fragment } from 'react'
-import { useSnapshot } from 'valtio'
 
 import type {
   ProposalAction,
@@ -8,9 +7,6 @@ import type {
   ProposalStakeFormValues,
 } from 'types'
 import { SPACING } from 'util/constants'
-import { formatFee } from 'util/helpers'
-
-import { Chain } from 'store/chain.store'
 
 import { Heading, Stack, Text } from '@/atoms'
 import { FormCard } from '@/molecules/form-card'
@@ -86,7 +82,6 @@ export const SendReview = ({
   groupPolicyAddress: string
   values: ProposalSendFormValues
 }) => {
-  const { fee } = useSnapshot(Chain)
   return (
     <FormCard title="Send">
       <Stack spacing={SPACING.formStack}>
@@ -104,7 +99,6 @@ export const SendReview = ({
         )}
         {/* TODO(#19): add support for currencies other than staking denom */}
         <ReviewItem label="Amount">{values.amount + ' REGEN'}</ReviewItem>
-        <ReviewItem label="Transaction Fee">{formatFee(fee)}</ReviewItem>
       </Stack>
     </FormCard>
   )
@@ -117,7 +111,6 @@ export const StakeReview = ({
   groupPolicyAddress: string
   values: ProposalStakeFormValues
 }) => {
-  const { fee } = useSnapshot(Chain)
   return (
     <FormCard title="Stake">
       <Stack spacing={SPACING.formStack}>
@@ -142,7 +135,6 @@ export const StakeReview = ({
           <ReviewItem label="To validator">{values.toValidator}</ReviewItem>
         )}
         <ReviewItem label="Amount">{values.amount}</ReviewItem>
-        <ReviewItem label="Transaction Fee">{formatFee(fee)}</ReviewItem>
       </Stack>
     </FormCard>
   )

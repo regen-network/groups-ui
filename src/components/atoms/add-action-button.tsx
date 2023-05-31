@@ -1,6 +1,6 @@
 import { Center, forwardRef, IconButton, type IconButtonProps } from './chakra-components'
 
-import { AiOutlinePlus } from 'assets/tsx'
+import { PlusIcon } from 'assets/tsx'
 
 /** Icon button   */
 export const AddActionButton = forwardRef((props: IconButtonProps, ref) => {
@@ -22,7 +22,7 @@ export const AddActionButton = forwardRef((props: IconButtonProps, ref) => {
         aria-label="new action"
         rounded="full"
         my={5}
-        icon={<AiOutlinePlus />}
+        icon={<PlusIcon />}
         zIndex={2}
         _before={{
           content: '""',

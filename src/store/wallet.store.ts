@@ -1,6 +1,6 @@
 import { type AccountData, coins, type EncodeObject } from '@cosmjs/proto-signing'
 import type { SigningStargateClient } from '@cosmjs/stargate'
-import { cosmos, getSigningCosmosClient } from '@haveanicedavid/regen-ts'
+import { cosmos, getSigningCosmosClient } from '@regen-network/api'
 import { proxy } from 'valtio'
 
 import { logError, throwError } from 'util/errors'

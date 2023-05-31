@@ -1,7 +1,7 @@
 import {
   Timestamp,
   TimestampSDKType,
-} from '@haveanicedavid/regen-ts/types/codegen/google/protobuf/timestamp'
+} from '@regen-network/api/types/codegen/google/protobuf/timestamp'
 import dayjs from 'dayjs'
 import Long from 'long'
 

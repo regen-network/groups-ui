@@ -1,14 +1,12 @@
-import type { IconType } from 'react-icons'
-
 import { useColorModeValue } from 'hooks/chakra-hooks'
 
-import { BaseCard, Box, CardBody, Flex, InfoTooltip, Text } from '@/atoms'
+import { BaseCard, Box, CardBody, Flex, type IconProps, InfoTooltip, Text } from '@/atoms'
 
 export const ActionButton = (props: {
   label: string
   /** NOTE: This will have to change if we want the component to be more flexible
    * in the future - this is easiest for now */
-  icon: IconType
+  icon: (props: IconProps) => JSX.Element
   tooltipText?: string
   onClick: () => void
 }) => {
