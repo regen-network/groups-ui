@@ -1,5 +1,3 @@
-import { Any } from '@haveanicedavid/regen-ts/types/codegen/google/protobuf/any'
-
 import type {
   ProposalSendFormValues,
   ProposalStakeFormValues,
@@ -8,6 +6,7 @@ import type {
   Vote,
   VoteOptionType,
 } from 'types'
+import { Any } from 'types'
 import { formatDate } from 'util/date'
 import { VoteOption } from 'util/enums'
 
