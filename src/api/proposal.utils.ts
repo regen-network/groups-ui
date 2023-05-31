@@ -42,7 +42,7 @@ export function proposalActionsToMsgs(
   })
 }
 
-export function toUIProposal(sdkProposal: ProposalSDKType): UIProposal {
+export async function toUIProposal(sdkProposal: ProposalSDKType): Promise<UIProposal> {
   const { final_tally_result } = sdkProposal
   return {
     // executorResult is an enum - currently identical to SDK versions so this
@@ -55,13 +55,14 @@ export function toUIProposal(sdkProposal: ProposalSDKType): UIProposal {
     id: sdkProposal.id,
     // TODO(#9): dependent on https://github.com/regen-network/regen-js/issues/71
     messages: sdkProposal.messages.map(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (msg: any) =>
         ({
           typeUrl: msg['@type'],
           value: msg,
         } as Any),
     ),
-    metadata: getProposalMetadata(sdkProposal.metadata, {
+    metadata: await getProposalMetadata(sdkProposal.metadata, {
       title: `Proposal #${sdkProposal.id}`,
     }),
     proposers: sdkProposal.proposers,
