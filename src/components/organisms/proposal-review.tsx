@@ -85,7 +85,7 @@ export const SendReview = ({
   return (
     <FormCard title="Send">
       <Stack spacing={SPACING.formStack}>
-        {'sendType' in values && <ReviewItem label="Type">{values.sendType}</ReviewItem>}
+        <ReviewItem label="Type">{values.sendType}</ReviewItem>
         <ReviewItem label="From Address">
           <Truncate
             clickToCopy
@@ -114,9 +114,7 @@ export const StakeReview = ({
   return (
     <FormCard title="Stake">
       <Stack spacing={SPACING.formStack}>
-        {'stakeType' in values && (
-          <ReviewItem label="Type">{values.stakeType}</ReviewItem>
-        )}
+        <ReviewItem label="Type">{values.stakeType}</ReviewItem>
         <ReviewItem label="Delegator">
           <Truncate
             clickToCopy

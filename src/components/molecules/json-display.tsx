@@ -2,7 +2,8 @@ import { useColorModeValue } from 'hooks/chakra-hooks'
 
 import { Card, CardBody } from '@/atoms'
 
-export const JSONDisplay = ({ data }: { data: Record<string, unknown> }) => {
+// TODO: Unexpected any. Specify a different type.
+export const JSONDisplay = ({ data }: { data: any }) => {
   return (
     <Card shadow="none">
       <CardBody bg={useColorModeValue('gray.100', 'gray.700')}>

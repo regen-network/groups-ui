@@ -6,7 +6,6 @@ import type {
   Vote,
   VoteOptionType,
 } from 'types'
-import { Any } from 'types'
 import { formatDate } from 'util/date'
 import { VoteOption } from 'util/enums'
 
@@ -24,6 +23,7 @@ import {
   Stack,
   Text,
 } from '@/atoms'
+import { JSONDisplay } from '@/molecules/json-display'
 import { VoteButtons } from '@/molecules/vote-buttons'
 import { SendReview, StakeReview } from '@/organisms/proposal-review'
 
@@ -102,27 +102,72 @@ export const ProposalSummary = ({
   )
 }
 
-function renderMessage(msg: Any, groupPolicyAddress: string) {
+// TODO: Unexpected any. Specify a different type.
+function renderMessage(msg: any, groupPolicyAddress: string) {
   if (!msg) return null
   switch (msg.typeUrl) {
     case '/cosmos.bank.v1beta1.MsgSend':
       return (
         <SendReview
           groupPolicyAddress={groupPolicyAddress}
-          values={msg as unknown as ProposalSendFormValues}
+          values={
+            {
+              ...msg,
+              sendType: 'single',
+              amount: msg.value['amount'][0]['amount'], // TODO
+            } as unknown as ProposalSendFormValues
+          }
         />
       )
     case '/cosmos.staking.v1beta1.MsgDelegate':
+      return (
+        <StakeReview
+          groupPolicyAddress={groupPolicyAddress}
+          values={
+            {
+              ...msg,
+              stakeType: 'delegate',
+            } as unknown as ProposalStakeFormValues
+          }
+        />
+      )
     case '/cosmos.staking.v1beta1.MsgBeginRedelegate':
+      return (
+        <StakeReview
+          groupPolicyAddress={groupPolicyAddress}
+          values={
+            {
+              ...msg,
+              stakeType: 'redelegate',
+            } as unknown as ProposalStakeFormValues
+          }
+        />
+      )
     case '/cosmos.staking.v1beta1.MsgUndelegate':
+      return (
+        <StakeReview
+          groupPolicyAddress={groupPolicyAddress}
+          values={
+            {
+              ...msg,
+              stakeType: 'undelegate',
+            } as unknown as ProposalStakeFormValues
+          }
+        />
+      )
     case '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward':
       return (
         <StakeReview
           groupPolicyAddress={groupPolicyAddress}
-          values={msg as unknown as ProposalStakeFormValues}
+          values={
+            {
+              ...msg,
+              stakeType: 'claim',
+            } as unknown as ProposalStakeFormValues
+          }
         />
       )
     default:
-      return null
+      return <JSONDisplay data={msg} />
   }
 }
