@@ -53,7 +53,7 @@ export async function toUIProposal(sdkProposal: ProposalSDKType): Promise<UIProp
     groupPolicyVersion: sdkProposal.group_policy_version,
     groupVersion: sdkProposal.group_version,
     id: sdkProposal.id,
-    // TODO(#9): dependent on https://github.com/regen-network/regen-js/issues/71
+    // TODO: https://github.com/regen-network/regen-js/issues/71
     messages: sdkProposal.messages.map(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (msg: any) =>

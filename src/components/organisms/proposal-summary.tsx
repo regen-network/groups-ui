@@ -102,7 +102,7 @@ export const ProposalSummary = ({
   )
 }
 
-// TODO: Unexpected any. Specify a different type.
+// TODO: https://github.com/regen-network/regen-js/issues/71
 function renderMessage(msg: any, groupPolicyAddress: string) {
   if (!msg) return null
   switch (msg.typeUrl) {
@@ -114,7 +114,8 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
             {
               ...msg,
               sendType: 'single',
-              amount: msg.value['amount'][0]['amount'], // TODO
+              // TODO(#19): add support for other currencies / multiple amounts
+              amount: msg.value['amount'][0]['amount'],
             } as unknown as ProposalSendFormValues
           }
         />
@@ -127,6 +128,8 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
             {
               ...msg,
               stakeType: 'delegate',
+              // TODO(#19): add support for other currencies
+              amount: msg.value['amount']['amount'],
             } as unknown as ProposalStakeFormValues
           }
         />
@@ -139,6 +142,8 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
             {
               ...msg,
               stakeType: 'redelegate',
+              // TODO(#19): add support for other currencies
+              amount: msg.value['amount']['amount'],
             } as unknown as ProposalStakeFormValues
           }
         />
@@ -151,6 +156,8 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
             {
               ...msg,
               stakeType: 'undelegate',
+              // TODO(#19): add support for other currencies
+              amount: msg.value['amount']['amount'],
             } as unknown as ProposalStakeFormValues
           }
         />
@@ -163,6 +170,8 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
             {
               ...msg,
               stakeType: 'claim',
+              // TODO(#19): add support for other currencies
+              amount: msg.value['amount']['amount'],
             } as unknown as ProposalStakeFormValues
           }
         />
