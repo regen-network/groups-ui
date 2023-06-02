@@ -75,7 +75,7 @@ function renderAction(action: ProposalAction, groupPolicyAddress: string) {
   }
 }
 
-const SendReview = ({
+export const SendReview = ({
   groupPolicyAddress,
   values,
 }: {
@@ -104,7 +104,7 @@ const SendReview = ({
   )
 }
 
-const StakeReview = ({
+export const StakeReview = ({
   groupPolicyAddress,
   values,
 }: {
