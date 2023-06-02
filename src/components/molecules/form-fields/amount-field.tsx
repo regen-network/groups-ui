@@ -1,24 +1,15 @@
 import { useController, useFormContext } from 'react-hook-form'
 
-import { AmountInput, type AmountInputProps, Heading, HStack, Text } from '@/atoms'
+import { Button, Input, InputGroup, InputRightElement } from '@/atoms'
 
 import { FieldControl, type FieldProps } from './field-control'
 
 type Props = FieldProps & {
-  inputProps?: AmountInputProps
   maxValue: string
-  maxLabel?: string
-  denom?: string
 }
 
 /** Basic number input with a `maxValue`, set upon click */
-export const AmountField = ({
-  maxValue,
-  maxLabel = 'Available:',
-  denom,
-  inputProps,
-  ...fieldProps
-}: Props) => {
+export const AmountField = ({ maxValue, ...fieldProps }: Props) => {
   const { name, required } = fieldProps
   const { control, getValues, setValue } = useFormContext()
   const {
@@ -36,20 +27,15 @@ export const AmountField = ({
   }
 
   return (
-    <FieldControl
-      {...fieldProps}
-      error={error}
-      labelRight={
-        <HStack alignItems="baseline">
-          <Text fontSize="xs">{maxLabel + ' '}</Text>
-          <Heading variant="label" fontSize="xs">
-            {maxValue}
-            {denom && ' ' + denom}
-          </Heading>
-        </HStack>
-      }
-    >
-      <AmountInput {...field} {...inputProps} onMaxClick={handleClick} />
+    <FieldControl {...fieldProps} error={error}>
+      <InputGroup>
+        <Input type="number" {...field} />
+        <InputRightElement width="4.5rem">
+          <Button size="sm" h="1.75rem" onClick={handleClick}>
+            max
+          </Button>
+        </InputRightElement>
+      </InputGroup>
     </FieldControl>
   )
 }

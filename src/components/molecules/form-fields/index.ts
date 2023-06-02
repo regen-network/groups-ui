@@ -1,4 +1,5 @@
 export * from './amount-field'
+export * from './denom-field'
 export * from './field-control'
 export * from './input-field'
 export * from './number-field'
