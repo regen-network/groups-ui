@@ -27,7 +27,7 @@ export const ClaimForm = (props: {
   maxAmount: string
   onSubmit: (data: ClaimFormValues) => void
 }) => {
-  // TODO: hook for amount claimable from validator
+  // TODO(#79): hook for amount claimable from validator
   const { fee } = useSnapshot(Chain)
   const form = useZodForm({
     schema,
