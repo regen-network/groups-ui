@@ -103,6 +103,7 @@ export const ProposalSummary = ({
 }
 
 // TODO: https://github.com/regen-network/regen-js/issues/71
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function renderMessage(msg: any, groupPolicyAddress: string) {
   if (!msg) return null
   switch (msg.typeUrl) {

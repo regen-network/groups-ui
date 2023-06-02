@@ -2,6 +2,7 @@ import { useColorModeValue } from 'hooks/chakra-hooks'
 
 import { Card, CardBody } from '@/atoms'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const JSONDisplay = ({ data }: { data: Record<any, unknown> }) => {
   return (
     <Card shadow="none">
