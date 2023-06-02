@@ -16,7 +16,7 @@ import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 const schema = z.object({
   toAddress: valid.bech32Address,
   amount: valid.amount,
-  denom: z.string().optional(), // TODO
+  denom: valid.denom,
   sendType: z.literal('single'),
 })
 

@@ -18,7 +18,7 @@ export function msgSend({
   const value = cosmos.bank.v1beta1.MsgSend.encode({
     fromAddress,
     toAddress,
-    amount: [{ denom, amount }], // TODO: support multiple coins?
+    amount: [{ denom, amount }], // TODO(#19): support multiple coins?
   }).finish()
   return {
     typeUrl: '/cosmos.bank.v1beta1.MsgSend',

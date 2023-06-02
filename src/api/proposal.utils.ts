@@ -110,7 +110,7 @@ function sendValuesToMsg(values: ProposalSendFormValues, data: ProposalData) {
     fromAddress: data.groupPolicyAddress,
     toAddress: values.toAddress,
     amount: values.amount,
-    denom: data.denom,
+    denom: values.denom,
   }
   return msgSend(sendInfo)
 }
@@ -125,8 +125,8 @@ function stakeValuesToMsg(values: ProposalStakeFormValues, data: ProposalData) {
   if (isDelegateValues(values)) {
     const delegateInfo = {
       amount: values.amount,
+      denom: values.denom,
       validatorAddress: values.validator,
-      denom: data.denom,
       delegatorAddress: data.groupPolicyAddress,
     }
     return values.stakeType === 'delegate'
@@ -136,7 +136,7 @@ function stakeValuesToMsg(values: ProposalStakeFormValues, data: ProposalData) {
   if (isRedelegateValues(values)) {
     return msgStakingRedelegate({
       amount: values.amount,
-      denom: data.denom,
+      denom: values.denom,
       delegatorAddress: data.groupPolicyAddress,
       validatorDstAddress: values.toValidator,
       validatorSrcAddress: values.fromValidator,

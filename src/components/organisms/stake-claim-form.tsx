@@ -15,7 +15,7 @@ import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 
 const schema = z.object({
   amount: valid.amount,
-  denom: z.string().optional(), // TODO
+  denom: valid.denom,
   stakeType: z.literal('claim'),
 })
 

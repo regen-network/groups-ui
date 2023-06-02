@@ -37,23 +37,27 @@ export const defaultGroupPolicyFormValues: GroupPolicyFormValues = {
 export const defaultSendFormValues: ProposalSendFormValues = {
   toAddress: '',
   amount: '',
+  denom: '',
   sendType: 'single',
 }
 
 export const defaultDelegateFormValues: DelegateFormValues = {
   amount: '',
+  denom: '',
   validator: '',
   stakeType: 'delegate',
 }
 
 export const defaultUndelegateFormValues: DelegateFormValues = {
   amount: '',
+  denom: '',
   validator: '',
   stakeType: 'undelegate',
 }
 
 export const defaultRedelegateFormValues: RedelegateFormValues = {
   amount: '',
+  denom: '',
   fromValidator: '',
   toValidator: '',
   stakeType: 'redelegate',
@@ -61,6 +65,7 @@ export const defaultRedelegateFormValues: RedelegateFormValues = {
 
 export const defaultClaimFormValues: ClaimFormValues = {
   amount: '',
+  denom: '',
   stakeType: 'claim',
 }
 
