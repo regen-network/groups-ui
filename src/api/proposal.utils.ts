@@ -18,7 +18,12 @@ import {
   msgStakingRedelegate,
   msgStakingUndelegate,
 } from './staking.messages'
-import { isClaimValues, isDelegateValues, isRedelegateValues } from './staking.utils'
+import {
+  isClaimValues,
+  isDelegateValues,
+  isRedelegateValues,
+  isUndelegateValues,
+} from './staking.utils'
 
 type ProposalData = {
   denom: string
@@ -123,15 +128,20 @@ function isStakeProposal(
 
 function stakeValuesToMsg(values: ProposalStakeFormValues, data: ProposalData) {
   if (isDelegateValues(values)) {
-    const delegateInfo = {
+    return msgStakingDelegate({
       amount: values.amount,
       denom: values.denom,
       validatorAddress: values.validator,
       delegatorAddress: data.groupPolicyAddress,
-    }
-    return values.stakeType === 'delegate'
-      ? msgStakingDelegate(delegateInfo)
-      : msgStakingUndelegate(delegateInfo)
+    })
+  }
+  if (isUndelegateValues(values)) {
+    return msgStakingUndelegate({
+      amount: values.amount,
+      denom: values.denom,
+      validatorAddress: values.validator,
+      delegatorAddress: data.groupPolicyAddress,
+    })
   }
   if (isRedelegateValues(values)) {
     return msgStakingRedelegate({

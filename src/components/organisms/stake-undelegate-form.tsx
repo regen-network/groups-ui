@@ -14,20 +14,20 @@ import { DenomField } from '@/molecules/form-fields/denom-field'
 import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 
 const schema = z.object({
-  fromValidator: valid.bech32Address,
-  toValidator: valid.bech32Address,
+  validator: valid.bech32Address,
   amount: valid.amount,
   denom: valid.denom,
-  stakeType: z.literal('redelegate'),
+  stakeType: z.literal('undelegate'),
 })
 
-export type RedelegateFormValues = z.infer<typeof schema>
+export type UndelegateFormValues = z.infer<typeof schema>
 
-export const RedelegateForm = (props: {
-  defaultValues: RedelegateFormValues
+export const UndelegateForm = (props: {
+  defaultValues: UndelegateFormValues
   formId: string
   maxAmount: string
-  onSubmit: (data: RedelegateFormValues) => void
+  onSubmit: (data: UndelegateFormValues) => void
+  onError: () => void
 }) => {
   // TODO: hook for amount delegated to selected validator
   const { validators, fee } = useSnapshot(Chain)
@@ -42,27 +42,19 @@ export const RedelegateForm = (props: {
     defaultValues: {
       ...props.defaultValues,
       denom: getFeeDenom(fee),
-      fromValidator: items[0].value,
+      validator: items[0].value,
     },
   })
 
   // TODO: set max amount
 
   return (
-    <Form form={form} onSubmit={props.onSubmit} id={props.formId}>
+    <Form id={props.formId} form={form} onSubmit={props.onSubmit} onError={props.onError}>
       <SelectField
         required
-        name="fromValidator"
-        label="From validator"
-        selected={items.find((i) => i.value === form.getValues().fromValidator)}
-        dropdownLabel="Select a validator"
-        items={items}
-      />
-      <SelectField
-        required
-        name="toValidator"
-        label="To validator"
-        selected={items.find((i) => i.value === form.getValues().toValidator)}
+        name="validator"
+        label="Validator"
+        selected={items.find((i) => i.value === form.getValues().validator)}
         dropdownLabel="Select a validator"
         items={items}
       />
@@ -84,7 +76,7 @@ export const RedelegateForm = (props: {
           />
         </GridItem>
       </Grid>
-      <FormSubmitHiddenButton id={props.formId} />
+      <FormSubmitHiddenButton id={props.formId} onSubmit={props.onSubmit} />
     </Form>
   )
 }

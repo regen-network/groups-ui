@@ -7,6 +7,7 @@ import type {
   ProposalSendFormValues,
   ProposalStakeFormValues,
   RedelegateFormValues,
+  UndelegateFormValues,
 } from 'types'
 
 export const defaultMemberFormValues = (): MemberFormValues => ({
@@ -48,7 +49,7 @@ export const defaultDelegateFormValues: DelegateFormValues = {
   stakeType: 'delegate',
 }
 
-export const defaultUndelegateFormValues: DelegateFormValues = {
+export const defaultUndelegateFormValues: UndelegateFormValues = {
   amount: '',
   denom: '',
   validator: '',

@@ -4,8 +4,10 @@ import { z } from 'zod'
 import { getFeeDenom } from 'util/helpers'
 import { valid } from 'util/validation/zod'
 
+import { useBalances } from 'hooks/use-query'
 import { useZodForm } from 'hooks/use-zod-form'
 import { Chain } from 'store/chain.store'
+import { Wallet } from 'store/wallet.store'
 
 import { Grid, GridItem } from '@/atoms'
 import { Form } from '@/molecules/form'
@@ -17,7 +19,7 @@ const schema = z.object({
   validator: valid.bech32Address,
   amount: valid.amount,
   denom: valid.denom,
-  stakeType: z.union([z.literal('delegate'), z.literal('undelegate')]),
+  stakeType: z.literal('delegate'),
 })
 
 export type DelegateFormValues = z.infer<typeof schema>
@@ -29,6 +31,7 @@ export const DelegateForm = (props: {
   onSubmit: (data: DelegateFormValues) => void
   onError: () => void
 }) => {
+  const { data: balances } = useBalances(Wallet.account?.address)
   const { validators, fee } = useSnapshot(Chain)
   const items = validators.map((v, i) => {
     return {
@@ -45,6 +48,8 @@ export const DelegateForm = (props: {
     },
   })
 
+  // TODO: set max amount
+
   return (
     <Form id={props.formId} form={form} onSubmit={props.onSubmit} onError={props.onError}>
       <SelectField
@@ -57,14 +62,19 @@ export const DelegateForm = (props: {
       />
       <Grid alignItems="end" gridTemplateColumns={'1fr 150px'} gap={2}>
         <GridItem>
-          <AmountField required name="amount" label="Amount" maxValue={props.maxAmount} />
+          <AmountField
+            required
+            name="amount"
+            label="Amount"
+            maxValue={props.maxAmount} // TODO
+          />
         </GridItem>
         <GridItem>
           <DenomField
             required
             name="denom"
             denoms={[getFeeDenom(fee)]}
-            maxValue={props.maxAmount}
+            maxValue={props.maxAmount} // TODO
           />
         </GridItem>
       </Grid>

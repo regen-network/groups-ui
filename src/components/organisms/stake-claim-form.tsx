@@ -27,6 +27,7 @@ export const ClaimForm = (props: {
   maxAmount: string
   onSubmit: (data: ClaimFormValues) => void
 }) => {
+  // TODO: hook for amount claimable from validator
   const { fee } = useSnapshot(Chain)
   const form = useZodForm({
     schema,
@@ -36,18 +37,25 @@ export const ClaimForm = (props: {
     },
   })
 
+  // TODO: set max amount
+
   return (
     <Form form={form} onSubmit={props.onSubmit} id={props.formId}>
       <Grid alignItems="end" gridTemplateColumns={'1fr 150px'} gap={2}>
         <GridItem>
-          <AmountField required name="amount" label="Amount" maxValue={props.maxAmount} />
+          <AmountField
+            required
+            name="amount"
+            label="Amount"
+            maxValue={props.maxAmount} // TODO
+          />
         </GridItem>
         <GridItem>
           <DenomField
             required
             name="denom"
             denoms={[getFeeDenom(fee)]}
-            maxValue={props.maxAmount}
+            maxValue={props.maxAmount} // TODO
           />
         </GridItem>
       </Grid>

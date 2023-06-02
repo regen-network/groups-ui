@@ -10,6 +10,7 @@ import { RadioGroupOptions } from '@/molecules/radio-group-options'
 import { ClaimForm, type ClaimFormValues } from './stake-claim-form'
 import { DelegateForm, type DelegateFormValues } from './stake-delegate-form'
 import { RedelegateForm, type RedelegateFormValues } from './stake-redelegate-form'
+import { UndelegateForm, type UndelegateFormValues } from './stake-undelegate-form'
 
 const stakeOptions: { label: string; value: ProposalStakeType }[] = [
   { label: 'Delegate', value: 'delegate' },
@@ -53,11 +54,11 @@ export const ProposalStakeForm = ({
         )
       case 'undelegate':
         return (
-          <DelegateForm
+          <UndelegateForm
             {...baseProps}
             key={formId + '-undelegate'}
             defaultValues={
-              { ...defaultValues, stakeType: 'undelegate' } as DelegateFormValues
+              { ...defaultValues, stakeType: 'undelegate' } as UndelegateFormValues
             }
           />
         )
