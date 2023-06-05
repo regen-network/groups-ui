@@ -1,3 +1,4 @@
+import { Event } from '@regen-network/api/types/codegen/tendermint/abci/types'
 import Long from 'long'
 
 import type {
@@ -92,7 +93,7 @@ export async function createProposal({
   if (data.rawLog && isJson(data.rawLog)) {
     const [raw] = JSON.parse(data.rawLog)
     const idRaw = raw.events.find(
-      (e: any) => e.type === 'cosmos.group.v1.EventSubmitProposal',
+      (e: Event) => e.type === 'cosmos.group.v1.EventSubmitProposal',
     ).attributes[0].value
     proposalId = String(JSON.parse(idRaw))
   }
