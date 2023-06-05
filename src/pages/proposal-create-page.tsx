@@ -27,7 +27,7 @@ export default function ProposalCreate() {
   const { groupId } = useParams()
   const { state } = useAppLocation()
   const { toastSuccess, toastErr } = useTxToasts()
-  const { defaultDenom } = useSnapshot(Chain)
+  const { stakeDenom } = useSnapshot(Chain)
   const { account } = useSnapshot(Wallet)
   const { data: group, isLoading: isLoadingGroup } = useGroup(groupId)
   const { data: groupPolicies } = useGroupPolicies(groupId)
@@ -68,7 +68,7 @@ export default function ProposalCreate() {
         actions,
         title,
         summary,
-        denom: defaultDenom,
+        denom: stakeDenom,
         groupPolicyAddress: groupPolicy.address,
         metadata: { title, summary },
         proposers: [account.address],

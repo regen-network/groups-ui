@@ -25,12 +25,12 @@ export const ClaimForm = (props: {
   formId: string
   onSubmit: (data: ClaimFormValues) => void
 }) => {
-  const { defaultDenom } = useSnapshot(Chain)
+  const { stakeDenom } = useSnapshot(Chain)
   const form = useZodForm({
     schema,
     defaultValues: {
       ...props.defaultValues,
-      denom: defaultDenom,
+      denom: stakeDenom,
     },
   })
 

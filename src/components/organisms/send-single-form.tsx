@@ -29,12 +29,12 @@ export const SingleForm = (props: {
   onSubmit: (data: SingleFormValues) => void
   onError: () => void
 }) => {
-  const { defaultDenom } = useSnapshot(Chain)
+  const { stakeDenom } = useSnapshot(Chain)
   const form = useZodForm({
     schema,
     defaultValues: {
       ...props.defaultValues,
-      denom: defaultDenom,
+      denom: stakeDenom,
     },
   })
 

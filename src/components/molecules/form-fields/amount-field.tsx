@@ -26,7 +26,7 @@ export const AmountField = ({ balances, ...fieldProps }: Props) => {
 
   function handleClick() {
     const balance = balances?.find((b) => b.denom === getValues('denom'))
-    if (balance !== undefined) {
+    if (balance) {
       setValue(name, balance.amount)
     }
   }

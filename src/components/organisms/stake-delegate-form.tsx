@@ -29,7 +29,7 @@ export const DelegateForm = (props: {
   onSubmit: (data: DelegateFormValues) => void
   onError: () => void
 }) => {
-  const { validators, defaultDenom } = useSnapshot(Chain)
+  const { validators, stakeDenom } = useSnapshot(Chain)
   const items = validators.map((v, i) => {
     return {
       label: v.description?.moniker || `Validator ${i}`,
@@ -40,7 +40,7 @@ export const DelegateForm = (props: {
     schema,
     defaultValues: {
       ...props.defaultValues,
-      denom: defaultDenom,
+      denom: stakeDenom,
       validator: items[0].value,
     },
   })

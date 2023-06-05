@@ -27,7 +27,7 @@ export const RedelegateForm = (props: {
   formId: string
   onSubmit: (data: RedelegateFormValues) => void
 }) => {
-  const { validators, defaultDenom } = useSnapshot(Chain)
+  const { validators, stakeDenom } = useSnapshot(Chain)
   const items = validators.map((v, i) => {
     return {
       label: v.description?.moniker || `Validator ${i}`,
@@ -38,7 +38,7 @@ export const RedelegateForm = (props: {
     schema,
     defaultValues: {
       ...props.defaultValues,
-      denom: defaultDenom,
+      denom: stakeDenom,
       fromValidator: items[0].value,
     },
   })
