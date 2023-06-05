@@ -24,7 +24,7 @@ export type ClaimFormValues = z.infer<typeof schema>
 export const ClaimForm = (props: {
   defaultValues: ClaimFormValues
   formId: string
-  maxAmount: string
+  policyBalances: any // TODO
   onSubmit: (data: ClaimFormValues) => void
 }) => {
   // TODO(#79): hook for amount claimable from validator
@@ -47,15 +47,14 @@ export const ClaimForm = (props: {
             required
             name="amount"
             label="Amount"
-            maxValue={props.maxAmount} // TODO
+            available={props.policyBalances} // TODO
           />
         </GridItem>
         <GridItem>
           <DenomField
             required
             name="denom"
-            denoms={[getFeeDenom(fee)]}
-            maxValue={props.maxAmount} // TODO
+            available={props.policyBalances} // TODO
           />
         </GridItem>
       </Grid>

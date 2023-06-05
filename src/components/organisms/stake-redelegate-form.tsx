@@ -26,10 +26,11 @@ export type RedelegateFormValues = z.infer<typeof schema>
 export const RedelegateForm = (props: {
   defaultValues: RedelegateFormValues
   formId: string
-  maxAmount: string
+  policyBalances: any // TODO
   onSubmit: (data: RedelegateFormValues) => void
 }) => {
   // TODO: hook for amount delegated to selected validator
+
   const { validators, fee } = useSnapshot(Chain)
   const items = validators.map((v, i) => {
     return {
@@ -45,8 +46,6 @@ export const RedelegateForm = (props: {
       fromValidator: items[0].value,
     },
   })
-
-  // TODO: set max amount
 
   return (
     <Form form={form} onSubmit={props.onSubmit} id={props.formId}>
@@ -72,15 +71,14 @@ export const RedelegateForm = (props: {
             required
             name="amount"
             label="Amount"
-            maxValue={props.maxAmount} // TODO
+            available={props.policyBalances} // TODO
           />
         </GridItem>
         <GridItem>
           <DenomField
             required
             name="denom"
-            denoms={[getFeeDenom(fee)]}
-            maxValue={props.maxAmount} // TODO
+            available={props.policyBalances} // TODO
           />
         </GridItem>
       </Grid>

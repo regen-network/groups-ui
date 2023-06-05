@@ -17,13 +17,13 @@ import { SingleForm, type SingleFormValues } from './send-single-form'
 export const ProposalSendForm = ({
   defaultValues,
   formId,
-  maxAmount,
+  policyBalances,
   onError,
   onSubmit,
 }: {
   defaultValues: ProposalSendFormValues
   formId: string
-  maxAmount: string
+  policyBalances: any // TODO
   onError: () => void
   onSubmit: (values: ProposalSendFormValues) => void
 }) => {
@@ -33,7 +33,7 @@ export const ProposalSendForm = ({
       formId,
       onSubmit,
       onError,
-      maxAmount,
+      policyBalances,
     }
     switch (sendType) {
       case 'single':

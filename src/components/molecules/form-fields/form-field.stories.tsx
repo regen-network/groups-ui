@@ -49,14 +49,10 @@ const Template: StoryFn<typeof FormProvider> = () => {
           />
           <Grid gridTemplateColumns={'1fr 150px'}>
             <GridItem>
-              <AmountField name="amount" label="Amount field" maxValue="100" />
+              <AmountField name="amount" label="Amount field" />
             </GridItem>
             <GridItem>
-              <DenomField
-                name="denom"
-                denoms={['regen', 'stake', 'chora']}
-                maxValue="100"
-              />
+              <DenomField name="denom" />
             </GridItem>
           </Grid>
           <TextareaField name="textarea" label="Textarea field" />

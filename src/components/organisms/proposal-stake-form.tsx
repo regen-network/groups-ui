@@ -22,13 +22,13 @@ const stakeOptions: { label: string; value: ProposalStakeType }[] = [
 export const ProposalStakeForm = ({
   defaultValues,
   formId,
-  maxStakeAmount,
+  policyBalances,
   onError,
   onSubmit,
 }: {
   defaultValues: ProposalStakeFormValues
   formId: string
-  maxStakeAmount: string
+  policyBalances: any // TODO
   onError: () => void
   onSubmit: (values: ProposalStakeFormValues) => void
 }) => {
@@ -38,7 +38,7 @@ export const ProposalStakeForm = ({
       formId,
       onSubmit,
       onError,
-      maxAmount: maxStakeAmount,
+      policyBalances,
     }
     switch (stakeType) {
       case 'claim':

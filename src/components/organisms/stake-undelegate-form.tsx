@@ -25,11 +25,12 @@ export type UndelegateFormValues = z.infer<typeof schema>
 export const UndelegateForm = (props: {
   defaultValues: UndelegateFormValues
   formId: string
-  maxAmount: string
+  policyBalances: any // TODO
   onSubmit: (data: UndelegateFormValues) => void
   onError: () => void
 }) => {
   // TODO: hook for amount delegated to selected validator
+
   const { validators, fee } = useSnapshot(Chain)
   const items = validators.map((v, i) => {
     return {
@@ -45,8 +46,6 @@ export const UndelegateForm = (props: {
       validator: items[0].value,
     },
   })
-
-  // TODO: set max amount
 
   return (
     <Form id={props.formId} form={form} onSubmit={props.onSubmit} onError={props.onError}>
@@ -64,15 +63,14 @@ export const UndelegateForm = (props: {
             required
             name="amount"
             label="Amount"
-            maxValue={props.maxAmount} // TODO
+            available={props.policyBalances} // TODO
           />
         </GridItem>
         <GridItem>
           <DenomField
             required
             name="denom"
-            denoms={[getFeeDenom(fee)]}
-            maxValue={props.maxAmount} // TODO
+            available={props.policyBalances} // TODO
           />
         </GridItem>
       </Grid>

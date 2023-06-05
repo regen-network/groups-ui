@@ -6,18 +6,11 @@ import { SelectDropdown } from '@/molecules/select-dropdown'
 import { FieldControl, type FieldProps } from './field-control'
 
 type Props = FieldProps & {
-  denoms: string[]
-  maxValue: string
-  maxLabel?: string
+  available?: any[] // TODO
 }
 
 /** Denom select input */
-export const DenomField = ({
-  denoms,
-  maxValue = '0',
-  maxLabel = 'Available:',
-  ...fieldProps
-}: Props) => {
+export const DenomField = ({ available, ...fieldProps }: Props) => {
   const { name, required } = fieldProps
   const { control, getValues } = useFormContext()
   const {
@@ -30,16 +23,39 @@ export const DenomField = ({
     rules: { required },
   })
 
+  let denoms: string[]
+  if (available) {
+    denoms = available.map((b) => b.denom)
+  } else {
+    denoms = []
+  }
+
+  let maxAmount: string
+  const balance = available?.find((b) => b.denom === getValues('denom'))
+  if (balance) {
+    maxAmount = balance.amount
+  } else {
+    maxAmount = '0'
+  }
+
   return (
     <FieldControl
       {...fieldProps}
       error={error}
       label=" "
       labelRight={
-        <HStack>
-          <Text fontSize="xs">{maxLabel + ' '}</Text>
+        <HStack
+          style={{
+            justifyContent: 'end',
+            minWidth: '400px',
+            position: 'absolute',
+            right: '0',
+            top: '-20px',
+          }}
+        >
+          <Text fontSize="xs">{'Available:' + ' '}</Text>
           <Heading variant="label" fontSize="xs">
-            {maxValue} {field.value}
+            {maxAmount} {field.value}
           </Heading>
         </HStack>
       }

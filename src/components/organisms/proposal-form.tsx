@@ -130,8 +130,7 @@ export const ProposalForm = (props: {
           <ProposalSendForm
             defaultValues={action.values as ProposalSendFormValues}
             formId={action.id}
-            // TODO: maxAmount should probably be dynamic, or set by searching balances
-            maxAmount={props.policyBalances[0]?.amount}
+            policyBalances={props.policyBalances}
             onError={() => handleFormError(action.id)}
             onSubmit={(data) => updateActionValues(action.id, data)}
           />
@@ -141,8 +140,7 @@ export const ProposalForm = (props: {
           <ProposalStakeForm
             defaultValues={action.values as ProposalStakeFormValues}
             formId={action.id}
-            // TODO: maxStakeAmount should probably be dynamic, or set by searching balances for the stake denom
-            maxStakeAmount={props.policyBalances[0]?.amount}
+            policyBalances={props.policyBalances}
             onError={() => handleFormError(action.id)}
             onSubmit={(data) => updateActionValues(action.id, data)}
           />
