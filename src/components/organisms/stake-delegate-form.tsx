@@ -61,11 +61,11 @@ export const DelegateForm = (props: {
             required
             name="amount"
             label="Amount"
-            available={props.policyBalances}
+            balances={props.policyBalances}
           />
         </GridItem>
         <GridItem>
-          <DenomField required name="denom" available={props.policyBalances} />
+          <DenomField required name="denom" balances={props.policyBalances} />
         </GridItem>
       </Grid>
       <FormSubmitHiddenButton id={props.formId} onSubmit={props.onSubmit} />

@@ -71,14 +71,14 @@ export const RedelegateForm = (props: {
             required
             name="amount"
             label="Amount"
-            available={props.policyBalances} // TODO
+            balances={props.policyBalances} // TODO
           />
         </GridItem>
         <GridItem>
           <DenomField
             required
             name="denom"
-            available={props.policyBalances} // TODO
+            balances={props.policyBalances} // TODO
           />
         </GridItem>
       </Grid>

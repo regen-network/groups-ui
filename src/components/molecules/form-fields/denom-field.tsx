@@ -6,11 +6,11 @@ import { SelectDropdown } from '@/molecules/select-dropdown'
 import { FieldControl, type FieldProps } from './field-control'
 
 type Props = FieldProps & {
-  available?: any[] // TODO
+  balances?: any[] // TODO
 }
 
 /** Denom select input */
-export const DenomField = ({ available, ...fieldProps }: Props) => {
+export const DenomField = ({ balances, ...fieldProps }: Props) => {
   const { name, required } = fieldProps
   const { control, getValues } = useFormContext()
   const {
@@ -24,14 +24,14 @@ export const DenomField = ({ available, ...fieldProps }: Props) => {
   })
 
   let denoms: string[]
-  if (available) {
-    denoms = available.map((b) => b.denom)
+  if (balances) {
+    denoms = balances.map((b) => b.denom)
   } else {
     denoms = []
   }
 
   let maxAmount: string
-  const balance = available?.find((b) => b.denom === getValues('denom'))
+  const balance = balances?.find((b) => b.denom === getValues('denom'))
   if (balance) {
     maxAmount = balance.amount
   } else {
