@@ -1,13 +1,13 @@
 import { useController, useFormContext } from 'react-hook-form'
 
-import { CoinSDKType } from 'types'
+import { UICoin } from 'types'
 
 import { Button, Input, InputGroup, InputRightElement } from '@/atoms'
 
 import { FieldControl, type FieldProps } from './field-control'
 
 type Props = FieldProps & {
-  balances: CoinSDKType[] // TODO
+  balances: UICoin[]
 }
 
 /** Basic number input with a `maxValue`, set upon click */

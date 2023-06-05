@@ -11,7 +11,7 @@ type Props = FieldProps & {
   balances: CoinSDKType[]
 }
 
-/** Denom select input */
+/** Denom select dropdown */
 export const DenomField = ({ balances, ...fieldProps }: Props) => {
   const { name, required } = fieldProps
   const { control, getValues } = useFormContext()
