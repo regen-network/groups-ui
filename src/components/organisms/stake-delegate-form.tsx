@@ -1,7 +1,6 @@
 import { useSnapshot } from 'valtio'
 import { z } from 'zod'
 
-import { getFeeDenom } from 'util/helpers'
 import { valid } from 'util/validation/zod'
 
 import { useZodForm } from 'hooks/use-zod-form'
@@ -29,7 +28,7 @@ export const DelegateForm = (props: {
   onSubmit: (data: DelegateFormValues) => void
   onError: () => void
 }) => {
-  const { validators, fee } = useSnapshot(Chain)
+  const { validators, defaultDenom } = useSnapshot(Chain)
   const items = validators.map((v, i) => {
     return {
       label: v.description?.moniker || `Validator ${i}`,
@@ -40,7 +39,7 @@ export const DelegateForm = (props: {
     schema,
     defaultValues: {
       ...props.defaultValues,
-      denom: getFeeDenom(fee),
+      denom: defaultDenom,
       validator: items[0].value,
     },
   })

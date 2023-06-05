@@ -1,7 +1,6 @@
 import { useSnapshot } from 'valtio'
 import { z } from 'zod'
 
-import { getFeeDenom } from 'util/helpers'
 import { valid } from 'util/validation/zod'
 
 import { useZodForm } from 'hooks/use-zod-form'
@@ -29,12 +28,12 @@ export const SingleForm = (props: {
   onSubmit: (data: SingleFormValues) => void
   onError: () => void
 }) => {
-  const { fee } = useSnapshot(Chain)
+  const { defaultDenom } = useSnapshot(Chain)
   const form = useZodForm({
     schema,
     defaultValues: {
       ...props.defaultValues,
-      denom: getFeeDenom(fee),
+      denom: defaultDenom,
     },
   })
 

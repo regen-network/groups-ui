@@ -70,12 +70,6 @@ export function formatFee(fee?: StdFee): string | null {
   return `${amount} ${denom}`
 }
 
-export function getFeeDenom(fee?: StdFee): string {
-  if (!fee) return '-'
-  const [{ denom }] = fee.amount
-  return denom
-}
-
 /** basic UUID generator */
 export function uuid(): string {
   const dateStr = Date.now().toString(36) // convert num to base 36 and stringify

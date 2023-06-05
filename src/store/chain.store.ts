@@ -18,12 +18,14 @@ type ChainStore = {
   active: ChainInfo
   all: ChainInfo[]
   fee?: StdFee // | 'auto' | number
+  defaultDenom: string
   validators: ValidatorSDKType[]
 }
 
 export const Chain = proxy<ChainStore>({
   active: savedChain && isJson(savedChain) ? JSON.parse(savedChain) : defaultChain,
   all: allChainsArray,
+  defaultDenom: defaultChain.stakeCurrency.coinMinimalDenom,
   validators: [],
 })
 

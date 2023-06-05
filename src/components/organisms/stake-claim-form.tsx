@@ -1,7 +1,6 @@
 import { useSnapshot } from 'valtio'
 import { z } from 'zod'
 
-import { getFeeDenom } from 'util/helpers'
 import { valid } from 'util/validation/zod'
 
 import { useZodForm } from 'hooks/use-zod-form'
@@ -28,16 +27,15 @@ export const ClaimForm = (props: {
   onSubmit: (data: ClaimFormValues) => void
 }) => {
   // TODO(#79): hook for amount claimable from validator
-  const { fee } = useSnapshot(Chain)
+
+  const { defaultDenom } = useSnapshot(Chain)
   const form = useZodForm({
     schema,
     defaultValues: {
       ...props.defaultValues,
-      denom: getFeeDenom(fee),
+      denom: defaultDenom,
     },
   })
-
-  // TODO: set max amount
 
   return (
     <Form form={form} onSubmit={props.onSubmit} id={props.formId}>
