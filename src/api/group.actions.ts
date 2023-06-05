@@ -17,10 +17,10 @@ export async function createGroupWithPolicy(values: GroupWithPolicyFormValues) {
   let groupId
   if (data.rawLog && isJson(data.rawLog)) {
     const [raw] = JSON.parse(data.rawLog)
-    const idRaw = raw.events[0].attributes[0].value
-    if (idRaw && isJson(idRaw)) {
-      groupId = String(JSON.parse(idRaw))
-    }
+    const idRaw = raw.events.find(
+      (e: Event) => e.type === 'cosmos.group.v1.EventCreateGroup',
+    ).attributes[0].value
+    groupId = String(JSON.parse(idRaw))
   }
   return { ...data, groupId }
 }
