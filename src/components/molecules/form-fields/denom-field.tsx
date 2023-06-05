@@ -1,12 +1,14 @@
 import { useController, useFormContext } from 'react-hook-form'
 
+import { CoinSDKType } from 'types'
+
 import { Heading, HStack, Text } from '@/atoms'
 import { SelectDropdown } from '@/molecules/select-dropdown'
 
 import { FieldControl, type FieldProps } from './field-control'
 
 type Props = FieldProps & {
-  balances?: any[] // TODO
+  balances: CoinSDKType[]
 }
 
 /** Denom select input */
@@ -44,20 +46,24 @@ export const DenomField = ({ balances, ...fieldProps }: Props) => {
       error={error}
       label=" "
       labelRight={
-        <HStack
-          style={{
-            justifyContent: 'end',
-            minWidth: '400px',
-            position: 'absolute',
-            right: '0',
-            top: '-20px',
-          }}
-        >
-          <Text fontSize="xs">{'Available:' + ' '}</Text>
-          <Heading variant="label" fontSize="xs">
-            {maxAmount} {field.value}
-          </Heading>
-        </HStack>
+        balances.length ? (
+          <HStack
+            style={{
+              justifyContent: 'end',
+              minWidth: '400px',
+              position: 'absolute',
+              right: '0',
+              top: '-20px',
+            }}
+          >
+            <Text fontSize="xs">{'Available: '}</Text>
+            <Heading variant="label" fontSize="xs">
+              {maxAmount} {field.value}
+            </Heading>
+          </HStack>
+        ) : (
+          <></>
+        )
       }
     >
       <SelectDropdown

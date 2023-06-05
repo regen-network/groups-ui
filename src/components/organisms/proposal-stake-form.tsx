@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import type { ProposalStakeFormValues, ProposalStakeType } from 'types'
+import { UICoin } from 'types'
 import { SPACING } from 'util/constants'
 
 import { FormControl, FormLabel, RadioGroup, Stack } from '@/atoms'
@@ -28,7 +29,7 @@ export const ProposalStakeForm = ({
 }: {
   defaultValues: ProposalStakeFormValues
   formId: string
-  policyBalances: any // TODO
+  policyBalances: UICoin[]
   onError: () => void
   onSubmit: (values: ProposalStakeFormValues) => void
 }) => {

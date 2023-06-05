@@ -23,11 +23,8 @@ export type ClaimFormValues = z.infer<typeof schema>
 export const ClaimForm = (props: {
   defaultValues: ClaimFormValues
   formId: string
-  policyBalances: any // TODO
   onSubmit: (data: ClaimFormValues) => void
 }) => {
-  // TODO(#79): hook for amount claimable from validator
-
   const { defaultDenom } = useSnapshot(Chain)
   const form = useZodForm({
     schema,
@@ -45,14 +42,14 @@ export const ClaimForm = (props: {
             required
             name="amount"
             label="Amount"
-            balances={props.policyBalances} // TODO
+            balances={[]} // TODO(#79): use claimable amount from validator
           />
         </GridItem>
         <GridItem>
           <DenomField
             required
             name="denom"
-            balances={props.policyBalances} // TODO
+            balances={[]} // TODO(#79): use claimable amount from validator
           />
         </GridItem>
       </Grid>

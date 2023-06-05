@@ -1,6 +1,7 @@
 import { useSnapshot } from 'valtio'
 import { z } from 'zod'
 
+import { UICoin } from 'types'
 import { valid } from 'util/validation/zod'
 
 import { useZodForm } from 'hooks/use-zod-form'
@@ -24,12 +25,10 @@ export type UndelegateFormValues = z.infer<typeof schema>
 export const UndelegateForm = (props: {
   defaultValues: UndelegateFormValues
   formId: string
-  policyBalances: any // TODO
+  policyBalances: UICoin[]
   onSubmit: (data: UndelegateFormValues) => void
   onError: () => void
 }) => {
-  // TODO: hook for amount delegated to selected validator
-
   const { validators, defaultDenom } = useSnapshot(Chain)
   const items = validators.map((v, i) => {
     return {
@@ -62,14 +61,14 @@ export const UndelegateForm = (props: {
             required
             name="amount"
             label="Amount"
-            balances={props.policyBalances} // TODO
+            balances={[]} // TODO: use amount staked on validator
           />
         </GridItem>
         <GridItem>
           <DenomField
             required
             name="denom"
-            balances={props.policyBalances} // TODO
+            balances={[]} // TODO: use amount staked on validator
           />
         </GridItem>
       </Grid>

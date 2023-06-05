@@ -1,11 +1,13 @@
 import { useController, useFormContext } from 'react-hook-form'
 
+import { CoinSDKType } from 'types'
+
 import { Button, Input, InputGroup, InputRightElement } from '@/atoms'
 
 import { FieldControl, type FieldProps } from './field-control'
 
 type Props = FieldProps & {
-  balances?: any[] // TODO
+  balances: CoinSDKType[] // TODO
 }
 
 /** Basic number input with a `maxValue`, set upon click */
@@ -33,11 +35,13 @@ export const AmountField = ({ balances, ...fieldProps }: Props) => {
     <FieldControl {...fieldProps} error={error}>
       <InputGroup>
         <Input type="number" {...field} />
-        <InputRightElement width="4.5rem">
-          <Button size="sm" h="1.75rem" onClick={handleClick}>
-            max
-          </Button>
-        </InputRightElement>
+        {balances.length && (
+          <InputRightElement width="4.5rem">
+            <Button size="sm" h="1.75rem" onClick={handleClick}>
+              max
+            </Button>
+          </InputRightElement>
+        )}
       </InputGroup>
     </FieldControl>
   )

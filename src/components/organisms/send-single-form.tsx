@@ -1,6 +1,7 @@
 import { useSnapshot } from 'valtio'
 import { z } from 'zod'
 
+import { UICoin } from 'types'
 import { valid } from 'util/validation/zod'
 
 import { useZodForm } from 'hooks/use-zod-form'
@@ -24,7 +25,7 @@ export type SingleFormValues = z.infer<typeof schema>
 export const SingleForm = (props: {
   defaultValues: SingleFormValues
   formId: string
-  policyBalances: any // TODO
+  policyBalances: UICoin[]
   onSubmit: (data: SingleFormValues) => void
   onError: () => void
 }) => {

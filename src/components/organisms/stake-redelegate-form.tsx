@@ -25,11 +25,8 @@ export type RedelegateFormValues = z.infer<typeof schema>
 export const RedelegateForm = (props: {
   defaultValues: RedelegateFormValues
   formId: string
-  policyBalances: any // TODO
   onSubmit: (data: RedelegateFormValues) => void
 }) => {
-  // TODO: hook for amount delegated to selected validator
-
   const { validators, defaultDenom } = useSnapshot(Chain)
   const items = validators.map((v, i) => {
     return {
@@ -70,14 +67,14 @@ export const RedelegateForm = (props: {
             required
             name="amount"
             label="Amount"
-            balances={props.policyBalances} // TODO
+            balances={[]} // TODO: use amount staked on validator
           />
         </GridItem>
         <GridItem>
           <DenomField
             required
             name="denom"
-            balances={props.policyBalances} // TODO
+            balances={[]} // TODO: use amount staked on validator
           />
         </GridItem>
       </Grid>

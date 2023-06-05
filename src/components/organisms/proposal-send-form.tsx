@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import type { ProposalSendFormValues, ProposalSendType } from 'types'
+import { UICoin } from 'types'
 import { SPACING } from 'util/constants'
 
 import { /* FormControl, FormLabel, RadioGroup, */ Stack } from '@/atoms'
@@ -23,7 +24,7 @@ export const ProposalSendForm = ({
 }: {
   defaultValues: ProposalSendFormValues
   formId: string
-  policyBalances: any // TODO
+  policyBalances: UICoin[]
   onError: () => void
   onSubmit: (values: ProposalSendFormValues) => void
 }) => {
