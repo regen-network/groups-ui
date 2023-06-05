@@ -1,3 +1,4 @@
+import { Event } from '@regen-network/api/types/codegen/tendermint/abci/types'
 import Long from 'long'
 
 import type { GroupWithPolicyFormValues, UIGroup } from 'types'
