@@ -11,21 +11,18 @@ import { msgCreateGroupWithPolicy } from './group.messages'
 import { addMembersToGroups, toUIGroup } from './group.utils'
 
 export async function createGroupWithPolicy(values: GroupWithPolicyFormValues) {
-  try {
-    const msg = msgCreateGroupWithPolicy(values)
-    const data = await signAndBroadcast([msg])
-    let groupId
-    if (data.rawLog && isJson(data.rawLog)) {
-      const [raw] = JSON.parse(data.rawLog)
-      const idRaw = raw.events[0].attributes[0].value
-      if (idRaw && isJson(idRaw)) {
-        groupId = String(JSON.parse(idRaw))
-      }
+  const msg = msgCreateGroupWithPolicy(values)
+  const data = await signAndBroadcast([msg])
+  if (!data) throwError('No data returned from transaction')
+  let groupId
+  if (data.rawLog && isJson(data.rawLog)) {
+    const [raw] = JSON.parse(data.rawLog)
+    const idRaw = raw.events[0].attributes[0].value
+    if (idRaw && isJson(idRaw)) {
+      groupId = String(JSON.parse(idRaw))
     }
-    return { ...data, groupId }
-  } catch (error) {
-    throwError(error)
   }
+  return { ...data, groupId }
 }
 
 export async function fetchGroupsWithMembersByMember(address?: string) {

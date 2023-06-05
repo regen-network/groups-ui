@@ -36,8 +36,8 @@ export default function GroupPage() {
 
   const handleExecute = async (proposal: UIProposal) => {
     try {
-      const data = await executeProposal({ proposalId: proposal.id })
-      toastSuccess(data?.transactionHash || '')
+      const { transactionHash } = await executeProposal({ proposalId: proposal.id })
+      toastSuccess(transactionHash)
     } catch (err) {
       toastErr(err)
     }

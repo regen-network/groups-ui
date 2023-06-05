@@ -6,7 +6,7 @@ import type {
   UIProposalMetadata,
   VoteOptionType,
 } from 'types'
-import { logError, throwError } from 'util/errors'
+import { throwError } from 'util/errors'
 import { isJson } from 'util/validation'
 
 import { Query } from 'store/query.store'
@@ -51,7 +51,7 @@ export async function fetchVotesByProposal(proposalId?: string) {
     })
     return votes.map(toUIVote)
   } catch (error) {
-    logError(error)
+    throwError(error)
   }
 }
 
@@ -72,51 +72,43 @@ export async function createProposal({
   summary: string
   title: string
 }) {
-  try {
-    const messages = proposalActionsToMsgs(actions, {
-      denom,
-      summary,
-      title,
-      groupPolicyAddress,
-    })
-    const submitMsg = msgSubmitProposal({
-      groupPolicyAddress,
-      messages,
-      proposers,
-      summary,
-      title,
-      metadata: JSON.stringify(metadata),
-    })
-    const data = await signAndBroadcast([submitMsg])
-    if (!data) throwError('No data returned from transaction')
-    let proposalId: string | undefined
-    if (data.rawLog && isJson(data.rawLog)) {
-      const [raw] = JSON.parse(data.rawLog)
-      const idRaw = raw.events[0].attributes[0].value
-      if (isJson(idRaw)) {
-        proposalId = String(JSON.parse(idRaw))
-      }
-    }
-    if (!proposalId) throwError('No data returned from transaction')
-    return { ...data, proposalId }
-  } catch (err) {
-    logError(err)
+  const messages = proposalActionsToMsgs(actions, {
+    denom,
+    summary,
+    title,
+    groupPolicyAddress,
+  })
+  const submitMsg = msgSubmitProposal({
+    groupPolicyAddress,
+    messages,
+    proposers,
+    summary,
+    title,
+    metadata: JSON.stringify(metadata),
+  })
+  const data = await signAndBroadcast([submitMsg])
+  if (!data) throwError('No data returned from transaction')
+  let proposalId: string | undefined
+  if (data.rawLog && isJson(data.rawLog)) {
+    const [raw] = JSON.parse(data.rawLog)
+    const idRaw = raw.events.find(
+      (e: any) => e.type === 'cosmos.group.v1.EventSubmitProposal',
+    ).attributes[0].value
+    proposalId = String(JSON.parse(idRaw))
   }
+  if (!proposalId) throwError('No data returned from transaction')
+  return { ...data, proposalId }
 }
 
 export async function executeProposal({ proposalId }: { proposalId: Long }) {
   if (!Wallet.account?.address) throwError('Wallet not initialized')
-  try {
-    const msg = GroupMsgWithTypeUrl.exec({
-      proposalId,
-      executor: Wallet.account.address,
-    })
-    const data = await signAndBroadcast([msg])
-    if (!data) throwError('No data returned from execution')
-    return data
-  } catch (err) {
-    logError(err)
-  }
+  const msg = GroupMsgWithTypeUrl.exec({
+    proposalId,
+    executor: Wallet.account.address,
+  })
+  const data = await signAndBroadcast([msg])
+  if (!data) throwError('No data returned from transaction')
+  return data
 }
 
 export async function voteOnProposal({
@@ -127,20 +119,16 @@ export async function voteOnProposal({
   proposalId: string
 }) {
   if (!Wallet.account?.address) throwError('Wallet not initialized')
-  try {
-    const msg = GroupMsgWithTypeUrl.vote({
-      option,
-      proposalId: Long.fromString(proposalId),
-      voter: Wallet.account.address,
-      exec: 0, // EXEC_UNSPECIFIED
-      metadata: '',
-    })
-    const data = await signAndBroadcast([msg])
-    if (!data) throwError('No data returned from vote')
-    return data
-  } catch (err) {
-    logError(err)
-  }
+  const msg = GroupMsgWithTypeUrl.vote({
+    option,
+    proposalId: Long.fromString(proposalId),
+    voter: Wallet.account.address,
+    exec: 0, // EXEC_UNSPECIFIED
+    metadata: '',
+  })
+  const data = await signAndBroadcast([msg])
+  if (!data) throwError('No data returned from vote')
+  return data
 }
 
 export async function fetchVotesByAddress(address?: string) {
@@ -150,6 +138,6 @@ export async function fetchVotesByAddress(address?: string) {
     const { votes } = await Query.groups.votesByVoter({ voter: address })
     return votes.map(toUIVote)
   } catch (error) {
-    logError(error)
+    throwError(error)
   }
 }
