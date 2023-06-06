@@ -11,10 +11,12 @@ import { signAndBroadcast } from 'store/wallet.store'
 import { msgCreateGroupWithPolicy } from './group.messages'
 import { addMembersToGroups, toUIGroup } from './group.utils'
 
+const txError = 'No data returned from transaction'
+
 export async function createGroupWithPolicy(values: GroupWithPolicyFormValues) {
   const msg = msgCreateGroupWithPolicy(values)
   const data = await signAndBroadcast([msg])
-  if (!data) throwError('No data returned from transaction')
+  if (!data) throwError(txError)
   let groupId
   if (data.rawLog && isJson(data.rawLog)) {
     const [raw] = JSON.parse(data.rawLog)

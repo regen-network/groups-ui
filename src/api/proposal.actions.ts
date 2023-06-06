@@ -17,6 +17,8 @@ import { GroupMsgWithTypeUrl } from './cosmosgroups'
 import { msgSubmitProposal } from './proposal.messages'
 import { proposalActionsToMsgs, toUIProposal, toUIVote } from './proposal.utils'
 
+const txError = 'No data returned from transaction'
+
 export async function fetchProposalsByGroupPolicy(address?: string) {
   if (!Query.groups) throwError('Wallet not initialized')
   if (!address) throwError('Address is required')
@@ -88,7 +90,7 @@ export async function createProposal({
     metadata: JSON.stringify(metadata),
   })
   const data = await signAndBroadcast([submitMsg])
-  if (!data) throwError('No data returned from transaction')
+  if (!data) throwError(txError)
   let proposalId: string | undefined
   if (data.rawLog && isJson(data.rawLog)) {
     const [raw] = JSON.parse(data.rawLog)
@@ -97,7 +99,7 @@ export async function createProposal({
     ).attributes[0].value
     proposalId = String(JSON.parse(idRaw))
   }
-  if (!proposalId) throwError('No data returned from transaction')
+  if (!proposalId) throwError(txError)
   return { ...data, proposalId }
 }
 
@@ -108,7 +110,7 @@ export async function executeProposal({ proposalId }: { proposalId: Long }) {
     executor: Wallet.account.address,
   })
   const data = await signAndBroadcast([msg])
-  if (!data) throwError('No data returned from transaction')
+  if (!data) throwError(txError)
   return data
 }
 
@@ -128,7 +130,7 @@ export async function voteOnProposal({
     metadata: '',
   })
   const data = await signAndBroadcast([msg])
-  if (!data) throwError('No data returned from transaction')
+  if (!data) throwError(txError)
   return data
 }
 
