@@ -60,7 +60,7 @@ export const defaultRedelegateFormValues: RedelegateFormValues = {
 }
 
 export const defaultClaimFormValues: ClaimFormValues = {
-  amount: '',
+  validator: '',
   stakeType: 'claim',
 }
 

@@ -171,8 +171,7 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
             {
               ...msg,
               stakeType: 'claim',
-              // TODO(#19): add support for other currencies
-              amount: msg.value['amount']['amount'],
+              validator: msg.value['validator_address'],
             } as unknown as ProposalStakeFormValues
           }
         />
