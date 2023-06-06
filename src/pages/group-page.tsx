@@ -24,10 +24,12 @@ export default function GroupPage() {
   const { toastSuccess, toastErr } = useTxToasts()
 
   const groupPolicy = policies?.[0]
-  const { data: balances } = useBalances(groupPolicy?.address)
+  const { data: balances, isLoading: isLoadingBalances } = useBalances(
+    groupPolicy?.address,
+  )
   const derivedProposals = useDerivedProposals(proposals)
 
-  if (isLoadingGroup || isLoadingProposals) return <Loading />
+  if (isLoadingGroup || isLoadingProposals || isLoadingBalances) return <Loading />
   if (!group) {
     logError('Group not found')
     redirect('/')
