@@ -57,7 +57,6 @@ export const ProposalStakeForm = ({
         return (
           <UndelegateForm
             {...baseProps}
-            key={formId + '-undelegate'}
             defaultValues={
               { ...defaultValues, stakeType: 'undelegate' } as UndelegateFormValues
             }
@@ -68,7 +67,6 @@ export const ProposalStakeForm = ({
         return (
           <DelegateForm
             {...baseProps}
-            key={formId + '-delegate'} // force re-render when toggling between delegate / undelegate
             defaultValues={defaultValues as DelegateFormValues}
           />
         )
