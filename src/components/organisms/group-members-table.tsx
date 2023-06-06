@@ -26,13 +26,18 @@ import {
   Tr,
   UndoButton,
 } from '@/atoms'
+import { NoItemCard } from '@/molecules/no-item-card'
 import { TableTitlebar } from '@/molecules/table-titlebar'
 import { Truncate } from '@/molecules/truncate'
+
+import { NoMemberIcon } from 'assets/tsx/no-member-icon'
 
 export type GroupMembersTableProps = {
   members: UIGroupMember[]
   onSave: (vals: MemberFormValues[]) => Promise<boolean>
 }
+
+const HEADER = 'Members'
 
 export const GroupMembersTable = ({ members = [], onSave }: GroupMembersTableProps) => {
   const [isEdit, setEdit] = useBoolean(false)
@@ -44,11 +49,29 @@ export const GroupMembersTable = ({ members = [], onSave }: GroupMembersTablePro
   }>({})
   const [addrErr, setAddrErr] = useState('')
   const tailSize = useBreakpointValue({ base: 4, sm: 6, md: 25, lg: 35, xl: 100 })
+  const updatedBg = useColorModeValue('blue.100', 'blue.800')
+  const deletedBg = useColorModeValue('red.100', 'red.900')
 
   const tableMembers: MemberFormValues[] = useMemo(() => {
     const currMembers = members.map(toMemberFormValues)
     return [...newMembers, ...currMembers]
   }, [members, newMembers])
+
+  if (tableMembers.length === 0) {
+    return (
+      <NoItemCard
+        header={HEADER}
+        body={{
+          icon: <NoMemberIcon width="100" height="100" />,
+          header: 'No members',
+          buttonText: 'add members',
+          onClick: () => {
+            console.log('TODO')
+          },
+        }}
+      />
+    )
+  }
 
   function resetState() {
     setNewMembers([])
@@ -103,11 +126,8 @@ export const GroupMembersTable = ({ members = [], onSave }: GroupMembersTablePro
     setNewMemberAddr('')
   }
 
-  const updatedBg = useColorModeValue('blue.100', 'blue.800')
-  const deletedBg = useColorModeValue('red.100', 'red.900')
-
   return (
-    <TableContainer w="full">
+    <TableContainer w="full" borderWidth={1}>
       <TableTitlebar title="Members">
         <AnimatePresence mode="wait">
           {isEdit && (
