@@ -1,3 +1,4 @@
+import { Event } from '@regen-network/api/types/codegen/tendermint/abci/types'
 import Long from 'long'
 
 import type { GroupWithPolicyFormValues, UIGroup } from 'types'
@@ -10,22 +11,21 @@ import { signAndBroadcast } from 'store/wallet.store'
 import { msgCreateGroupWithPolicy } from './group.messages'
 import { addMembersToGroups, toUIGroup } from './group.utils'
 
+const txError = 'No data returned from transaction'
+
 export async function createGroupWithPolicy(values: GroupWithPolicyFormValues) {
-  try {
-    const msg = msgCreateGroupWithPolicy(values)
-    const data = await signAndBroadcast([msg])
-    let groupId
-    if (data.rawLog && isJson(data.rawLog)) {
-      const [raw] = JSON.parse(data.rawLog)
-      const idRaw = raw.events[0].attributes[0].value
-      if (idRaw && isJson(idRaw)) {
-        groupId = String(JSON.parse(idRaw))
-      }
-    }
-    return { ...data, groupId }
-  } catch (error) {
-    throwError(error)
+  const msg = msgCreateGroupWithPolicy(values)
+  const data = await signAndBroadcast([msg])
+  if (!data) throwError(txError)
+  let groupId
+  if (data.rawLog && isJson(data.rawLog)) {
+    const [raw] = JSON.parse(data.rawLog)
+    const idRaw = raw.events.find(
+      (e: Event) => e.type === 'cosmos.group.v1.EventCreateGroup',
+    ).attributes[0].value
+    groupId = String(JSON.parse(idRaw))
   }
+  return { ...data, groupId }
 }
 
 export async function fetchGroupsWithMembersByMember(address?: string) {

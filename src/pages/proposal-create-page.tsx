@@ -75,7 +75,7 @@ export default function ProposalCreate() {
       })
       if (!data?.proposalId)
         throwError('Proposal transaction completed, but no proposal ID found')
-      toastSuccess(data.transactionHash, 'Proposal created!')
+      toastSuccess(data.transactionHash)
       return data.proposalId
     } catch (error) {
       logError(error)
