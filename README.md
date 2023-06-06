@@ -20,7 +20,7 @@
 # Local Setup
 
 1. `yarn install`
-2. copy over the config `cp .env.local.example .env.local`
+2. copy over the config `cp .env.local.example .env.local` and set any missing variables
 3. `yarn dev` to run the repo
 4. (optional) `yarn storybook` to see component examples
 

@@ -50,8 +50,8 @@ export default function ProposalPage() {
   async function handleVote(option: VoteOptionType) {
     if (!proposalId) throwError('Proposal ID is required to cast vote')
     try {
-      await voteOnProposal({ proposalId, option })
-      toastSuccess('Vote cast successfully')
+      const { transactionHash } = await voteOnProposal({ proposalId, option })
+      toastSuccess(transactionHash)
       refetchVotes()
       refetchUserVotes()
     } catch (err) {
