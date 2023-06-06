@@ -128,7 +128,7 @@ export async function voteOnProposal({
     metadata: '',
   })
   const data = await signAndBroadcast([msg])
-  if (!data) throwError('No data returned from vote')
+  if (!data) throwError('No data returned from transaction')
   return data
 }
 
