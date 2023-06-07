@@ -2,7 +2,7 @@ type ErrorWithMessage = {
   message: string
 }
 
-function isErrorWithMessage(error: unknown): error is ErrorWithMessage {
+export function isErrorWithMessage(error: unknown): error is ErrorWithMessage {
   return (
     typeof error === 'object' &&
     error !== null &&
