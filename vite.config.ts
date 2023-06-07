@@ -5,7 +5,6 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig /* , splitVendorChunkPlugin */ } from 'vite'
 import checker from 'vite-plugin-checker'
 import { VitePluginFonts } from 'vite-plugin-fonts'
-import svgr from 'vite-plugin-svgr'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
 // https://vitejs.dev/config/
@@ -14,7 +13,6 @@ export default defineConfig({
     tsconfigPaths(),
     checker({ typescript: true }),
     react({ babel: { plugins: [jotaiDebugLabel, jotaiReactRefresh] } }),
-    svgr(),
     VitePluginFonts({
       google: {
         families: [
