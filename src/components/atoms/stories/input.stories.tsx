@@ -1,15 +1,13 @@
 import type { ReactNode } from 'react'
 import type { Meta, StoryFn } from '@storybook/react'
 
-import { AmountInput, Center, HStack, NumberInput, Stack, Text } from '@/atoms'
+import { Center, HStack, NumberInput, Stack, Text } from '@/atoms'
 
 export default {
   title: 'Atoms/inputs',
   component: Center,
   argTypes: {},
 } as Meta<typeof Center>
-
-const onClick = () => void null
 
 const Label = ({ children, label }: { children: ReactNode; label: string }) => (
   <HStack>
@@ -23,9 +21,6 @@ const Template: StoryFn<typeof Center> = () => {
     <Center flexDir="column">
       <Text mb={4}>(base inputs)</Text>
       <Stack>
-        <Label label="AmountInput">
-          <AmountInput onMaxClick={onClick} />
-        </Label>
         <Label label="NumberInput">
           <NumberInput />
         </Label>

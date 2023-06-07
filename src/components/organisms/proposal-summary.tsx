@@ -115,8 +115,9 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
             {
               ...msg,
               sendType: 'single',
-              // TODO(#19): add support for other currencies / multiple amounts
+              // TODO(#80): support multiple coins
               amount: msg.value['amount'][0]['amount'],
+              denom: msg.value['amount'][0]['denom'],
             } as unknown as ProposalSendFormValues
           }
         />
@@ -129,8 +130,8 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
             {
               ...msg,
               stakeType: 'delegate',
-              // TODO(#19): add support for other currencies
               amount: msg.value['amount']['amount'],
+              denom: msg.value['amount']['denom'],
             } as unknown as ProposalStakeFormValues
           }
         />
@@ -143,8 +144,8 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
             {
               ...msg,
               stakeType: 'redelegate',
-              // TODO(#19): add support for other currencies
               amount: msg.value['amount']['amount'],
+              denom: msg.value['amount']['denom'],
             } as unknown as ProposalStakeFormValues
           }
         />
@@ -157,8 +158,8 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
             {
               ...msg,
               stakeType: 'undelegate',
-              // TODO(#19): add support for other currencies
               amount: msg.value['amount']['amount'],
+              denom: msg.value['amount']['denom'],
             } as unknown as ProposalStakeFormValues
           }
         />
@@ -171,8 +172,7 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
             {
               ...msg,
               stakeType: 'claim',
-              // TODO(#19): add support for other currencies
-              amount: msg.value['amount']['amount'],
+              validator: msg.value['validator_address'],
             } as unknown as ProposalStakeFormValues
           }
         />

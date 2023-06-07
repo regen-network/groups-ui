@@ -9,7 +9,7 @@
  */
 import type { ChainInfo } from '@keplr-wallet/types'
 
-const { VITE_LOCAL_HOSTNAME } = import.meta.env
+const { VITE_LOCAL_HOSTNAME, VITE_PROXY_URL } = import.meta.env
 
 // import { axelar } from './axelar'
 // import { cosmosLocal } from './cosmos-local'
@@ -24,7 +24,7 @@ import { regenLocal, regenTestnet } from './regen'
 export const mainnetChainsArray: ChainInfo[] = []
 
 export const testnetChainsArray: ChainInfo[] = [
-  regenTestnet,
+  ...(VITE_PROXY_URL ? [regenTestnet] : []),
   ...(VITE_LOCAL_HOSTNAME ? [regenLocal] : []),
 ]
 

@@ -1,18 +1,17 @@
 import { useSnapshot } from 'valtio'
 import { z } from 'zod'
 
-import { getFeeDenom } from 'util/helpers'
 import { valid } from 'util/validation/zod'
 
 import { useZodForm } from 'hooks/use-zod-form'
 import { Chain } from 'store/chain.store'
 
 import { Form } from '@/molecules/form'
-import { AmountField } from '@/molecules/form-fields'
+import { SelectField } from '@/molecules/form-fields'
 import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 
 const schema = z.object({
-  amount: valid.amount,
+  validator: valid.bech32Address,
   stakeType: z.literal('claim'),
 })
 
@@ -21,22 +20,31 @@ export type ClaimFormValues = z.infer<typeof schema>
 export const ClaimForm = (props: {
   defaultValues: ClaimFormValues
   formId: string
-  maxAmount: string
   onSubmit: (data: ClaimFormValues) => void
 }) => {
+  const { validators } = useSnapshot(Chain)
+  const items = validators.map((v, i) => {
+    return {
+      label: v.description?.moniker || `Validator ${i}`,
+      value: v.operator_address || '',
+    }
+  })
   const form = useZodForm({
     schema,
-    defaultValues: props.defaultValues,
+    defaultValues: {
+      ...props.defaultValues,
+      validator: items[0].value,
+    },
   })
-  const { fee } = useSnapshot(Chain)
   return (
     <Form form={form} onSubmit={props.onSubmit} id={props.formId}>
-      <AmountField
+      <SelectField
         required
-        name="amount"
-        label="Amount"
-        maxValue={props.maxAmount}
-        denom={getFeeDenom(fee)}
+        name="validator"
+        label="Validator"
+        selected={items.find((i) => i.value === form.getValues().validator)}
+        dropdownLabel="Select a validator"
+        items={items}
       />
       <FormSubmitHiddenButton id={props.formId} />
     </Form>

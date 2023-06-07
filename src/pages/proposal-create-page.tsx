@@ -4,7 +4,7 @@ import { useSnapshot } from 'valtio'
 import type { ProposalAction, ProposalFormValues } from 'types'
 import { logError, throwError } from 'util/errors'
 import { defaultDelegateFormValues, defaultSendFormValues } from 'util/form.defaults'
-import { getFeeDenom, uuid } from 'util/helpers'
+import { uuid } from 'util/helpers'
 
 import { createProposal } from 'api/proposal.actions'
 import { useAppLocation } from 'hooks/react-router'
@@ -27,7 +27,7 @@ export default function ProposalCreate() {
   const { groupId } = useParams()
   const { state } = useAppLocation()
   const { toastSuccess, toastErr } = useTxToasts()
-  const { fee } = useSnapshot(Chain)
+  const { stakeDenom } = useSnapshot(Chain)
   const { account } = useSnapshot(Wallet)
   const { data: group, isLoading: isLoadingGroup } = useGroup(groupId)
   const { data: groupPolicies } = useGroupPolicies(groupId)
@@ -60,22 +60,22 @@ export default function ProposalCreate() {
     summary,
   }: ProposalFormValues): Promise<string | null> {
     try {
-      if (!fee || !account?.address) {
-        throwError('Error submitting proposal:  No fee or group policy found')
+      if (!account?.address) {
+        throwError('Error submitting proposal: No group policy found')
       }
       // TODO: should this be a react-query mutation?
       const data = await createProposal({
         actions,
         title,
         summary,
-        denom: getFeeDenom(fee),
+        denom: stakeDenom,
         groupPolicyAddress: groupPolicy.address,
         metadata: { title, summary },
         proposers: [account.address],
       })
       if (!data?.proposalId)
         throwError('Proposal transaction completed, but no proposal ID found')
-      toastSuccess(data.transactionHash, 'Proposal created!')
+      toastSuccess(data.transactionHash)
       return data.proposalId
     } catch (error) {
       logError(error)

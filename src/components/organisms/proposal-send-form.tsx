@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import type { ProposalSendFormValues, ProposalSendType } from 'types'
+import { UICoin } from 'types'
 import { SPACING } from 'util/constants'
 
 import { /* FormControl, FormLabel, RadioGroup, */ Stack } from '@/atoms'
@@ -17,13 +18,13 @@ import { SingleForm, type SingleFormValues } from './send-single-form'
 export const ProposalSendForm = ({
   defaultValues,
   formId,
-  maxAmount,
+  policyBalances,
   onError,
   onSubmit,
 }: {
   defaultValues: ProposalSendFormValues
   formId: string
-  maxAmount: string
+  policyBalances: UICoin[]
   onError: () => void
   onSubmit: (values: ProposalSendFormValues) => void
 }) => {
@@ -33,7 +34,7 @@ export const ProposalSendForm = ({
       formId,
       onSubmit,
       onError,
-      maxAmount,
+      policyBalances,
     }
     switch (sendType) {
       case 'single':
