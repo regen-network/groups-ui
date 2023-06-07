@@ -12,10 +12,8 @@ import { AnimatePresence, FadeIn } from '@/animations'
 import {
   Box,
   Button,
-  Center,
   DeleteButton,
   Flex,
-  Heading,
   Input,
   NumberInput,
   Table,
