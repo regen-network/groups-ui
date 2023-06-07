@@ -17,16 +17,16 @@ const schema = z.object({
   validator: valid.bech32Address,
   amount: valid.amount,
   denom: valid.denom,
-  stakeType: z.literal('delegate'),
+  stakeType: z.literal('undelegate'),
 })
 
-export type DelegateFormValues = z.infer<typeof schema>
+export type UndelegateFormValues = z.infer<typeof schema>
 
-export const DelegateForm = (props: {
-  defaultValues: DelegateFormValues
+export const UndelegateForm = (props: {
+  defaultValues: UndelegateFormValues
   formId: string
   policyBalances: UICoin[]
-  onSubmit: (data: DelegateFormValues) => void
+  onSubmit: (data: UndelegateFormValues) => void
   onError: () => void
 }) => {
   const { validators, stakeDenom } = useSnapshot(Chain)
@@ -61,11 +61,15 @@ export const DelegateForm = (props: {
             required
             name="amount"
             label="Amount"
-            balances={props.policyBalances}
+            balances={[]} // TODO: use amount staked on validator
           />
         </GridItem>
         <GridItem>
-          <DenomField required name="denom" balances={props.policyBalances} />
+          <DenomField
+            required
+            name="denom"
+            balances={[]} // TODO: use amount staked on validator
+          />
         </GridItem>
       </Grid>
       <FormSubmitHiddenButton id={props.formId} onSubmit={props.onSubmit} />

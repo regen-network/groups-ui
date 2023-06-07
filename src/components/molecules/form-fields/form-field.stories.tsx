@@ -1,13 +1,14 @@
 import { FormProvider, useForm } from 'react-hook-form'
 import type { Meta, StoryFn } from '@storybook/react'
 
-import { Button, Center, Input, Text } from '@/atoms'
+import { Button, Center, Grid, GridItem, Input, Text } from '@/atoms'
 
 import { Form } from '../form'
 import { FormCard } from '../form-card'
 import { RadioGroupOption } from '../radio-group-options'
 
 import { AmountField } from './amount-field'
+import { DenomField } from './denom-field'
 import { InputField } from './input-field'
 import { NumberField, NumberFieldWithSideLabel } from './number-field'
 import { RadioGroupField } from './radio-group-field'
@@ -46,7 +47,21 @@ const Template: StoryFn<typeof FormProvider> = () => {
             label="Number field with Side Label"
             sideLabel="Side label"
           />
-          <AmountField name="amount" label="Amount field" maxValue="100" denom="regen" />
+          <Grid gridTemplateColumns={'1fr 150px'}>
+            <GridItem>
+              <AmountField
+                name="amount"
+                label="Amount field"
+                balances={[{ denom: 'uregen', amount: '1000000' }]}
+              />
+            </GridItem>
+            <GridItem>
+              <DenomField
+                name="denom"
+                balances={[{ denom: 'uregen', amount: '1000000' }]}
+              />
+            </GridItem>
+          </Grid>
           <TextareaField name="textarea" label="Textarea field" />
           <RadioGroupField name="radiogroup" label="Radiogroup field" options={options} />
           <RadioGroupField

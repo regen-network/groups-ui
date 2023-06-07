@@ -18,7 +18,12 @@ import {
   msgStakingRedelegate,
   msgStakingUndelegate,
 } from './staking.messages'
-import { isClaimValues, isDelegateValues, isRedelegateValues } from './staking.utils'
+import {
+  isClaimValues,
+  isDelegateValues,
+  isRedelegateValues,
+  isUndelegateValues,
+} from './staking.utils'
 
 type ProposalData = {
   denom: string
@@ -110,7 +115,7 @@ function sendValuesToMsg(values: ProposalSendFormValues, data: ProposalData) {
     fromAddress: data.groupPolicyAddress,
     toAddress: values.toAddress,
     amount: values.amount,
-    denom: data.denom,
+    denom: values.denom,
   }
   return msgSend(sendInfo)
 }
@@ -123,20 +128,25 @@ function isStakeProposal(
 
 function stakeValuesToMsg(values: ProposalStakeFormValues, data: ProposalData) {
   if (isDelegateValues(values)) {
-    const delegateInfo = {
+    return msgStakingDelegate({
       amount: values.amount,
+      denom: values.denom,
       validatorAddress: values.validator,
-      denom: data.denom,
       delegatorAddress: data.groupPolicyAddress,
-    }
-    return values.stakeType === 'delegate'
-      ? msgStakingDelegate(delegateInfo)
-      : msgStakingUndelegate(delegateInfo)
+    })
+  }
+  if (isUndelegateValues(values)) {
+    return msgStakingUndelegate({
+      amount: values.amount,
+      denom: values.denom,
+      validatorAddress: values.validator,
+      delegatorAddress: data.groupPolicyAddress,
+    })
   }
   if (isRedelegateValues(values)) {
     return msgStakingRedelegate({
       amount: values.amount,
-      denom: data.denom,
+      denom: values.denom,
       delegatorAddress: data.groupPolicyAddress,
       validatorDstAddress: values.toValidator,
       validatorSrcAddress: values.fromValidator,
@@ -144,7 +154,7 @@ function stakeValuesToMsg(values: ProposalStakeFormValues, data: ProposalData) {
   }
   if (isClaimValues(values)) {
     console.warn('Not yet implemented! Cannot create claim message')
-    // TODO: stakingClaimMsg currently only accepts arguments for delegator &
+    // TODO(#79): stakingClaimMsg currently only accepts arguments for delegator &
     // validator addresses - from UX standpoint though we should probably target
     // something like Keplr where it's just a simple "claim"
     // return stakingClaimMsg({})
