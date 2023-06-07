@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import type { ProposalStakeFormValues, ProposalStakeType } from 'types'
+import { UICoin } from 'types'
 import { SPACING } from 'util/constants'
 
 import { FormControl, FormLabel, RadioGroup, Stack } from '@/atoms'
@@ -10,6 +11,7 @@ import { RadioGroupOptions } from '@/molecules/radio-group-options'
 import { ClaimForm, type ClaimFormValues } from './stake-claim-form'
 import { DelegateForm, type DelegateFormValues } from './stake-delegate-form'
 import { RedelegateForm, type RedelegateFormValues } from './stake-redelegate-form'
+import { UndelegateForm, type UndelegateFormValues } from './stake-undelegate-form'
 
 const stakeOptions: { label: string; value: ProposalStakeType }[] = [
   { label: 'Delegate', value: 'delegate' },
@@ -21,13 +23,13 @@ const stakeOptions: { label: string; value: ProposalStakeType }[] = [
 export const ProposalStakeForm = ({
   defaultValues,
   formId,
-  maxStakeAmount,
+  policyBalances,
   onError,
   onSubmit,
 }: {
   defaultValues: ProposalStakeFormValues
   formId: string
-  maxStakeAmount: string
+  policyBalances: UICoin[]
   onError: () => void
   onSubmit: (values: ProposalStakeFormValues) => void
 }) => {
@@ -37,7 +39,7 @@ export const ProposalStakeForm = ({
       formId,
       onSubmit,
       onError,
-      maxAmount: maxStakeAmount,
+      policyBalances,
     }
     switch (stakeType) {
       case 'claim':
@@ -58,11 +60,10 @@ export const ProposalStakeForm = ({
         )
       case 'undelegate':
         return (
-          <DelegateForm
+          <UndelegateForm
             {...baseProps}
-            key={formId + '-undelegate'}
             defaultValues={
-              { ...defaultValues, stakeType: 'undelegate' } as DelegateFormValues
+              { ...defaultValues, stakeType: 'undelegate' } as UndelegateFormValues
             }
           />
         )
@@ -71,7 +72,6 @@ export const ProposalStakeForm = ({
         return (
           <DelegateForm
             {...baseProps}
-            key={formId + '-delegate'} // force re-render when toggling between delegate / undelegate
             defaultValues={defaultValues as DelegateFormValues}
           />
         )

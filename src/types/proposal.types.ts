@@ -6,6 +6,7 @@ import type { SingleFormValues } from '@/organisms/send-single-form'
 import type { ClaimFormValues } from '@/organisms/stake-claim-form'
 import type { DelegateFormValues } from '@/organisms/stake-delegate-form'
 import type { RedelegateFormValues } from '@/organisms/stake-redelegate-form'
+import type { UndelegateFormValues } from '@/organisms/stake-undelegate-form'
 export type {
   ProposalSDKType,
   ProposalStatus as ProposalStatusType,
@@ -39,10 +40,16 @@ export type ProposalStakeFormValues =
   | DelegateFormValues
   | ClaimFormValues
   | RedelegateFormValues
+  | UndelegateFormValues
 
 // Re-export for convenience
 export type { SingleFormValues }
-export type { ClaimFormValues, DelegateFormValues, RedelegateFormValues }
+export type {
+  ClaimFormValues,
+  DelegateFormValues,
+  RedelegateFormValues,
+  UndelegateFormValues,
+}
 /** TODO: in v0.47, this data will live directly on a proposal */
 export type { UIProposalMetadata }
 export type { ProposalFormValues } from '@/organisms/proposal-form'

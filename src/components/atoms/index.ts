@@ -2,7 +2,6 @@
 // (dont have to change imports). NOTE: this hurts code splitting, and currently
 // adds about 50KB as of 1/20/2023 - might be able to fix with an esbuild setting
 export * from './add-action-button'
-export * from './amount-input'
 export * from './card'
 export * from './chakra-components'
 export * from './delete-button'

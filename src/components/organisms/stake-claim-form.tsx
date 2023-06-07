@@ -20,7 +20,6 @@ export type ClaimFormValues = z.infer<typeof schema>
 export const ClaimForm = (props: {
   defaultValues: ClaimFormValues
   formId: string
-  maxAmount: string
   onSubmit: (data: ClaimFormValues) => void
 }) => {
   const { validators } = useSnapshot(Chain)

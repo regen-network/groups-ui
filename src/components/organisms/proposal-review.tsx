@@ -97,8 +97,7 @@ export const SendReview = ({
         {'toAddress' in values && (
           <ReviewItem label="To Address">{values.toAddress}</ReviewItem>
         )}
-        {/* TODO(#19): add support for currencies other than staking denom */}
-        <ReviewItem label="Amount">{values.amount + ' REGEN'}</ReviewItem>
+        <ReviewItem label="Amount">{`${values.amount} ${values.denom}`}</ReviewItem>
       </Stack>
     </FormCard>
   )
@@ -132,7 +131,7 @@ export const StakeReview = ({
         {'toValidator' in values && (
           <ReviewItem label="To validator">{values.toValidator}</ReviewItem>
         )}
-        {'amount' in values && <ReviewItem label="Amount">{values.amount}</ReviewItem>}
+        {'amount' in values && <ReviewItem label="Amount">{`${values.amount} ${values.denom}`}</ReviewItem>}
       </Stack>
     </FormCard>
   )

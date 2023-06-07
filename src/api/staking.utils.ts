@@ -3,18 +3,25 @@ import type {
   DelegateFormValues,
   ProposalStakeFormValues,
   RedelegateFormValues,
+  UndelegateFormValues,
 } from 'types'
 
 export function isDelegateValues(
   values: ProposalStakeFormValues,
 ): values is DelegateFormValues {
-  return values.stakeType === 'delegate' || values.stakeType === 'undelegate'
+  return values.stakeType === 'delegate'
 }
 
 export function isRedelegateValues(
   values: ProposalStakeFormValues,
 ): values is RedelegateFormValues {
   return values.stakeType === 'redelegate'
+}
+
+export function isUndelegateValues(
+  values: ProposalStakeFormValues,
+): values is UndelegateFormValues {
+  return values.stakeType === 'undelegate'
 }
 
 export function isClaimValues(
