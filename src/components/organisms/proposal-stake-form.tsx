@@ -17,7 +17,7 @@ const stakeOptions: { label: string; value: ProposalStakeType }[] = [
   { label: 'Delegate', value: 'delegate' },
   { label: 'Redelegate', value: 'redelegate' },
   { label: 'Undelegate', value: 'undelegate' },
-  { label: 'Claim reward', value: 'claim' },
+  { label: 'Claim Reward', value: 'claim' },
 ]
 
 export const ProposalStakeForm = ({
@@ -44,13 +44,18 @@ export const ProposalStakeForm = ({
     switch (stakeType) {
       case 'claim':
         return (
-          <ClaimForm {...baseProps} defaultValues={defaultValues as ClaimFormValues} />
+          <ClaimForm
+            {...baseProps}
+            defaultValues={{ ...defaultValues, stakeType: 'claim' } as ClaimFormValues}
+          />
         )
       case 'redelegate':
         return (
           <RedelegateForm
             {...baseProps}
-            defaultValues={defaultValues as RedelegateFormValues}
+            defaultValues={
+              { ...defaultValues, stakeType: 'redelegate' } as RedelegateFormValues
+            }
           />
         )
       case 'undelegate':

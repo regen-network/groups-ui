@@ -172,8 +172,7 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
             {
               ...msg,
               stakeType: 'claim',
-              amount: msg.value['amount']['amount'],
-              denom: msg.value['amount']['denom'],
+              validator: msg.value['validator_address'],
             } as unknown as ProposalStakeFormValues
           }
         />

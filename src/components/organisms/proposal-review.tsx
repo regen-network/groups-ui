@@ -131,7 +131,7 @@ export const StakeReview = ({
         {'toValidator' in values && (
           <ReviewItem label="To validator">{values.toValidator}</ReviewItem>
         )}
-        <ReviewItem label="Amount">{`${values.amount} ${values.denom}`}</ReviewItem>
+        {'amount' in values && <ReviewItem label="Amount">{`${values.amount} ${values.denom}`}</ReviewItem>}
       </Stack>
     </FormCard>
   )

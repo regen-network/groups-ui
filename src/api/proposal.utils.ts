@@ -14,6 +14,7 @@ import { getProposalMetadata } from 'util/validation'
 
 import { msgSend } from './bank.messages'
 import {
+  msgStakingClaim,
   msgStakingDelegate,
   msgStakingRedelegate,
   msgStakingUndelegate,
@@ -153,11 +154,10 @@ function stakeValuesToMsg(values: ProposalStakeFormValues, data: ProposalData) {
     })
   }
   if (isClaimValues(values)) {
-    console.warn('Not yet implemented! Cannot create claim message')
-    // TODO(#79): stakingClaimMsg currently only accepts arguments for delegator &
-    // validator addresses - from UX standpoint though we should probably target
-    // something like Keplr where it's just a simple "claim"
-    // return stakingClaimMsg({})
+    return msgStakingClaim({
+      delegatorAddress: data.groupPolicyAddress,
+      validatorAddress: values.validator,
+    })
   }
   throwError('Unknown stake type')
 }
