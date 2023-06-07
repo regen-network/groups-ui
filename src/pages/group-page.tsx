@@ -19,15 +19,20 @@ import { GroupTemplate } from '@/templates/group-template'
 export default function GroupPage() {
   const { groupId } = useParams()
   const { data: group, isLoading: isLoadingGroup } = useGroup(groupId)
-  const { data: policies } = useGroupPolicies(groupId)
+  const { data: policies, isLoading: isLoadingPolicies } = useGroupPolicies(groupId)
   const { data: proposals, isLoading: isLoadingProposals } = useGroupProposals(groupId)
   const { toastSuccess, toastErr } = useTxToasts()
 
   const groupPolicy = policies?.[0]
-  const { data: balances } = useBalances(groupPolicy?.address)
+  const { data: balances, isLoading: isLoadingBalances } = useBalances(
+    groupPolicy?.address,
+  )
   const derivedProposals = useDerivedProposals(proposals)
 
-  if (isLoadingGroup || isLoadingProposals) return <Loading />
+  if (isLoadingGroup || isLoadingPolicies || isLoadingProposals || isLoadingBalances) {
+    return <Loading />
+  }
+
   if (!group) {
     logError('Group not found')
     redirect('/')
