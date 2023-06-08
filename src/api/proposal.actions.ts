@@ -13,11 +13,10 @@ import { isJson } from 'util/validation'
 import { Query } from 'store/query.store'
 import { signAndBroadcast, Wallet } from 'store/wallet.store'
 
+import { txError } from './api.constants'
 import { GroupMsgWithTypeUrl } from './cosmosgroups'
 import { msgSubmitProposal } from './proposal.messages'
 import { proposalActionsToMsgs, toUIProposal, toUIVote } from './proposal.utils'
-
-const txError = 'No data returned from transaction'
 
 export async function fetchProposalsByGroupPolicy(address?: string) {
   if (!Query.groups) throwError('Wallet not initialized')

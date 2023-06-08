@@ -8,6 +8,7 @@ import { Query } from 'store/query.store'
 // import { fetchProposalsByGroupPolicy } from './proposal.actions'
 import { signAndBroadcast } from 'store/wallet.store'
 
+import { txError } from './api.constants'
 import { msgCreateGroupPolicy } from './policy.messages'
 import { toUIGroupPolicy } from './policy.utils'
 
@@ -18,7 +19,7 @@ export async function createGroupPolicy(
 ) {
   const msg = msgCreateGroupPolicy({ groupId, admin, values })
   const data = await signAndBroadcast([msg])
-  if (!data) throwError('no data') // TODO replace with reusable string
+  if (!data) throwError(txError)
   let policyAddress
   if (data.rawLog && isJson(data.rawLog)) {
     const [raw] = JSON.parse(data.rawLog)
