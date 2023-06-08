@@ -1,9 +1,33 @@
+import Long from 'long'
+
 import { GroupPolicyFormValues } from 'types'
 import { daysToDuration, secondsToDuration } from 'util/date'
 import { throwError } from 'util/errors'
-import { numToPercentStr } from 'util/helpers'
+import { clearEmptyStr, numToPercentStr } from 'util/helpers'
 
 import { GroupMsgWithTypeUrl, groupV1 } from './cosmosgroups'
+
+export function msgCreateGroupPolicy({
+  groupId,
+  admin,
+  values: { percentage, threshold, policyType, votingWindow },
+}: {
+  groupId: string
+  admin: string
+  values: GroupPolicyFormValues
+}) {
+  return GroupMsgWithTypeUrl.createGroupPolicy({
+    groupId: Long.fromString(groupId),
+    metadata: '',
+    admin,
+    decisionPolicy: encodeDecisionPolicy({
+      policyType,
+      percentage: clearEmptyStr(percentage),
+      threshold: clearEmptyStr(threshold),
+      votingWindow: votingWindow,
+    }),
+  })
+}
 
 export function msgUpdateDecisionPolicy({
   admin,

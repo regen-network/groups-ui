@@ -174,8 +174,7 @@ export const GroupMembersTable = ({ members = [], onSave }: GroupMembersTablePro
         <NoItem
           icon={<NoMemberIcon width="100" height="100" />}
           header="No members"
-          buttonText="add members"
-          onClick={setEdit.on}
+          button={<Button onClick={setEdit.on}>add members</Button>}
         />
       )}
       {hasMembers && (

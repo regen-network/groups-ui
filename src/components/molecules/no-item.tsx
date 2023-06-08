@@ -3,13 +3,11 @@ import { Button, Center, Heading } from '@/atoms'
 export const NoItem = ({
   icon,
   header,
-  buttonText,
-  onClick,
+  button,
 }: {
   icon: JSX.Element
   header: string
-  buttonText: string
-  onClick: () => void
+  button: JSX.Element
 }) => {
   return (
     <Center flexDir="column" pb={50}>
@@ -17,7 +15,7 @@ export const NoItem = ({
       <Heading size="sm" py={15}>
         {header}
       </Heading>
-      <Button onClick={onClick}>{buttonText}</Button>
+      {button}
     </Center>
   )
 }

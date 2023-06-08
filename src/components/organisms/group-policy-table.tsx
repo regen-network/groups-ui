@@ -1,6 +1,7 @@
 import type { UIGroupPolicyInfo } from 'types'
 import { formatDate } from 'util/date'
 
+import { ROUTE_PATH } from 'routes'
 import {
   formatPercentage,
   formatThreshold,
@@ -9,14 +10,30 @@ import {
 } from 'api/policy.utils'
 import { useBreakpointValue } from 'hooks/chakra-hooks'
 
-import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@/atoms'
+import {
+  Button,
+  RouteLink,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from '@/atoms'
 import { NoItem } from '@/molecules/no-item'
 import { TableTitlebar } from '@/molecules/table-titlebar'
 import { Truncate } from '@/molecules/truncate'
 
 import { NoPolicyIcon } from 'assets/tsx/no-policy-icon'
 
-export const GroupPolicyTable = ({ policies }: { policies: UIGroupPolicyInfo[] }) => {
+export const GroupPolicyTable = ({
+  policies,
+  groupId,
+}: {
+  policies: UIGroupPolicyInfo[]
+  groupId: string
+}) => {
   const tailSize = useBreakpointValue({ base: 4, sm: 6, md: 25, lg: 35, xl: 100 })
   const [p] = policies
 
@@ -27,10 +44,11 @@ export const GroupPolicyTable = ({ policies }: { policies: UIGroupPolicyInfo[] }
         <NoItem
           icon={<NoPolicyIcon width="100" height="100" />}
           header="No group policy"
-          buttonText="add policy"
-          onClick={() => {
-            console.log('TODO')
-          }}
+          button={
+            <Button as={RouteLink} to={ROUTE_PATH.groupPolicyCreate(groupId)}>
+              add policy
+            </Button>
+          }
         />
       ) : (
         <Table variant="striped" size="lg">
