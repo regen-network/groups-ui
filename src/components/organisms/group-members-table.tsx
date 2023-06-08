@@ -30,7 +30,7 @@ import { NoItem } from '@/molecules/no-item'
 import { TableTitlebar } from '@/molecules/table-titlebar'
 import { Truncate } from '@/molecules/truncate'
 
-import { NoMemberIcon } from 'assets/tsx/no-member-icon'
+import { NoMemberIcon } from 'assets/tsx'
 
 export type GroupMembersTableProps = {
   members: UIGroupMember[]

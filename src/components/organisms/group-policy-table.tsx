@@ -25,7 +25,7 @@ import { NoItem } from '@/molecules/no-item'
 import { TableTitlebar } from '@/molecules/table-titlebar'
 import { Truncate } from '@/molecules/truncate'
 
-import { NoPolicyIcon } from 'assets/tsx/no-policy-icon'
+import { NoPolicyIcon } from 'assets/tsx'
 
 export const GroupPolicyTable = ({
   policies,
