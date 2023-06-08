@@ -24,13 +24,21 @@ export default function GroupPage() {
   const { toastSuccess, toastErr } = useTxToasts()
 
   const groupPolicy = policies?.[0]
-  // See https://github.com/TanStack/query/issues/3584 why we use isInitialLoading
-  const { data: balances, isInitialLoading: isLoadingBalances } = useBalances(
-    groupPolicy?.address,
-  )
+  // See https://github.com/TanStack/query/issues/3584
+  const {
+    data: balances,
+    isInitialLoading: isInitialLoadingBalances,
+    isRefetching: isRefetchingBalances,
+  } = useBalances(groupPolicy?.address)
   const derivedProposals = useDerivedProposals(proposals)
 
-  if (isLoadingGroup || isLoadingPolicies || isLoadingProposals || isLoadingBalances) {
+  if (
+    isLoadingGroup ||
+    isLoadingPolicies ||
+    isLoadingProposals ||
+    isInitialLoadingBalances ||
+    isRefetchingBalances
+  ) {
     return <Loading />
   }
 
