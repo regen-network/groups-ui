@@ -1,4 +1,4 @@
-import { Button, Center, Heading } from '@/atoms'
+import { Center, Heading } from '@/atoms'
 
 export const NoItem = ({
   icon,
