@@ -14,14 +14,22 @@ export default function GroupPolicyCreate() {
   const { toastErr, toastSuccess } = useTxToasts()
   const { groupId } = useParams()
 
-  async function handleCreate(values: GroupWithPolicyFormValues): Promise<boolean> {
+  async function handleCreate({
+    policyType,
+    percentage,
+    threshold,
+    votingWindow,
+  }: GroupWithPolicyFormValues): Promise<boolean> {
     try {
       if (groupId) {
-        const { transactionHash, policyAddress } = await createGroupPolicy(
+        const { transactionHash, policyAddress } = await createGroupPolicy({
           groupId,
-          Wallet.account?.address as string,
-          values,
-        )
+          admin: Wallet.account?.address as string,
+          policyType,
+          percentage,
+          threshold,
+          votingWindow,
+        })
         toastSuccess(transactionHash, `Group policy ${policyAddress} created!`)
         return true
       }

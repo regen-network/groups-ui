@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { redirect, useParams } from 'react-router-dom'
 
 import type {
   GroupFormValues,
@@ -6,16 +6,20 @@ import type {
   GroupWithPolicyFormValues,
 } from 'types'
 import { logError, throwError } from 'util/errors'
-import { DEFAULT_MEMBER_WEIGHT, DEFAULT_VOTING_WINDOW } from 'util/form.defaults'
+import {
+  DEFAULT_MEMBER_WEIGHT,
+  DEFAULT_VOTING_WINDOW,
+  defaultGroupPolicyFormValues,
+} from 'util/form.defaults'
 import { clearEmptyStr, percentStrToNum } from 'util/helpers'
 
 import { msgUpdateGroupMetadata } from 'api/group.messages'
 import { msgUpdateGroupMembers } from 'api/member.messages'
-import { msgUpdateDecisionPolicy } from 'api/policy.messages'
+import { msgCreateGroupPolicy, msgUpdateDecisionPolicy } from 'api/policy.messages'
 import { isPercentagePolicy, isThresholdPolicy } from 'api/policy.utils'
 import { useGroup, useGroupMembers, useGroupPolicies } from 'hooks/use-query'
 import { useTxToasts } from 'hooks/use-toasts'
-import { signAndBroadcast } from 'store/wallet.store'
+import { signAndBroadcast, Wallet } from 'store/wallet.store'
 
 import { Loading } from '@/molecules/loading'
 import { GroupCRUDTemplate } from '@/templates/group-crud-template'
@@ -23,42 +27,49 @@ import { GroupCRUDTemplate } from '@/templates/group-crud-template'
 export default function GroupEdit() {
   const { toastErr, toastSuccess } = useTxToasts()
   const { groupId } = useParams()
-  const { data: group } = useGroup(groupId)
-  const { data: members } = useGroupMembers(groupId)
-  const { data: policies } = useGroupPolicies(groupId)
+  const { data: group, isLoading: isLoadingGroup } = useGroup(groupId)
+  const { data: members, isLoading: isLoadingMembers } = useGroupMembers(groupId)
+  const { data: policies, isLoading: isLoadingPolicies } = useGroupPolicies(groupId)
 
-  const [policy] = policies ?? []
-
-  if (!group || !members || !policy?.decisionPolicy) return <Loading />
-
-  const { decisionPolicy } = policy
+  const policy = policies?.[0]
+  if (isLoadingGroup || isLoadingMembers || isLoadingPolicies) return <Loading />
+  if (!group || !groupId) {
+    logError('Missing group or group ID, redirecting')
+    redirect('/')
+    return null
+  }
 
   const initialGroupValues: GroupFormValues = {
-    admin: policy.admin,
-    members: members.map(({ member }) => ({
-      address: member?.address,
-      weight: parseInt(member?.weight || DEFAULT_MEMBER_WEIGHT.toString()),
-      metadata: member?.metadata,
-    })),
+    admin: group.admin,
+    members:
+      members?.map(({ member }) => ({
+        address: member?.address,
+        weight: parseInt(member?.weight || DEFAULT_MEMBER_WEIGHT.toString()),
+        metadata: member?.metadata,
+      })) || [],
     name: group.metadata.name,
-    policyAsAdmin: policy.address === group.admin ? 'true' : 'false',
+    policyAsAdmin: policy && policy.address === group.admin ? 'true' : 'false',
     description: group.metadata.description,
     forumLink: group.metadata.forumLink,
     otherMetadata: group.metadata.other,
   }
 
-  const initialPolicyValues: GroupPolicyFormValues = {
-    threshold: isThresholdPolicy(decisionPolicy)
-      ? parseInt(decisionPolicy.threshold)
-      : undefined,
-    votingWindow: parseInt(
-      decisionPolicy.windows?.votingPeriod || DEFAULT_VOTING_WINDOW.toString(),
-    ), //parseFloat(decisionPolicy.windows.voting_period),
-    percentage: isPercentagePolicy(policy.decisionPolicy)
-      ? percentStrToNum(policy.decisionPolicy.percentage)
-      : undefined,
-    policyType: isThresholdPolicy(decisionPolicy) ? 'threshold' : 'percentage',
-  }
+  const decisionPolicy = policy?.decisionPolicy
+  const initialPolicyValues: GroupPolicyFormValues =
+    policy && decisionPolicy
+      ? {
+          threshold: isThresholdPolicy(decisionPolicy)
+            ? parseInt(decisionPolicy.threshold)
+            : undefined,
+          votingWindow: parseInt(
+            decisionPolicy?.windows?.votingPeriod || DEFAULT_VOTING_WINDOW.toString(),
+          ), //parseFloat(decisionPolicy.windows.voting_period),
+          percentage: isPercentagePolicy(policy?.decisionPolicy)
+            ? percentStrToNum(policy?.decisionPolicy.percentage)
+            : undefined,
+          policyType: isThresholdPolicy(decisionPolicy) ? 'threshold' : 'percentage',
+        }
+      : defaultGroupPolicyFormValues
 
   const initialValues = {
     // combined for ease of iterating over
@@ -109,16 +120,28 @@ export default function GroupEdit() {
           )
         }
         if (prop === 'votingWindow' || prop === 'threshold' || prop === 'percentage') {
-          msgs.push(
-            msgUpdateDecisionPolicy({
-              admin: group.admin,
-              policyAddress: policy.address,
-              policyType: values.policyType,
-              votingWindow: values.votingWindow,
-              percentage: clearEmptyStr(values.percentage),
-              threshold: clearEmptyStr(values.threshold),
-            }),
-          )
+          if (policy)
+            msgs.push(
+              msgUpdateDecisionPolicy({
+                admin: group.admin,
+                policyAddress: policy.address,
+                policyType: values.policyType,
+                votingWindow: values.votingWindow,
+                percentage: clearEmptyStr(values.percentage),
+                threshold: clearEmptyStr(values.threshold),
+              }),
+            )
+          else if (Wallet.account?.address)
+            msgs.push(
+              msgCreateGroupPolicy({
+                groupId,
+                admin: Wallet.account?.address,
+                policyType: values.policyType,
+                votingWindow: values.votingWindow,
+                percentage: clearEmptyStr(values.percentage),
+                threshold: clearEmptyStr(values.threshold),
+              }),
+            )
         }
       }
     }
@@ -143,7 +166,11 @@ export default function GroupEdit() {
         submitBtn: 'Redeploy',
         finished: 'You have successfully edited your group.',
       }}
-      steps={['Edit Group', 'Edit Group Policy', 'Finished editing']}
+      steps={[
+        'Edit Group',
+        `${policy ? 'Edit' : 'Create'} Group Policy`,
+        'Finished editing',
+      ]}
       submit={handleSave}
     />
   )

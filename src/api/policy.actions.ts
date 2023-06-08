@@ -1,6 +1,5 @@
 import Long from 'long'
 
-import { GroupPolicyFormValues } from 'types'
 import { throwError } from 'util/errors'
 import { isJson } from 'util/validation'
 
@@ -9,15 +8,11 @@ import { Query } from 'store/query.store'
 import { signAndBroadcast } from 'store/wallet.store'
 
 import { txError } from './api.constants'
-import { msgCreateGroupPolicy } from './policy.messages'
+import { CreateGroupPolicyValues, msgCreateGroupPolicy } from './policy.messages'
 import { toUIGroupPolicy } from './policy.utils'
 
-export async function createGroupPolicy(
-  groupId: string,
-  admin: string,
-  values: GroupPolicyFormValues,
-) {
-  const msg = msgCreateGroupPolicy({ groupId, admin, values })
+export async function createGroupPolicy(values: CreateGroupPolicyValues) {
+  const msg = msgCreateGroupPolicy(values)
   const data = await signAndBroadcast([msg])
   if (!data) throwError(txError)
   let policyAddress

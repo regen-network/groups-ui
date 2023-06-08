@@ -7,15 +7,19 @@ import { clearEmptyStr, numToPercentStr } from 'util/helpers'
 
 import { GroupMsgWithTypeUrl, groupV1 } from './cosmosgroups'
 
+export interface CreateGroupPolicyValues extends GroupPolicyFormValues {
+  groupId: string
+  admin: string
+}
+
 export function msgCreateGroupPolicy({
   groupId,
   admin,
-  values: { percentage, threshold, policyType, votingWindow },
-}: {
-  groupId: string
-  admin: string
-  values: GroupPolicyFormValues
-}) {
+  percentage,
+  threshold,
+  policyType,
+  votingWindow,
+}: CreateGroupPolicyValues) {
   return GroupMsgWithTypeUrl.createGroupPolicy({
     groupId: Long.fromString(groupId),
     metadata: '',
