@@ -3,6 +3,7 @@ import type { ChainInfo } from '@keplr-wallet/types'
 import { proxy } from 'valtio'
 
 import type { ValidatorSDKType } from 'types'
+import { isJson } from 'util/validation'
 
 import { allChainsArray } from 'api/chains'
 
@@ -17,12 +18,14 @@ type ChainStore = {
   active: ChainInfo
   all: ChainInfo[]
   fee?: StdFee // | 'auto' | number
+  stakeDenom: string
   validators: ValidatorSDKType[]
 }
 
 export const Chain = proxy<ChainStore>({
-  active: savedChain ? JSON.parse(savedChain) : defaultChain,
+  active: savedChain && isJson(savedChain) ? JSON.parse(savedChain) : defaultChain,
   all: allChainsArray,
+  stakeDenom: defaultChain.stakeCurrency.coinMinimalDenom,
   validators: [],
 })
 

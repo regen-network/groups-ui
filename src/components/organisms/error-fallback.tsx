@@ -1,7 +1,9 @@
 import { isRouteErrorResponse, useRouteError } from 'react-router-dom'
+import axios from 'axios'
 
-import { toErrorWithMessage } from 'util/errors'
+import { isErrorWithMessage, toErrorWithMessage } from 'util/errors'
 
+import NotFound from 'pages/not-found-page'
 import { Center, Code } from '@/atoms'
 import { AlertTemplate } from '@/templates/alert-template'
 
@@ -29,6 +31,14 @@ export const ErrorFallback = () => {
 
   function handleReset() {
     window.location.reload()
+  }
+
+  if (
+    axios.isAxiosError(error) &&
+    isErrorWithMessage(error.response?.data) &&
+    error.response?.data.message.includes('not found')
+  ) {
+    return <NotFound />
   }
 
   const { text, message } = getErrorText(error)

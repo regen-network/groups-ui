@@ -1,24 +1,17 @@
 import { useController, useFormContext } from 'react-hook-form'
 
-import { AmountInput, type AmountInputProps, Heading, HStack, Text } from '@/atoms'
+import { UICoin } from 'types'
+
+import { Button, Input, InputGroup, InputRightElement } from '@/atoms'
 
 import { FieldControl, type FieldProps } from './field-control'
 
 type Props = FieldProps & {
-  inputProps?: AmountInputProps
-  maxValue: string
-  maxLabel?: string
-  denom?: string
+  balances: UICoin[]
 }
 
 /** Basic number input with a `maxValue`, set upon click */
-export const AmountField = ({
-  maxValue,
-  maxLabel = 'Available:',
-  denom,
-  inputProps,
-  ...fieldProps
-}: Props) => {
+export const AmountField = ({ balances, ...fieldProps }: Props) => {
   const { name, required } = fieldProps
   const { control, getValues, setValue } = useFormContext()
   const {
@@ -32,24 +25,24 @@ export const AmountField = ({
   })
 
   function handleClick() {
-    setValue(name, maxValue)
+    const balance = balances?.find((b) => b.denom === getValues('denom'))
+    if (balance) {
+      setValue(name, balance.amount)
+    }
   }
 
   return (
-    <FieldControl
-      {...fieldProps}
-      error={error}
-      labelRight={
-        <HStack alignItems="baseline">
-          <Text fontSize="xs">{maxLabel + ' '}</Text>
-          <Heading variant="label" fontSize="xs">
-            {maxValue}
-            {denom && ' ' + denom}
-          </Heading>
-        </HStack>
-      }
-    >
-      <AmountInput {...field} {...inputProps} onMaxClick={handleClick} />
+    <FieldControl {...fieldProps} error={error}>
+      <InputGroup>
+        <Input type="number" {...field} />
+        {balances.length && (
+          <InputRightElement width="4.5rem">
+            <Button size="sm" h="1.75rem" onClick={handleClick}>
+              max
+            </Button>
+          </InputRightElement>
+        )}
+      </InputGroup>
     </FieldControl>
   )
 }

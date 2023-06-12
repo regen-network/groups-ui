@@ -1,3 +1,4 @@
+import { Event } from '@regen-network/api/types/codegen/tendermint/abci/types'
 import Long from 'long'
 
 import type {
@@ -6,7 +7,8 @@ import type {
   UIProposalMetadata,
   VoteOptionType,
 } from 'types'
-import { logError, throwError } from 'util/errors'
+import { throwError } from 'util/errors'
+import { isJson } from 'util/validation'
 
 import { Query } from 'store/query.store'
 import { signAndBroadcast, Wallet } from 'store/wallet.store'
@@ -15,12 +17,14 @@ import { GroupMsgWithTypeUrl } from './cosmosgroups'
 import { msgSubmitProposal } from './proposal.messages'
 import { proposalActionsToMsgs, toUIProposal, toUIVote } from './proposal.utils'
 
+const txError = 'No data returned from transaction'
+
 export async function fetchProposalsByGroupPolicy(address?: string) {
   if (!Query.groups) throwError('Wallet not initialized')
   if (!address) throwError('Address is required')
   try {
     const { proposals } = await Query.groups.proposalsByGroupPolicy({ address })
-    return proposals.map(toUIProposal)
+    return Promise.all(proposals.map(toUIProposal))
   } catch (error) {
     throwError(error)
   }
@@ -50,7 +54,7 @@ export async function fetchVotesByProposal(proposalId?: string) {
     })
     return votes.map(toUIVote)
   } catch (error) {
-    logError(error)
+    throwError(error)
   }
 }
 
@@ -71,49 +75,43 @@ export async function createProposal({
   summary: string
   title: string
 }) {
-  try {
-    const messages = proposalActionsToMsgs(actions, {
-      denom,
-      summary,
-      title,
-      groupPolicyAddress,
-    })
-    const submitMsg = msgSubmitProposal({
-      groupPolicyAddress,
-      messages,
-      proposers,
-      summary,
-      title,
-      metadata: JSON.stringify(metadata),
-    })
-    const data = await signAndBroadcast([submitMsg])
-    if (!data) throwError('No data returned from transaction')
-    let proposalId: string | undefined
-    if (data.rawLog) {
-      const [raw] = JSON.parse(data.rawLog)
-      const idRaw = raw.events[0].attributes[0].value
-      proposalId = String(JSON.parse(idRaw))
-    }
-    if (!proposalId) throwError('No data returned from transaction')
-    return { ...data, proposalId }
-  } catch (err) {
-    logError(err)
+  const messages = proposalActionsToMsgs(actions, {
+    denom,
+    summary,
+    title,
+    groupPolicyAddress,
+  })
+  const submitMsg = msgSubmitProposal({
+    groupPolicyAddress,
+    messages,
+    proposers,
+    summary,
+    title,
+    metadata: JSON.stringify(metadata),
+  })
+  const data = await signAndBroadcast([submitMsg])
+  if (!data) throwError(txError)
+  let proposalId: string | undefined
+  if (data.rawLog && isJson(data.rawLog)) {
+    const [raw] = JSON.parse(data.rawLog)
+    const idRaw = raw.events.find(
+      (e: Event) => e.type === 'cosmos.group.v1.EventSubmitProposal',
+    ).attributes[0].value
+    proposalId = String(JSON.parse(idRaw))
   }
+  if (!proposalId) throwError(txError)
+  return { ...data, proposalId }
 }
 
 export async function executeProposal({ proposalId }: { proposalId: Long }) {
   if (!Wallet.account?.address) throwError('Wallet not initialized')
-  try {
-    const msg = GroupMsgWithTypeUrl.exec({
-      proposalId,
-      executor: Wallet.account.address,
-    })
-    const data = await signAndBroadcast([msg])
-    if (!data) throwError('No data returned from execution')
-    return data
-  } catch (err) {
-    logError(err)
-  }
+  const msg = GroupMsgWithTypeUrl.exec({
+    proposalId,
+    executor: Wallet.account.address,
+  })
+  const data = await signAndBroadcast([msg])
+  if (!data) throwError(txError)
+  return data
 }
 
 export async function voteOnProposal({
@@ -124,20 +122,16 @@ export async function voteOnProposal({
   proposalId: string
 }) {
   if (!Wallet.account?.address) throwError('Wallet not initialized')
-  try {
-    const msg = GroupMsgWithTypeUrl.vote({
-      option,
-      proposalId: Long.fromString(proposalId),
-      voter: Wallet.account.address,
-      exec: 0, // EXEC_UNSPECIFIED
-      metadata: '',
-    })
-    const data = await signAndBroadcast([msg])
-    if (!data) throwError('No data returned from vote')
-    return data
-  } catch (err) {
-    logError(err)
-  }
+  const msg = GroupMsgWithTypeUrl.vote({
+    option,
+    proposalId: Long.fromString(proposalId),
+    voter: Wallet.account.address,
+    exec: 0, // EXEC_UNSPECIFIED
+    metadata: '',
+  })
+  const data = await signAndBroadcast([msg])
+  if (!data) throwError(txError)
+  return data
 }
 
 export async function fetchVotesByAddress(address?: string) {
@@ -147,6 +141,6 @@ export async function fetchVotesByAddress(address?: string) {
     const { votes } = await Query.groups.votesByVoter({ voter: address })
     return votes.map(toUIVote)
   } catch (error) {
-    logError(error)
+    throwError(error)
   }
 }

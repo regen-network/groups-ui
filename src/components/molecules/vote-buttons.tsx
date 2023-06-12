@@ -5,7 +5,7 @@ import { useToastBottom } from 'hooks/use-toasts'
 
 import { Button } from '@/atoms'
 
-import { BsSlashCircle, CheckIcon, CloseIcon, GoThumbsdown } from 'assets/tsx'
+import { CheckIcon, CloseIcon, SlashCircleIcon, ThumbsDownIcon } from 'assets/tsx'
 
 export const VoteButtons = ({
   onVote,
@@ -47,7 +47,7 @@ export const VoteButtons = ({
       <Button
         colorScheme="yellow"
         isDisabled={isDisabled(VoteOption.VOTE_OPTION_ABSTAIN)}
-        leftIcon={<BsSlashCircle />}
+        leftIcon={<SlashCircleIcon />}
         onClick={() => handleVote(VoteOption.VOTE_OPTION_ABSTAIN)}
         variant="outline"
       >
@@ -56,7 +56,7 @@ export const VoteButtons = ({
       <Button
         colorScheme="orange"
         isDisabled={isDisabled(VoteOption.VOTE_OPTION_NO_WITH_VETO)}
-        leftIcon={<GoThumbsdown />}
+        leftIcon={<ThumbsDownIcon />}
         onClick={() => handleVote(VoteOption.VOTE_OPTION_NO_WITH_VETO)}
         variant="outline"
       >

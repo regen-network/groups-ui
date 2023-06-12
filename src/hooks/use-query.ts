@@ -76,7 +76,7 @@ export function useProposal(proposalId?: string) {
 }
 
 export function useGroupProposals(groupId?: string) {
-  const { data: policies } = useGroupPolicies(groupId)
+  const { data: policies, isLoading } = useGroupPolicies(groupId)
   const policyIds = policies?.map((p) => p.address) || []
   return useQuery({
     queryKey: ['proposals', groupId],
@@ -86,6 +86,7 @@ export function useGroupProposals(groupId?: string) {
       )
       return proposals.flat()
     },
+    enabled: !isLoading,
   })
 }
 

@@ -6,7 +6,7 @@ import { useColorModeValue } from 'hooks/chakra-hooks'
 import { AnimatePresence, FadeIn } from '@/animations'
 import { Box, Button, Container, HStack, IconButton } from '@/atoms'
 
-import { IoMdArrowBack, IoMdArrowForward } from 'assets/tsx'
+import { BackIcon, ForwardIcon } from 'assets/tsx'
 
 type FormFooterState = {
   btnText?: string
@@ -109,7 +109,7 @@ export const FormFooter = ({ isSubmitting }: { isSubmitting?: boolean }) => {
                     aria-label="Go back"
                     variant="outline"
                     disabled={isSubmitting}
-                    icon={<IoMdArrowBack />}
+                    icon={<BackIcon />}
                     onClick={onPrev}
                   />
                 </FadeIn>
@@ -121,7 +121,7 @@ export const FormFooter = ({ isSubmitting }: { isSubmitting?: boolean }) => {
                     aria-label="Go Forward"
                     variant="outline"
                     disabled={isSubmitting}
-                    icon={<IoMdArrowForward />}
+                    icon={<ForwardIcon />}
                     onClick={onNext}
                   />
                 </FadeIn>

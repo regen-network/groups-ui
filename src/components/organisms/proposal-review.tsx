@@ -1,5 +1,4 @@
 import { Fragment } from 'react'
-import { useSnapshot } from 'valtio'
 
 import type {
   ProposalAction,
@@ -8,9 +7,6 @@ import type {
   ProposalStakeFormValues,
 } from 'types'
 import { SPACING } from 'util/constants'
-import { formatFee } from 'util/helpers'
-
-import { Chain } from 'store/chain.store'
 
 import { Heading, Stack, Text } from '@/atoms'
 import { FormCard } from '@/molecules/form-card'
@@ -79,14 +75,13 @@ function renderAction(action: ProposalAction, groupPolicyAddress: string) {
   }
 }
 
-const SendReview = ({
+export const SendReview = ({
   groupPolicyAddress,
   values,
 }: {
   groupPolicyAddress: string
   values: ProposalSendFormValues
 }) => {
-  const { fee } = useSnapshot(Chain)
   return (
     <FormCard title="Send">
       <Stack spacing={SPACING.formStack}>
@@ -102,22 +97,19 @@ const SendReview = ({
         {'toAddress' in values && (
           <ReviewItem label="To Address">{values.toAddress}</ReviewItem>
         )}
-        {/* TODO(#19): add support for currencies other than staking denom */}
-        <ReviewItem label="Amount">{values.amount + ' REGEN'}</ReviewItem>
-        <ReviewItem label="Transaction Fee">{formatFee(fee)}</ReviewItem>
+        <ReviewItem label="Amount">{`${values.amount} ${values.denom}`}</ReviewItem>
       </Stack>
     </FormCard>
   )
 }
 
-const StakeReview = ({
+export const StakeReview = ({
   groupPolicyAddress,
   values,
 }: {
   groupPolicyAddress: string
   values: ProposalStakeFormValues
 }) => {
-  const { fee } = useSnapshot(Chain)
   return (
     <FormCard title="Stake">
       <Stack spacing={SPACING.formStack}>
@@ -139,8 +131,7 @@ const StakeReview = ({
         {'toValidator' in values && (
           <ReviewItem label="To validator">{values.toValidator}</ReviewItem>
         )}
-        <ReviewItem label="Amount">{values.amount}</ReviewItem>
-        <ReviewItem label="Transaction Fee">{formatFee(fee)}</ReviewItem>
+        {'amount' in values && <ReviewItem label="Amount">{`${values.amount} ${values.denom}`}</ReviewItem>}
       </Stack>
     </FormCard>
   )

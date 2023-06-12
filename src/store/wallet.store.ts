@@ -50,6 +50,7 @@ export async function bootstrapKeplr() {
     Query.bank = lcdClient.cosmos.bank.v1beta1
     Wallet.signingClient = signingClient
     Wallet.account = account
+    Chain.stakeDenom = Chain.active.stakeCurrency.coinMinimalDenom
     Chain.fee = {
       amount: coins(10, Chain.active.feeCurrencies[0].coinDenom),
       gas: '2000000', // TODO how do I calculate this?

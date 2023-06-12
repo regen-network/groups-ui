@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 
 import { Box, IconButton, type IconButtonProps } from '@/atoms'
 
-import { AiOutlineMinus } from 'assets/tsx'
+import { MinusIcon } from 'assets/tsx'
 
 /** absolutely positions a remove button on the top-right of whatever it wraps */
 export const WithRemoveButton = ({
@@ -25,7 +25,7 @@ export const WithRemoveButton = ({
           variant="solid"
           rounded="full"
           size="xs"
-          icon={<AiOutlineMinus />}
+          icon={<MinusIcon />}
           zIndex={2}
           pos="absolute"
           top={0}

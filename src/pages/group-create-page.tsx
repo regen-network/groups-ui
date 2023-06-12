@@ -18,7 +18,7 @@ export default function GroupCreate() {
     try {
       const { transactionHash, groupId } = await createGroupWithPolicy(values)
       setNewGroupId(groupId?.toString())
-      toastSuccess(transactionHash, 'Group created!')
+      toastSuccess(transactionHash)
       return true
     } catch (err) {
       logError(err)

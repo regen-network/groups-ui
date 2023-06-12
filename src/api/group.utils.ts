@@ -11,9 +11,9 @@ import { getGroupMetadata } from 'util/validation'
 import { fetchGroupMembers } from './member.actions'
 
 /** Parses chain-group and returns typed metadata */
-export function toUIGroup(group: GroupInfoSDKType): UIGroup {
+export async function toUIGroup(group: GroupInfoSDKType): Promise<UIGroup> {
   return {
-    metadata: getGroupMetadata(group.metadata, {
+    metadata: await getGroupMetadata(group.metadata, {
       name: `Group #${group.id}`,
       updatedAt: '',
     }),

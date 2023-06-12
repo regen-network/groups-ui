@@ -8,7 +8,6 @@ export default {
   argTypes: {
     isOpen: {
       type: 'boolean',
-      defaultValue: true,
     },
   },
 } as Meta<typeof ProposalActionDrawer>

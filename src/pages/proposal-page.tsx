@@ -20,7 +20,7 @@ import { ProposalDetails } from '@/organisms/proposal-details'
 import { ProposalSummary } from '@/organisms/proposal-summary'
 import { ProposalVotesTable } from '@/organisms/proposal-votes-table'
 
-import { IoMdArrowBack } from 'assets/tsx'
+import { BackIcon } from 'assets/tsx'
 
 export default function ProposalPage() {
   const { toastErr, toastSuccess } = useTxToasts()
@@ -50,8 +50,8 @@ export default function ProposalPage() {
   async function handleVote(option: VoteOptionType) {
     if (!proposalId) throwError('Proposal ID is required to cast vote')
     try {
-      await voteOnProposal({ proposalId, option })
-      toastSuccess('Vote cast successfully')
+      const { transactionHash } = await voteOnProposal({ proposalId, option })
+      toastSuccess(transactionHash)
       refetchVotes()
       refetchUserVotes()
     } catch (err) {
@@ -69,7 +69,7 @@ export default function ProposalPage() {
         <div>
           <Button
             variant="ghost"
-            leftIcon={<IoMdArrowBack />}
+            leftIcon={<BackIcon />}
             as={RouteLink}
             to={ROUTE_PATH.group(groupId)}
           >

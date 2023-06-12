@@ -1,20 +1,22 @@
 import { useSnapshot } from 'valtio'
 import { z } from 'zod'
 
-import { getFeeDenom } from 'util/helpers'
 import { valid } from 'util/validation/zod'
 
 import { useZodForm } from 'hooks/use-zod-form'
 import { Chain } from 'store/chain.store'
 
+import { Grid, GridItem } from '@/atoms'
 import { Form } from '@/molecules/form'
-import { AmountField, FeeDisplayField, SelectField } from '@/molecules/form-fields'
+import { AmountField, SelectField } from '@/molecules/form-fields'
+import { DenomField } from '@/molecules/form-fields/denom-field'
 import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 
 const schema = z.object({
   fromValidator: valid.bech32Address,
   toValidator: valid.bech32Address,
   amount: valid.amount,
+  denom: valid.denom,
   stakeType: z.literal('redelegate'),
 })
 
@@ -23,10 +25,9 @@ export type RedelegateFormValues = z.infer<typeof schema>
 export const RedelegateForm = (props: {
   defaultValues: RedelegateFormValues
   formId: string
-  maxAmount: string
   onSubmit: (data: RedelegateFormValues) => void
 }) => {
-  const { validators, fee } = useSnapshot(Chain)
+  const { validators, stakeDenom } = useSnapshot(Chain)
   const items = validators.map((v, i) => {
     return {
       label: v.description?.moniker || `Validator ${i}`,
@@ -37,9 +38,11 @@ export const RedelegateForm = (props: {
     schema,
     defaultValues: {
       ...props.defaultValues,
+      denom: stakeDenom,
       fromValidator: items[0].value,
     },
   })
+
   return (
     <Form form={form} onSubmit={props.onSubmit} id={props.formId}>
       <SelectField
@@ -58,14 +61,23 @@ export const RedelegateForm = (props: {
         dropdownLabel="Select a validator"
         items={items}
       />
-      <AmountField
-        required
-        name="amount"
-        label="Amount"
-        maxValue={props.maxAmount}
-        denom={getFeeDenom(fee)}
-      />
-      <FeeDisplayField />
+      <Grid alignItems="end" gridTemplateColumns={'1fr 150px'} gap={2}>
+        <GridItem>
+          <AmountField
+            required
+            name="amount"
+            label="Amount"
+            balances={[]} // TODO: use amount staked on validator
+          />
+        </GridItem>
+        <GridItem>
+          <DenomField
+            required
+            name="denom"
+            balances={[]} // TODO: use amount staked on validator
+          />
+        </GridItem>
+      </Grid>
       <FormSubmitHiddenButton id={props.formId} />
     </Form>
   )

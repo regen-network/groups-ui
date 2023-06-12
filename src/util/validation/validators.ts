@@ -10,12 +10,11 @@ export const isBech32Address = (address: string): boolean => {
   }
 }
 
-export const isJSON = (str: string): boolean => {
-  // allow empty strings - this could be problematic if we go to parse later
-  if (!str.length) return true
+export const isJson = (str: string): boolean => {
   try {
-    JSON.parse(str)
-    return true
+    const result = JSON.parse(str)
+    const type = Object.prototype.toString.call(result)
+    return type === '[object Object]' || type === '[object Array]'
   } catch (err) {
     return false
   }
