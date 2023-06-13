@@ -8,10 +8,9 @@ import { isJson } from 'util/validation'
 import { Query } from 'store/query.store'
 import { signAndBroadcast } from 'store/wallet.store'
 
+import { txError } from './api.constants'
 import { msgCreateGroupWithPolicy } from './group.messages'
 import { addMembersToGroups, toUIGroup } from './group.utils'
-
-const txError = 'No data returned from transaction'
 
 export async function createGroupWithPolicy(values: GroupWithPolicyFormValues) {
   const msg = msgCreateGroupWithPolicy(values)

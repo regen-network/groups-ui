@@ -6,10 +6,12 @@ import { Grid, GridItem, Heading, Stack, Text } from '@/atoms'
 
 import * as ChakraIcons from './chakra-icons'
 import { GroupsIcon } from './groups-icon'
+import { NoMemberIcon } from './no-member-icon'
+import { NoPolicyIcon } from './no-policy-icon'
 import * as ReactIcons from './react-icons'
 
 /** Import component and add here to display */
-const customIcons = [GroupsIcon]
+const customIcons = [GroupsIcon, NoMemberIcon, NoPolicyIcon]
 const reactIcons = [GroupsIcon, ...Object.values(ReactIcons)]
 const chakraIcons = Object.values(ChakraIcons)
 

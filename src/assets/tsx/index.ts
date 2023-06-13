@@ -1,3 +1,5 @@
 export * from './chakra-icons'
 export * from './groups-icon'
+export * from './no-member-icon'
+export * from './no-policy-icon'
 export * from './react-icons'

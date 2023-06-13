@@ -83,7 +83,7 @@ export function GroupCRUDTemplate({
   })
 
   function renderStep() {
-    switch (activeStep) {
+    switch (activeStep + 3 - steps.length) {
       case 0:
         return (
           <HorizontalSlide key="step-0" fromRight={priorStep !== 0}>

@@ -10,6 +10,7 @@ import { ErrorFallback } from '@/organisms/error-fallback'
 import { RootLayout } from '@/templates/root-layout'
 
 const GroupCreate = lazy(() => import('./pages/group-create-page'))
+const GroupPolicyCreate = lazy(() => import('./pages/group-policy-create-page'))
 const GroupDetails = lazy(() => import('./pages/group-details-page'))
 const GroupEdit = lazy(() => import('./pages/group-edit-page'))
 const Groups = lazy(() => import('./pages/groups-page'))
@@ -24,6 +25,7 @@ export const ROUTE_PATH = {
   groups: '/',
   groupCreate: '/new',
   groupDetails: (id: string) => `/${id}/details`,
+  groupPolicyCreate: (id: string) => `/${id}/policies/new`,
   groupEdit: (id: string) => `/${id}/edit`,
   proposalCreate: (groupId: string) => `/${groupId}/proposals/new`,
   proposal: (groupId: string, proposalId: string) =>
@@ -39,6 +41,7 @@ const router = createBrowserRouter(
         <Route index element={<Group />} />
         <Route path="details" element={<GroupDetails />} />
         <Route path="edit" element={<GroupEdit />} />
+        <Route path="policies/new" element={<GroupPolicyCreate />} />
         <Route path="proposals">
           <Route path="new" element={<ProposalCreate />} />
           <Route path=":proposalId" element={<Proposal />} />
