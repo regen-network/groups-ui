@@ -1,9 +1,11 @@
+import type { MsgUpdateGroupPolicyDecisionPolicyEncoded } from '@regen-network/api/types/codegen/cosmos/group/v1/tx'
+
 import { GroupPolicyFormValues } from 'types'
 import { daysToDuration, secondsToDuration } from 'util/date'
 import { throwError } from 'util/errors'
 import { numToPercentStr } from 'util/helpers'
 
-import { GroupMsgWithTypeUrl, groupV1 } from './cosmosgroups'
+import { groupV1 } from './cosmosgroups'
 
 export function msgUpdateDecisionPolicy({
   admin,
@@ -20,7 +22,9 @@ export function msgUpdateDecisionPolicy({
   threshold?: number
   votingWindow: number
 }) {
-  return GroupMsgWithTypeUrl.updateGroupPolicyDecisionPolicy({
+  // NOTE: We use the encoded msg type to support amino signing with nested types.
+  // See https://github.com/osmosis-labs/telescope/issues/281
+  const encodedMsg: MsgUpdateGroupPolicyDecisionPolicyEncoded = {
     admin,
     decisionPolicy: encodeDecisionPolicy({
       percentage,
@@ -29,7 +33,12 @@ export function msgUpdateDecisionPolicy({
       votingWindow,
     }),
     groupPolicyAddress: policyAddress,
-  })
+  }
+
+  return {
+    typeUrl: '/cosmos.group.v1.MsgUpdateGroupPolicyDecisionPolicy',
+    value: encodedMsg,
+  }
 }
 
 /** @returns gogo `Any` shaped encoded decision policy: `ThresholdDecisionPolicy`
@@ -55,22 +64,20 @@ export function encodeDecisionPolicy({
   }
   if (policyType === 'percentage') {
     if (!percentage) throwError('Must provide percentage value')
-    return {
-      typeUrl: '/cosmos.group.v1.PercentageDecisionPolicy',
-      value: groupV1.PercentageDecisionPolicy.encode({
-        percentage: numToPercentStr(percentage),
-        windows,
-      }).finish(),
-    }
+    // NOTE: We convert the decision policy to a proto msg to support amino signing with nested types.
+    // See https://github.com/osmosis-labs/telescope/issues/281
+    return groupV1.PercentageDecisionPolicy.toProtoMsg({
+      percentage: numToPercentStr(percentage),
+      windows,
+    })
   } else if (policyType === 'threshold') {
     if (!threshold) throwError('Must provide threshold value')
-    return {
-      typeUrl: '/cosmos.group.v1.ThresholdDecisionPolicy',
-      value: groupV1.ThresholdDecisionPolicy.encode({
-        threshold: threshold.toString(),
-        windows,
-      }).finish(),
-    }
+    // NOTE: We convert the decision policy to a proto msg to support amino signing with nested types.
+    // See https://github.com/osmosis-labs/telescope/issues/281
+    return groupV1.ThresholdDecisionPolicy.toProtoMsg({
+      threshold: threshold.toString(),
+      windows,
+    })
   } else {
     throwError('Invalid policy type: ' + policyType)
   }
