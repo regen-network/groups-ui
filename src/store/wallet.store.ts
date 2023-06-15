@@ -1,12 +1,6 @@
 import { type AccountData, coins, type EncodeObject } from '@cosmjs/proto-signing'
-import { Registry } from '@cosmjs/proto-signing'
-import { AminoTypes, SigningStargateClient } from '@cosmjs/stargate'
-import {
-  cosmos,
-  cosmosAminoConverters,
-  cosmosProtoRegistry,
-  getSigningCosmosClient,
-} from '@regen-network/api'
+import { SigningStargateClient } from '@cosmjs/stargate'
+import { cosmos, getSigningCosmosClient } from '@regen-network/api'
 import { proxy } from 'valtio'
 
 import { logError, throwError } from 'util/errors'
@@ -47,18 +41,10 @@ export async function bootstrapKeplr() {
     // Using "only amino" also ensures messages are human-readable within keplr.
     const offlineSigner = await keplr.getOfflineSignerOnlyAmino(chainId)
     const [account] = await offlineSigner.getAccounts()
-    // const signingClient = await getSigningCosmosClient({
-    //   rpcEndpoint: Chain.active.rpc,
-    //   signer: offlineSigner,
-    // })
-
-    // NOTE: We use signing stargate client so that we can register types.
-    const registry = new Registry(cosmosProtoRegistry)
-    const signingClient = await SigningStargateClient.connectWithSigner(
-      Chain.active.rpc,
-      offlineSigner,
-      { registry, aminoTypes: new AminoTypes({ ...cosmosAminoConverters }) },
-    )
+    const signingClient = await getSigningCosmosClient({
+      rpcEndpoint: Chain.active.rpc,
+      signer: offlineSigner,
+    })
 
     const lcdClient = await cosmos.ClientFactory.createLCDClient({
       restEndpoint: Chain.active.rest,

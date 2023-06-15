@@ -3927,7 +3927,7 @@
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
 "@regen-network/api@../regen-js/packages/api":
-  version "1.0.0-beta1"
+  version "1.0.0-alpha2"
   dependencies:
     "@babel/runtime" "^7.19.4"
     "@cosmjs/amino" "0.29.5"

@@ -25,7 +25,7 @@ export function msgCreateGroupWithPolicy(values: GroupWithPolicyFormValues) {
   // See https://github.com/osmosis-labs/telescope/issues/281
   const encodedMsg: MsgCreateGroupWithPolicyEncoded = {
     admin,
-    groupPolicyMetadata: '',
+    groupPolicyMetadata: ' ', // NOTE: whitespace required for amino
     groupPolicyAsAdmin: policyAsAdmin === 'true',
     decisionPolicy: encodeDecisionPolicy({
       policyType,
@@ -43,7 +43,7 @@ export function msgCreateGroupWithPolicy(values: GroupWithPolicyFormValues) {
     members: members.map((m) => ({
       address: m.address,
       weight: m.weight.toString(),
-      metadata: '',
+      metadata: ' ', // NOTE: whitespace required for amino
       // metadata: JSON.stringify(m.metadata),
     })),
   }
