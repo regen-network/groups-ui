@@ -1,4 +1,7 @@
-import type { MsgUpdateGroupPolicyDecisionPolicyEncoded } from '@regen-network/api/types/codegen/cosmos/group/v1/tx'
+import type {
+  MsgCreateGroupPolicyEncoded,
+  MsgUpdateGroupPolicyDecisionPolicyEncoded,
+} from '@regen-network/api/types/codegen/cosmos/group/v1/tx'
 import Long from 'long'
 
 import { GroupPolicyFormValues } from 'types'
@@ -21,17 +24,24 @@ export function msgCreateGroupPolicy({
   policyType,
   votingWindow,
 }: CreateGroupPolicyValues) {
-  return GroupMsgWithTypeUrl.createGroupPolicy({
-    groupId: Long.fromString(groupId),
-    metadata: '',
+  // NOTE: We use the encoded msg type to support amino signing with nested types.
+  // See https://github.com/osmosis-labs/telescope/issues/281
+  const encodedMsg: MsgCreateGroupPolicyEncoded = {
     admin,
+    groupId: Long.fromString(groupId),
+    metadata: ' ', // NOTE: whitespace required for amino
     decisionPolicy: encodeDecisionPolicy({
       policyType,
       percentage: clearEmptyStr(percentage),
       threshold: clearEmptyStr(threshold),
       votingWindow: votingWindow,
     }),
-  })
+  }
+
+  return {
+    typeUrl: '/cosmos.group.v1.MsgCreateGroupPolicy',
+    value: encodedMsg,
+  }
 }
 
 export function msgUpdateDecisionPolicy({
