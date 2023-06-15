@@ -26,7 +26,7 @@ export function msgCreateGroupWithPolicy(values: GroupWithPolicyFormValues) {
   const encodedMsg: MsgCreateGroupWithPolicyEncoded = {
     admin,
     groupPolicyMetadata: ' ', // NOTE: whitespace required for amino
-    groupPolicyAsAdmin: policyAsAdmin === 'true',
+    groupPolicyAsAdmin: policyAsAdmin === 'true', // TODO: unauthorized error when false
     decisionPolicy: encodeDecisionPolicy({
       policyType,
       percentage: clearEmptyStr(percentage),
