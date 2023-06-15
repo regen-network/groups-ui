@@ -1,5 +1,5 @@
 import { type AccountData, coins, type EncodeObject } from '@cosmjs/proto-signing'
-import { SigningStargateClient } from '@cosmjs/stargate'
+import type { SigningStargateClient } from '@cosmjs/stargate'
 import { cosmos, getSigningCosmosClient } from '@regen-network/api'
 import { proxy } from 'valtio'
 
@@ -45,7 +45,6 @@ export async function bootstrapKeplr() {
       rpcEndpoint: Chain.active.rpc,
       signer: offlineSigner,
     })
-
     const lcdClient = await cosmos.ClientFactory.createLCDClient({
       restEndpoint: Chain.active.rest,
     })

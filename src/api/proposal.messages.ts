@@ -27,6 +27,8 @@ export function msgSubmitProposal({
     proposers,
   })
 
+  // TODO: MsgSubmitProposalEncoded undefined
+
   // NOTE: We use the encoded msg type to support amino signing with nested types.
   // See https://github.com/osmosis-labs/telescope/issues/281
   // const encodedMsg: MsgSubmitProposalEncoded = {
