@@ -63,7 +63,7 @@ export const GroupDetailsTemplate = ({
           </Heading>
           <Text>{admin}</Text>
         </HStack>
-        <GroupPolicyTable policies={policies} />
+        <GroupPolicyTable policies={policies} groupId={id} />
         <GroupMembersTable members={members} onSave={onMembersSave} />
       </Stack>
     </PageContainer>

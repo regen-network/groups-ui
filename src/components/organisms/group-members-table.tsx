@@ -26,14 +26,16 @@ import {
   Tr,
   UndoButton,
 } from '@/atoms'
+import { NoItem } from '@/molecules/no-item'
 import { TableTitlebar } from '@/molecules/table-titlebar'
 import { Truncate } from '@/molecules/truncate'
+
+import { NoMemberIcon } from 'assets/tsx'
 
 export type GroupMembersTableProps = {
   members: UIGroupMember[]
   onSave: (vals: MemberFormValues[]) => Promise<boolean>
 }
-
 export const GroupMembersTable = ({ members = [], onSave }: GroupMembersTableProps) => {
   const [isEdit, setEdit] = useBoolean(false)
   const [submitting, setSubmitting] = useState(false)
@@ -44,11 +46,14 @@ export const GroupMembersTable = ({ members = [], onSave }: GroupMembersTablePro
   }>({})
   const [addrErr, setAddrErr] = useState('')
   const tailSize = useBreakpointValue({ base: 4, sm: 6, md: 25, lg: 35, xl: 100 })
+  const updatedBg = useColorModeValue('blue.100', 'blue.800')
+  const deletedBg = useColorModeValue('red.100', 'red.900')
 
   const tableMembers: MemberFormValues[] = useMemo(() => {
     const currMembers = members.map(toMemberFormValues)
     return [...newMembers, ...currMembers]
   }, [members, newMembers])
+  const hasMembers = tableMembers.length > 0
 
   function resetState() {
     setNewMembers([])
@@ -103,12 +108,9 @@ export const GroupMembersTable = ({ members = [], onSave }: GroupMembersTablePro
     setNewMemberAddr('')
   }
 
-  const updatedBg = useColorModeValue('blue.100', 'blue.800')
-  const deletedBg = useColorModeValue('red.100', 'red.900')
-
   return (
-    <TableContainer w="full">
-      <TableTitlebar title="Members">
+    <TableContainer w="full" borderWidth={1}>
+      <TableTitlebar title="Members" noBorder={!hasMembers}>
         <AnimatePresence mode="wait">
           {isEdit && (
             <Flex grow={1} justify="end">
@@ -157,91 +159,104 @@ export const GroupMembersTable = ({ members = [], onSave }: GroupMembersTablePro
             </Flex>
           )}
         </AnimatePresence>
-        <Button
-          variant={isEdit ? 'solid' : 'outline'}
-          onClick={isEdit ? handleSave : setEdit.toggle}
-          loadingText="Saving"
-          isLoading={submitting}
-        >
-          {isEdit ? 'Save Changes' : 'Edit Members'}
-        </Button>
+        {hasMembers && (
+          <Button
+            variant={isEdit ? 'solid' : 'outline'}
+            onClick={isEdit ? handleSave : setEdit.toggle}
+            loadingText="Saving"
+            isLoading={submitting}
+          >
+            {isEdit ? 'Save Changes' : 'Edit Members'}
+          </Button>
+        )}
       </TableTitlebar>
-      <Table size="lg" variant={isEdit ? undefined : 'striped'}>
-        <Thead>
-          <Tr>
-            <Th>Address</Th>
-            <Th>Voting Weight</Th>
-            <Th>Date Added</Th>
-            <Th />
-          </Tr>
-        </Thead>
-        <Tbody>
-          {tableMembers.map((member, i) => {
-            const key = member.address + i
-            const updatedMember = membersToUpdate[member.address]
-            return (
-              <Tr
-                key={key}
-                sx={{
-                  '> td': {
-                    bgColor: updatedMember
-                      ? updatedMember.weight === 0
-                        ? deletedBg
-                        : updatedBg
-                      : undefined,
-                  },
-                }}
-              >
-                <Td>
-                  <Truncate clickToCopy tailLength={tailSize} text={member.address} />
-                </Td>
-                <Td>
-                  <AnimatePresence mode="wait">
-                    {isEdit ? (
-                      <FadeIn key={'weight-edit' + key}>
-                        <NumberInput
-                          maxW={20}
-                          min={0}
-                          type="number"
-                          value={updatedMember?.weight ?? member.weight}
-                          onChange={(weight) => changeMemberWeight(member, weight)}
-                        />
-                      </FadeIn>
-                    ) : (
-                      <FadeIn key={'weight' + key}>{member.weight}</FadeIn>
-                    )}
-                  </AnimatePresence>
-                </Td>
-                <Td>{formatDate(member.addedAt)}</Td>
-                <Td>
-                  <AnimatePresence mode="wait">
-                    {isEdit ? (
-                      <FadeIn key={'delete' + key}>
-                        {updatedMember ? (
-                          <UndoButton
-                            onClick={() => handleUndo(member)}
-                            hoverText={
-                              updatedMember.weight === 0
-                                ? 'Undo deletion'
-                                : 'Revert change'
-                            }
+      {!hasMembers && (
+        <NoItem
+          icon={<NoMemberIcon width="100" height="100" />}
+          header="No members"
+          button={<Button onClick={setEdit.on}>add members</Button>}
+        />
+      )}
+      {hasMembers && (
+        <Table size="lg" variant={isEdit ? undefined : 'striped'}>
+          <Thead>
+            <Tr>
+              <Th>Address</Th>
+              <Th>Voting Weight</Th>
+              <Th>Date Added</Th>
+              <Th />
+            </Tr>
+          </Thead>
+          <Tbody>
+            {tableMembers.map((member, i) => {
+              const key = member.address + i
+              const updatedMember = membersToUpdate[member.address]
+              return (
+                <Tr
+                  key={key}
+                  sx={{
+                    '> td': {
+                      bgColor: updatedMember
+                        ? updatedMember.weight === 0
+                          ? deletedBg
+                          : updatedBg
+                        : undefined,
+                    },
+                  }}
+                >
+                  <Td>
+                    <Truncate clickToCopy tailLength={tailSize} text={member.address} />
+                  </Td>
+                  <Td>
+                    <AnimatePresence mode="wait">
+                      {isEdit ? (
+                        <FadeIn key={'weight-edit' + key}>
+                          <NumberInput
+                            maxW={20}
+                            min={0}
+                            type="number"
+                            value={updatedMember?.weight ?? member.weight}
+                            onChange={(weight) => changeMemberWeight(member, weight)}
                           />
-                        ) : (
-                          <DeleteButton onClick={() => changeMemberWeight(member, '0')} />
-                        )}
-                      </FadeIn>
-                    ) : (
-                      <FadeIn key={'hidden' + key}>
-                        <Box h={10} w={10} />
-                      </FadeIn>
-                    )}
-                  </AnimatePresence>
-                </Td>
-              </Tr>
-            )
-          })}
-        </Tbody>
-      </Table>
+                        </FadeIn>
+                      ) : (
+                        <FadeIn key={'weight' + key}>{member.weight}</FadeIn>
+                      )}
+                    </AnimatePresence>
+                  </Td>
+                  <Td>{formatDate(member.addedAt)}</Td>
+                  <Td>
+                    <AnimatePresence mode="wait">
+                      {isEdit ? (
+                        <FadeIn key={'delete' + key}>
+                          {updatedMember ? (
+                            <UndoButton
+                              onClick={() => handleUndo(member)}
+                              hoverText={
+                                updatedMember.weight === 0
+                                  ? 'Undo deletion'
+                                  : 'Revert change'
+                              }
+                            />
+                          ) : (
+                            <DeleteButton
+                              onClick={() => changeMemberWeight(member, '0')}
+                            />
+                          )}
+                        </FadeIn>
+                      ) : (
+                        <FadeIn key={'hidden' + key}>
+                          <Box h={10} w={10} />
+                        </FadeIn>
+                      )}
+                    </AnimatePresence>
+                  </Td>
+                </Tr>
+              )
+            })}
+          </Tbody>
+        </Table>
+      )}
     </TableContainer>
   )
 }

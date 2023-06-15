@@ -18,7 +18,7 @@ export default function GroupDetailsPage() {
   const { data: policies, isLoading: loadingPolicies } = useGroupPolicies(groupId)
   const { toastSuccess, toastErr } = useTxToasts()
   const [policy] = policies ?? []
-  const policyIsAdmin = policy?.admin === policy?.address
+  const policyIsAdmin = policy && policy.admin === policy.address
 
   if (loadingGroup || loadingPolicies) return <Loading />
   if (!group || !groupId) {
@@ -47,7 +47,7 @@ export default function GroupDetailsPage() {
 
   return (
     <GroupDetailsTemplate
-      admin={policyIsAdmin ? 'Group Policy' : policy?.admin}
+      admin={policyIsAdmin ? 'Group Policy' : group?.admin}
       description={group.metadata.description}
       id={groupId}
       members={members || []}
