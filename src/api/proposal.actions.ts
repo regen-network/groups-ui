@@ -126,7 +126,7 @@ export async function voteOnProposal({
     proposalId: Long.fromString(proposalId),
     voter: Wallet.account.address,
     exec: 0, // EXEC_UNSPECIFIED // TODO: unauthorized error when 0
-    metadata: ' ', // NOTE: whitespace required for amino
+    metadata: ' ', // TODO: unauthorized error when empty
   })
   const data = await signAndBroadcast([msg])
   if (!data) throwError(txError)

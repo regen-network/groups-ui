@@ -29,7 +29,7 @@ export function msgCreateGroupPolicy({
   const encodedMsg: MsgCreateGroupPolicyEncoded = {
     admin,
     groupId: Long.fromString(groupId),
-    metadata: ' ', // NOTE: whitespace required for amino
+    metadata: ' ', // TODO: unauthorized error when empty
     decisionPolicy: encodeDecisionPolicy({
       policyType,
       percentage: clearEmptyStr(percentage),
@@ -101,7 +101,7 @@ export function encodeDecisionPolicy({
   }
   if (policyType === 'percentage') {
     if (!percentage) throwError('Must provide percentage value')
-    // NOTE: We convert the decision policy to a proto msg to support amino signing with nested types.
+    // NOTE: We use the encoded msg type to support amino signing with nested types.
     // See https://github.com/osmosis-labs/telescope/issues/281
     return groupV1.PercentageDecisionPolicy.toProtoMsg({
       percentage: numToPercentStr(percentage),
@@ -109,7 +109,7 @@ export function encodeDecisionPolicy({
     })
   } else if (policyType === 'threshold') {
     if (!threshold) throwError('Must provide threshold value')
-    // NOTE: We convert the decision policy to a proto msg to support amino signing with nested types.
+    // NOTE: We use the encoded msg type to support amino signing with nested types.
     // See https://github.com/osmosis-labs/telescope/issues/281
     return groupV1.ThresholdDecisionPolicy.toProtoMsg({
       threshold: threshold.toString(),
