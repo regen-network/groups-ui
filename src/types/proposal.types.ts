@@ -2,11 +2,13 @@ import type { Proposal } from '@regen-network/api/types/codegen/cosmos/group/v1/
 
 import type { UIProposalMetadata } from 'util/validation'
 
+import { GroupPolicyFormValues } from '@/organisms/group-policy-form-base'
 import type { SingleFormValues } from '@/organisms/send-single-form'
 import type { ClaimFormValues } from '@/organisms/stake-claim-form'
 import type { DelegateFormValues } from '@/organisms/stake-delegate-form'
 import type { RedelegateFormValues } from '@/organisms/stake-redelegate-form'
 import type { UndelegateFormValues } from '@/organisms/stake-undelegate-form'
+import { DecisionPolicyFormValues } from '@/organisms/update-group-decision-policy-form'
 export type {
   ProposalSDKType,
   ProposalStatus as ProposalStatusType,
@@ -26,8 +28,8 @@ export interface UIProposal
 export type ProposalAction = {
   /** for handling add / remove behavior + passing to nested forms for submit handler */
   id: string
-  type: 'send' | 'stake' | 'text' // TODO: add other event types
-  values: ProposalSendFormValues | ProposalStakeFormValues // TODO: types for other form actions
+  type: 'send' | 'stake' | 'text' | 'update-group' // TODO: add other event types
+  values: ProposalSendFormValues | ProposalStakeFormValues | ProposalUpdateGroupFormValues // TODO: types for other form actions
 }
 
 export type ProposalSendType = 'single' // TODO: "multi" send
@@ -42,6 +44,9 @@ export type ProposalStakeFormValues =
   | RedelegateFormValues
   | UndelegateFormValues
 
+export type ProposalUpdateGroupType = 'decision-policy' | 'members' | 'metadata'
+export type ProposalUpdateGroupFormValues = DecisionPolicyFormValues
+
 // Re-export for convenience
 export type { SingleFormValues }
 export type {
@@ -50,6 +55,7 @@ export type {
   RedelegateFormValues,
   UndelegateFormValues,
 }
+
 /** TODO: in v0.47, this data will live directly on a proposal */
 export type { UIProposalMetadata }
 export type { ProposalFormValues } from '@/organisms/proposal-form'

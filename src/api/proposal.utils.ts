@@ -4,15 +4,18 @@ import type {
   ProposalSDKType,
   ProposalSendFormValues,
   ProposalStakeFormValues,
+  ProposalUpdateGroupFormValues,
   UIProposal,
   Vote,
   VoteSDKType,
 } from 'types'
 import { toDate } from 'util/date'
 import { throwError } from 'util/errors'
+import { clearEmptyStr } from 'util/helpers'
 import { getProposalMetadata } from 'util/validation'
 
 import { msgSend } from './bank.messages'
+import { msgUpdateDecisionPolicy } from './policy.messages'
 import {
   msgStakingClaim,
   msgStakingDelegate,
@@ -25,6 +28,7 @@ import {
   isRedelegateValues,
   isUndelegateValues,
 } from './staking.utils'
+import { isDecisionPolicyValues } from './update-group.utils'
 
 type ProposalData = {
   denom: string
@@ -43,6 +47,9 @@ export function proposalActionsToMsgs(
     }
     if (isStakeProposal(values)) {
       return stakeValuesToMsg(values, data) as unknown as Any // TODO
+    }
+    if (isGroupUpdateProposal(values)) {
+      return groupUpdateValuesToMsg(values, data) as unknown as Any // TODO
     }
     throwError(`Unknown proposal action: ${JSON.stringify(values, null, 2)}`)
   })
@@ -160,4 +167,27 @@ function stakeValuesToMsg(values: ProposalStakeFormValues, data: ProposalData) {
     })
   }
   throwError('Unknown stake type')
+}
+
+function isGroupUpdateProposal(
+  values: ProposalAction['values'],
+): values is ProposalUpdateGroupFormValues {
+  return 'groupUpdateType' in values
+}
+
+function groupUpdateValuesToMsg(
+  values: ProposalUpdateGroupFormValues,
+  data: ProposalData,
+) {
+  if (isDecisionPolicyValues(values)) {
+    return msgUpdateDecisionPolicy({
+      admin: data.groupPolicyAddress,
+      policyAddress: data.groupPolicyAddress,
+      percentage: clearEmptyStr(values.percentage),
+      threshold: clearEmptyStr(values.threshold),
+      policyType: values.policyType,
+      votingWindow: values.votingWindow,
+    })
+  }
+  throwError('Unknown group update type')
 }

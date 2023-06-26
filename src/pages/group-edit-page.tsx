@@ -55,21 +55,20 @@ export default function GroupEdit() {
   }
 
   const decisionPolicy = policy?.decisionPolicy
-  const initialPolicyValues: GroupPolicyFormValues =
-    policy && decisionPolicy
-      ? {
-          threshold: isThresholdPolicy(decisionPolicy)
-            ? parseInt(decisionPolicy.threshold)
-            : undefined,
-          votingWindow: parseInt(
-            decisionPolicy?.windows?.votingPeriod || DEFAULT_VOTING_WINDOW.toString(),
-          ), //parseFloat(decisionPolicy.windows.voting_period),
-          percentage: isPercentagePolicy(policy?.decisionPolicy)
-            ? percentStrToNum(policy?.decisionPolicy.percentage)
-            : undefined,
-          policyType: isThresholdPolicy(decisionPolicy) ? 'threshold' : 'percentage',
-        }
-      : defaultGroupPolicyFormValues
+  const initialPolicyValues: GroupPolicyFormValues = decisionPolicy
+    ? {
+        threshold: isThresholdPolicy(decisionPolicy)
+          ? parseInt(decisionPolicy.threshold)
+          : undefined,
+        votingWindow: parseInt(
+          decisionPolicy?.windows?.votingPeriod || DEFAULT_VOTING_WINDOW.toString(),
+        ), //parseFloat(decisionPolicy.windows.voting_period),
+        percentage: isPercentagePolicy(decisionPolicy)
+          ? percentStrToNum(decisionPolicy.percentage)
+          : undefined,
+        policyType: isThresholdPolicy(decisionPolicy) ? 'threshold' : 'percentage',
+      }
+    : defaultGroupPolicyFormValues
 
   const initialValues = {
     // combined for ease of iterating over

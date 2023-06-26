@@ -3,7 +3,11 @@ import { useSnapshot } from 'valtio'
 
 import type { ProposalAction, ProposalFormValues } from 'types'
 import { logError, throwError } from 'util/errors'
-import { defaultDelegateFormValues, defaultSendFormValues } from 'util/form.defaults'
+import {
+  defaultDecisionPolicyFormValues,
+  defaultDelegateFormValues,
+  defaultSendFormValues,
+} from 'util/form.defaults'
 import { uuid } from 'util/helpers'
 
 import { createProposal } from 'api/proposal.actions'
@@ -48,6 +52,12 @@ export default function ProposalCreate() {
         return { id, type: 'send', values: defaultSendFormValues }
       case 'stake':
         return { id, type: 'stake', values: defaultDelegateFormValues }
+      case 'update-group':
+        return {
+          id,
+          type: 'update-group',
+          values: state?.newUpdateGroupProposalValues || defaultDecisionPolicyFormValues,
+        }
       default:
       case 'text':
         return null
