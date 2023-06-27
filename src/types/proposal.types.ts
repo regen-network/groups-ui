@@ -2,7 +2,6 @@ import type { Proposal } from '@regen-network/api/types/codegen/cosmos/group/v1/
 
 import type { UIProposalMetadata } from 'util/validation'
 
-import { GroupPolicyFormValues } from '@/organisms/group-policy-form-base'
 import type { SingleFormValues } from '@/organisms/send-single-form'
 import type { ClaimFormValues } from '@/organisms/stake-claim-form'
 import type { DelegateFormValues } from '@/organisms/stake-delegate-form'

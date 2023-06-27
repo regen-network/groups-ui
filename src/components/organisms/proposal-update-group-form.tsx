@@ -1,17 +1,12 @@
 import { useState } from 'react'
 
 import type { ProposalUpdateGroupFormValues, ProposalUpdateGroupType } from 'types'
-import { UICoin } from 'types'
 import { SPACING } from 'util/constants'
 
 import { FormControl, FormLabel, RadioGroup, Stack } from '@/atoms'
 import { FormCard } from '@/molecules/form-card'
 import { RadioGroupOptions } from '@/molecules/radio-group-options'
 
-import { ClaimForm, type ClaimFormValues } from './stake-claim-form'
-import { DelegateForm, type DelegateFormValues } from './stake-delegate-form'
-import { RedelegateForm, type RedelegateFormValues } from './stake-redelegate-form'
-import { UndelegateForm, type UndelegateFormValues } from './stake-undelegate-form'
 import {
   DecisionPolicyForm,
   DecisionPolicyFormValues,

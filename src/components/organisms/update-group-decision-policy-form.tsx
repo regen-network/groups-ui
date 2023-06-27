@@ -1,23 +1,10 @@
-import { useSnapshot } from 'valtio'
 import { z } from 'zod'
 
-import { UICoin } from 'types'
-import { valid } from 'util/validation/zod'
-
 import { useZodForm } from 'hooks/use-zod-form'
-import { Chain } from 'store/chain.store'
 
-import { Grid, GridItem } from '@/atoms'
 import { Form } from '@/molecules/form'
-import { AmountField, SelectField } from '@/molecules/form-fields'
-import { DenomField } from '@/molecules/form-fields/denom-field'
-import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 
-import {
-  GroupPolicyFormBase,
-  GroupPolicyFormValues,
-  schema as baseSchema,
-} from './group-policy-form-base'
+import { GroupPolicyFormBase, schema as baseSchema } from './group-policy-form-base'
 
 const schema = baseSchema.extend({
   updateGroupType: z.literal('decision-policy'),

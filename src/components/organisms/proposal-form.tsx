@@ -11,7 +11,6 @@ import type {
 import { defaultSendFormValues, defaultStakeFormValues } from 'util/form.defaults'
 import { uuid } from 'util/helpers'
 
-import { isDecisionPolicyValues } from 'api/update-group.utils'
 import { useDisclosure } from 'hooks/chakra-hooks'
 
 import { AnimatePresence, FadeIn, motion } from '@/animations'

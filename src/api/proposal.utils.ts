@@ -15,10 +15,7 @@ import { clearEmptyStr } from 'util/helpers'
 import { getProposalMetadata } from 'util/validation'
 
 import { msgSend } from './bank.messages'
-import {
-  msgUpdateDecisionPolicy,
-  msgUpdateDecisionPolicyProposal,
-} from './policy.messages'
+import { msgUpdateDecisionPolicyProposal } from './policy.messages'
 import {
   msgStakingClaim,
   msgStakingDelegate,
