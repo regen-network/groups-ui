@@ -39,6 +39,8 @@ export default function GroupEdit() {
     return null
   }
 
+  const policyAsGroupAdmin = policy && policy.address === group.admin
+  const policyAsPolicyAdmin = policy && policy.address === policy.admin
   const initialGroupValues: GroupFormValues = {
     admin: group.admin,
     members:
@@ -48,7 +50,7 @@ export default function GroupEdit() {
         metadata: member?.metadata,
       })) || [],
     name: group.metadata.name,
-    policyAsAdmin: policy && policy.address === group.admin ? 'true' : 'false',
+    policyAsAdmin: policyAsGroupAdmin ? 'true' : 'false',
     description: group.metadata.description,
     forumLink: group.metadata.forumLink,
     otherMetadata: group.metadata.other,
@@ -162,7 +164,7 @@ export default function GroupEdit() {
       initialGroupFormValues={initialGroupValues}
       initialPolicyFormValues={initialPolicyValues}
       text={{
-        submitBtn: 'Redeploy',
+        submitBtn: policyAsPolicyAdmin ? 'Create Proposal' : 'Redeploy',
         finished: 'You have successfully edited your group.',
       }}
       steps={[
@@ -171,6 +173,8 @@ export default function GroupEdit() {
         'Finished editing',
       ]}
       submit={handleSave}
+      policyAsGroupAdmin={policyAsGroupAdmin}
+      policyAsPolicyAdmin={policyAsPolicyAdmin}
     />
   )
 }

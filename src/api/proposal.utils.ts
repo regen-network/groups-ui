@@ -15,7 +15,10 @@ import { clearEmptyStr } from 'util/helpers'
 import { getProposalMetadata } from 'util/validation'
 
 import { msgSend } from './bank.messages'
-import { msgUpdateDecisionPolicy } from './policy.messages'
+import {
+  msgUpdateDecisionPolicy,
+  msgUpdateDecisionPolicyProposal,
+} from './policy.messages'
 import {
   msgStakingClaim,
   msgStakingDelegate,
@@ -172,7 +175,7 @@ function stakeValuesToMsg(values: ProposalStakeFormValues, data: ProposalData) {
 function isGroupUpdateProposal(
   values: ProposalAction['values'],
 ): values is ProposalUpdateGroupFormValues {
-  return 'groupUpdateType' in values
+  return 'updateGroupType' in values
 }
 
 function groupUpdateValuesToMsg(
@@ -180,7 +183,7 @@ function groupUpdateValuesToMsg(
   data: ProposalData,
 ) {
   if (isDecisionPolicyValues(values)) {
-    return msgUpdateDecisionPolicy({
+    return msgUpdateDecisionPolicyProposal({
       admin: data.groupPolicyAddress,
       policyAddress: data.groupPolicyAddress,
       percentage: clearEmptyStr(values.percentage),

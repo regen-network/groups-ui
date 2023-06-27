@@ -5,11 +5,13 @@ import type {
   ProposalAction,
   ProposalSendFormValues,
   ProposalStakeFormValues,
+  ProposalUpdateGroupFormValues,
   UICoin,
 } from 'types'
 import { defaultSendFormValues, defaultStakeFormValues } from 'util/form.defaults'
 import { uuid } from 'util/helpers'
 
+import { isDecisionPolicyValues } from 'api/update-group.utils'
 import { useDisclosure } from 'hooks/chakra-hooks'
 
 import { AnimatePresence, FadeIn, motion } from '@/animations'
@@ -20,6 +22,8 @@ import { WithRemoveButton } from '@/molecules/with-remove-button'
 import { ProposalActionDrawer } from '@/organisms/proposal-action-drawer'
 import { ProposalSendForm } from '@/organisms/proposal-send-form'
 import { ProposalStakeForm } from '@/organisms/proposal-stake-form'
+
+import { ProposalUpdateGroupForm } from './proposal-update-group-form'
 
 export type ProposalFormValues = {
   title: string
@@ -145,6 +149,16 @@ export const ProposalForm = (props: {
             onSubmit={(data) => updateActionValues(action.id, data)}
           />
         )
+      case 'update-group':
+        return (
+          <ProposalUpdateGroupForm
+            defaultValues={action.values as ProposalUpdateGroupFormValues}
+            formId={action.id}
+            onError={() => handleFormError(action.id)}
+            onSubmit={(data) => updateActionValues(action.id, data)}
+          />
+        )
+        return null
       // TODO add other message types
       default:
         return null
