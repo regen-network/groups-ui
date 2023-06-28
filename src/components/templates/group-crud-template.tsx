@@ -65,9 +65,31 @@ export function GroupCRUDTemplate({
 
   function handleGroupSubmit(values: GroupFormValues) {
     if (policyAsGroupAdmin && newGroupId) {
-      // TODO prefill proposal with group values that changed
+      const newUpdateGroupProposalValues = []
+      for (const _prop in values) {
+        const prop = _prop as keyof GroupFormValues
+        if (initialGroupFormValues[prop] !== values[prop]) {
+          if (['name', 'description', 'forumLink', 'otherMetadata'].includes(prop)) {
+            const { name, description, forumLink, otherMetadata } = values
+            newUpdateGroupProposalValues.push({
+              name,
+              description,
+              forumLink,
+              otherMetadata,
+              updateGroupType: 'metadata',
+            })
+          }
+          if (prop === 'members') {
+            newUpdateGroupProposalValues.push({
+              members: values.members,
+              updateGroupType: 'members',
+            })
+          }
+        }
+      }
+
       navigate(ROUTE_PATH.proposalCreate(newGroupId), {
-        state: { newProposalType: 'update-group' },
+        state: { newProposalType: 'update-group', newUpdateGroupProposalValues },
       })
     } else {
       setGroupValues(values)

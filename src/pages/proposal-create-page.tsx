@@ -99,7 +99,7 @@ export default function ProposalCreate() {
     title,
     summary,
   }: ProposalFormValues): Promise<string | null> {
-    if (!groupPolicy) {
+    if (!groupPolicy || !group) {
       return null
     }
     try {
@@ -115,12 +115,14 @@ export default function ProposalCreate() {
         groupPolicyAddress: groupPolicy.address,
         metadata: { title, summary },
         proposers: [account.address],
+        groupId: group.id.toString(),
       })
       if (!data?.proposalId)
         throwError('Proposal transaction completed, but no proposal ID found')
       toastSuccess(data.transactionHash)
       return data.proposalId
     } catch (error) {
+      console.log(error)
       logError(error)
       toastErr(error, 'Proposal could not be created:')
       return null

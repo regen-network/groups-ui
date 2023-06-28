@@ -65,6 +65,7 @@ export async function createProposal({
   proposers,
   summary,
   title,
+  groupId,
 }: {
   actions: ProposalAction[]
   denom: string
@@ -73,13 +74,16 @@ export async function createProposal({
   proposers: string[]
   summary: string
   title: string
+  groupId: string
 }) {
   const messages = proposalActionsToMsgs(actions, {
     denom,
     summary,
     title,
     groupPolicyAddress,
+    groupId,
   })
+  console.log(messages)
   const submitMsg = msgSubmitProposal({
     groupPolicyAddress,
     messages,

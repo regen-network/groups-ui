@@ -1,4 +1,6 @@
-import { GroupMemberSDKType, UIGroupMember } from 'types'
+import Long from 'long'
+
+import { GroupMemberSDKType, MemberFormValues, UIGroupMember } from 'types'
 import { toDate } from 'util/date'
 
 const isGroupMember = (m: UIGroupMember | null): m is UIGroupMember => !!m
@@ -17,5 +19,23 @@ function toUIGroupMember({ group_id, member }: GroupMemberSDKType): UIGroupMembe
       metadata: member.metadata,
       weight: member.weight,
     },
+  }
+}
+
+export type MembersMsgParams = {
+  admin: string
+  groupId: string | Long
+  members: MemberFormValues[]
+}
+
+export function toMsgValue({ admin, groupId, members }: MembersMsgParams) {
+  return {
+    admin,
+    groupId: groupId instanceof Long ? groupId : Long.fromString(groupId),
+    memberUpdates: members.map(({ address, metadata, weight }) => ({
+      address,
+      metadata: JSON.stringify(metadata) || '',
+      weight: weight.toString(),
+    })),
   }
 }

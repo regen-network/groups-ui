@@ -15,6 +15,7 @@ import { clearEmptyStr } from 'util/helpers'
 import { getProposalMetadata } from 'util/validation'
 
 import { msgSend } from './bank.messages'
+import { msgUpdateGroupMembersProposal } from './member.messages'
 import { msgUpdateDecisionPolicyProposal } from './policy.messages'
 import {
   msgStakingClaim,
@@ -28,13 +29,14 @@ import {
   isRedelegateValues,
   isUndelegateValues,
 } from './staking.utils'
-import { isDecisionPolicyValues } from './update-group.utils'
+import { isDecisionPolicyValues, isMembersValues } from './update-group.utils'
 
 type ProposalData = {
   denom: string
   groupPolicyAddress: string
   title: string
   summary: string
+  groupId: string
 }
 
 export function proposalActionsToMsgs(
@@ -187,6 +189,13 @@ function groupUpdateValuesToMsg(
       threshold: clearEmptyStr(values.threshold),
       policyType: values.policyType,
       votingWindow: values.votingWindow,
+    })
+  }
+  if (isMembersValues(values)) {
+    return msgUpdateGroupMembersProposal({
+      admin: data.groupPolicyAddress,
+      groupId: data.groupId,
+      members: values.members,
     })
   }
   throwError('Unknown group update type')

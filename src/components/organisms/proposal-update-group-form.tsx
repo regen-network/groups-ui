@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import type { ProposalUpdateGroupFormValues, ProposalUpdateGroupType } from 'types'
 import { SPACING } from 'util/constants'
@@ -30,8 +30,10 @@ export const ProposalUpdateGroupForm = ({
   onError: () => void
   onSubmit: (values: ProposalUpdateGroupFormValues) => void
 }) => {
-  const [updateGroupType, setUpdateGroupType] =
-    useState<ProposalUpdateGroupType>('decision-policy')
+  const [updateGroupType, setUpdateGroupType] = useState<ProposalUpdateGroupType>(
+    defaultValues.updateGroupType,
+  )
+
   function renderForm() {
     const baseProps = {
       formId,
