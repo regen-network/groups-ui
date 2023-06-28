@@ -90,13 +90,15 @@ export function GroupCRUDTemplate({
       navigate(ROUTE_PATH.proposalCreate(newGroupId), {
         state: {
           newProposalType: 'update-group',
-          newUpdateGroupProposalValues: {
-            votingWindow: policyValues.votingWindow,
-            policyType: policyValues.policyType,
-            threshold: policyValues.threshold,
-            percentage: policyValues.percentage,
-            updateGroupType: 'decision-policy',
-          },
+          newUpdateGroupProposalValues: [
+            {
+              votingWindow: policyValues.votingWindow,
+              policyType: policyValues.policyType,
+              threshold: policyValues.threshold,
+              percentage: policyValues.percentage,
+              updateGroupType: 'decision-policy',
+            },
+          ],
         },
       })
     } else {

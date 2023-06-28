@@ -67,22 +67,27 @@ export default function ProposalCreate() {
       } as MembersFormValues)
     : undefined
 
-  function getInitialFormAction(): ProposalAction | null {
+  function getInitialFormActions(): ProposalAction[] | null {
     const id = uuid()
     switch (state?.newProposalType) {
       case 'send':
-        return { id, type: 'send', values: defaultSendFormValues }
+        return [{ id, type: 'send', values: defaultSendFormValues }]
       case 'stake':
-        return { id, type: 'stake', values: defaultDelegateFormValues }
+        return [{ id, type: 'stake', values: defaultDelegateFormValues }]
       case 'update-group':
-        return {
-          id,
-          type: 'update-group',
-          values:
-            state?.newUpdateGroupProposalValues ||
-            updateGroupFormValues ||
-            defaultDecisionPolicyFormValues,
-        }
+        return (
+          state?.newUpdateGroupProposalValues?.map((values) => ({
+            id,
+            type: 'update-group',
+            values,
+          })) ?? [
+            {
+              id,
+              type: 'update-group',
+              values: updateGroupFormValues || defaultDecisionPolicyFormValues,
+            },
+          ]
+        )
       default:
       case 'text':
         return null
@@ -122,8 +127,6 @@ export default function ProposalCreate() {
     }
   }
 
-  const initialAction = getInitialFormAction()
-
   return (
     <ProposalCRUDTemplate
       policyBalances={policyBalances || []}
@@ -131,7 +134,7 @@ export default function ProposalCreate() {
       groupName={group.metadata.name}
       groupPolicyAddress={groupPolicy.address}
       initialProposalFormValues={{
-        actions: initialAction ? [initialAction] : [],
+        actions: getInitialFormActions() ?? [],
         title: `Proposal ${proposals ? proposals.length + 1 : 'Title'}`,
         summary: 'Add a description or a text proposal here',
       }}

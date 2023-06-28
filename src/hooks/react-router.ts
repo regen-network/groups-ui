@@ -5,7 +5,7 @@ import type { ProposalAction, ProposalUpdateGroupFormValues } from 'types'
 interface AppLocation extends Location {
   state: {
     newProposalType?: ProposalAction['type']
-    newUpdateGroupProposalValues?: ProposalUpdateGroupFormValues
+    newUpdateGroupProposalValues?: ProposalUpdateGroupFormValues[]
   }
 }
 

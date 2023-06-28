@@ -1,16 +1,14 @@
 import { redirect, useParams } from 'react-router-dom'
 
-import type { GroupPolicyFormValues, GroupWithPolicyFormValues } from 'types'
+import type { GroupWithPolicyFormValues } from 'types'
 import { logError, throwError } from 'util/errors'
-import { DEFAULT_VOTING_WINDOW, defaultGroupPolicyFormValues } from 'util/form.defaults'
-import { clearEmptyStr, percentStrToNum } from 'util/helpers'
+import { clearEmptyStr } from 'util/helpers'
 import { getGroupPolicyValues, getGroupValues } from 'util/initialValues'
 import { getPolicyAsGroupAdmin, getPolicyAsPolicyAdmin } from 'util/policyAdmin'
 
 import { msgUpdateGroupMetadata } from 'api/group.messages'
 import { msgUpdateGroupMembers } from 'api/member.messages'
 import { msgCreateGroupPolicy, msgUpdateDecisionPolicy } from 'api/policy.messages'
-import { isPercentagePolicy, isThresholdPolicy } from 'api/policy.utils'
 import { useGroup, useGroupMembers, useGroupPolicies } from 'hooks/use-query'
 import { useTxToasts } from 'hooks/use-toasts'
 import { signAndBroadcast, Wallet } from 'store/wallet.store'
