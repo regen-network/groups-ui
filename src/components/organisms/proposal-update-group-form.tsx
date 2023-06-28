@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import type { ProposalUpdateGroupFormValues, ProposalUpdateGroupType } from 'types'
 import { SPACING } from 'util/constants'
