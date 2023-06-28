@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { useZodForm } from 'hooks/use-zod-form'
 
 import { Form } from '@/molecules/form'
+import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 import { GroupPolicyFields } from '@/molecules/group-policy-fields'
 import { schema as baseSchema } from '@/organisms/group-policy-form'
 
@@ -51,7 +52,8 @@ export const DecisionPolicyForm = ({
 
   return (
     <Form id={formId} form={form} onSubmit={handleSubmit} onError={onError}>
-      <GroupPolicyFields formId={formId} />
+      <GroupPolicyFields />
+      <FormSubmitHiddenButton id={formId} />
     </Form>
   )
 }

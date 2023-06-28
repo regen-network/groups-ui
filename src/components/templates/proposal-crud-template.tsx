@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import type { UICoin } from 'types'
+import type { ProposalUpdateGroupFormValues, UICoin } from 'types'
 import { SPACING } from 'util/constants'
 
 import { ROUTE_PATH } from 'routes'
@@ -31,6 +31,9 @@ export const ProposalCRUDTemplate = (props: {
   policyBalances: UICoin[]
   steps: string[]
   submit: (values: ProposalFormValues) => Promise<string | null>
+  policyAsGroupAdmin?: boolean
+  policyAsPolicyAdmin?: boolean
+  updateGroupFormValues?: ProposalUpdateGroupFormValues
 }) => {
   const { activeStep, nextStep, prevStep } = useSteps({
     initialStep: 0,
@@ -77,6 +80,9 @@ export const ProposalCRUDTemplate = (props: {
               defaultValues={proposalValues}
               groupName={props.groupName}
               onSubmit={handleSave}
+              policyAsGroupAdmin={props.policyAsGroupAdmin}
+              policyAsPolicyAdmin={props.policyAsPolicyAdmin}
+              updateGroupFormValues={props.updateGroupFormValues}
             />
           </HorizontalSlide>
         )

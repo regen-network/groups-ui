@@ -11,6 +11,7 @@ import {
   DecisionPolicyForm,
   DecisionPolicyFormValues,
 } from './update-group-decision-policy-form'
+import { MembersForm, MembersFormValues } from './update-group-members-form'
 
 const updateGroupOptions: { label: string; value: ProposalUpdateGroupType }[] = [
   { label: 'Update group decision policy', value: 'decision-policy' },
@@ -48,6 +49,18 @@ export const ProposalUpdateGroupForm = ({
                 ...defaultValues,
                 updateGroupType: 'decision-policy',
               } as DecisionPolicyFormValues
+            }
+          />
+        )
+      case 'members':
+        return (
+          <MembersForm
+            {...baseProps}
+            defaultValues={
+              {
+                ...defaultValues,
+                updateGroupType: 'members',
+              } as MembersFormValues
             }
           />
         )

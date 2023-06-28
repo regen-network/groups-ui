@@ -9,12 +9,15 @@ import {
   defaultSendFormValues,
 } from 'util/form.defaults'
 import { uuid } from 'util/helpers'
+import { getGroupPolicyValues, getGroupValues } from 'util/initialValues'
+import { getPolicyAsGroupAdmin, getPolicyAsPolicyAdmin } from 'util/policyAdmin'
 
 import { createProposal } from 'api/proposal.actions'
 import { useAppLocation } from 'hooks/react-router'
 import {
   useBalances,
   useGroup,
+  useGroupMembers,
   useGroupPolicies,
   useGroupProposals,
 } from 'hooks/use-query'
@@ -23,6 +26,8 @@ import { Chain } from 'store/chain.store'
 import { Wallet } from 'store/wallet.store'
 
 import { Loading } from '@/molecules/loading'
+import { DecisionPolicyFormValues } from '@/organisms/update-group-decision-policy-form'
+import { MembersFormValues } from '@/organisms/update-group-members-form'
 import { ProposalCRUDTemplate } from '@/templates/proposal-crud-template'
 
 const steps = ['Propose Action', 'Review Proposal', 'Proposal Open']
@@ -34,9 +39,10 @@ export default function ProposalCreate() {
   const { stakeDenom } = useSnapshot(Chain)
   const { account } = useSnapshot(Wallet)
   const { data: group, isLoading: isLoadingGroup } = useGroup(groupId)
+  const { data: members } = useGroupMembers(groupId)
   const { data: groupPolicies } = useGroupPolicies(groupId)
   const { data: proposals, isLoading: isLoadingProposals } = useGroupProposals(groupId)
-  const [groupPolicy] = groupPolicies || []
+  const groupPolicy = groupPolicies?.[0]
   const { data: policyBalances } = useBalances(groupPolicy?.address)
 
   if (isLoadingGroup || isLoadingProposals) return <Loading />
@@ -44,6 +50,22 @@ export default function ProposalCreate() {
     redirect('/')
     return null
   }
+
+  const policyAsGroupAdmin = getPolicyAsGroupAdmin(group, groupPolicy)
+  const policyAsPolicyAdmin = getPolicyAsPolicyAdmin(groupPolicy)
+  const initialGroupValues = getGroupValues(group, members, policyAsGroupAdmin)
+  const initialPolicyValues = getGroupPolicyValues(groupPolicy?.decisionPolicy)
+  const updateGroupFormValues = policyAsPolicyAdmin
+    ? ({
+        ...initialPolicyValues,
+        updateGroupType: 'decision-policy',
+      } as DecisionPolicyFormValues)
+    : policyAsGroupAdmin
+    ? ({
+        members: initialGroupValues.members,
+        updateGroupType: 'members',
+      } as MembersFormValues)
+    : undefined
 
   function getInitialFormAction(): ProposalAction | null {
     const id = uuid()
@@ -56,7 +78,10 @@ export default function ProposalCreate() {
         return {
           id,
           type: 'update-group',
-          values: state?.newUpdateGroupProposalValues || defaultDecisionPolicyFormValues,
+          values:
+            state?.newUpdateGroupProposalValues ||
+            updateGroupFormValues ||
+            defaultDecisionPolicyFormValues,
         }
       default:
       case 'text':
@@ -69,6 +94,9 @@ export default function ProposalCreate() {
     title,
     summary,
   }: ProposalFormValues): Promise<string | null> {
+    if (!groupPolicy) {
+      return null
+    }
     try {
       if (!account?.address) {
         throwError('Error submitting proposal: No group policy found')
@@ -109,6 +137,9 @@ export default function ProposalCreate() {
       }}
       steps={steps}
       submit={handleSubmit}
+      policyAsGroupAdmin={policyAsGroupAdmin}
+      policyAsPolicyAdmin={policyAsPolicyAdmin}
+      updateGroupFormValues={updateGroupFormValues}
     />
   )
 }

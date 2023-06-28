@@ -9,9 +9,9 @@ import { Form } from '@/molecules/form'
 import { FormCard } from '@/molecules/form-card'
 import { InputField, RadioGroupField, TextareaField } from '@/molecules/form-fields'
 import { FormSubmitHiddenButton } from '@/molecules/form-footer'
-import { GroupMemberFields } from '@/molecules/group-members-fields'
+import { GroupMembersFields } from '@/molecules/group-members-fields'
 
-const schema = z.object({
+export const schema = z.object({
   admin: valid.admin,
   name: valid.name,
   policyAsAdmin: valid.boolStr,
@@ -56,7 +56,7 @@ export const GroupForm = ({
         <TextareaField name="description" label="Description" />
         <InputField name="forumLink" label="Link to forum" />
         <TextareaField name="otherMetadata" label="Other metadata" />
-        <GroupMemberFields />
+        <GroupMembersFields />
         <FormSubmitHiddenButton id="group-form" />
       </Form>
     </FormCard>

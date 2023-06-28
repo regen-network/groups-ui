@@ -6,6 +6,7 @@ import { useZodForm } from 'hooks/use-zod-form'
 
 import { Form } from '@/molecules/form'
 import { FormCard } from '@/molecules/form-card'
+import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 
 import { GroupPolicyFields } from '../molecules/group-policy-fields'
 
@@ -55,6 +56,7 @@ export const GroupPolicyForm = ({
     <FormCard>
       <Form form={form} onSubmit={handleSubmit}>
         <GroupPolicyFields />
+        <FormSubmitHiddenButton id="group-policy-form" />
       </Form>
     </FormCard>
   )

@@ -1,7 +1,6 @@
 import { NumberFieldWithSideLabel, RadioGroupField } from '@/molecules/form-fields'
-import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 
-export const GroupPolicyFields = ({ formId }: { formId?: string }) => {
+export const GroupPolicyFields = () => {
   return (
     <>
       <NumberFieldWithSideLabel
@@ -48,7 +47,6 @@ export const GroupPolicyFields = ({ formId }: { formId?: string }) => {
           },
         ]}
       />
-      <FormSubmitHiddenButton id={formId || 'group-policy-form'} />
     </>
   )
 }

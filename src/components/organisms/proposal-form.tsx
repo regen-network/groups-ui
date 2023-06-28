@@ -8,7 +8,11 @@ import type {
   ProposalUpdateGroupFormValues,
   UICoin,
 } from 'types'
-import { defaultSendFormValues, defaultStakeFormValues } from 'util/form.defaults'
+import {
+  defaultDecisionPolicyFormValues,
+  defaultSendFormValues,
+  defaultStakeFormValues,
+} from 'util/form.defaults'
 import { uuid } from 'util/helpers'
 
 import { useDisclosure } from 'hooks/chakra-hooks'
@@ -35,6 +39,9 @@ export const ProposalForm = (props: {
   groupName: string
   policyBalances: UICoin[]
   onSubmit: (values: ProposalFormValues) => void
+  policyAsGroupAdmin?: boolean
+  policyAsPolicyAdmin?: boolean
+  updateGroupFormValues?: ProposalUpdateGroupFormValues
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   // it's normally an antipattern to set initial state based on props, but
@@ -81,6 +88,16 @@ export const ProposalForm = (props: {
         break
       case 'stake':
         setActions([...actions, { id, type: 'stake', values: defaultStakeFormValues }])
+        break
+      case 'update-group':
+        setActions([
+          ...actions,
+          {
+            id,
+            type: 'update-group',
+            values: props.updateGroupFormValues || defaultDecisionPolicyFormValues,
+          },
+        ])
         break
       // TODO add other actions here
       default:
@@ -157,7 +174,6 @@ export const ProposalForm = (props: {
             onSubmit={(data) => updateActionValues(action.id, data)}
           />
         )
-        return null
       // TODO add other message types
       default:
         return null
@@ -221,6 +237,8 @@ export const ProposalForm = (props: {
         isOpen={isOpen}
         onClose={onClose}
         onActionSelect={handleNewAction}
+        policyAsGroupAdmin={props.policyAsGroupAdmin}
+        policyAsPolicyAdmin={props.policyAsPolicyAdmin}
       />
     </>
   )

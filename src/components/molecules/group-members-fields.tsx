@@ -27,7 +27,7 @@ export interface Members {
   members: GroupFormValues['members']
 }
 
-export const GroupMemberFields = () => {
+export const GroupMembersFields = () => {
   const [memberAddr, setMemberAddr] = useState('')
   const form = useFormContext<Members>()
   const {

@@ -2,6 +2,7 @@ import { redirect, useParams } from 'react-router-dom'
 
 import { UIProposal } from 'types'
 import { logError } from 'util/errors'
+import { getPolicyAsGroupAdmin, getPolicyAsPolicyAdmin } from 'util/policyAdmin'
 
 import { executeProposal } from 'api/proposal.actions'
 import { useDerivedProposals } from 'hooks/use-derived-proposals'
@@ -48,6 +49,9 @@ export default function GroupPage() {
     return null
   }
 
+  const policyAsGroupAdmin = getPolicyAsGroupAdmin(group, groupPolicy)
+  const policyAsPolicyAdmin = getPolicyAsPolicyAdmin(groupPolicy)
+
   const handleExecute = async (proposal: UIProposal) => {
     try {
       const { transactionHash } = await executeProposal({ proposalId: proposal.id })
@@ -68,6 +72,8 @@ export default function GroupPage() {
         history: derivedProposals.other,
         submitted: derivedProposals.submitted,
       }}
+      policyAsGroupAdmin={policyAsGroupAdmin}
+      policyAsPolicyAdmin={policyAsPolicyAdmin}
     />
   )
 }

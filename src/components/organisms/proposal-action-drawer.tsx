@@ -1,5 +1,5 @@
 import type { ProposalAction } from 'types'
-import { ENABLED_ACTIONS } from 'util/constants'
+import { getActions } from 'util/actions'
 
 import {
   Drawer,
@@ -19,6 +19,8 @@ type Props = {
   isOpen: DrawerProps['isOpen']
   onClose: DrawerProps['onClose']
   finalFocusRef?: DrawerProps['finalFocusRef']
+  policyAsGroupAdmin?: boolean
+  policyAsPolicyAdmin?: boolean
 }
 
 export const ProposalActionDrawer = ({
@@ -26,6 +28,8 @@ export const ProposalActionDrawer = ({
   finalFocusRef,
   onActionSelect,
   onClose,
+  policyAsGroupAdmin,
+  policyAsPolicyAdmin,
 }: Props) => {
   return (
     <Drawer
@@ -44,7 +48,7 @@ export const ProposalActionDrawer = ({
             Event type
           </Text>
           <Stack spacing={3}>
-            {ENABLED_ACTIONS.map((a, i) => (
+            {getActions(policyAsGroupAdmin, policyAsPolicyAdmin).map((a, i) => (
               <ActionButton
                 key={'action-' + i}
                 icon={a.icon}
