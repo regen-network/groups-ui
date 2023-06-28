@@ -6,12 +6,10 @@ import { useZodForm } from 'hooks/use-zod-form'
 
 import { Form } from '@/molecules/form'
 import { FormCard } from '@/molecules/form-card'
-import { NumberFieldWithSideLabel, RadioGroupField } from '@/molecules/form-fields'
-import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 
-import { GroupPolicyFormBase } from './group-policy-form-base'
+import { GroupPolicyFields } from '../molecules/group-policy-fields'
 
-const schema = z.object({
+export const schema = z.object({
   votingWindow: valid.positiveNumber,
   threshold: valid.positiveNumberOrEmptyStr.optional(),
   percentage: valid.percentOrEmptyStr.optional(),
@@ -56,7 +54,7 @@ export const GroupPolicyForm = ({
   return (
     <FormCard>
       <Form form={form} onSubmit={handleSubmit}>
-        <GroupPolicyFormBase />
+        <GroupPolicyFields />
       </Form>
     </FormCard>
   )

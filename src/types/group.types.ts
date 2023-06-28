@@ -3,7 +3,7 @@ import type { GroupInfo } from '@regen-network/api/types/codegen/cosmos/group/v1
 import { UIGroupMetadata } from 'util/validation'
 
 import type { GroupFormKeys, GroupFormValues } from '@/organisms/group-form'
-import type { GroupPolicyFormValues } from '@/organisms/group-policy-form-base'
+import type { GroupPolicyFormValues } from '@/organisms/group-policy-form'
 
 import type { UIGroupMember } from './member.types'
 

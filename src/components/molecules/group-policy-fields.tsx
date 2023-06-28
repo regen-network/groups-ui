@@ -1,20 +1,7 @@
-import { z } from 'zod'
-
-import { valid } from 'util/validation/zod'
-
 import { NumberFieldWithSideLabel, RadioGroupField } from '@/molecules/form-fields'
 import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 
-export const schema = z.object({
-  votingWindow: valid.positiveNumber,
-  threshold: valid.positiveNumberOrEmptyStr.optional(),
-  percentage: valid.percentOrEmptyStr.optional(),
-  policyType: z.enum(['threshold', 'percentage']),
-})
-
-export type GroupPolicyFormValues = z.infer<typeof schema>
-
-export const GroupPolicyFormBase = ({ formId }: { formId?: string }) => {
+export const GroupPolicyFields = ({ formId }: { formId?: string }) => {
   return (
     <>
       <NumberFieldWithSideLabel

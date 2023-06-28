@@ -3,8 +3,8 @@ import { z } from 'zod'
 import { useZodForm } from 'hooks/use-zod-form'
 
 import { Form } from '@/molecules/form'
-
-import { GroupPolicyFormBase, schema as baseSchema } from './group-policy-form-base'
+import { GroupPolicyFields } from '@/molecules/group-policy-fields'
+import { schema as baseSchema } from '@/organisms/group-policy-form'
 
 const schema = baseSchema.extend({
   updateGroupType: z.literal('decision-policy'),
@@ -51,7 +51,7 @@ export const DecisionPolicyForm = ({
 
   return (
     <Form id={formId} form={form} onSubmit={handleSubmit} onError={onError}>
-      <GroupPolicyFormBase formId={formId} />
+      <GroupPolicyFields formId={formId} />
     </Form>
   )
 }
