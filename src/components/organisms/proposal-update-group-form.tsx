@@ -14,6 +14,7 @@ import { RadioGroupOptions } from '@/molecules/radio-group-options'
 
 import { DecisionPolicyForm } from './update-group-decision-policy-form'
 import { MembersForm } from './update-group-members-form'
+import { MetadataForm } from './update-group-metadata-form'
 
 const updateGroupOptions: { label: string; value: ProposalUpdateGroupType }[] = [
   { label: 'Update group decision policy', value: 'decision-policy' },
@@ -55,6 +56,8 @@ export const ProposalUpdateGroupForm = ({
         return <DecisionPolicyForm {...baseProps} defaultValues={formDefaultValues} />
       case 'members':
         return <MembersForm {...baseProps} defaultValues={formDefaultValues} />
+      case 'metadata':
+        return <MetadataForm {...baseProps} defaultValues={formDefaultValues} />
     }
   }
 
@@ -70,9 +73,15 @@ export const ProposalUpdateGroupForm = ({
       case 'members':
         setFormDefaultValues({ members: initialGroupValues.members, updateGroupType })
         break
-      // case 'metadata':
-      //   setFormDefaultValues({ TODO, updateGroupType })
-      //   break
+      case 'metadata':
+        setFormDefaultValues({
+          name: initialGroupValues.name,
+          description: initialGroupValues.description,
+          forumLink: initialGroupValues.forumLink,
+          otherMetadata: initialGroupValues.otherMetadata,
+          updateGroupType,
+        })
+        break
       default:
         break
     }

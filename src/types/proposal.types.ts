@@ -9,6 +9,7 @@ import type { RedelegateFormValues } from '@/organisms/stake-redelegate-form'
 import type { UndelegateFormValues } from '@/organisms/stake-undelegate-form'
 import { DecisionPolicyFormValues } from '@/organisms/update-group-decision-policy-form'
 import { MembersFormValues } from '@/organisms/update-group-members-form'
+import { MetadataFormValues } from '@/organisms/update-group-metadata-form'
 export type {
   ProposalSDKType,
   ProposalStatus as ProposalStatusType,
@@ -45,7 +46,10 @@ export type ProposalStakeFormValues =
   | UndelegateFormValues
 
 export type ProposalUpdateGroupType = 'decision-policy' | 'members' | 'metadata'
-export type ProposalUpdateGroupFormValues = DecisionPolicyFormValues | MembersFormValues
+export type ProposalUpdateGroupFormValues =
+  | DecisionPolicyFormValues
+  | MembersFormValues
+  | MetadataFormValues
 
 // Re-export for convenience
 export type { SingleFormValues }

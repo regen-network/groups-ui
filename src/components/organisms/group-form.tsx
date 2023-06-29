@@ -7,9 +7,10 @@ import { useZodForm } from 'hooks/use-zod-form'
 
 import { Form } from '@/molecules/form'
 import { FormCard } from '@/molecules/form-card'
-import { InputField, RadioGroupField, TextareaField } from '@/molecules/form-fields'
+import { RadioGroupField } from '@/molecules/form-fields'
 import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 import { GroupMembersFields } from '@/molecules/group-members-fields'
+import { GroupMetadataFields } from '@/molecules/group-metadata-fields'
 
 export const schema = z.object({
   admin: valid.admin,
@@ -52,10 +53,7 @@ export const GroupForm = ({
             },
           ]}
         />
-        <InputField required name="name" label="Group name" />
-        <TextareaField name="description" label="Description" />
-        <InputField name="forumLink" label="Link to forum" />
-        <TextareaField name="otherMetadata" label="Other metadata" />
+        <GroupMetadataFields />
         <GroupMembersFields />
         <FormSubmitHiddenButton id="group-form" />
       </Form>
