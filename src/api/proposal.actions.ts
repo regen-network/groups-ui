@@ -83,7 +83,6 @@ export async function createProposal({
     groupPolicyAddress,
     groupId,
   })
-  console.log(messages)
   const submitMsg = msgSubmitProposal({
     groupPolicyAddress,
     messages,
@@ -92,7 +91,6 @@ export async function createProposal({
     title,
     metadata: JSON.stringify(metadata),
   })
-  console.log(submitMsg)
   const data = await signAndBroadcast([submitMsg])
   if (!data) throwError(txError)
   let proposalId: string | undefined

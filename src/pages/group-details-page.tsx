@@ -1,6 +1,7 @@
 import { redirect, useParams } from 'react-router-dom'
 
 import { logError } from 'util/errors'
+import { getPolicyAsGroupAdmin } from 'util/policyAdmin'
 
 import { msgUpdateGroupMembers } from 'api/member.messages'
 import { useGroup, useGroupMembers, useGroupPolicies } from 'hooks/use-query'
@@ -18,7 +19,6 @@ export default function GroupDetailsPage() {
   const { data: policies, isLoading: loadingPolicies } = useGroupPolicies(groupId)
   const { toastSuccess, toastErr } = useTxToasts()
   const [policy] = policies ?? []
-  const policyIsAdmin = policy && policy.admin === policy.address
 
   if (loadingGroup || loadingPolicies) return <Loading />
   if (!group || !groupId) {
@@ -26,6 +26,8 @@ export default function GroupDetailsPage() {
     redirect('/')
     return null
   }
+
+  const policyAsGroupAdmin = getPolicyAsGroupAdmin(group, policy)
 
   const handleUpdateMembers: GroupMembersTableProps['onSave'] = async (values) => {
     const msg = msgUpdateGroupMembers({
@@ -47,13 +49,14 @@ export default function GroupDetailsPage() {
 
   return (
     <GroupDetailsTemplate
-      admin={policyIsAdmin ? 'Group Policy' : group?.admin}
+      admin={policyAsGroupAdmin ? 'Group Policy' : group?.admin}
       description={group.metadata.description}
       id={groupId}
       members={members || []}
       name={group.metadata.name}
       onMembersSave={handleUpdateMembers}
       policies={policies || []}
+      policyAsGroupAdmin={policyAsGroupAdmin}
     />
   )
 }

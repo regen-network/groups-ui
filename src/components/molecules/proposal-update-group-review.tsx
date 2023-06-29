@@ -7,7 +7,7 @@ import { isDecisionPolicyValues, isMembersValues } from 'api/update-group.utils'
 
 import { FormCard } from './form-card'
 import { ReviewItem } from './review-item'
-import { Truncate } from './truncate'
+// import { Truncate } from './truncate'
 
 const titlesMap = {
   'decision-policy': 'Update group decision policy',
@@ -36,8 +36,8 @@ export const UpdateGroupReview = ({
             <Table>
               <Thead>
                 <Tr>
-                  <Th>Accounts</Th>
-                  <Th>Voting weights</Th>
+                  <Th>Address</Th>
+                  <Th>Voting Weight</Th>
                 </Tr>
               </Thead>
               <Tbody fontSize={14}>

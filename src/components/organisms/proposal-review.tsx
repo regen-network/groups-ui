@@ -16,7 +16,6 @@ import { SendReview } from '@/molecules/proposal-send-review'
 import { StakeReview } from '@/molecules/proposal-stake-review'
 import { UpdateGroupReview } from '@/molecules/proposal-update-group-review'
 import { ReviewItem } from '@/molecules/review-item'
-import { Truncate } from '@/molecules/truncate'
 
 export const ProposalReview = (props: {
   values: ProposalFormValues
