@@ -53,11 +53,29 @@ export const ProposalUpdateGroupForm = ({
     switch (formDefaultValues.updateGroupType) {
       case 'decision-policy':
       default:
-        return <DecisionPolicyForm {...baseProps} defaultValues={formDefaultValues} />
+        return (
+          <DecisionPolicyForm
+            {...baseProps}
+            defaultValues={formDefaultValues}
+            initialPolicyValues={initialPolicyValues}
+          />
+        )
       case 'members':
-        return <MembersForm {...baseProps} defaultValues={formDefaultValues} />
+        return (
+          <MembersForm
+            {...baseProps}
+            defaultValues={formDefaultValues}
+            initialGroupValues={initialGroupValues}
+          />
+        )
       case 'metadata':
-        return <MetadataForm {...baseProps} defaultValues={formDefaultValues} />
+        return (
+          <MetadataForm
+            {...baseProps}
+            defaultValues={formDefaultValues}
+            initialGroupValues={initialGroupValues}
+          />
+        )
     }
   }
 

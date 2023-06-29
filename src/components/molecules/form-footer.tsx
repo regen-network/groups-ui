@@ -7,7 +7,7 @@ import { AnimatePresence, FadeIn } from '@/animations'
 import { Box, Button, Container, HStack, IconButton } from '@/atoms'
 import { QuestionTooltip } from '@/atoms/question-tooltip'
 
-import { BackIcon, ForwardIcon, QuestionOutlineIcon } from 'assets/tsx'
+import { BackIcon, ForwardIcon } from 'assets/tsx'
 
 type FormFooterState = {
   btnText?: string

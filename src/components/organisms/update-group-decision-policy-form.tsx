@@ -5,7 +5,10 @@ import { useZodForm } from 'hooks/use-zod-form'
 import { Form } from '@/molecules/form'
 import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 import { GroupPolicyFields } from '@/molecules/group-policy-fields'
-import { schema as baseSchema } from '@/organisms/group-policy-form'
+import {
+  GroupPolicyFormValues,
+  schema as baseSchema,
+} from '@/organisms/group-policy-form'
 
 const schema = baseSchema.extend({
   updateGroupType: z.literal('decision-policy'),
@@ -18,11 +21,13 @@ export const DecisionPolicyForm = ({
   formId,
   onSubmit,
   onError,
+  initialPolicyValues,
 }: {
   defaultValues: DecisionPolicyFormValues
   formId: string
   onSubmit: (data: DecisionPolicyFormValues) => void
   onError: () => void
+  initialPolicyValues: GroupPolicyFormValues
 }) => {
   const form = useZodForm({
     defaultValues,
@@ -51,7 +56,20 @@ export const DecisionPolicyForm = ({
   }
 
   return (
-    <Form id={formId} form={form} onSubmit={handleSubmit} onError={onError}>
+    <Form
+      id={formId}
+      form={form}
+      onSubmit={(data) => {
+        if (
+          data.policyType !== initialPolicyValues.policyType ||
+          data.threshold !== initialPolicyValues.threshold ||
+          data.percentage !== initialPolicyValues.percentage ||
+          data.votingWindow !== initialPolicyValues.votingWindow
+        )
+          handleSubmit(data)
+      }}
+      onError={onError}
+    >
       <GroupPolicyFields />
       <FormSubmitHiddenButton id={formId} />
     </Form>

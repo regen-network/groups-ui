@@ -5,7 +5,7 @@ import { useZodForm } from 'hooks/use-zod-form'
 import { Form } from '@/molecules/form'
 import { FormSubmitHiddenButton } from '@/molecules/form-footer'
 import { GroupMetadataFields } from '@/molecules/group-metadata-fields'
-import { schema as baseSchema } from '@/organisms/group-form'
+import { GroupFormValues, schema as baseSchema } from '@/organisms/group-form'
 
 const schema = baseSchema
   .pick({ name: true, description: true, forumLink: true, otherMetadata: true })
@@ -20,11 +20,13 @@ export const MetadataForm = ({
   formId,
   onSubmit,
   onError,
+  initialGroupValues,
 }: {
   defaultValues: MetadataFormValues
   formId: string
   onSubmit: (data: MetadataFormValues) => void
   onError: () => void
+  initialGroupValues: GroupFormValues
 }) => {
   const form = useZodForm({
     defaultValues,
@@ -32,7 +34,20 @@ export const MetadataForm = ({
   })
 
   return (
-    <Form id={formId} form={form} onSubmit={onSubmit} onError={onError}>
+    <Form
+      id={formId}
+      form={form}
+      onSubmit={(data) => {
+        if (
+          data.name !== initialGroupValues.name ||
+          data.description !== initialGroupValues.description ||
+          data.forumLink !== initialGroupValues.forumLink ||
+          data.otherMetadata !== initialGroupValues.otherMetadata
+        )
+          onSubmit(data)
+      }}
+      onError={onError}
+    >
       <GroupMetadataFields />
       <FormSubmitHiddenButton id={formId} />
     </Form>
