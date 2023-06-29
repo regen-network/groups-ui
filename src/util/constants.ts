@@ -32,9 +32,12 @@ export const ENABLED_ACTIONS: Array<Action> = [
   },
 ]
 
+export const GROUP_WITH_POLICY_ADMIN_TOOLTIP =
+  'This group is administered by a group address, so editing the group requires a proposal'
+
 export const UPDATE_GROUP_ACTION: Action = {
   type: 'update-group',
   label: 'Update group',
-  tooltip: 'TODO',
+  tooltip: GROUP_WITH_POLICY_ADMIN_TOOLTIP,
   icon: UpdateGroupIcon,
 }

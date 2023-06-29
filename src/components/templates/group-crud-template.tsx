@@ -7,7 +7,7 @@ import type {
   GroupPolicyFormValues,
   GroupWithPolicyFormValues,
 } from 'types'
-import { SPACING } from 'util/constants'
+import { GROUP_WITH_POLICY_ADMIN_TOOLTIP, SPACING } from 'util/constants'
 
 import { ROUTE_PATH } from 'routes'
 import { useSteps } from 'hooks/chakra-hooks'
@@ -191,7 +191,15 @@ export function GroupCRUDTemplate({
         </Heading>
         <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
       </PageContainer>
-      <FormFooter isSubmitting={submitting} />
+      <FormFooter
+        isSubmitting={submitting}
+        tooltip={
+          (activeStep === 0 && policyAsGroupAdmin) ||
+          (activeStep === 1 && policyAsPolicyAdmin)
+            ? GROUP_WITH_POLICY_ADMIN_TOOLTIP
+            : undefined
+        }
+      />
     </Flex>
   )
 }

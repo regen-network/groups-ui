@@ -1,5 +1,3 @@
-import { describe } from 'vitest'
-
 import type {
   Any,
   ProposalAction,
