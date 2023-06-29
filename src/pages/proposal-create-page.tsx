@@ -145,6 +145,8 @@ export default function ProposalCreate() {
       policyAsGroupAdmin={policyAsGroupAdmin}
       policyAsPolicyAdmin={policyAsPolicyAdmin}
       updateGroupFormValues={updateGroupFormValues}
+      initialPolicyValues={initialPolicyValues}
+      initialGroupValues={initialGroupValues}
     />
   )
 }

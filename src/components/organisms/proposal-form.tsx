@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from 'react'
 import { omit } from 'remeda'
 
 import type {
+  GroupFormValues,
+  GroupPolicyFormValues,
   ProposalAction,
   ProposalSendFormValues,
   ProposalStakeFormValues,
@@ -42,6 +44,8 @@ export const ProposalForm = (props: {
   policyAsGroupAdmin?: boolean
   policyAsPolicyAdmin?: boolean
   updateGroupFormValues?: ProposalUpdateGroupFormValues
+  initialPolicyValues?: GroupPolicyFormValues
+  initialGroupValues?: GroupFormValues
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   // it's normally an antipattern to set initial state based on props, but
@@ -166,14 +170,24 @@ export const ProposalForm = (props: {
           />
         )
       case 'update-group':
-        return (
-          <ProposalUpdateGroupForm
-            defaultValues={action.values as ProposalUpdateGroupFormValues}
-            formId={action.id}
-            onError={() => handleFormError(action.id)}
-            onSubmit={(data) => updateActionValues(action.id, data)}
-          />
+        if (
+          (props.policyAsGroupAdmin || props.policyAsPolicyAdmin) &&
+          props.initialGroupValues &&
+          props.initialPolicyValues
         )
+          return (
+            <ProposalUpdateGroupForm
+              defaultValues={action.values as ProposalUpdateGroupFormValues}
+              formId={action.id}
+              onError={() => handleFormError(action.id)}
+              onSubmit={(data) => updateActionValues(action.id, data)}
+              policyAsGroupAdmin={props.policyAsGroupAdmin}
+              policyAsPolicyAdmin={props.policyAsPolicyAdmin}
+              initialPolicyValues={props.initialPolicyValues}
+              initialGroupValues={props.initialGroupValues}
+            />
+          )
+        return null
       // TODO add other message types
       default:
         return null
