@@ -3,7 +3,11 @@ import { Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-
 import { ProposalUpdateGroupFormValues } from 'types'
 import { SPACING } from 'util/constants'
 
-import { isDecisionPolicyValues, isMembersValues } from 'api/update-group.utils'
+import {
+  isDecisionPolicyValues,
+  isMembersValues,
+  isMetadataValues,
+} from 'api/update-group.utils'
 
 import { FormCard } from './form-card'
 import { ReviewItem } from './review-item'
@@ -50,6 +54,20 @@ export const UpdateGroupReview = ({
               </Tbody>
             </Table>
           </TableContainer>
+        )}
+        {isMetadataValues(values) && (
+          <>
+            <ReviewItem label="group name">{values.name}</ReviewItem>
+            {values.description && (
+              <ReviewItem label="group description">{values.description}</ReviewItem>
+            )}
+            {values.otherMetadata && (
+              <ReviewItem label="Other metadata">{values.otherMetadata}</ReviewItem>
+            )}
+            {values.forumLink && (
+              <ReviewItem label="Link to forum">{values.forumLink}</ReviewItem>
+            )}
+          </>
         )}
       </Stack>
     </FormCard>

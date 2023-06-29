@@ -76,11 +76,14 @@ export default function ProposalCreate() {
         return [{ id, type: 'stake', values: defaultDelegateFormValues }]
       case 'update-group':
         return (
-          state?.newUpdateGroupProposalValues?.map((values) => ({
-            id,
-            type: 'update-group',
-            values,
-          })) ?? [
+          state?.newUpdateGroupProposalValues?.map((values) => {
+            const id = uuid()
+            return {
+              id,
+              type: 'update-group',
+              values,
+            }
+          }) ?? [
             {
               id,
               type: 'update-group',

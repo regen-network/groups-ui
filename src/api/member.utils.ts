@@ -28,7 +28,7 @@ export type MembersMsgParams = {
   members: MemberFormValues[]
 }
 
-export function toMsgValue({ admin, groupId, members }: MembersMsgParams) {
+export function toMembersMsgValue({ admin, groupId, members }: MembersMsgParams) {
   return {
     admin,
     groupId: groupId instanceof Long ? groupId : Long.fromString(groupId),

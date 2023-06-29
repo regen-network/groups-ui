@@ -1,3 +1,5 @@
+import { describe } from 'vitest'
+
 import type {
   Any,
   ProposalAction,
@@ -15,6 +17,7 @@ import { clearEmptyStr } from 'util/helpers'
 import { getProposalMetadata } from 'util/validation'
 
 import { msgSend } from './bank.messages'
+import { msgUpdateGroupMetadataProposal } from './group.messages'
 import { msgUpdateGroupMembersProposal } from './member.messages'
 import { msgUpdateDecisionPolicyProposal } from './policy.messages'
 import {
@@ -29,7 +32,11 @@ import {
   isRedelegateValues,
   isUndelegateValues,
 } from './staking.utils'
-import { isDecisionPolicyValues, isMembersValues } from './update-group.utils'
+import {
+  isDecisionPolicyValues,
+  isMembersValues,
+  isMetadataValues,
+} from './update-group.utils'
 
 type ProposalData = {
   denom: string
@@ -196,6 +203,18 @@ function groupUpdateValuesToMsg(
       admin: data.groupPolicyAddress,
       groupId: data.groupId,
       members: values.members,
+    })
+  }
+  if (isMetadataValues(values)) {
+    return msgUpdateGroupMetadataProposal({
+      admin: data.groupPolicyAddress,
+      groupId: data.groupId,
+      metadata: {
+        name: values.name,
+        description: values.description,
+        forumLink: values.forumLink,
+        other: values.otherMetadata,
+      },
     })
   }
   throwError('Unknown group update type')
