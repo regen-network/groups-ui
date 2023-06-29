@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import type { MemberFormValues, UIGroupMember } from 'types'
+import { GROUP_WITH_POLICY_ADMIN_TOOLTIP } from 'util/constants'
 import { formatDate } from 'util/date'
 import { defaultMemberFormValues } from 'util/form.defaults'
 import { isBech32Address } from 'util/validation'
@@ -18,6 +19,7 @@ import {
   Flex,
   Input,
   NumberInput,
+  QuestionTooltip,
   Table,
   TableContainer,
   Tbody,
@@ -191,18 +193,25 @@ export const GroupMembersTable = ({
           )}
         </AnimatePresence>
         {hasMembers && (
-          <Button
-            variant={isEdit ? 'solid' : 'outline'}
-            onClick={isEdit ? handleSave : setEdit.toggle}
-            loadingText="Saving"
-            isLoading={submitting}
-          >
-            {isEdit
-              ? policyAsGroupAdmin
-                ? 'Create Proposal'
-                : 'Save Changes'
-              : 'Edit Members'}
-          </Button>
+          <>
+            <Button
+              variant={isEdit ? 'solid' : 'outline'}
+              onClick={isEdit ? handleSave : setEdit.toggle}
+              loadingText="Saving"
+              isLoading={submitting}
+            >
+              {isEdit
+                ? policyAsGroupAdmin
+                  ? 'Create Proposal'
+                  : 'Save Changes'
+                : 'Edit Members'}
+            </Button>
+            {isEdit && policyAsGroupAdmin && (
+              <Box ml={2}>
+                <QuestionTooltip label={GROUP_WITH_POLICY_ADMIN_TOOLTIP} />
+              </Box>
+            )}
+          </>
         )}
       </TableTitlebar>
       {!hasMembers && (
