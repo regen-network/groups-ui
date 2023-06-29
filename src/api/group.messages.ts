@@ -25,8 +25,8 @@ export function msgCreateGroupWithPolicy(values: GroupWithPolicyFormValues) {
   // See https://github.com/osmosis-labs/telescope/issues/281
   const encodedMsg: MsgCreateGroupWithPolicyEncoded = {
     admin,
-    groupPolicyMetadata: ' ', // TODO: unauthorized error when empty
-    groupPolicyAsAdmin: policyAsAdmin === 'true', // TODO: unauthorized error when false
+    groupPolicyMetadata: '',
+    groupPolicyAsAdmin: policyAsAdmin === 'true',
     decisionPolicy: encodeDecisionPolicy({
       policyType,
       percentage: clearEmptyStr(percentage),
@@ -43,7 +43,7 @@ export function msgCreateGroupWithPolicy(values: GroupWithPolicyFormValues) {
     members: members.map((m) => ({
       address: m.address,
       weight: m.weight.toString(),
-      metadata: ' ', // TODO: unauthorized error when empty
+      metadata: '',
       // metadata: JSON.stringify(m.metadata),
     })),
   }

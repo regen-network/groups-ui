@@ -125,8 +125,8 @@ export async function voteOnProposal({
     option,
     proposalId: Long.fromString(proposalId),
     voter: Wallet.account.address,
-    exec: 0, // EXEC_UNSPECIFIED // TODO: unauthorized error when 0
-    metadata: ' ', // TODO: unauthorized error when empty
+    exec: 0, // EXEC_UNSPECIFIED
+    metadata: '',
   })
   const data = await signAndBroadcast([msg])
   if (!data) throwError(txError)

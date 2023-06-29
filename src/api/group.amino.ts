@@ -1,3 +1,4 @@
+import { MsgSend } from '@regen-network/api/src/codegen/cosmos/bank/v1beta1/tx'
 import {
   MemberRequest,
   PercentageDecisionPolicy,
@@ -9,14 +10,18 @@ import type {
   MsgCreateGroupWithPolicyAmino,
   MsgSubmitProposal,
   MsgSubmitProposalAmino,
+  MsgVote,
+  MsgVoteAmino,
 } from '@regen-network/api/types/codegen/cosmos/group/v1/tx'
+import Long from 'long'
 
 // TODO: fix amino converters
 export const groupAminoConverters = {
   '/cosmos.group.v1.MsgCreateGroupWithPolicy': {
     aminoType: 'cosmos-sdk/MsgCreateGroupWithPolicy',
     fromAmino: (object: MsgCreateGroupWithPolicyAmino): MsgCreateGroupWithPolicy => {
-      return {
+      console.log('fromAmino input', object)
+      const output = {
         admin: object.admin,
         members: Array.isArray(
           object === null || object === void 0 ? void 0 : object.members,
@@ -47,10 +52,12 @@ export const groupAminoConverters = {
                 })
             : undefined,
       }
+      console.log('fromAmino output', output)
+      return output // TODO: typescript errors
     },
     toAmino: (message: MsgCreateGroupWithPolicy): MsgCreateGroupWithPolicyAmino => {
-      console.log('toAmino message', message)
-      return {
+      console.log('toAmino input', message)
+      const output = {
         admin: message.admin,
         members: message.members
           ? message.members.map((e) => (e ? MemberRequest.toAmino(e) : undefined))
@@ -78,15 +85,81 @@ export const groupAminoConverters = {
               }
           : undefined,
       }
+      console.log('toAmino output', output)
+      return output // TODO: typescript errors
     },
   },
   '/cosmos.group.v1.MsgSubmitProposal': {
-    aminoType: 'cosmos-sdk/MsgSubmitProposal',
+    aminoType: 'cosmos-sdk/group/MsgSubmitProposal',
     fromAmino: (object: MsgSubmitProposalAmino): MsgSubmitProposal => {
-      return
+      console.log('fromAmino input', object)
+      const output = {
+        groupPolicyAddress: object.group_policy_address,
+        proposers: Array.isArray(object?.proposers)
+          ? object.proposers.map((e: any) => e)
+          : [],
+        metadata: object.metadata,
+        messages: Array.isArray(object?.messages)
+          ? object.messages.map((e: any) => Any.fromAmino(e))
+          : [],
+        exec: object.exec !== null && object.exec !== undefined ? object.exec : 0,
+      }
+      console.log('fromAmino output', output)
+      return output
     },
     toAmino: (message: MsgSubmitProposal): MsgSubmitProposalAmino => {
-      return
+      console.log('toAmino input', message)
+      const output = {
+        group_policy_address: message.groupPolicyAddress,
+        proposers: message.proposers ? message.proposers.map((e) => e) : [],
+        metadata: message.metadata ? message.metadata : undefined,
+        // messages: message.messages ? message.messages.map(e => e ? Any.toAmino(e) : undefined) : [],
+        messages: message.messages
+          ? message.messages.map((msg) => {
+              switch (msg.typeUrl) {
+                // TODO: unable to resolve type URL cosmos-sdk/MsgSend: tx parse error
+                case '/cosmos.bank.v1beta1.MsgSend':
+                  return {
+                    type_url: 'cosmos-sdk/MsgSend',
+                    value: MsgSend.toAmino(MsgSend.decode(msg?.value)),
+                  }
+                // TODO: unable to resolve type URL not implemented: tx parse error
+                default:
+                  return {
+                    type_url: 'not implemented',
+                  }
+              }
+            })
+          : [],
+        exec: message.exec,
+      }
+      console.log('toAmino output', output)
+      return output // TODO: typescript errors
+    },
+  },
+  '/cosmos.group.v1.MsgVote': {
+    aminoType: 'cosmos-sdk/group/MsgVote',
+    fromAmino: (object: MsgVoteAmino): MsgVote => {
+      console.log('fromAmino input', object)
+      const output = {
+        proposalId: Long.fromString(object.proposal_id),
+        voter: object.voter,
+        option: object.option !== null && object.option !== undefined ? object.option : 0,
+        metadata: object.metadata,
+      }
+      console.log('fromAmino output', output)
+      return output
+    },
+    toAmino: (message: MsgVote): MsgVoteAmino => {
+      console.log('toAmino input', message)
+      const output = {
+        proposal_id: message.proposalId ? message.proposalId.toString() : undefined,
+        voter: message.voter,
+        option: message.option,
+        metadata: message.metadata ? message.metadata : undefined,
+      }
+      console.log('toAmino output', output)
+      return output // TODO: typescript errors
     },
   },
 }

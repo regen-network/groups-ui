@@ -29,7 +29,7 @@ export function msgCreateGroupPolicy({
   const encodedMsg: MsgCreateGroupPolicyEncoded = {
     admin,
     groupId: Long.fromString(groupId),
-    metadata: ' ', // TODO: unauthorized error when empty
+    metadata: '',
     decisionPolicy: encodeDecisionPolicy({
       policyType,
       percentage: clearEmptyStr(percentage),
