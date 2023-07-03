@@ -13,9 +13,23 @@ import type {
   MsgVote,
   MsgVoteAmino,
 } from '@regen-network/api/types/codegen/cosmos/group/v1/tx'
+import { AnyAmino } from '@regen-network/api/types/codegen/google/protobuf/any'
 import Long from 'long'
+import {MemberRequestAmino} from "@regen-network/api/types/codegen/cosmos/group/v1/types";
 
-// TODO: fix amino converters
+// TODO: fix amino converters in regen-js
+export const MemberRequestToAmino = (message: MemberRequest): MemberRequestAmino => {
+  console.log('toAmino input', message)
+  const output = {
+    address: message.address,
+    weight: message.weight,
+    metadata: message.metadata || undefined, // NOTE: added else undefined
+  }
+  console.log('toAmino output', output)
+  return output
+}
+
+// TODO: fix amino converters in regen-js
 export const groupAminoConverters = {
   '/cosmos.group.v1.MsgCreateGroupWithPolicy': {
     aminoType: 'cosmos-sdk/MsgCreateGroupWithPolicy',
@@ -41,7 +55,7 @@ export const groupAminoConverters = {
                       PercentageDecisionPolicy.fromAmino(object.decision_policy?.value),
                     ),
                   ).finish(),
-                })
+                }) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any
               : Any.fromPartial({
                   typeUrl: '/cosmos.group.v1.ThresholdDecisionPolicy',
                   value: ThresholdDecisionPolicy.encode(
@@ -49,38 +63,34 @@ export const groupAminoConverters = {
                       ThresholdDecisionPolicy.fromAmino(object.decision_policy?.value),
                     ),
                   ).finish(),
-                })
-            : undefined,
+                }) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any
+            : Any.fromAmino(object.decision_policy as AnyAmino) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any,
       }
       console.log('fromAmino output', output)
-      return output // TODO: typescript errors
+      return output
     },
     toAmino: (message: MsgCreateGroupWithPolicy): MsgCreateGroupWithPolicyAmino => {
       console.log('toAmino input', message)
       const output = {
         admin: message.admin,
         members: message.members
-          ? message.members.map((e) => (e ? MemberRequest.toAmino(e) : undefined))
+          ? message.members.map((e) => MemberRequestToAmino(e))
           : [],
-        group_metadata: message.groupMetadata ? message.groupMetadata : undefined,
-        group_policy_metadata: message.groupPolicyMetadata
-          ? message.groupPolicyMetadata
-          : undefined,
-        group_policy_as_admin: message.groupPolicyAsAdmin
-          ? message.groupPolicyAsAdmin
-          : undefined,
+        group_metadata: message.groupMetadata || undefined, // NOTE: added else undefined
+        group_policy_metadata: message.groupPolicyMetadata || undefined, // NOTE: added else undefined
+        group_policy_as_admin: message.groupPolicyAsAdmin || undefined, // NOTE: added else undefined
         decision_policy: message.decisionPolicy
           ? message.decisionPolicy.typeUrl === '/cosmos.group.v1.PercentageDecisionPolicy'
             ? {
                 type: 'cosmos-sdk/PercentageDecisionPolicy',
                 value: PercentageDecisionPolicy.toAmino(
-                  PercentageDecisionPolicy.decode(message.decisionPolicy?.value),
+                  PercentageDecisionPolicy.decode(message.decisionPolicy.value),
                 ),
               }
             : {
                 type: 'cosmos-sdk/ThresholdDecisionPolicy',
                 value: ThresholdDecisionPolicy.toAmino(
-                  ThresholdDecisionPolicy.decode(message.decisionPolicy?.value),
+                  ThresholdDecisionPolicy.decode(message.decisionPolicy.value),
                 ),
               }
           : undefined,
@@ -111,10 +121,9 @@ export const groupAminoConverters = {
       console.log('toAmino input', message)
       const output = {
         group_policy_address: message.groupPolicyAddress,
-        proposers: message.proposers ? message.proposers.map((e) => e) : [],
-        metadata: message.metadata ? message.metadata : undefined,
-        // messages: message.messages ? message.messages.map(e => e ? Any.toAmino(e) : undefined) : [],
-        messages: message.messages
+        proposers: message.proposers || undefined, // NOTE: added else undefined
+        metadata: message.metadata || undefined, // NOTE: added else undefined
+        messages: message.messages.length > 0
           ? message.messages.map((msg) => {
               switch (msg.typeUrl) {
                 // TODO: unable to resolve type URL cosmos-sdk/MsgSend: tx parse error
@@ -130,8 +139,8 @@ export const groupAminoConverters = {
                   }
               }
             })
-          : [],
-        exec: message.exec,
+          : undefined,
+        exec: message.exec || undefined, // NOTE: added else undefined
       }
       console.log('toAmino output', output)
       return output // TODO: typescript errors
@@ -145,7 +154,8 @@ export const groupAminoConverters = {
         proposalId: Long.fromString(object.proposal_id),
         voter: object.voter,
         option: object.option !== null && object.option !== undefined ? object.option : 0,
-        metadata: object.metadata,
+        metadata: object.metadata || '',
+        exec: object.exec !== null && object.exec !== undefined ? object.exec : 0,
       }
       console.log('fromAmino output', output)
       return output
@@ -156,7 +166,8 @@ export const groupAminoConverters = {
         proposal_id: message.proposalId ? message.proposalId.toString() : undefined,
         voter: message.voter,
         option: message.option,
-        metadata: message.metadata ? message.metadata : undefined,
+        metadata: message.metadata || undefined, // NOTE: added else undefined
+        exec: message.exec || undefined, // NOTE: added else undefined
       }
       console.log('toAmino output', output)
       return output // TODO: typescript errors

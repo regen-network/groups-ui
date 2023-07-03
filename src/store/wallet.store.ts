@@ -8,7 +8,7 @@ import { logError, throwError } from 'util/errors'
 
 import { fetchValidators } from 'api/staking.actions'
 
-import { groupAminoConverters } from '../api/group.amino' // TODO: fix amino converters
+import { groupAminoConverters } from '../api/group.amino' // TODO: fix amino converters in regen-js
 
 import { Chain } from './chain.store'
 import { Query } from './query.store'
@@ -45,12 +45,13 @@ export async function bootstrapKeplr() {
     const offlineSigner = await keplr.getOfflineSignerOnlyAmino(chainId)
     const [account] = await offlineSigner.getAccounts()
 
-    // TODO: fix amino converters
+    // TODO: fix amino converters in regen-js
     // const signingClient = await getSigningCosmosClient({
     //   rpcEndpoint: Chain.active.rpc,
     //   signer: offlineSigner,
     // })
 
+    // TODO: fix amino converters in regen-js
     // NOTE: We use signing stargate client so that we can set amino types
     const registry = new Registry(cosmosProtoRegistry)
     const signingClient = await SigningStargateClient.connectWithSigner(
@@ -58,7 +59,6 @@ export async function bootstrapKeplr() {
       offlineSigner,
       {
         registry,
-        // TODO: fix amino converters
         aminoTypes: new AminoTypes({ ...cosmosAminoConverters, ...groupAminoConverters }),
       },
     )
