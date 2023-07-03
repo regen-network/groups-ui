@@ -5,6 +5,7 @@ import {
   ThresholdDecisionPolicy,
 } from '@regen-network/api/src/codegen/cosmos/group/v1/types'
 import { Any } from '@regen-network/api/src/codegen/google/protobuf/any'
+import { MsgWithdrawDelegatorReward } from '@regen-network/api/types/codegen/cosmos/distribution/v1beta1/tx'
 import type {
   MsgCreateGroupWithPolicy,
   MsgCreateGroupWithPolicyAmino,
@@ -13,9 +14,14 @@ import type {
   MsgVote,
   MsgVoteAmino,
 } from '@regen-network/api/types/codegen/cosmos/group/v1/tx'
+import { MemberRequestAmino } from '@regen-network/api/types/codegen/cosmos/group/v1/types'
+import {
+  MsgBeginRedelegate,
+  MsgDelegate,
+  MsgUndelegate,
+} from '@regen-network/api/types/codegen/cosmos/staking/v1beta1/tx'
 import { AnyAmino } from '@regen-network/api/types/codegen/google/protobuf/any'
 import Long from 'long'
-import {MemberRequestAmino} from "@regen-network/api/types/codegen/cosmos/group/v1/types";
 
 // TODO: fix amino converters in regen-js
 export const MemberRequestToAmino = (message: MemberRequest): MemberRequestAmino => {
@@ -48,23 +54,25 @@ export const groupAminoConverters = {
         decisionPolicy:
           object !== null && object !== void 0 && object.decision_policy
             ? object.decision_policy.type === 'cosmos-sdk/PercentageDecisionPolicy'
-              ? Any.fromPartial({
+              ? (Any.fromPartial({
                   typeUrl: '/cosmos.group.v1.PercentageDecisionPolicy',
                   value: PercentageDecisionPolicy.encode(
                     PercentageDecisionPolicy.fromPartial(
                       PercentageDecisionPolicy.fromAmino(object.decision_policy?.value),
                     ),
                   ).finish(),
-                }) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any
-              : Any.fromPartial({
+                }) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any)
+              : (Any.fromPartial({
                   typeUrl: '/cosmos.group.v1.ThresholdDecisionPolicy',
                   value: ThresholdDecisionPolicy.encode(
                     ThresholdDecisionPolicy.fromPartial(
                       ThresholdDecisionPolicy.fromAmino(object.decision_policy?.value),
                     ),
                   ).finish(),
-                }) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any
-            : Any.fromAmino(object.decision_policy as AnyAmino) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any,
+                }) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any)
+            : (Any.fromAmino(
+                object.decision_policy as AnyAmino,
+              ) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any),
       }
       console.log('fromAmino output', output)
       return output
@@ -123,23 +131,52 @@ export const groupAminoConverters = {
         group_policy_address: message.groupPolicyAddress,
         proposers: message.proposers || undefined, // NOTE: added else undefined
         metadata: message.metadata || undefined, // NOTE: added else undefined
-        messages: message.messages.length > 0
-          ? message.messages.map((msg) => {
-              switch (msg.typeUrl) {
-                // TODO: unable to resolve type URL cosmos-sdk/MsgSend: tx parse error
-                case '/cosmos.bank.v1beta1.MsgSend':
-                  return {
-                    type_url: 'cosmos-sdk/MsgSend',
-                    value: MsgSend.toAmino(MsgSend.decode(msg?.value)),
-                  }
-                // TODO: unable to resolve type URL not implemented: tx parse error
-                default:
-                  return {
-                    type_url: 'not implemented',
-                  }
-              }
-            })
-          : undefined,
+        messages:
+          message.messages.length > 0
+            ? message.messages.map((msg) => {
+                switch (msg.typeUrl) {
+                  // TODO: unable to resolve type URL cosmos-sdk/MsgSend: tx parse error
+                  case '/cosmos.bank.v1beta1.MsgSend':
+                    return {
+                      type_url: 'cosmos-sdk/MsgSend',
+                      value: MsgSend.toAmino(MsgSend.decode(msg.value)),
+                    }
+                  // TODO: unable to resolve type URL cosmos-sdk/MsgDelegate: tx parse error
+                  case '/cosmos.bank.v1beta1.MsgDelegate':
+                    return {
+                      type_url: 'cosmos-sdk/MsgDelegate',
+                      value: MsgDelegate.toAmino(MsgDelegate.decode(msg.value)),
+                    }
+                  // TODO: unable to resolve type URL cosmos-sdk/MsgBeginRedelegate: tx parse error
+                  case '/cosmos.bank.v1beta1.MsgBeginRedelegate':
+                    return {
+                      type_url: 'cosmos-sdk/MsgBeginRedelegate',
+                      value: MsgBeginRedelegate.toAmino(
+                        MsgBeginRedelegate.decode(msg.value),
+                      ),
+                    }
+                  // TODO: unable to resolve type URL cosmos-sdk/MsgUndelegate: tx parse error
+                  case '/cosmos.bank.v1beta1.MsgUndelegate':
+                    return {
+                      type_url: 'cosmos-sdk/MsgUndelegate',
+                      value: MsgUndelegate.toAmino(MsgUndelegate.decode(msg.value)),
+                    }
+                  // TODO: unable to resolve type URL cosmos-sdk/MsgWithdrawDelegatorReward: tx parse error
+                  case '/cosmos.bank.v1beta1.MsgWithdrawDelegatorReward':
+                    return {
+                      type_url: 'cosmos-sdk/MsgWithdrawDelegatorReward',
+                      value: MsgWithdrawDelegatorReward.toAmino(
+                        MsgWithdrawDelegatorReward.decode(msg.value),
+                      ),
+                    }
+                  // TODO: unable to resolve type URL not implemented: tx parse error
+                  default:
+                    return {
+                      type_url: 'not implemented',
+                    }
+                }
+              })
+            : undefined,
         exec: message.exec || undefined, // NOTE: added else undefined
       }
       console.log('toAmino output', output)
