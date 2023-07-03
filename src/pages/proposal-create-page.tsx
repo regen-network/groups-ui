@@ -125,7 +125,6 @@ export default function ProposalCreate() {
       toastSuccess(data.transactionHash)
       return data.proposalId
     } catch (error) {
-      console.log(error)
       logError(error)
       toastErr(error, 'Proposal could not be created:')
       return null
