@@ -9,22 +9,20 @@
  */
 import type { ChainInfo } from '@keplr-wallet/types'
 
-const { VITE_LOCAL_HOSTNAME, VITE_PROXY_URL } = import.meta.env
+const {
+  VITE_LOCAL_HOSTNAME,
+  VITE_PROXY_URL_REGEN_MAINNET,
+  VITE_PROXY_URL_REGEN_TESTNET,
+} = import.meta.env
 
-// import { axelar } from './axelar'
-// import { cosmosLocal } from './cosmos-local'
-import { regenLocal, regenTestnet } from './regen'
-// import { cosmoshub } from './cosmoshub'
-// import { juno } from './juno'
-// import { junoTestnet } from './juno-testnet'
-// import { osmosis } from './osmosis'
-// import { osmosisTestnet } from './osmosis-testnet'
+import { regenLocal, regenMainnet, regenTestnet } from './regen'
 
-// export const mainnetChainsArray: ChainInfo[] = [cosmoshub, axelar, juno, osmosis]
-export const mainnetChainsArray: ChainInfo[] = []
+export const mainnetChainsArray: ChainInfo[] = [
+  ...(VITE_PROXY_URL_REGEN_MAINNET ? [regenMainnet] : []),
+]
 
 export const testnetChainsArray: ChainInfo[] = [
-  ...(VITE_PROXY_URL ? [regenTestnet] : []),
+  ...(VITE_PROXY_URL_REGEN_TESTNET ? [regenTestnet] : []),
   ...(VITE_LOCAL_HOSTNAME ? [regenLocal] : []),
 ]
 
