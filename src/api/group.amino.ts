@@ -1,11 +1,16 @@
 import { MsgSend } from '@regen-network/api/src/codegen/cosmos/bank/v1beta1/tx'
+import { MsgWithdrawDelegatorReward } from '@regen-network/api/src/codegen/cosmos/distribution/v1beta1/tx'
 import {
   MemberRequest,
   PercentageDecisionPolicy,
   ThresholdDecisionPolicy,
 } from '@regen-network/api/src/codegen/cosmos/group/v1/types'
+import {
+  MsgBeginRedelegate,
+  MsgDelegate,
+  MsgUndelegate,
+} from '@regen-network/api/src/codegen/cosmos/staking/v1beta1/tx'
 import { Any } from '@regen-network/api/src/codegen/google/protobuf/any'
-import { MsgWithdrawDelegatorReward } from '@regen-network/api/types/codegen/cosmos/distribution/v1beta1/tx'
 import type {
   MsgCreateGroupWithPolicy,
   MsgCreateGroupWithPolicyAmino,
@@ -15,11 +20,6 @@ import type {
   MsgVoteAmino,
 } from '@regen-network/api/types/codegen/cosmos/group/v1/tx'
 import { MemberRequestAmino } from '@regen-network/api/types/codegen/cosmos/group/v1/types'
-import {
-  MsgBeginRedelegate,
-  MsgDelegate,
-  MsgUndelegate,
-} from '@regen-network/api/types/codegen/cosmos/staking/v1beta1/tx'
 import { AnyAmino } from '@regen-network/api/types/codegen/google/protobuf/any'
 import Long from 'long'
 
@@ -32,7 +32,7 @@ export const MemberRequestToAmino = (message: MemberRequest): MemberRequestAmino
     metadata: message.metadata || undefined, // NOTE: added else undefined
   }
   console.log('toAmino output', output)
-  return output
+  return output // TODO: typescript errors
 }
 
 // TODO: fix amino converters in regen-js
@@ -116,10 +116,56 @@ export const groupAminoConverters = {
         proposers: Array.isArray(object?.proposers)
           ? object.proposers.map((e: any) => e)
           : [],
-        metadata: object.metadata,
+        metadata: object.metadata || '',
         messages: Array.isArray(object?.messages)
-          ? object.messages.map((e: any) => Any.fromAmino(e))
-          : [],
+          ? object.messages.map((msg) => {
+              switch (msg.type) {
+                case 'cosmos-sdk/MsgSend':
+                  return Any.fromPartial({
+                    typeUrl: '/cosmos.bank.v1beta1.MsgSend',
+                    value: MsgSend.encode(
+                      MsgSend.fromPartial(MsgSend.fromAmino(msg.value)),
+                    ).finish(),
+                  })
+                case 'cosmos-sdk/MsgDelegate':
+                  return Any.fromPartial({
+                    typeUrl: '/cosmos.staking.v1beta1.MsgDelegate',
+                    value: MsgDelegate.encode(
+                      MsgDelegate.fromPartial(MsgDelegate.fromAmino(msg.value)),
+                    ).finish(),
+                  })
+                case 'cosmos-sdk/MsgBeginRedelegate':
+                  return Any.fromPartial({
+                    typeUrl: '/cosmos.staking.v1beta1.MsgBeginRedelegate',
+                    value: MsgBeginRedelegate.encode(
+                      MsgBeginRedelegate.fromPartial(
+                        MsgBeginRedelegate.fromAmino(msg.value),
+                      ),
+                    ).finish(),
+                  })
+                case 'cosmos-sdk/MsgUndelegate':
+                  return Any.fromPartial({
+                    typeUrl: '/cosmos.staking.v1beta1.MsgUndelegate',
+                    value: MsgUndelegate.encode(
+                      MsgUndelegate.fromPartial(MsgUndelegate.fromAmino(msg.value)),
+                    ).finish(),
+                  })
+                case 'cosmos-sdk/MsgWithdrawDelegationReward':
+                  return Any.fromPartial({
+                    typeUrl: '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward',
+                    value: MsgWithdrawDelegatorReward.encode(
+                      MsgWithdrawDelegatorReward.fromPartial(
+                        MsgWithdrawDelegatorReward.fromAmino(msg.value),
+                      ),
+                    ).finish(),
+                  })
+                default:
+                  return {
+                    type_url: 'not implemented',
+                  }
+              }
+            })
+          : undefined,
         exec: object.exec !== null && object.exec !== undefined ? object.exec : 0,
       }
       console.log('fromAmino output', output)
@@ -135,44 +181,38 @@ export const groupAminoConverters = {
           message.messages.length > 0
             ? message.messages.map((msg) => {
                 switch (msg.typeUrl) {
-                  // TODO: unable to resolve type URL cosmos-sdk/MsgSend: tx parse error
                   case '/cosmos.bank.v1beta1.MsgSend':
                     return {
-                      type_url: 'cosmos-sdk/MsgSend',
+                      type: 'cosmos-sdk/MsgSend',
                       value: MsgSend.toAmino(MsgSend.decode(msg.value)),
                     }
-                  // TODO: unable to resolve type URL cosmos-sdk/MsgDelegate: tx parse error
-                  case '/cosmos.bank.v1beta1.MsgDelegate':
+                  case '/cosmos.staking.v1beta1.MsgDelegate':
                     return {
-                      type_url: 'cosmos-sdk/MsgDelegate',
+                      type: 'cosmos-sdk/MsgDelegate',
                       value: MsgDelegate.toAmino(MsgDelegate.decode(msg.value)),
                     }
-                  // TODO: unable to resolve type URL cosmos-sdk/MsgBeginRedelegate: tx parse error
-                  case '/cosmos.bank.v1beta1.MsgBeginRedelegate':
+                  case '/cosmos.staking.v1beta1.MsgBeginRedelegate':
                     return {
-                      type_url: 'cosmos-sdk/MsgBeginRedelegate',
+                      type: 'cosmos-sdk/MsgBeginRedelegate',
                       value: MsgBeginRedelegate.toAmino(
                         MsgBeginRedelegate.decode(msg.value),
                       ),
                     }
-                  // TODO: unable to resolve type URL cosmos-sdk/MsgUndelegate: tx parse error
-                  case '/cosmos.bank.v1beta1.MsgUndelegate':
+                  case '/cosmos.staking.v1beta1.MsgUndelegate':
                     return {
-                      type_url: 'cosmos-sdk/MsgUndelegate',
+                      type: 'cosmos-sdk/MsgUndelegate',
                       value: MsgUndelegate.toAmino(MsgUndelegate.decode(msg.value)),
                     }
-                  // TODO: unable to resolve type URL cosmos-sdk/MsgWithdrawDelegatorReward: tx parse error
-                  case '/cosmos.bank.v1beta1.MsgWithdrawDelegatorReward':
+                  case '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward':
                     return {
-                      type_url: 'cosmos-sdk/MsgWithdrawDelegatorReward',
+                      type: 'cosmos-sdk/MsgWithdrawDelegationReward',
                       value: MsgWithdrawDelegatorReward.toAmino(
                         MsgWithdrawDelegatorReward.decode(msg.value),
                       ),
                     }
-                  // TODO: unable to resolve type URL not implemented: tx parse error
                   default:
                     return {
-                      type_url: 'not implemented',
+                      type: 'not implemented',
                     }
                 }
               })

@@ -44,14 +44,14 @@ export async function bootstrapKeplr() {
     // Using "only amino" also ensures messages are human-readable within keplr.
     const offlineSigner = await keplr.getOfflineSignerOnlyAmino(chainId)
     const [account] = await offlineSigner.getAccounts()
-
-    // TODO: fix amino converters in regen-js
     // const signingClient = await getSigningCosmosClient({
     //   rpcEndpoint: Chain.active.rpc,
     //   signer: offlineSigner,
     // })
 
     // TODO: fix amino converters in regen-js
+    const aminoConverters = { ...cosmosAminoConverters, ...groupAminoConverters }
+
     // NOTE: We use signing stargate client so that we can set amino types
     const registry = new Registry(cosmosProtoRegistry)
     const signingClient = await SigningStargateClient.connectWithSigner(
@@ -59,7 +59,7 @@ export async function bootstrapKeplr() {
       offlineSigner,
       {
         registry,
-        aminoTypes: new AminoTypes({ ...cosmosAminoConverters, ...groupAminoConverters }),
+        aminoTypes: new AminoTypes(aminoConverters),
       },
     )
 
