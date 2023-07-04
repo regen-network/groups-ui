@@ -1,25 +1,18 @@
-import Long from 'long'
-
-import type { MemberFormValues } from 'types'
+import { cosmos } from '@regen-network/api'
 
 import { GroupMsgWithTypeUrl } from './cosmosgroups'
+import { MembersMsgParams, toMembersMsgValue } from './member.utils'
 
-export function msgUpdateGroupMembers({
-  admin,
-  groupId,
-  members,
-}: {
-  admin: string
-  groupId: string | Long
-  members: MemberFormValues[]
-}) {
-  return GroupMsgWithTypeUrl.updateGroupMembers({
-    admin,
-    groupId: groupId instanceof Long ? groupId : Long.fromString(groupId),
-    memberUpdates: members.map(({ address, metadata, weight }) => ({
-      address,
-      metadata: JSON.stringify(metadata),
-      weight: weight.toString(),
-    })),
-  })
+export function msgUpdateGroupMembers(params: MembersMsgParams) {
+  return GroupMsgWithTypeUrl.updateGroupMembers(toMembersMsgValue(params))
+}
+
+export function msgUpdateGroupMembersProposal(params: MembersMsgParams) {
+  const value = cosmos.group.v1.MsgUpdateGroupMembers.encode(
+    toMembersMsgValue(params),
+  ).finish()
+  return {
+    value,
+    typeUrl: '/cosmos.group.v1.MsgUpdateGroupMembers',
+  }
 }

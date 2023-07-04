@@ -2,12 +2,19 @@ import { useCallback, useEffect, useState } from 'react'
 import { omit } from 'remeda'
 
 import type {
+  GroupFormValues,
+  GroupPolicyFormValues,
   ProposalAction,
   ProposalSendFormValues,
   ProposalStakeFormValues,
+  ProposalUpdateGroupFormValues,
   UICoin,
 } from 'types'
-import { defaultSendFormValues, defaultStakeFormValues } from 'util/form.defaults'
+import {
+  defaultDecisionPolicyFormValues,
+  defaultSendFormValues,
+  defaultStakeFormValues,
+} from 'util/form.defaults'
 import { uuid } from 'util/helpers'
 
 import { useDisclosure } from 'hooks/chakra-hooks'
@@ -21,6 +28,8 @@ import { ProposalActionDrawer } from '@/organisms/proposal-action-drawer'
 import { ProposalSendForm } from '@/organisms/proposal-send-form'
 import { ProposalStakeForm } from '@/organisms/proposal-stake-form'
 
+import { ProposalUpdateGroupForm } from './proposal-update-group-form'
+
 export type ProposalFormValues = {
   title: string
   summary: string
@@ -32,6 +41,11 @@ export const ProposalForm = (props: {
   groupName: string
   policyBalances: UICoin[]
   onSubmit: (values: ProposalFormValues) => void
+  policyAsGroupAdmin?: boolean
+  policyAsPolicyAdmin?: boolean
+  updateGroupFormValues?: ProposalUpdateGroupFormValues
+  initialPolicyValues?: GroupPolicyFormValues
+  initialGroupValues?: GroupFormValues
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   // it's normally an antipattern to set initial state based on props, but
@@ -78,6 +92,16 @@ export const ProposalForm = (props: {
         break
       case 'stake':
         setActions([...actions, { id, type: 'stake', values: defaultStakeFormValues }])
+        break
+      case 'update-group':
+        setActions([
+          ...actions,
+          {
+            id,
+            type: 'update-group',
+            values: props.updateGroupFormValues || defaultDecisionPolicyFormValues,
+          },
+        ])
         break
       // TODO add other actions here
       default:
@@ -145,6 +169,25 @@ export const ProposalForm = (props: {
             onSubmit={(data) => updateActionValues(action.id, data)}
           />
         )
+      case 'update-group':
+        if (
+          (props.policyAsGroupAdmin || props.policyAsPolicyAdmin) &&
+          props.initialGroupValues &&
+          props.initialPolicyValues
+        )
+          return (
+            <ProposalUpdateGroupForm
+              defaultValues={action.values as ProposalUpdateGroupFormValues}
+              formId={action.id}
+              onError={() => handleFormError(action.id)}
+              onSubmit={(data) => updateActionValues(action.id, data)}
+              policyAsGroupAdmin={props.policyAsGroupAdmin}
+              policyAsPolicyAdmin={props.policyAsPolicyAdmin}
+              initialPolicyValues={props.initialPolicyValues}
+              initialGroupValues={props.initialGroupValues}
+            />
+          )
+        return null
       // TODO add other message types
       default:
         return null
@@ -208,6 +251,8 @@ export const ProposalForm = (props: {
         isOpen={isOpen}
         onClose={onClose}
         onActionSelect={handleNewAction}
+        policyAsGroupAdmin={props.policyAsGroupAdmin}
+        policyAsPolicyAdmin={props.policyAsPolicyAdmin}
       />
     </>
   )

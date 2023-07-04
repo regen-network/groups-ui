@@ -1,6 +1,14 @@
 import { useColorModeValue } from 'hooks/chakra-hooks'
 
-import { BaseCard, Box, CardBody, Flex, type IconProps, InfoTooltip, Text } from '@/atoms'
+import {
+  BaseCard,
+  Box,
+  CardBody,
+  Flex,
+  type IconProps,
+  QuestionTooltip,
+  Text,
+} from '@/atoms'
 
 export const ActionButton = (props: {
   label: string
@@ -46,7 +54,7 @@ export const ActionButton = (props: {
       <CardBody h="full">
         <Flex justify="space-between" align="center" h="full">
           <Text size="xl">{props.label}</Text>
-          {props.tooltipText && <InfoTooltip label={props.tooltipText} />}
+          {props.tooltipText && <QuestionTooltip label={props.tooltipText} />}
         </Flex>
       </CardBody>
     </BaseCard>

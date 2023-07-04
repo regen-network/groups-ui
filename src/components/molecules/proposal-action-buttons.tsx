@@ -1,4 +1,4 @@
-import { ENABLED_ACTIONS } from 'util/constants'
+import { getActions } from 'util/actions'
 
 import { ROUTE_PATH } from 'routes'
 
@@ -9,9 +9,13 @@ import { FileTextIcon } from 'assets/tsx'
 export const ProposalActionButtons = ({
   groupId,
   btnProps,
+  policyAsGroupAdmin,
+  policyAsPolicyAdmin,
 }: {
   groupId: string
   btnProps?: ButtonProps
+  policyAsGroupAdmin?: boolean
+  policyAsPolicyAdmin?: boolean
 }) => {
   const actions = [
     // we want a 'text proposal' create button on proposal page, but it isn't available elsewhere
@@ -21,8 +25,9 @@ export const ProposalActionButtons = ({
       tooltip: 'Create a "text" proposal',
       icon: FileTextIcon,
     },
-    ...ENABLED_ACTIONS,
+    ...getActions(policyAsGroupAdmin, policyAsPolicyAdmin),
   ]
+
   return (
     <>
       {actions.map(({ type, label, icon: Icon }, i) => (
