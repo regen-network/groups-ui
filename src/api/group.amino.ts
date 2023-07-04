@@ -25,14 +25,12 @@ import Long from 'long'
 
 // TODO: fix amino converters in regen-js
 export const MemberRequestToAmino = (message: MemberRequest): MemberRequestAmino => {
-  console.log('toAmino input', message)
   const output = {
     address: message.address,
     weight: message.weight,
     metadata: message.metadata || undefined, // NOTE: added else undefined
   }
-  console.log('toAmino output', output)
-  return output // TODO: typescript errors
+  return output as MemberRequestAmino
 }
 
 // TODO: fix amino converters in regen-js
@@ -40,7 +38,6 @@ export const groupAminoConverters = {
   '/cosmos.group.v1.MsgCreateGroupWithPolicy': {
     aminoType: 'cosmos-sdk/MsgCreateGroupWithPolicy',
     fromAmino: (object: MsgCreateGroupWithPolicyAmino): MsgCreateGroupWithPolicy => {
-      console.log('fromAmino input', object)
       const output = {
         admin: object.admin,
         members: Array.isArray(
@@ -74,11 +71,9 @@ export const groupAminoConverters = {
                 object.decision_policy as AnyAmino,
               ) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any),
       }
-      console.log('fromAmino output', output)
       return output
     },
     toAmino: (message: MsgCreateGroupWithPolicy): MsgCreateGroupWithPolicyAmino => {
-      console.log('toAmino input', message)
       const output = {
         admin: message.admin,
         members: message.members
@@ -103,19 +98,15 @@ export const groupAminoConverters = {
               }
           : undefined,
       }
-      console.log('toAmino output', output)
-      return output // TODO: typescript errors
+      return output as MsgCreateGroupWithPolicyAmino
     },
   },
   '/cosmos.group.v1.MsgSubmitProposal': {
     aminoType: 'cosmos-sdk/group/MsgSubmitProposal',
     fromAmino: (object: MsgSubmitProposalAmino): MsgSubmitProposal => {
-      console.log('fromAmino input', object)
       const output = {
         groupPolicyAddress: object.group_policy_address,
-        proposers: Array.isArray(object?.proposers)
-          ? object.proposers.map((e: any) => e)
-          : [],
+        proposers: Array.isArray(object?.proposers) ? object.proposers.map((e) => e) : [],
         metadata: object.metadata || '',
         messages: Array.isArray(object?.messages)
           ? object.messages.map((msg) => {
@@ -160,19 +151,18 @@ export const groupAminoConverters = {
                     ).finish(),
                   })
                 default:
-                  return {
-                    type_url: 'not implemented',
-                  }
+                  return Any.fromPartial({
+                    typeUrl: 'not implemented',
+                    value: new Uint8Array([]),
+                  })
               }
             })
-          : undefined,
+          : [],
         exec: object.exec !== null && object.exec !== undefined ? object.exec : 0,
       }
-      console.log('fromAmino output', output)
       return output
     },
     toAmino: (message: MsgSubmitProposal): MsgSubmitProposalAmino => {
-      console.log('toAmino input', message)
       const output = {
         group_policy_address: message.groupPolicyAddress,
         proposers: message.proposers || undefined, // NOTE: added else undefined
@@ -219,14 +209,12 @@ export const groupAminoConverters = {
             : undefined,
         exec: message.exec || undefined, // NOTE: added else undefined
       }
-      console.log('toAmino output', output)
-      return output // TODO: typescript errors
+      return output as MsgSubmitProposalAmino
     },
   },
   '/cosmos.group.v1.MsgVote': {
     aminoType: 'cosmos-sdk/group/MsgVote',
     fromAmino: (object: MsgVoteAmino): MsgVote => {
-      console.log('fromAmino input', object)
       const output = {
         proposalId: Long.fromString(object.proposal_id),
         voter: object.voter,
@@ -234,11 +222,9 @@ export const groupAminoConverters = {
         metadata: object.metadata || '',
         exec: object.exec !== null && object.exec !== undefined ? object.exec : 0,
       }
-      console.log('fromAmino output', output)
       return output
     },
     toAmino: (message: MsgVote): MsgVoteAmino => {
-      console.log('toAmino input', message)
       const output = {
         proposal_id: message.proposalId ? message.proposalId.toString() : undefined,
         voter: message.voter,
@@ -246,8 +232,7 @@ export const groupAminoConverters = {
         metadata: message.metadata || undefined, // NOTE: added else undefined
         exec: message.exec || undefined, // NOTE: added else undefined
       }
-      console.log('toAmino output', output)
-      return output // TODO: typescript errors
+      return output as MsgVoteAmino
     },
   },
 }
