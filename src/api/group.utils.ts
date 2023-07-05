@@ -1,8 +1,11 @@
+import Long from 'long'
+
 import type {
   GroupInfoSDKType,
   MemberFormValues,
   UIGroup,
   UIGroupMember,
+  UIGroupMetadata,
   UIGroupWithMembers,
 } from 'types'
 import { toDate } from 'util/date'
@@ -44,5 +47,19 @@ export function toMemberFormValues({ member }: UIGroupMember): MemberFormValues 
     address: member.address,
     weight: parseInt(member.weight),
     addedAt: member.addedAt ? toDate(member.addedAt) : undefined,
+  }
+}
+
+export type MetadataMsgParams = {
+  admin: string
+  groupId: string
+  metadata: UIGroupMetadata
+}
+
+export function toMetadataMsgValue({ admin, groupId, metadata }: MetadataMsgParams) {
+  return {
+    admin,
+    groupId: Long.fromString(groupId),
+    metadata: JSON.stringify(metadata),
   }
 }

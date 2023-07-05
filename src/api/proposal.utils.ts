@@ -4,15 +4,20 @@ import type {
   ProposalSDKType,
   ProposalSendFormValues,
   ProposalStakeFormValues,
+  ProposalUpdateGroupFormValues,
   UIProposal,
   Vote,
   VoteSDKType,
 } from 'types'
 import { toDate } from 'util/date'
 import { throwError } from 'util/errors'
+import { clearEmptyStr } from 'util/helpers'
 import { getProposalMetadata } from 'util/validation'
 
 import { msgSend } from './bank.messages'
+import { msgUpdateGroupMetadataProposal } from './group.messages'
+import { msgUpdateGroupMembersProposal } from './member.messages'
+import { msgUpdateDecisionPolicyProposal } from './policy.messages'
 import {
   msgStakingClaim,
   msgStakingDelegate,
@@ -25,12 +30,18 @@ import {
   isRedelegateValues,
   isUndelegateValues,
 } from './staking.utils'
+import {
+  isDecisionPolicyValues,
+  isMembersValues,
+  isMetadataValues,
+} from './update-group.utils'
 
 type ProposalData = {
   denom: string
   groupPolicyAddress: string
   title: string
   summary: string
+  groupId: string
 }
 
 export function proposalActionsToMsgs(
@@ -43,6 +54,9 @@ export function proposalActionsToMsgs(
     }
     if (isStakeProposal(values)) {
       return stakeValuesToMsg(values, data) as unknown as Any // TODO
+    }
+    if (isGroupUpdateProposal(values)) {
+      return groupUpdateValuesToMsg(values, data) as unknown as Any // TODO
     }
     throwError(`Unknown proposal action: ${JSON.stringify(values, null, 2)}`)
   })
@@ -160,4 +174,46 @@ function stakeValuesToMsg(values: ProposalStakeFormValues, data: ProposalData) {
     })
   }
   throwError('Unknown stake type')
+}
+
+function isGroupUpdateProposal(
+  values: ProposalAction['values'],
+): values is ProposalUpdateGroupFormValues {
+  return 'updateGroupType' in values
+}
+
+function groupUpdateValuesToMsg(
+  values: ProposalUpdateGroupFormValues,
+  data: ProposalData,
+) {
+  if (isDecisionPolicyValues(values)) {
+    return msgUpdateDecisionPolicyProposal({
+      admin: data.groupPolicyAddress,
+      policyAddress: data.groupPolicyAddress,
+      percentage: clearEmptyStr(values.percentage),
+      threshold: clearEmptyStr(values.threshold),
+      policyType: values.policyType,
+      votingWindow: values.votingWindow,
+    })
+  }
+  if (isMembersValues(values)) {
+    return msgUpdateGroupMembersProposal({
+      admin: data.groupPolicyAddress,
+      groupId: data.groupId,
+      members: values.members,
+    })
+  }
+  if (isMetadataValues(values)) {
+    return msgUpdateGroupMetadataProposal({
+      admin: data.groupPolicyAddress,
+      groupId: data.groupId,
+      metadata: {
+        name: values.name,
+        description: values.description,
+        forumLink: values.forumLink,
+        other: values.otherMetadata,
+      },
+    })
+  }
+  throwError('Unknown group update type')
 }

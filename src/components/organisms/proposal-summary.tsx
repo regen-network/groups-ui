@@ -24,8 +24,9 @@ import {
   Text,
 } from '@/atoms'
 import { JSONDisplay } from '@/molecules/json-display'
+import { SendReview } from '@/molecules/proposal-send-review'
+import { StakeReview } from '@/molecules/proposal-stake-review'
 import { VoteButtons } from '@/molecules/vote-buttons'
-import { SendReview, StakeReview } from '@/organisms/proposal-review'
 
 import { VotesGraph } from './votes-graph'
 
