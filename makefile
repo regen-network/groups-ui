@@ -1,11 +1,11 @@
 CHAIN_HOME=$(shell pwd)/local-ledger/.regen
-CHAIN_ID=regenlocal
+CHAIN_ID=regen-local
 COIN_DENOM=uregen
 GENESIS_ACCT_ADDR=regen1kdzkazludrnmnzchcxgs6znsjph5ugx4u45w4n
 GENESIS_ACCT_NAME=alice
 LEDGER=$(shell pwd)/local-ledger/regen
 LEDGER_BRANCH=v5.1.0
-MONIKER=regenlocal1
+MONIKER=regen-local-1
 USER_ADDR=regen106ljn6kds9vegaux0w4jnend97fdm50yx6le6y
 USER_NAME=user1
 
@@ -36,7 +36,7 @@ install-local-ledger:
 
 .PHONY: local-clean
 local-clean:
-	rm -rf $(CHAIN_HOME) && rm -rf $(HOME)/.regenlocal
+	rm -rf $(CHAIN_HOME) && rm -rf $(HOME)/local-ledger
 
 .PHONY: local-keys
 local-keys:
