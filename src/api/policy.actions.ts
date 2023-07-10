@@ -1,3 +1,4 @@
+import { PageRequest } from '@osmonauts/helpers'
 import Long from 'long'
 
 import { throwError } from 'util/errors'
@@ -32,6 +33,7 @@ export async function fetchGroupPolicies(groupId?: string | Long) {
   try {
     const { group_policies } = await Query.groups.groupPoliciesByGroup({
       groupId: groupId instanceof Long ? groupId : Long.fromString(groupId),
+      pagination: { countTotal: true } as PageRequest,
     })
     return group_policies.map(toUIGroupPolicy)
   } catch (error) {

@@ -1,4 +1,9 @@
 import { cosmos } from '@regen-network/api'
+import {
+  PercentageDecisionPolicy,
+  ThresholdDecisionPolicy,
+} from '@regen-network/api/types/codegen/cosmos/group/v1/types'
+import { Any } from '@regen-network/api/types/codegen/google/protobuf/any'
 import Long from 'long'
 
 import { GroupPolicyFormValues } from 'types'
@@ -121,7 +126,7 @@ export function encodeDecisionPolicy({
         percentage: numToPercentStr(percentage),
         windows,
       }).finish(),
-    }
+    } as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any
   } else if (policyType === 'threshold') {
     if (!threshold) throwError('Must provide threshold value')
     return {
@@ -130,7 +135,7 @@ export function encodeDecisionPolicy({
         threshold: threshold.toString(),
         windows,
       }).finish(),
-    }
+    } as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any
   } else {
     throwError('Invalid policy type: ' + policyType)
   }
