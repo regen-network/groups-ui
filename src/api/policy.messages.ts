@@ -1,4 +1,4 @@
-import { cosmos } from '@regen-network/api'
+import { cosmos, cosmos } from '@regen-network/api'
 import type {
   MsgCreateGroupPolicyEncoded,
   MsgUpdateGroupPolicyDecisionPolicyEncoded,
