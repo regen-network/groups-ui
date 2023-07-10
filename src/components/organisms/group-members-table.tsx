@@ -1,10 +1,13 @@
 import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import type { MemberFormValues, UIGroupMember } from 'types'
+import { GROUP_WITH_POLICY_ADMIN_TOOLTIP } from 'util/constants'
 import { formatDate } from 'util/date'
 import { defaultMemberFormValues } from 'util/form.defaults'
 import { isBech32Address } from 'util/validation'
 
+import { ROUTE_PATH } from 'routes'
 import { toMemberFormValues } from 'api/group.utils'
 import { useBoolean, useBreakpointValue, useColorModeValue } from 'hooks/chakra-hooks'
 
@@ -16,6 +19,7 @@ import {
   Flex,
   Input,
   NumberInput,
+  QuestionTooltip,
   Table,
   TableContainer,
   Tbody,
@@ -35,8 +39,17 @@ import { NoMemberIcon } from 'assets/tsx'
 export type GroupMembersTableProps = {
   members: UIGroupMember[]
   onSave: (vals: MemberFormValues[]) => Promise<boolean>
+  policyAsGroupAdmin?: boolean
+  groupId: string
 }
-export const GroupMembersTable = ({ members = [], onSave }: GroupMembersTableProps) => {
+
+export const GroupMembersTable = ({
+  members = [],
+  onSave,
+  policyAsGroupAdmin,
+  groupId,
+}: GroupMembersTableProps) => {
+  const navigate = useNavigate()
   const [isEdit, setEdit] = useBoolean(false)
   const [submitting, setSubmitting] = useState(false)
   const [newMemberAddr, setNewMemberAddr] = useState('')
@@ -64,14 +77,34 @@ export const GroupMembersTable = ({ members = [], onSave }: GroupMembersTablePro
   }
 
   async function handleSave() {
-    const members = Object.values(membersToUpdate)
-    if (!members.length) return
-    setSubmitting(true)
-    const success = await onSave(members)
-    setSubmitting(false)
-    if (success) {
-      resetState()
-      setEdit.off()
+    const membersToUpdateValues = Object.values(membersToUpdate)
+    if (policyAsGroupAdmin) {
+      const membersToUpdateAddresses = Object.keys(membersToUpdate)
+      navigate(ROUTE_PATH.proposalCreate(groupId), {
+        state: {
+          newProposalType: 'update-group',
+          newUpdateGroupProposalValues: [
+            {
+              updateGroupType: 'members',
+              members: [
+                ...members
+                  .map(toMemberFormValues)
+                  .filter((m) => !membersToUpdateAddresses.includes(m.address)),
+                ...membersToUpdateValues,
+              ],
+            },
+          ],
+        },
+      })
+    } else {
+      if (!membersToUpdateValues.length) return
+      setSubmitting(true)
+      const success = await onSave(membersToUpdateValues)
+      setSubmitting(false)
+      if (success) {
+        resetState()
+        setEdit.off()
+      }
     }
   }
 
@@ -160,14 +193,25 @@ export const GroupMembersTable = ({ members = [], onSave }: GroupMembersTablePro
           )}
         </AnimatePresence>
         {hasMembers && (
-          <Button
-            variant={isEdit ? 'solid' : 'outline'}
-            onClick={isEdit ? handleSave : setEdit.toggle}
-            loadingText="Saving"
-            isLoading={submitting}
-          >
-            {isEdit ? 'Save Changes' : 'Edit Members'}
-          </Button>
+          <>
+            <Button
+              variant={isEdit ? 'solid' : 'outline'}
+              onClick={isEdit ? handleSave : setEdit.toggle}
+              loadingText="Saving"
+              isLoading={submitting}
+            >
+              {isEdit
+                ? policyAsGroupAdmin
+                  ? 'Create Proposal'
+                  : 'Save Changes'
+                : 'Edit Members'}
+            </Button>
+            {isEdit && policyAsGroupAdmin && (
+              <Box ml={2}>
+                <QuestionTooltip label={GROUP_WITH_POLICY_ADMIN_TOOLTIP} />
+              </Box>
+            )}
+          </>
         )}
       </TableTitlebar>
       {!hasMembers && (

@@ -1,3 +1,4 @@
+import { cosmos } from '@regen-network/api'
 import type {
   MsgCreateGroupPolicyEncoded,
   MsgUpdateGroupPolicyDecisionPolicyEncoded,
@@ -75,6 +76,37 @@ export function msgUpdateDecisionPolicy({
   return {
     typeUrl: '/cosmos.group.v1.MsgUpdateGroupPolicyDecisionPolicy',
     value: encodedMsg,
+  }
+}
+
+export function msgUpdateDecisionPolicyProposal({
+  admin,
+  policyAddress,
+  percentage,
+  threshold,
+  policyType,
+  votingWindow,
+}: {
+  admin: string
+  percentage?: number
+  policyAddress: string
+  policyType: GroupPolicyFormValues['policyType']
+  threshold?: number
+  votingWindow: number
+}) {
+  const value = cosmos.group.v1.MsgUpdateGroupPolicyDecisionPolicy.encode({
+    admin,
+    decisionPolicy: encodeDecisionPolicy({
+      percentage,
+      policyType,
+      threshold,
+      votingWindow,
+    }),
+    groupPolicyAddress: policyAddress,
+  }).finish()
+  return {
+    value,
+    typeUrl: '/cosmos.group.v1.MsgUpdateGroupPolicyDecisionPolicy',
   }
 }
 

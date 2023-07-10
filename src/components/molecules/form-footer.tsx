@@ -5,6 +5,7 @@ import { useColorModeValue } from 'hooks/chakra-hooks'
 
 import { AnimatePresence, FadeIn } from '@/animations'
 import { Box, Button, Container, HStack, IconButton } from '@/atoms'
+import { QuestionTooltip } from '@/atoms/question-tooltip'
 
 import { BackIcon, ForwardIcon } from 'assets/tsx'
 
@@ -65,7 +66,13 @@ export function useFormFooter({ btnText, onPrev, onNext }: FormFooterState): voi
   }, [btnText, onPrev, onNext, setFooterActions])
 }
 
-export const FormFooter = ({ isSubmitting }: { isSubmitting?: boolean }) => {
+export const FormFooter = ({
+  isSubmitting,
+  tooltip,
+}: {
+  isSubmitting?: boolean
+  tooltip?: string
+}) => {
   const [{ onNext, onPrev, btnText, submitRefs }, setFooterActions] =
     useAtom(FormFooterAtom)
   const hasNavButtons = Boolean(onPrev || onNext)
@@ -128,18 +135,25 @@ export const FormFooter = ({ isSubmitting }: { isSubmitting?: boolean }) => {
               )}
             </HStack>
           </AnimatePresence>
-          <Button
-            aria-label="Submit"
-            size="lg"
-            isLoading={isSubmitting}
-            minW="60"
-            onClick={(e) => {
-              e.preventDefault()
-              handleSubmitAll()
-            }}
-          >
-            {btnText || 'Submit'}
-          </Button>
+          <Box>
+            {tooltip && (
+              <Box mr={5} display="inline">
+                <QuestionTooltip label={tooltip} />
+              </Box>
+            )}
+            <Button
+              aria-label="Submit"
+              size="lg"
+              isLoading={isSubmitting}
+              minW="60"
+              onClick={(e) => {
+                e.preventDefault()
+                handleSubmitAll()
+              }}
+            >
+              {btnText || 'Submit'}
+            </Button>
+          </Box>
         </HStack>
       </Container>
     </Box>

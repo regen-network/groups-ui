@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import type {
   GroupFormKeys,
@@ -6,7 +7,7 @@ import type {
   GroupPolicyFormValues,
   GroupWithPolicyFormValues,
 } from 'types'
-import { SPACING } from 'util/constants'
+import { GROUP_WITH_POLICY_ADMIN_TOOLTIP, SPACING } from 'util/constants'
 
 import { ROUTE_PATH } from 'routes'
 import { useSteps } from 'hooks/chakra-hooks'
@@ -35,6 +36,8 @@ export function GroupCRUDTemplate({
   submit,
   steps,
   text,
+  policyAsGroupAdmin = false,
+  policyAsPolicyAdmin = false,
 }: {
   disabledGroupFormFields?: GroupFormKeys[]
   initialGroupFormValues: GroupFormValues
@@ -47,7 +50,10 @@ export function GroupCRUDTemplate({
     finished: string
     submitBtn?: string
   }
+  policyAsGroupAdmin?: boolean
+  policyAsPolicyAdmin?: boolean
 }) {
+  const navigate = useNavigate()
   const { activeStep, nextStep, prevStep } = useSteps({
     initialStep: 0,
   })
@@ -58,8 +64,37 @@ export function GroupCRUDTemplate({
   const { threshold, votingWindow, percentage, policyType } = initialPolicyFormValues
 
   function handleGroupSubmit(values: GroupFormValues) {
-    setGroupValues(values)
-    nextStep()
+    if (policyAsGroupAdmin && newGroupId) {
+      const newUpdateGroupProposalValues = []
+      for (const _prop in values) {
+        const prop = _prop as keyof GroupFormValues
+        if (initialGroupFormValues[prop] !== values[prop]) {
+          if (['name', 'description', 'forumLink', 'otherMetadata'].includes(prop)) {
+            const { name, description, forumLink, otherMetadata } = values
+            newUpdateGroupProposalValues.push({
+              name,
+              description,
+              forumLink,
+              otherMetadata,
+              updateGroupType: 'metadata',
+            })
+          }
+          if (prop === 'members') {
+            newUpdateGroupProposalValues.push({
+              members: values.members,
+              updateGroupType: 'members',
+            })
+          }
+        }
+      }
+
+      navigate(ROUTE_PATH.proposalCreate(newGroupId), {
+        state: { newProposalType: 'update-group', newUpdateGroupProposalValues },
+      })
+    } else {
+      setGroupValues(values)
+      nextStep()
+    }
   }
 
   function handlePrev() {
@@ -67,19 +102,49 @@ export function GroupCRUDTemplate({
     prevStep()
   }
 
+  function handleNext() {
+    setPriorStep(activeStep)
+    nextStep()
+  }
+
   async function handleSubmit(policyValues: GroupPolicyFormValues) {
-    setSubmitting(true)
-    const success = await submit({
-      ...policyValues,
-      ...groupValues,
-    })
-    setSubmitting(false)
-    if (success) nextStep()
+    if (policyAsPolicyAdmin && newGroupId) {
+      navigate(ROUTE_PATH.proposalCreate(newGroupId), {
+        state: {
+          newProposalType: 'update-group',
+          newUpdateGroupProposalValues: [
+            {
+              votingWindow: policyValues.votingWindow,
+              policyType: policyValues.policyType,
+              threshold: policyValues.threshold,
+              percentage: policyValues.percentage,
+              updateGroupType: 'decision-policy',
+            },
+          ],
+        },
+      })
+    } else {
+      setSubmitting(true)
+      const success = await submit({
+        ...policyValues,
+        ...groupValues,
+      })
+      setSubmitting(false)
+      if (success) nextStep()
+    }
   }
 
   useFormFooter({
+    onNext: activeStep === 0 && steps.length > 2 ? handleNext : undefined,
     onPrev: activeStep === 1 ? handlePrev : undefined,
-    btnText: activeStep === 0 ? 'Next' : activeStep === 1 ? text.submitBtn : undefined,
+    btnText:
+      activeStep === 0
+        ? policyAsGroupAdmin
+          ? 'Create Proposal'
+          : 'Next'
+        : activeStep === 1
+        ? text.submitBtn
+        : undefined,
   })
 
   function renderStep() {
@@ -126,7 +191,15 @@ export function GroupCRUDTemplate({
         </Heading>
         <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
       </PageContainer>
-      <FormFooter isSubmitting={submitting} />
+      <FormFooter
+        isSubmitting={submitting}
+        tooltip={
+          (activeStep === 0 && policyAsGroupAdmin) ||
+          (activeStep === 1 && policyAsPolicyAdmin)
+            ? GROUP_WITH_POLICY_ADMIN_TOOLTIP
+            : undefined
+        }
+      />
     </Flex>
   )
 }

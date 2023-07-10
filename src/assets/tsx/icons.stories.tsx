@@ -9,9 +9,10 @@ import { GroupsIcon } from './groups-icon'
 import { NoMemberIcon } from './no-member-icon'
 import { NoPolicyIcon } from './no-policy-icon'
 import * as ReactIcons from './react-icons'
+import { UpdateGroupIcon } from './update-group-icon'
 
 /** Import component and add here to display */
-const customIcons = [GroupsIcon, NoMemberIcon, NoPolicyIcon]
+const customIcons = [GroupsIcon, NoMemberIcon, NoPolicyIcon, UpdateGroupIcon]
 const reactIcons = [GroupsIcon, ...Object.values(ReactIcons)]
 const chakraIcons = Object.values(ChakraIcons)
 

@@ -10,6 +10,8 @@ import type {
   UndelegateFormValues,
 } from 'types'
 
+import { DecisionPolicyFormValues } from '@/organisms/update-group-decision-policy-form'
+
 export const defaultMemberFormValues = (): MemberFormValues => ({
   address: '',
   weight: 1,
@@ -67,6 +69,11 @@ export const defaultRedelegateFormValues: RedelegateFormValues = {
 export const defaultClaimFormValues: ClaimFormValues = {
   validator: '',
   stakeType: 'claim',
+}
+
+export const defaultDecisionPolicyFormValues: DecisionPolicyFormValues = {
+  ...defaultGroupPolicyFormValues,
+  updateGroupType: 'decision-policy',
 }
 
 export const defaultStakeFormValues: ProposalStakeFormValues = {

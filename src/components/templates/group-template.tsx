@@ -33,6 +33,8 @@ export const GroupTemplate = ({
   balances,
   onExecute,
   proposals,
+  policyAsGroupAdmin,
+  policyAsPolicyAdmin,
 }: {
   group: UIGroup
   policies?: UIGroupPolicyInfo[]
@@ -43,6 +45,8 @@ export const GroupTemplate = ({
     submitted: UIProposal[]
     history: UIProposal[]
   }
+  policyAsGroupAdmin?: boolean
+  policyAsPolicyAdmin?: boolean
 }) => {
   const { name, description, forumLink } = group.metadata
   return (
@@ -85,6 +89,8 @@ export const GroupTemplate = ({
                       <ProposalActionButtons
                         groupId={group.id.toString()}
                         btnProps={{ flex: 1 }}
+                        policyAsGroupAdmin={policyAsGroupAdmin}
+                        policyAsPolicyAdmin={policyAsPolicyAdmin}
                       />
                     </HStack>
                   </Td>

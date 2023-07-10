@@ -1,10 +1,11 @@
+import { cosmos } from '@regen-network/api'
 import type { MsgCreateGroupWithPolicyEncoded } from '@regen-network/api/types/codegen/cosmos/group/v1/tx'
-import Long from 'long'
 
-import type { GroupWithPolicyFormValues, UIGroupMetadata } from 'types'
+import type { GroupWithPolicyFormValues } from 'types'
 import { clearEmptyStr } from 'util/helpers'
 
 import { GroupMsgWithTypeUrl } from './cosmosgroups'
+import { MetadataMsgParams, toMetadataMsgValue } from './group.utils'
 import { encodeDecisionPolicy } from './policy.messages'
 
 export function msgCreateGroupWithPolicy(values: GroupWithPolicyFormValues) {
@@ -54,18 +55,16 @@ export function msgCreateGroupWithPolicy(values: GroupWithPolicyFormValues) {
   }
 }
 
-export function msgUpdateGroupMetadata({
-  admin,
-  metadata,
-  groupId,
-}: {
-  admin: string
-  groupId: string
-  metadata: UIGroupMetadata
-}) {
-  return GroupMsgWithTypeUrl.updateGroupMetadata({
-    admin,
-    groupId: Long.fromString(groupId),
-    metadata: JSON.stringify(metadata),
-  })
+export function msgUpdateGroupMetadata(params: MetadataMsgParams) {
+  return GroupMsgWithTypeUrl.updateGroupMetadata(toMetadataMsgValue(params))
+}
+
+export function msgUpdateGroupMetadataProposal(params: MetadataMsgParams) {
+  const value = cosmos.group.v1.MsgUpdateGroupMetadata.encode(
+    toMetadataMsgValue(params),
+  ).finish()
+  return {
+    value,
+    typeUrl: '/cosmos.group.v1.MsgUpdateGroupMetadata',
+  }
 }
