@@ -1,3 +1,4 @@
+import { PageRequest } from '@osmonauts/helpers'
 import { Event } from '@regen-network/api/types/codegen/tendermint/abci/types'
 import Long from 'long'
 
@@ -57,7 +58,7 @@ export async function fetchGroupsByMember(address?: string): Promise<UIGroup[]> 
   try {
     const { groups } = await Query.groups.groupsByMember({
       address,
-      // pagination: PageRequest.encode({key}).finish(),
+      pagination: { countTotal: true } as PageRequest,
     })
     return Promise.all(groups.map(toUIGroup))
   } catch (error) {
@@ -71,6 +72,7 @@ export async function fetchGroupsByAdmin(admin?: string): Promise<UIGroup[]> {
   try {
     const { groups } = await Query.groups.groupsByAdmin({
       admin,
+      pagination: { countTotal: true } as PageRequest,
     })
     return Promise.all(groups.map(toUIGroup))
   } catch (error) {
