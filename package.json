@@ -31,6 +31,7 @@
     "@osmonauts/helpers": "^0.7.0",
     "@regen-network/api": "^1.0.0-alpha3",
     "@tanstack/react-query": "^4.29.5",
+    "@tanstack/react-query-devtools": "^4.29.19",
     "@tanstack/react-table": "^8.9.1",
     "chakra-react-select": "^4.4.3",
     "chakra-ui-steps": "^2.1.0",
