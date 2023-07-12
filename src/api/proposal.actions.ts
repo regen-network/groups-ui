@@ -1,3 +1,4 @@
+import { PageRequest } from '@osmonauts/helpers'
 import { Event } from '@regen-network/api/types/codegen/tendermint/abci/types'
 import Long from 'long'
 
@@ -22,7 +23,10 @@ export async function fetchProposalsByGroupPolicy(address?: string) {
   if (!Query.groups) throwError('Wallet not initialized')
   if (!address) throwError('Address is required')
   try {
-    const { proposals } = await Query.groups.proposalsByGroupPolicy({ address })
+    const { proposals } = await Query.groups.proposalsByGroupPolicy({
+      address,
+      pagination: { countTotal: true } as PageRequest,
+    })
     return Promise.all(proposals.map(toUIProposal))
   } catch (error) {
     throwError(error)
@@ -50,6 +54,7 @@ export async function fetchVotesByProposal(proposalId?: string) {
   try {
     const { votes } = await Query.groups.votesByProposal({
       proposalId: Long.fromString(proposalId),
+      pagination: { countTotal: true } as PageRequest,
     })
     return votes.map(toUIVote)
   } catch (error) {
@@ -140,7 +145,10 @@ export async function fetchVotesByAddress(address?: string) {
   if (!Query.groups) throwError('Wallet not initialized')
   if (!address) throwError('Address cannot be empty')
   try {
-    const { votes } = await Query.groups.votesByVoter({ voter: address })
+    const { votes } = await Query.groups.votesByVoter({
+      voter: address,
+      pagination: { countTotal: true } as PageRequest,
+    })
     return votes.map(toUIVote)
   } catch (error) {
     throwError(error)

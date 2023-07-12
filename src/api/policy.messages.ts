@@ -1,4 +1,4 @@
-import { cosmos, cosmos } from '@regen-network/api'
+import { cosmos } from '@regen-network/api'
 import type {
   MsgCreateGroupPolicyEncoded,
   MsgUpdateGroupPolicyDecisionPolicyEncoded,
@@ -138,7 +138,7 @@ export function encodeDecisionPolicy({
     return groupV1.PercentageDecisionPolicy.toProtoMsg({
       percentage: numToPercentStr(percentage),
       windows,
-    })
+    }) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any
   } else if (policyType === 'threshold') {
     if (!threshold) throwError('Must provide threshold value')
     // NOTE: We use the encoded msg type to support amino signing with nested types.
@@ -146,7 +146,7 @@ export function encodeDecisionPolicy({
     return groupV1.ThresholdDecisionPolicy.toProtoMsg({
       threshold: threshold.toString(),
       windows,
-    })
+    }) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any
   } else {
     throwError('Invalid policy type: ' + policyType)
   }
