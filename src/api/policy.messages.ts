@@ -11,6 +11,11 @@ import { throwError } from 'util/errors'
 import { clearEmptyStr, numToPercentStr } from 'util/helpers'
 
 import { groupV1 } from './cosmosgroups'
+import {
+  PercentageDecisionPolicy,
+  ThresholdDecisionPolicy
+} from "@regen-network/api/types/codegen/cosmos/group/v1/types";
+import {Any} from "@regen-network/api/src/codegen/google/protobuf/any";
 
 export interface CreateGroupPolicyValues extends GroupPolicyFormValues {
   groupId: string
@@ -101,7 +106,7 @@ export function msgUpdateDecisionPolicyProposal({
       policyType,
       threshold,
       votingWindow,
-    }),
+    }) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any,
     groupPolicyAddress: policyAddress,
   }).finish()
   return {
@@ -138,7 +143,7 @@ export function encodeDecisionPolicy({
     return groupV1.PercentageDecisionPolicy.toProtoMsg({
       percentage: numToPercentStr(percentage),
       windows,
-    }) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any
+    })
   } else if (policyType === 'threshold') {
     if (!threshold) throwError('Must provide threshold value')
     // NOTE: We use the encoded msg type to support amino signing with nested types.
@@ -146,7 +151,7 @@ export function encodeDecisionPolicy({
     return groupV1.ThresholdDecisionPolicy.toProtoMsg({
       threshold: threshold.toString(),
       windows,
-    }) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any
+    })
   } else {
     throwError('Invalid policy type: ' + policyType)
   }
