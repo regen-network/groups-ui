@@ -1,0 +1,21 @@
+fragment ProposalItem on Proposal {
+  type
+  blockHeight
+  txIdx
+  msgIdx
+  chainNum
+  timestamp
+  txHash
+  proposalId
+  status
+  groupPolicyAddress
+  metadata
+  proposers
+  submitTime
+  groupVersion
+  groupPolicyAddress
+  finalTallyResult
+  votingPeriodEnd
+  executorResult
+  messages
+}

@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client'
 import { ReactQueryProvider } from 'react-query-provider'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ThemeProvider } from 'theme'
+import { ApolloProvider } from '@apollo/client'
+import { apolloClient } from 'clients/apolloClient'
 
 import App from './App'
 
@@ -15,9 +17,11 @@ root.render(
   <React.StrictMode>
     <ReactQueryProvider>
       <ReactQueryDevtools initialIsOpen={false} />
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
+      <ApolloProvider client={apolloClient}>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </ApolloProvider>
     </ReactQueryProvider>
   </React.StrictMode>,
 )

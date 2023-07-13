@@ -13,9 +13,11 @@
     "type-check": "tsc",
     "storybook": "storybook dev -p 6006",
     "storybook-clean": "rm -rf ./node_modules/.cache/storybook",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "graphql:codegen-indexer": "graphql-codegen --config indexer-codegen.yml"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.17",
     "@chakra-ui/icons": "^2.0.19",
     "@chakra-ui/react": "^2.7.0",
     "@cosmjs/amino": "^0.31.0",
@@ -38,6 +40,7 @@
     "chart.js": "^4.3.0",
     "dayjs": "^1.11.8",
     "framer-motion": "^10.12.8",
+    "graphql": "^16.7.1",
     "ipfs-http-client": "^60.0.0",
     "jotai": "^2.1.1",
     "react": "^18.2.0",
@@ -55,6 +58,10 @@
     "@babel/core": "^7.21.8",
     "@chakra-ui/cli": "^2.4.1",
     "@chakra-ui/storybook-addon": "^4.0.17",
+    "@graphql-codegen/cli": "^4.0.1",
+    "@graphql-codegen/client-preset": "^4.0.1",
+    "@graphql-codegen/introspection": "^4.0.0",
+    "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@keplr-wallet/types": "^0.11.59",
     "@storybook/addon-actions": "^7.0.18",
     "@storybook/addon-essentials": "^7.0.18",
