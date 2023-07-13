@@ -8,7 +8,8 @@ import { logError, throwError } from 'util/errors'
 
 import { fetchValidators } from 'api/staking.actions'
 
-import { groupAminoConverters } from '../api/group.amino' // TODO: fix amino converters in regen-js
+// TODO: remove amino converter workaround #105
+import { groupAminoConverters } from '../api/group.amino'
 
 import { Chain } from './chain.store'
 import { Query } from './query.store'
@@ -38,20 +39,25 @@ export async function bootstrapKeplr() {
   try {
     await keplr.experimentalSuggestChain(Chain.active)
     await keplr.enable(chainId)
+
     // NOTE: We use "only amino" to support amino signing with ledger devices.
     // Using "only amino" also ensures messages are human-readable within keplr.
     const offlineSigner = await keplr.getOfflineSignerOnlyAmino(chainId)
+
     const [account] = await offlineSigner.getAccounts()
 
-    // TODO: fix amino converters in regen-js
+    // TODO: remove amino converter workaround #105
+    // NOTE: We use the cosmos signing client that includes protobuf and amino
+    // encoding for all cosmos modules included within @regen-network/api
     // const signingClient = await getSigningCosmosClient({
     //   rpcEndpoint: Chain.active.rpc,
     //   signer: offlineSigner,
     // })
 
-    // TODO: fix amino converters in regen-js
+    // TODO: remove amino converter workaround #105
     const aminoConverters = { ...cosmosAminoConverters, ...groupAminoConverters }
 
+    // TODO: remove amino converter workaround #105
     // NOTE: We use signing stargate client so that we can set amino types
     const registry = new Registry(cosmosProtoRegistry)
     const signingClient = await SigningStargateClient.connectWithSigner(
