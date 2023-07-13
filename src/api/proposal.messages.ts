@@ -1,5 +1,4 @@
 // import { Exec } from '@regen-network/api/types/codegen/cosmos/group/v1/tx'
-// import type { MsgSubmitProposalEncoded } from '@regen-network/api/types/codegen/cosmos/group/v1/tx'
 import type { Any } from 'types'
 
 import { GroupMsgWithTypeUrl } from './cosmosgroups'
@@ -26,21 +25,4 @@ export function msgSubmitProposal({
     metadata,
     proposers,
   })
-
-  // TODO: MsgSubmitProposalEncoded undefined
-
-  // NOTE: We use the encoded msg type to support amino signing with nested types.
-  // See https://github.com/osmosis-labs/telescope/issues/281
-  // const encodedMsg: MsgSubmitProposalEncoded = {
-  //   exec,
-  //   groupPolicyAddress,
-  //   messages,
-  //   metadata,
-  //   proposers,
-  // }
-  //
-  // return {
-  //   typeUrl: '/cosmos.group.v1.MsgSubmitProposal',
-  //   value: encodedMsg,
-  // }
 }

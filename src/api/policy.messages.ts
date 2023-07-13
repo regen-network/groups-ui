@@ -1,8 +1,13 @@
 import { cosmos } from '@regen-network/api'
+import { Any } from '@regen-network/api/src/codegen/google/protobuf/any'
 import type {
   MsgCreateGroupPolicyEncoded,
   MsgUpdateGroupPolicyDecisionPolicyEncoded,
 } from '@regen-network/api/types/codegen/cosmos/group/v1/tx'
+import {
+  PercentageDecisionPolicy,
+  ThresholdDecisionPolicy,
+} from '@regen-network/api/types/codegen/cosmos/group/v1/types'
 import Long from 'long'
 
 import { GroupPolicyFormValues } from 'types'
@@ -11,11 +16,6 @@ import { throwError } from 'util/errors'
 import { clearEmptyStr, numToPercentStr } from 'util/helpers'
 
 import { groupV1 } from './cosmosgroups'
-import {
-  PercentageDecisionPolicy,
-  ThresholdDecisionPolicy
-} from "@regen-network/api/types/codegen/cosmos/group/v1/types";
-import {Any} from "@regen-network/api/src/codegen/google/protobuf/any";
 
 export interface CreateGroupPolicyValues extends GroupPolicyFormValues {
   groupId: string

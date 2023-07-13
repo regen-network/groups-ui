@@ -38,12 +38,12 @@ export async function bootstrapKeplr() {
   try {
     await keplr.experimentalSuggestChain(Chain.active)
     await keplr.enable(chainId)
-    // NOTE: We use "auto" to support amino signing with ledger devices.
-    // const offlineSigner = await keplr.getOfflineSignerAuto(chainId)
     // NOTE: We use "only amino" to support amino signing with ledger devices.
     // Using "only amino" also ensures messages are human-readable within keplr.
     const offlineSigner = await keplr.getOfflineSignerOnlyAmino(chainId)
     const [account] = await offlineSigner.getAccounts()
+
+    // TODO: fix amino converters in regen-js
     // const signingClient = await getSigningCosmosClient({
     //   rpcEndpoint: Chain.active.rpc,
     //   signer: offlineSigner,
