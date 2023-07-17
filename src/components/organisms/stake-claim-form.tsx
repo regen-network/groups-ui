@@ -42,7 +42,6 @@ export const ClaimForm = (props: {
         required
         name="validator"
         label="Validator"
-        selected={items.find((i) => i.value === form.getValues().validator)}
         dropdownLabel="Select a validator"
         items={items}
       />

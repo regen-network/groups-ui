@@ -23,8 +23,9 @@ export const CoinBalanceTotalInfo = ({ coins }: { coins?: UICoin[] }) => {
               const coin = coins.find((c) => c.denom === selected?.label)
               if (coin) setActive(coin)
             }}
+            value={active?.denom}
             label={`${Math.max(coins.length - 1, 0)} other tokens`}
-            items={coins.map((c) => ({ label: c.denom, value: c.amount }))}
+            items={coins.map((c) => ({ label: c.denom, value: c.denom }))}
           />
         </Box>
       )}
