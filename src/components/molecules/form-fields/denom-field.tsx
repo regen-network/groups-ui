@@ -74,7 +74,7 @@ export const DenomField = ({ balances, ...fieldProps }: Props) => {
           }
         }}
         items={denoms.map((d) => ({ label: d, value: d }))}
-        selected={{ label: field.value, value: field.value }}
+        value={field.value}
       />
     </FieldControl>
   )
