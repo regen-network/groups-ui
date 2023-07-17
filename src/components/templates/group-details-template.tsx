@@ -28,6 +28,7 @@ export const GroupDetailsTemplate = ({
   name,
   onMembersSave,
   policies,
+  policyAsGroupAdmin,
 }: {
   admin: string
   description?: string
@@ -36,6 +37,7 @@ export const GroupDetailsTemplate = ({
   name: string
   onMembersSave: GroupMembersTableProps['onSave']
   policies: UIGroupPolicyInfo[]
+  policyAsGroupAdmin?: boolean
 }) => {
   return (
     <PageContainer>
@@ -64,7 +66,12 @@ export const GroupDetailsTemplate = ({
           <Text>{admin}</Text>
         </HStack>
         <GroupPolicyTable policies={policies} groupId={id} />
-        <GroupMembersTable members={members} onSave={onMembersSave} />
+        <GroupMembersTable
+          members={members}
+          onSave={onMembersSave}
+          policyAsGroupAdmin={policyAsGroupAdmin}
+          groupId={id}
+        />
       </Stack>
     </PageContainer>
   )

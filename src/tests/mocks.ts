@@ -26,5 +26,11 @@ export function mockProposal(
       title: `Proposal ${i}`,
       summary: `Proposal ${i} summary`,
     },
+    finalTallyResult: {
+      abstainCount: '0',
+      noCount: '0',
+      noWithVetoCount: '0',
+      yesCount: '0',
+    },
   }
 }

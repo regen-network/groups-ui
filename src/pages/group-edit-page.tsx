@@ -1,22 +1,14 @@
 import { redirect, useParams } from 'react-router-dom'
 
-import type {
-  GroupFormValues,
-  GroupPolicyFormValues,
-  GroupWithPolicyFormValues,
-} from 'types'
+import type { GroupWithPolicyFormValues } from 'types'
 import { logError, throwError } from 'util/errors'
-import {
-  DEFAULT_MEMBER_WEIGHT,
-  DEFAULT_VOTING_WINDOW,
-  defaultGroupPolicyFormValues,
-} from 'util/form.defaults'
-import { clearEmptyStr, percentStrToNum } from 'util/helpers'
+import { clearEmptyStr } from 'util/helpers'
+import { getGroupPolicyValues, getGroupValues } from 'util/initialValues'
+import { getPolicyAsGroupAdmin, getPolicyAsPolicyAdmin } from 'util/policyAdmin'
 
 import { msgUpdateGroupMetadata } from 'api/group.messages'
 import { msgUpdateGroupMembers } from 'api/member.messages'
 import { msgCreateGroupPolicy, msgUpdateDecisionPolicy } from 'api/policy.messages'
-import { isPercentagePolicy, isThresholdPolicy } from 'api/policy.utils'
 import { useGroup, useGroupMembers, useGroupPolicies } from 'hooks/use-query'
 import { useTxToasts } from 'hooks/use-toasts'
 import { signAndBroadcast, Wallet } from 'store/wallet.store'
@@ -39,37 +31,10 @@ export default function GroupEdit() {
     return null
   }
 
-  const initialGroupValues: GroupFormValues = {
-    admin: group.admin,
-    members:
-      members?.map(({ member }) => ({
-        address: member?.address,
-        weight: parseInt(member?.weight || DEFAULT_MEMBER_WEIGHT.toString()),
-        metadata: member?.metadata,
-      })) || [],
-    name: group.metadata.name,
-    policyAsAdmin: policy && policy.address === group.admin ? 'true' : 'false',
-    description: group.metadata.description,
-    forumLink: group.metadata.forumLink,
-    otherMetadata: group.metadata.other,
-  }
-
-  const decisionPolicy = policy?.decisionPolicy
-  const initialPolicyValues: GroupPolicyFormValues =
-    policy && decisionPolicy
-      ? {
-          threshold: isThresholdPolicy(decisionPolicy)
-            ? parseInt(decisionPolicy.threshold)
-            : undefined,
-          votingWindow: parseInt(
-            decisionPolicy?.windows?.votingPeriod || DEFAULT_VOTING_WINDOW.toString(),
-          ), //parseFloat(decisionPolicy.windows.voting_period),
-          percentage: isPercentagePolicy(policy?.decisionPolicy)
-            ? percentStrToNum(policy?.decisionPolicy.percentage)
-            : undefined,
-          policyType: isThresholdPolicy(decisionPolicy) ? 'threshold' : 'percentage',
-        }
-      : defaultGroupPolicyFormValues
+  const policyAsGroupAdmin = getPolicyAsGroupAdmin(group, policy)
+  const policyAsPolicyAdmin = getPolicyAsPolicyAdmin(policy)
+  const initialGroupValues = getGroupValues(group, members, policyAsGroupAdmin)
+  const initialPolicyValues = getGroupPolicyValues(policy?.decisionPolicy)
 
   const initialValues = {
     // combined for ease of iterating over
@@ -163,7 +128,7 @@ export default function GroupEdit() {
       initialGroupFormValues={initialGroupValues}
       initialPolicyFormValues={initialPolicyValues}
       text={{
-        submitBtn: 'Redeploy',
+        submitBtn: policyAsPolicyAdmin ? 'Create Proposal' : 'Redeploy',
         finished: 'You have successfully edited your group.',
       }}
       steps={[
@@ -172,6 +137,8 @@ export default function GroupEdit() {
         'Finished editing',
       ]}
       submit={handleSave}
+      policyAsGroupAdmin={policyAsGroupAdmin}
+      policyAsPolicyAdmin={policyAsPolicyAdmin}
     />
   )
 }
