@@ -49,7 +49,6 @@ export const RedelegateForm = (props: {
         required
         name="fromValidator"
         label="From validator"
-        selected={items.find((i) => i.value === form.getValues().fromValidator)}
         dropdownLabel="Select a validator"
         items={items}
       />
@@ -57,7 +56,6 @@ export const RedelegateForm = (props: {
         required
         name="toValidator"
         label="To validator"
-        selected={items.find((i) => i.value === form.getValues().toValidator)}
         dropdownLabel="Select a validator"
         items={items}
       />

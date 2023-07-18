@@ -5,7 +5,7 @@ import { SelectDropdown, type SelectDropdownProps } from '../select-dropdown'
 import { FieldControl, type FieldProps } from './field-control'
 
 type Props = FieldProps &
-  Omit<SelectDropdownProps, 'onChange'> & { dropdownLabel: string }
+  Omit<SelectDropdownProps, 'onChange' | 'value'> & { dropdownLabel: string }
 
 /** custom `Select` with controls for react-hook-form */
 export const SelectField = ({
@@ -15,7 +15,6 @@ export const SelectField = ({
   label,
   name,
   required,
-  selected,
 }: Props) => {
   const { control, getValues } = useFormContext()
   const {
@@ -45,7 +44,6 @@ export const SelectField = ({
             onChange(item.value)
           }
         }}
-        selected={selected}
       />
     </FieldControl>
   )

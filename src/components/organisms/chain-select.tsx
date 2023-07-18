@@ -18,7 +18,7 @@ export const ChainSelect = () => {
   return (
     <SelectDropdown
       label={active.chainId ? '' : 'Select a Chain'}
-      selected={CHAIN_ITEMS.find((item) => item.value === active.chainId)}
+      value={active.chainId}
       onChange={(newChain) => {
         if (newChain?.value) setActiveChain(newChain.value)
       }}

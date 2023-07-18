@@ -13,18 +13,21 @@ type OnSelectChange = (
 ) => void
 
 export type SelectDropdownProps = {
-  selected?: SelectItem
   onChange: OnSelectChange
   label: string
   items: SelectItem[]
+  value?: string
 }
 
 export const SelectDropdown = forwardRef((p: SelectDropdownProps, ref) => {
   return (
     <Select
+      chakraStyles={{
+        menu: (provided) => ({ ...provided, zIndex: 1000 }),
+      }}
       ref={ref}
       placeholder={p.label}
-      value={p.selected}
+      value={p.items.find((i) => p.value === i.value)}
       options={p.items}
       onChange={p.onChange}
     />
