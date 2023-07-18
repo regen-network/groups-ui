@@ -1,6 +1,11 @@
 import { MsgSend } from '@regen-network/api/src/codegen/cosmos/bank/v1beta1/tx'
 import { MsgWithdrawDelegatorReward } from '@regen-network/api/src/codegen/cosmos/distribution/v1beta1/tx'
 import {
+  MsgUpdateGroupMembers,
+  MsgUpdateGroupMetadata,
+  MsgUpdateGroupPolicyDecisionPolicy,
+} from '@regen-network/api/src/codegen/cosmos/group/v1/tx'
+import {
   MemberRequest,
   PercentageDecisionPolicy,
   ThresholdDecisionPolicy,
@@ -12,10 +17,18 @@ import {
 } from '@regen-network/api/src/codegen/cosmos/staking/v1beta1/tx'
 import { Any } from '@regen-network/api/src/codegen/google/protobuf/any'
 import type {
+  MsgCreateGroupPolicy,
+  MsgCreateGroupPolicyAmino,
   MsgCreateGroupWithPolicy,
   MsgCreateGroupWithPolicyAmino,
   MsgSubmitProposal,
   MsgSubmitProposalAmino,
+  MsgUpdateGroupMembers as MsgUpdateGroupMembersType,
+  MsgUpdateGroupMembersAmino,
+  MsgUpdateGroupMetadata as MsgUpdateGroupMetadataType,
+  MsgUpdateGroupMetadataAmino,
+  MsgUpdateGroupPolicyDecisionPolicy as MsgUpdateGroupPolicyDecisionPolicyType,
+  MsgUpdateGroupPolicyDecisionPolicyAmino,
   MsgVote,
   MsgVoteAmino,
 } from '@regen-network/api/types/codegen/cosmos/group/v1/tx'
@@ -30,11 +43,67 @@ export const MemberRequestToAmino = (message: MemberRequest): MemberRequestAmino
     weight: message.weight,
     metadata: message.metadata || undefined, // NOTE: added else undefined
   }
-  return output as MemberRequestAmino
+  return output
 }
 
 // TODO: remove amino converter workaround #105
 export const groupAminoConverters = {
+  '/cosmos.group.v1.MsgCreateGroupPolicy': {
+    aminoType: 'cosmos-sdk/MsgCreateGroupPolicy',
+    fromAmino: (object: MsgCreateGroupPolicyAmino): MsgCreateGroupPolicy => {
+      const output = {
+        admin: object.admin,
+        groupId: Long.fromString(object.group_id),
+        metadata: object.metadata || '',
+        decisionPolicy:
+          object !== null && object !== void 0 && object.decision_policy
+            ? object.decision_policy.type === 'cosmos-sdk/PercentageDecisionPolicy'
+              ? (Any.fromPartial({
+                  typeUrl: '/cosmos.group.v1.PercentageDecisionPolicy',
+                  value: PercentageDecisionPolicy.encode(
+                    PercentageDecisionPolicy.fromPartial(
+                      PercentageDecisionPolicy.fromAmino(object.decision_policy?.value),
+                    ),
+                  ).finish(),
+                }) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any)
+              : (Any.fromPartial({
+                  typeUrl: '/cosmos.group.v1.ThresholdDecisionPolicy',
+                  value: ThresholdDecisionPolicy.encode(
+                    ThresholdDecisionPolicy.fromPartial(
+                      ThresholdDecisionPolicy.fromAmino(object.decision_policy?.value),
+                    ),
+                  ).finish(),
+                }) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any)
+            : (Any.fromAmino(
+                object.decision_policy as AnyAmino,
+              ) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any),
+      }
+      return output
+    },
+    toAmino: (message: MsgCreateGroupPolicy): MsgCreateGroupPolicyAmino => {
+      const output = {
+        admin: message.admin,
+        group_id: message.groupId ? message.groupId.toString() : undefined,
+        metadata: message.metadata || undefined, // NOTE: added else undefined
+        decision_policy: message.decisionPolicy
+          ? message.decisionPolicy.typeUrl === '/cosmos.group.v1.PercentageDecisionPolicy'
+            ? {
+                type: 'cosmos-sdk/PercentageDecisionPolicy',
+                value: PercentageDecisionPolicy.toAmino(
+                  PercentageDecisionPolicy.decode(message.decisionPolicy.value),
+                ),
+              }
+            : {
+                type: 'cosmos-sdk/ThresholdDecisionPolicy',
+                value: ThresholdDecisionPolicy.toAmino(
+                  ThresholdDecisionPolicy.decode(message.decisionPolicy.value),
+                ),
+              }
+          : undefined,
+      }
+      return output
+    },
+  },
   '/cosmos.group.v1.MsgCreateGroupWithPolicy': {
     aminoType: 'cosmos-sdk/MsgCreateGroupWithPolicy',
     fromAmino: (object: MsgCreateGroupWithPolicyAmino): MsgCreateGroupWithPolicy => {
@@ -98,7 +167,7 @@ export const groupAminoConverters = {
               }
           : undefined,
       }
-      return output as MsgCreateGroupWithPolicyAmino
+      return output
     },
   },
   '/cosmos.group.v1.MsgSubmitProposal': {
@@ -147,6 +216,33 @@ export const groupAminoConverters = {
                     value: MsgWithdrawDelegatorReward.encode(
                       MsgWithdrawDelegatorReward.fromPartial(
                         MsgWithdrawDelegatorReward.fromAmino(msg.value),
+                      ),
+                    ).finish(),
+                  })
+                case 'cosmos-sdk/MsgUpdateGroupMembers':
+                  return Any.fromPartial({
+                    typeUrl: '/cosmos.group.v1.MsgUpdateGroupMembers',
+                    value: MsgUpdateGroupMembers.encode(
+                      MsgUpdateGroupMembers.fromPartial(
+                        MsgUpdateGroupMembers.fromAmino(msg.value),
+                      ),
+                    ).finish(),
+                  })
+                case 'cosmos-sdk/MsgUpdateGroupMetadata':
+                  return Any.fromPartial({
+                    typeUrl: '/cosmos.group.v1.MsgUpdateGroupMetadata',
+                    value: MsgUpdateGroupMetadata.encode(
+                      MsgUpdateGroupMetadata.fromPartial(
+                        MsgUpdateGroupMetadata.fromAmino(msg.value),
+                      ),
+                    ).finish(),
+                  })
+                case 'cosmos-sdk/MsgUpdateGroupPolicyDecisionPolicy':
+                  return Any.fromPartial({
+                    typeUrl: '/cosmos.group.v1.MsgUpdateGroupPolicyDecisionPolicy',
+                    value: MsgUpdateGroupPolicyDecisionPolicy.encode(
+                      MsgUpdateGroupPolicyDecisionPolicy.fromPartial(
+                        MsgUpdateGroupPolicyDecisionPolicy.fromAmino(msg.value),
                       ),
                     ).finish(),
                   })
@@ -200,16 +296,82 @@ export const groupAminoConverters = {
                         MsgWithdrawDelegatorReward.decode(msg.value),
                       ),
                     }
+                  case '/cosmos.group.v1.MsgUpdateGroupMembers':
+                    return {
+                      type: 'cosmos-sdk/MsgUpdateGroupMembers',
+                      value: MsgUpdateGroupMembers.toAmino(
+                        MsgUpdateGroupMembers.decode(msg.value),
+                      ),
+                    }
+                  case '/cosmos.group.v1.MsgUpdateGroupMetadata':
+                    return {
+                      type: 'cosmos-sdk/MsgUpdateGroupMetadata',
+                      value: MsgUpdateGroupMetadata.toAmino(
+                        MsgUpdateGroupMetadata.decode(msg.value),
+                      ),
+                    }
+                  case '/cosmos.group.v1.MsgUpdateGroupPolicyDecisionPolicy':
+                    return {
+                      type: 'cosmos-sdk/MsgUpdateGroupPolicyDecisionPolicy',
+                      value: MsgUpdateGroupPolicyDecisionPolicy.toAmino(
+                        MsgUpdateGroupPolicyDecisionPolicy.decode(msg.value),
+                      ),
+                    }
                   default:
                     return {
                       type: 'not implemented',
+                      value: undefined,
                     }
                 }
               })
             : undefined,
         exec: message.exec || undefined, // NOTE: added else undefined
       }
-      return output as MsgSubmitProposalAmino
+      return output
+    },
+  },
+  '/cosmos.group.v1.MsgUpdateGroupMembers': {
+    aminoType: 'cosmos-sdk/MsgUpdateGroupMembers',
+    fromAmino: (object: MsgUpdateGroupMembersAmino): MsgUpdateGroupMembersType => {
+      const output = {
+        admin: object.admin,
+        groupId: Long.fromString(object.group_id),
+        memberUpdates: Array.isArray(
+          object === null || object === void 0 ? void 0 : object.member_updates,
+        )
+          ? object.member_updates.map((e) => MemberRequest.fromAmino(e))
+          : [],
+      }
+      return output
+    },
+    toAmino: (message: MsgUpdateGroupMembersType): MsgUpdateGroupMembersAmino => {
+      const output = {
+        admin: message.admin,
+        group_id: message.groupId ? message.groupId.toString() : undefined,
+        member_updates: message.memberUpdates
+          ? message.memberUpdates.map((e) => MemberRequestToAmino(e))
+          : [],
+      }
+      return output
+    },
+  },
+  '/cosmos.group.v1.MsgUpdateGroupMetadata': {
+    aminoType: 'cosmos-sdk/MsgUpdateGroupMetadata',
+    fromAmino: (object: MsgUpdateGroupMetadataAmino): MsgUpdateGroupMetadataType => {
+      const output = {
+        admin: object.admin,
+        groupId: Long.fromString(object.group_id),
+        metadata: object.metadata || '',
+      }
+      return output
+    },
+    toAmino: (message: MsgUpdateGroupMetadataType): MsgUpdateGroupMetadataAmino => {
+      const output = {
+        admin: message.admin,
+        group_id: message.groupId ? message.groupId.toString() : undefined,
+        metadata: message.metadata || undefined, // NOTE: added else undefined
+      }
+      return output
     },
   },
   '/cosmos.group.v1.MsgVote': {
@@ -232,7 +394,7 @@ export const groupAminoConverters = {
         metadata: message.metadata || undefined, // NOTE: added else undefined
         exec: message.exec || undefined, // NOTE: added else undefined
       }
-      return output as MsgVoteAmino
+      return output
     },
   },
 }
