@@ -16,12 +16,21 @@ import { useTxToasts } from 'hooks/use-toasts'
 
 import { Loading } from '@/molecules/loading'
 import { GroupTemplate } from '@/templates/group-template'
+import { useProposalsByGroupPolicyAddressQuery } from 'generated/indexer-graphql'
 
 export default function GroupPage() {
   const { groupId } = useParams()
   const { data: group, isLoading: isLoadingGroup } = useGroup(groupId)
   const { data: policies, isLoading: isLoadingPolicies } = useGroupPolicies(groupId)
   const { data: proposals, isLoading: isLoadingProposals } = useGroupProposals(groupId)
+  const {
+    loading: isLoadingHistoricalProposals,
+    data: proposalsByGroupPolicyAddressQuery,
+  } = useProposalsByGroupPolicyAddressQuery({
+    variables: {
+      groupPolicyAddress: group?.admin || '',
+    },
+  })
   const { toastSuccess, toastErr } = useTxToasts()
 
   const groupPolicy = policies?.[0]
@@ -31,12 +40,16 @@ export default function GroupPage() {
     isInitialLoading: isInitialLoadingBalances,
     isRefetching: isRefetchingBalances,
   } = useBalances(groupPolicy?.address)
-  const derivedProposals = useDerivedProposals(proposals)
+  const derivedProposals = useDerivedProposals(
+    proposals,
+    proposalsByGroupPolicyAddressQuery,
+  )
 
   if (
     isLoadingGroup ||
     isLoadingPolicies ||
     isLoadingProposals ||
+    isLoadingHistoricalProposals ||
     isInitialLoadingBalances ||
     isRefetchingBalances
   ) {
