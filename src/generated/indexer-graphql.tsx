@@ -2727,6 +2727,13 @@ export type AllProposalsQuery = { __typename?: 'Query', allProposals?: { __typen
 
 export type ProposalItemFragment = { __typename?: 'Proposal', type: string, blockHeight: any, txIdx: number, msgIdx: number, chainNum: number, timestamp?: any | null, txHash: string, proposalId: any, status: string, groupPolicyAddress: string, metadata: string, proposers: Array<string | null>, submitTime?: any | null, groupVersion: any, finalTallyResult: any, votingPeriodEnd: any, executorResult: string, messages: any };
 
+export type ProposalsByGroupPolicyAddressQueryVariables = Exact<{
+  groupPolicyAddress: Scalars['String']['input'];
+}>;
+
+
+export type ProposalsByGroupPolicyAddressQuery = { __typename?: 'Query', allProposals?: { __typename?: 'ProposalsConnection', nodes: Array<{ __typename?: 'Proposal', type: string, blockHeight: any, txIdx: number, msgIdx: number, chainNum: number, timestamp?: any | null, txHash: string, proposalId: any, status: string, groupPolicyAddress: string, metadata: string, proposers: Array<string | null>, submitTime?: any | null, groupVersion: any, finalTallyResult: any, votingPeriodEnd: any, executorResult: string, messages: any } | null> } | null };
+
 export const ProposalItemFragmentDoc = gql`
     fragment ProposalItem on Proposal {
   type
@@ -2786,3 +2793,40 @@ export function useAllProposalsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type AllProposalsQueryHookResult = ReturnType<typeof useAllProposalsQuery>;
 export type AllProposalsLazyQueryHookResult = ReturnType<typeof useAllProposalsLazyQuery>;
 export type AllProposalsQueryResult = Apollo.QueryResult<AllProposalsQuery, AllProposalsQueryVariables>;
+export const ProposalsByGroupPolicyAddressDocument = gql`
+    query ProposalsByGroupPolicyAddress($groupPolicyAddress: String!) {
+  allProposals(condition: {groupPolicyAddress: $groupPolicyAddress}) {
+    nodes {
+      ...ProposalItem
+    }
+  }
+}
+    ${ProposalItemFragmentDoc}`;
+
+/**
+ * __useProposalsByGroupPolicyAddressQuery__
+ *
+ * To run a query within a React component, call `useProposalsByGroupPolicyAddressQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProposalsByGroupPolicyAddressQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProposalsByGroupPolicyAddressQuery({
+ *   variables: {
+ *      groupPolicyAddress: // value for 'groupPolicyAddress'
+ *   },
+ * });
+ */
+export function useProposalsByGroupPolicyAddressQuery(baseOptions: Apollo.QueryHookOptions<ProposalsByGroupPolicyAddressQuery, ProposalsByGroupPolicyAddressQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProposalsByGroupPolicyAddressQuery, ProposalsByGroupPolicyAddressQueryVariables>(ProposalsByGroupPolicyAddressDocument, options);
+      }
+export function useProposalsByGroupPolicyAddressLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProposalsByGroupPolicyAddressQuery, ProposalsByGroupPolicyAddressQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProposalsByGroupPolicyAddressQuery, ProposalsByGroupPolicyAddressQueryVariables>(ProposalsByGroupPolicyAddressDocument, options);
+        }
+export type ProposalsByGroupPolicyAddressQueryHookResult = ReturnType<typeof useProposalsByGroupPolicyAddressQuery>;
+export type ProposalsByGroupPolicyAddressLazyQueryHookResult = ReturnType<typeof useProposalsByGroupPolicyAddressLazyQuery>;
+export type ProposalsByGroupPolicyAddressQueryResult = Apollo.QueryResult<ProposalsByGroupPolicyAddressQuery, ProposalsByGroupPolicyAddressQueryVariables>;
