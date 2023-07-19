@@ -23,6 +23,7 @@ export interface UIProposal
   extends Omit<Proposal, 'votingPeriodEnd' | 'submitTime' | 'metadata'> {
   votingPeriodEnd?: Date
   submitTime?: Date
+  historical?: boolean
   metadata: UIProposalMetadata
 }
 

@@ -1,5 +1,5 @@
-import { ProposalsByGroupPolicyAddressQuery } from 'generated/indexer-graphql'
 import { useEffect, useState } from 'react'
+import { ProposalsByGroupPolicyAddressQuery } from 'generated/indexer-graphql'
 
 import { UIProposal, UIProposalMetadata } from 'types'
 import { ProposalStatus } from 'util/enums'
@@ -58,15 +58,15 @@ export function useDerivedProposals(
           messages: proposal.messages,
           submitTime: proposal.submitTime,
           votingPeriodEnd: proposal.votingPeriodEnd,
+          historical: true,
         }
-        console.log({ proposal, newProposal })
         other.push(newProposal)
       }
     })
-    setAccepted(accepted)
+    setAccepted(accepted.sort((a, b) => (a.submitTime! > b.submitTime! ? -1 : 1)))
     // setRejected(rejected)
-    setSubmitted(submitted)
-    setOther(other)
+    setSubmitted(submitted.sort((a, b) => (a.submitTime! > b.submitTime! ? -1 : 1)))
+    setOther(other.sort((a, b) => (a.submitTime! > b.submitTime! ? -1 : 1)))
   }, [proposals, historicalProposals])
   return { accepted, /* rejected, */ submitted, other }
 }
