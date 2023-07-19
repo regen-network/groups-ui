@@ -6,9 +6,10 @@ fragment ProposalItem on Proposal {
   chainNum
   timestamp
   txHash
-  proposalId
+  id:proposalId
   status
   groupPolicyAddress
+  groupPolicyVersion
   metadata
   proposers
   submitTime

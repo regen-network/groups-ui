@@ -2723,16 +2723,16 @@ export type UpdateTxPayloadTxEdgeArgs = {
 export type AllProposalsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllProposalsQuery = { __typename?: 'Query', allProposals?: { __typename?: 'ProposalsConnection', nodes: Array<{ __typename?: 'Proposal', type: string, blockHeight: any, txIdx: number, msgIdx: number, chainNum: number, timestamp?: any | null, txHash: string, proposalId: any, status: string, groupPolicyAddress: string, metadata: string, proposers: Array<string | null>, submitTime?: any | null, groupVersion: any, finalTallyResult: any, votingPeriodEnd: any, executorResult: string, messages: any } | null> } | null };
+export type AllProposalsQuery = { __typename?: 'Query', allProposals?: { __typename?: 'ProposalsConnection', nodes: Array<{ __typename?: 'Proposal', type: string, blockHeight: any, txIdx: number, msgIdx: number, chainNum: number, timestamp?: any | null, txHash: string, status: string, groupPolicyAddress: string, groupPolicyVersion: any, metadata: string, proposers: Array<string | null>, submitTime?: any | null, groupVersion: any, finalTallyResult: any, votingPeriodEnd: any, executorResult: string, messages: any, id: any } | null> } | null };
 
-export type ProposalItemFragment = { __typename?: 'Proposal', type: string, blockHeight: any, txIdx: number, msgIdx: number, chainNum: number, timestamp?: any | null, txHash: string, proposalId: any, status: string, groupPolicyAddress: string, metadata: string, proposers: Array<string | null>, submitTime?: any | null, groupVersion: any, finalTallyResult: any, votingPeriodEnd: any, executorResult: string, messages: any };
+export type ProposalItemFragment = { __typename?: 'Proposal', type: string, blockHeight: any, txIdx: number, msgIdx: number, chainNum: number, timestamp?: any | null, txHash: string, status: string, groupPolicyAddress: string, groupPolicyVersion: any, metadata: string, proposers: Array<string | null>, submitTime?: any | null, groupVersion: any, finalTallyResult: any, votingPeriodEnd: any, executorResult: string, messages: any, id: any };
 
 export type ProposalsByGroupPolicyAddressQueryVariables = Exact<{
   groupPolicyAddress: Scalars['String']['input'];
 }>;
 
 
-export type ProposalsByGroupPolicyAddressQuery = { __typename?: 'Query', allProposals?: { __typename?: 'ProposalsConnection', nodes: Array<{ __typename?: 'Proposal', type: string, blockHeight: any, txIdx: number, msgIdx: number, chainNum: number, timestamp?: any | null, txHash: string, proposalId: any, status: string, groupPolicyAddress: string, metadata: string, proposers: Array<string | null>, submitTime?: any | null, groupVersion: any, finalTallyResult: any, votingPeriodEnd: any, executorResult: string, messages: any } | null> } | null };
+export type ProposalsByGroupPolicyAddressQuery = { __typename?: 'Query', allProposals?: { __typename?: 'ProposalsConnection', nodes: Array<{ __typename?: 'Proposal', type: string, blockHeight: any, txIdx: number, msgIdx: number, chainNum: number, timestamp?: any | null, txHash: string, status: string, groupPolicyAddress: string, groupPolicyVersion: any, metadata: string, proposers: Array<string | null>, submitTime?: any | null, groupVersion: any, finalTallyResult: any, votingPeriodEnd: any, executorResult: string, messages: any, id: any } | null> } | null };
 
 export const ProposalItemFragmentDoc = gql`
     fragment ProposalItem on Proposal {
@@ -2743,9 +2743,10 @@ export const ProposalItemFragmentDoc = gql`
   chainNum
   timestamp
   txHash
-  proposalId
+  id: proposalId
   status
   groupPolicyAddress
+  groupPolicyVersion
   metadata
   proposers
   submitTime
