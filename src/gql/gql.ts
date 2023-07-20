@@ -13,6 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "query AllProposals {\n  allProposals {\n    nodes {\n      ...ProposalItem\n    }\n  }\n}": types.AllProposalsDocument,
     "fragment ProposalItem on Proposal {\n  type\n  blockHeight\n  txIdx\n  msgIdx\n  chainNum\n  timestamp\n  txHash\n  id: proposalId\n  status\n  groupPolicyAddress\n  groupPolicyVersion\n  metadata\n  proposers\n  submitTime\n  groupVersion\n  groupPolicyAddress\n  finalTallyResult\n  votingPeriodEnd\n  executorResult\n  messages\n}": types.ProposalItemFragmentDoc,
     "query ProposalsByGroupPolicyAddress($groupPolicyAddress: String!) {\n  allProposals(condition: {groupPolicyAddress: $groupPolicyAddress}) {\n    nodes {\n      ...ProposalItem\n    }\n  }\n}": types.ProposalsByGroupPolicyAddressDocument,
 };
@@ -31,6 +32,10 @@ const documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query AllProposals {\n  allProposals {\n    nodes {\n      ...ProposalItem\n    }\n  }\n}"): (typeof documents)["query AllProposals {\n  allProposals {\n    nodes {\n      ...ProposalItem\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
