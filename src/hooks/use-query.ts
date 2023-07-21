@@ -15,6 +15,8 @@ import {
   fetchVotesByProposal,
 } from 'api/proposal.actions'
 import { fetchValidators } from 'api/staking.actions'
+import { ProposalsByGroupPolicyAddressDocument } from 'gql/graphql'
+import { useGraphQLClient } from 'graphqlRequestContext'
 import { Chain } from 'store/chain.store'
 import { Wallet } from 'store/wallet.store'
 
@@ -83,6 +85,27 @@ export function useGroupProposals(groupId?: string) {
     queryFn: async () => {
       const proposals = await Promise.all(
         policyIds.map(async (address) => await fetchProposalsByGroupPolicy(address)),
+      )
+      return proposals.flat()
+    },
+    enabled: !isLoading,
+  })
+}
+
+export function useGroupHistoricalProposals(groupId?: string) {
+  const { data: policies, isLoading } = useGroupPolicies(groupId)
+  const policyIds = policies?.map((p) => p.address) || []
+  const client = useGraphQLClient()
+  return useQuery({
+    queryKey: ['historicalProposals', groupId],
+    queryFn: async () => {
+      const proposals = await Promise.all(
+        policyIds.map(async (address) => {
+          const res = await client.request(ProposalsByGroupPolicyAddressDocument, {
+            groupPolicyAddress: address,
+          })
+          return res.allProposals?.nodes
+        }),
       )
       return proposals.flat()
     },

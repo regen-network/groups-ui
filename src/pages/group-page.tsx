@@ -9,6 +9,7 @@ import { useDerivedProposals } from 'hooks/use-derived-proposals'
 import {
   useBalances,
   useGroup,
+  useGroupHistoricalProposals,
   useGroupPolicies,
   useGroupProposals,
 } from 'hooks/use-query'
@@ -22,6 +23,8 @@ export default function GroupPage() {
   const { data: group, isLoading: isLoadingGroup } = useGroup(groupId)
   const { data: policies, isLoading: isLoadingPolicies } = useGroupPolicies(groupId)
   const { data: proposals, isLoading: isLoadingProposals } = useGroupProposals(groupId)
+  const { data: historicalProposals, isLoading: isLoadingHistoricalProposals } =
+    useGroupHistoricalProposals(groupId)
   const { toastSuccess, toastErr } = useTxToasts()
 
   const groupPolicy = policies?.[0]
@@ -37,11 +40,14 @@ export default function GroupPage() {
     isLoadingGroup ||
     isLoadingPolicies ||
     isLoadingProposals ||
+    isLoadingHistoricalProposals ||
     isInitialLoadingBalances ||
     isRefetchingBalances
   ) {
     return <Loading />
   }
+
+  console.log({ proposals, historicalProposals })
 
   if (!group) {
     logError('Group not found')
