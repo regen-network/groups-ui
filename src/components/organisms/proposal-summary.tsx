@@ -46,6 +46,9 @@ export const ProposalSummary = ({
   const cardBgDark = useColorModeValue('gray.100', 'gray.700')
   const now = new Date()
   const votingClosed = new Date(proposal.votingPeriodEnd || now).getTime() < now.getTime()
+  const proposalFinalized =
+    proposal.status.toString() === 'PROPOSAL_STATUS_ACCEPTED' ||
+    proposal.status.toString() === 'PROPOSAL_STATUS_REJECTED'
   return (
     <Card>
       <Flex>
@@ -56,8 +59,8 @@ export const ProposalSummary = ({
               <Badge>#{proposal.id.toString()}</Badge>
               {/* status */}
               <Badge variant="outline">#{proposal.status.toString()}</Badge>
-              <Badge colorScheme={votingClosed ? 'red' : 'orange'} variant="outline">
-                {votingClosed ? 'Finalized' : 'Unfinalized'}
+              <Badge colorScheme={proposalFinalized ? 'red' : 'orange'} variant="outline">
+                {proposalFinalized ? 'Finalized' : 'Unfinalized'}
               </Badge>
             </Stack>
             <Heading>{proposal.metadata.title}</Heading>
