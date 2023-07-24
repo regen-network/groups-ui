@@ -6,7 +6,11 @@ import { Card, CardBody } from '@/atoms'
 export const JSONDisplay = ({ data }: { data: Record<any, unknown> }) => {
   return (
     <Card shadow="none">
-      <CardBody bg={useColorModeValue('gray.100', 'gray.700')}>
+      <CardBody
+        bg={useColorModeValue('gray.100', 'gray.700')}
+        maxWidth="700px"
+        overflowX="scroll"
+      >
         <pre>{JSON.stringify(data, null, 2)}</pre>
       </CardBody>
     </Card>
