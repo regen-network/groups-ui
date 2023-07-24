@@ -237,7 +237,7 @@ export const groupAminoConverters = {
                       ),
                     ).finish(),
                   })
-                case 'cosmos-sdk/MsgUpdateGroupPolicyDecisionPolicy':
+                case 'cosmos-sdk/MsgUpdateGroupDecisionPolicy':
                   return Any.fromPartial({
                     typeUrl: '/cosmos.group.v1.MsgUpdateGroupPolicyDecisionPolicy',
                     value: MsgUpdateGroupPolicyDecisionPolicy.encode(
@@ -310,13 +310,32 @@ export const groupAminoConverters = {
                         MsgUpdateGroupMetadata.decode(msg.value),
                       ),
                     }
-                  case '/cosmos.group.v1.MsgUpdateGroupPolicyDecisionPolicy':
+                  case '/cosmos.group.v1.MsgUpdateGroupPolicyDecisionPolicy': {
+                    const protoMsg = MsgUpdateGroupPolicyDecisionPolicy.decode(msg.value)
                     return {
-                      type: 'cosmos-sdk/MsgUpdateGroupPolicyDecisionPolicy',
-                      value: MsgUpdateGroupPolicyDecisionPolicy.toAmino(
-                        MsgUpdateGroupPolicyDecisionPolicy.decode(msg.value),
-                      ),
+                      type: 'cosmos-sdk/MsgUpdateGroupDecisionPolicy',
+                      value: {
+                        admin: protoMsg.admin,
+                        group_policy_address: protoMsg.groupPolicyAddress,
+                        decision_policy: protoMsg.decisionPolicy
+                          ? protoMsg.decisionPolicy.typeUrl ===
+                            '/cosmos.group.v1.PercentageDecisionPolicy'
+                            ? {
+                                type: 'cosmos-sdk/PercentageDecisionPolicy',
+                                value: PercentageDecisionPolicy.toAmino(
+                                  protoMsg.decisionPolicy,
+                                ),
+                              }
+                            : {
+                                type: 'cosmos-sdk/ThresholdDecisionPolicy',
+                                value: ThresholdDecisionPolicy.toAmino(
+                                  protoMsg.decisionPolicy,
+                                ),
+                              }
+                          : undefined,
+                      },
                     }
+                  }
                   default:
                     return {
                       type: 'not implemented',
@@ -370,6 +389,64 @@ export const groupAminoConverters = {
         admin: message.admin,
         group_id: message.groupId ? message.groupId.toString() : undefined,
         metadata: message.metadata || undefined, // NOTE: added else undefined
+      }
+      return output
+    },
+  },
+  '/cosmos.group.v1.MsgUpdateGroupPolicyDecisionPolicy': {
+    aminoType: 'cosmos-sdk/MsgUpdateGroupDecisionPolicy',
+    fromAmino: (
+      object: MsgUpdateGroupPolicyDecisionPolicyAmino,
+    ): MsgUpdateGroupPolicyDecisionPolicyType => {
+      const output = {
+        admin: object.admin,
+        groupPolicyAddress: object.group_policy_address,
+        decisionPolicy:
+          object !== null && object !== void 0 && object.decision_policy
+            ? object.decision_policy.type === 'cosmos-sdk/PercentageDecisionPolicy'
+              ? (Any.fromPartial({
+                  typeUrl: '/cosmos.group.v1.PercentageDecisionPolicy',
+                  value: PercentageDecisionPolicy.encode(
+                    PercentageDecisionPolicy.fromPartial(
+                      PercentageDecisionPolicy.fromAmino(object.decision_policy?.value),
+                    ),
+                  ).finish(),
+                }) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any)
+              : (Any.fromPartial({
+                  typeUrl: '/cosmos.group.v1.ThresholdDecisionPolicy',
+                  value: ThresholdDecisionPolicy.encode(
+                    ThresholdDecisionPolicy.fromPartial(
+                      ThresholdDecisionPolicy.fromAmino(object.decision_policy?.value),
+                    ),
+                  ).finish(),
+                }) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any)
+            : (Any.fromAmino(
+                object.decision_policy as AnyAmino,
+              ) as ThresholdDecisionPolicy & PercentageDecisionPolicy & Any),
+      }
+      return output
+    },
+    toAmino: (
+      message: MsgUpdateGroupPolicyDecisionPolicyType,
+    ): MsgUpdateGroupPolicyDecisionPolicyAmino => {
+      const output = {
+        admin: message.admin,
+        group_policy_address: message.groupPolicyAddress,
+        decision_policy: message.decisionPolicy
+          ? message.decisionPolicy.typeUrl === '/cosmos.group.v1.PercentageDecisionPolicy'
+            ? {
+                type: 'cosmos-sdk/PercentageDecisionPolicy',
+                value: PercentageDecisionPolicy.toAmino(
+                  PercentageDecisionPolicy.decode(message.decisionPolicy.value),
+                ),
+              }
+            : {
+                type: 'cosmos-sdk/ThresholdDecisionPolicy',
+                value: ThresholdDecisionPolicy.toAmino(
+                  ThresholdDecisionPolicy.decode(message.decisionPolicy.value),
+                ),
+              }
+          : undefined,
       }
       return output
     },
