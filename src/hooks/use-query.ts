@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
+import { ProposalsByGroupPolicyAddressDocument } from 'gql/graphql'
+import { useGraphQLClient } from 'graphqlRequestContext'
 
 import { fetchAllBalances } from 'api/bank.actions'
 import {
@@ -15,8 +17,6 @@ import {
   fetchVotesByProposal,
 } from 'api/proposal.actions'
 import { fetchValidators } from 'api/staking.actions'
-import { ProposalsByGroupPolicyAddressDocument } from 'gql/graphql'
-import { useGraphQLClient } from 'graphqlRequestContext'
 import { Chain } from 'store/chain.store'
 import { Wallet } from 'store/wallet.store'
 
@@ -95,13 +95,13 @@ export function useGroupProposals(groupId?: string) {
 export function useGroupHistoricalProposals(groupId?: string) {
   const { data: policies, isLoading } = useGroupPolicies(groupId)
   const policyIds = policies?.map((p) => p.address) || []
-  const client = useGraphQLClient()
+  const { client } = useGraphQLClient()
   return useQuery({
     queryKey: ['historicalProposals', groupId],
     queryFn: async () => {
       const proposals = await Promise.all(
         policyIds.map(async (address) => {
-          const res = await client.request(ProposalsByGroupPolicyAddressDocument, {
+          const res = await client!.request(ProposalsByGroupPolicyAddressDocument, {
             groupPolicyAddress: address,
           })
           return res.allProposals?.nodes
