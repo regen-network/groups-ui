@@ -114,7 +114,9 @@ export const GroupProposalsTable = ({
     const baseProps = { key, proposal }
     switch (proposal.status) {
       case ProposalStatus.PROPOSAL_STATUS_ACCEPTED:
-        return <ExecuteRow {...baseProps} onExecute={onExecute} />
+        if (!proposal.historical) {
+          return <ExecuteRow {...baseProps} onExecute={onExecute} />
+        }
       default:
         return <Row {...baseProps} />
     }

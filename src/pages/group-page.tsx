@@ -34,7 +34,11 @@ export default function GroupPage() {
     isInitialLoading: isInitialLoadingBalances,
     isRefetching: isRefetchingBalances,
   } = useBalances(groupPolicy?.address)
-  const derivedProposals = useDerivedProposals(proposals)
+
+  const derivedProposals = useDerivedProposals(
+    proposals,
+    historicalProposals as UIProposal[],
+  )
 
   if (
     isLoadingGroup ||
@@ -46,8 +50,6 @@ export default function GroupPage() {
   ) {
     return <Loading />
   }
-
-  console.log({ proposals, historicalProposals })
 
   if (!group) {
     logError('Group not found')
