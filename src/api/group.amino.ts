@@ -296,13 +296,21 @@ export const groupAminoConverters = {
                         MsgWithdrawDelegatorReward.decode(msg.value),
                       ),
                     }
-                  case '/cosmos.group.v1.MsgUpdateGroupMembers':
+                  case '/cosmos.group.v1.MsgUpdateGroupMembers': {
+                    const protoMsg = MsgUpdateGroupMembers.decode(msg.value)
                     return {
                       type: 'cosmos-sdk/MsgUpdateGroupMembers',
-                      value: MsgUpdateGroupMembers.toAmino(
-                        MsgUpdateGroupMembers.decode(msg.value),
-                      ),
+                      value: {
+                        admin: protoMsg.admin,
+                        group_id: protoMsg.groupId
+                          ? protoMsg.groupId.toString()
+                          : undefined,
+                        member_updates: protoMsg.memberUpdates
+                          ? protoMsg.memberUpdates.map((e) => MemberRequestToAmino(e))
+                          : [],
+                      },
                     }
+                  }
                   case '/cosmos.group.v1.MsgUpdateGroupMetadata':
                     return {
                       type: 'cosmos-sdk/MsgUpdateGroupMetadata',
