@@ -1,6 +1,7 @@
 import { CodegenConfig } from '@graphql-codegen/cli'
 
 const config: CodegenConfig = {
+  overwrite: true,
   schema: 'http://localhost:5000/indexer/graphql',
   documents: ['src/graphql/indexer/**/*.graphql'],
   generates: {
