@@ -24,6 +24,7 @@ export interface UIProposal
   votingPeriodEnd?: Date
   submitTime?: Date
   metadata: UIProposalMetadata
+  historical?: boolean
 }
 
 export type ProposalAction = {
