@@ -1,4 +1,5 @@
 import { cosmos } from '@regen-network/api'
+import type { MsgCreateGroupWithPolicyEncoded } from '@regen-network/api/types/codegen/cosmos/group/v1/tx'
 
 import type { GroupWithPolicyFormValues } from 'types'
 import { clearEmptyStr } from 'util/helpers'
@@ -21,7 +22,9 @@ export function msgCreateGroupWithPolicy(values: GroupWithPolicyFormValues) {
     policyType,
     votingWindow,
   } = values
-  return GroupMsgWithTypeUrl.createGroupWithPolicy({
+  // NOTE: We use the encoded msg type to support amino signing with nested types.
+  // See https://github.com/osmosis-labs/telescope/issues/281
+  const encodedMsg: MsgCreateGroupWithPolicyEncoded = {
     admin,
     groupPolicyMetadata: '',
     groupPolicyAsAdmin: policyAsAdmin === 'true',
@@ -44,7 +47,12 @@ export function msgCreateGroupWithPolicy(values: GroupWithPolicyFormValues) {
       metadata: '',
       // metadata: JSON.stringify(m.metadata),
     })),
-  })
+  }
+
+  return {
+    typeUrl: '/cosmos.group.v1.MsgCreateGroupWithPolicy',
+    value: encodedMsg,
+  }
 }
 
 export function msgUpdateGroupMetadata(params: MetadataMsgParams) {
