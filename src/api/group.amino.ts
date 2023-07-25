@@ -326,7 +326,7 @@ export const groupAminoConverters = {
                         admin: protoMsg.admin,
                         group_policy_address: protoMsg.groupPolicyAddress,
                         decision_policy: protoMsg.decisionPolicy
-                          ? protoMsg.decisionPolicy.typeUrl ===
+                          ? protoMsg.decisionPolicy.$typeUrl ===
                             '/cosmos.group.v1.PercentageDecisionPolicy'
                             ? {
                                 type: 'cosmos-sdk/PercentageDecisionPolicy',
