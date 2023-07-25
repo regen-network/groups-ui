@@ -114,6 +114,7 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
     case '/cosmos.bank.v1beta1.MsgSend':
       return (
         <SendReview
+          key={groupPolicyAddress}
           groupPolicyAddress={groupPolicyAddress}
           values={
             {
@@ -129,6 +130,7 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
     case '/cosmos.staking.v1beta1.MsgDelegate':
       return (
         <StakeReview
+          key={groupPolicyAddress}
           groupPolicyAddress={groupPolicyAddress}
           values={
             {
@@ -143,6 +145,7 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
     case '/cosmos.staking.v1beta1.MsgBeginRedelegate':
       return (
         <StakeReview
+          key={groupPolicyAddress}
           groupPolicyAddress={groupPolicyAddress}
           values={
             {
@@ -157,6 +160,7 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
     case '/cosmos.staking.v1beta1.MsgUndelegate':
       return (
         <StakeReview
+          key={groupPolicyAddress}
           groupPolicyAddress={groupPolicyAddress}
           values={
             {
@@ -171,6 +175,7 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
     case '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward':
       return (
         <StakeReview
+          key={groupPolicyAddress}
           groupPolicyAddress={groupPolicyAddress}
           values={
             {
@@ -182,6 +187,6 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
         />
       )
     default:
-      return <JSONDisplay data={msg} />
+      return <JSONDisplay key={groupPolicyAddress} data={msg} />
   }
 }
