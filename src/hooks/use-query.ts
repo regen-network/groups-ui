@@ -115,7 +115,12 @@ export function useHistoricalProposal(proposalId?: string) {
         groupVersion: proposal.groupVersion,
         groupPolicyVersion: proposal.groupPolicyVersion,
         status: ProposalStatus[proposal.status as keyof typeof ProposalStatus],
-        finalTallyResult: proposal.finalTallyResult,
+        finalTallyResult: {
+          yesCount: proposal.finalTallyResult.yes_count,
+          noCount: proposal.finalTallyResult.no_count,
+          abstainCount: proposal.finalTallyResult.abstain_count,
+          noWithVetoCount: proposal.finalTallyResult.no_with_veto_count,
+        },
         messages: proposal.messages,
         submitTime: proposal.submitTime,
         votingPeriodEnd: proposal.votingPeriodEnd,

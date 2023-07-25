@@ -18,6 +18,7 @@ import { useTxToasts } from 'hooks/use-toasts'
 import { Button, PageContainer, RouteLink, Stack } from '@/atoms'
 import { Loading } from '@/molecules/loading'
 import { ProposalDetails } from '@/organisms/proposal-details'
+import { ProposalFinalTallyTable } from '@/organisms/proposal-final-tally-table'
 import { ProposalSummary } from '@/organisms/proposal-summary'
 import { ProposalVotesTable } from '@/organisms/proposal-votes-table'
 
@@ -59,6 +60,8 @@ export default function ProposalPage() {
     !isLoadingGroup &&
     !isLoadingHistoricalProposal
   ) {
+    const { finalTallyResult } = historicalProposal
+    console.log({ finalTallyResult })
     return (
       <PageContainer>
         <Stack w="full" spacing={6}>
@@ -78,6 +81,7 @@ export default function ProposalPage() {
             group={group}
           />
           <ProposalDetails proposal={historicalProposal} />
+          <ProposalFinalTallyTable finalTallyResult={finalTallyResult} />
         </Stack>
       </PageContainer>
     )
