@@ -3,10 +3,6 @@ import { useEffect, useState } from 'react'
 import { UIProposal } from 'types'
 import { ProposalStatus } from 'util/enums'
 
-function sortBySubmitTime(proposals: UIProposal[]) {
-  return proposals.sort((a, b) => (a.submitTime! > b.submitTime! ? 1 : -1))
-}
-
 export function useDerivedProposals(
   proposals?: UIProposal[],
   historicalProposals?: UIProposal[],
@@ -40,10 +36,10 @@ export function useDerivedProposals(
     historicalProposals?.forEach((proposal) => {
       other.push(proposal)
     })
-    setAccepted(sortBySubmitTime(accepted))
+    setAccepted(accepted)
     // setRejected(rejected)
-    setSubmitted(sortBySubmitTime(submitted))
-    setOther(sortBySubmitTime(other))
+    setSubmitted(submitted)
+    setOther(other)
   }, [proposals, historicalProposals])
   return { accepted, /* rejected, */ submitted, other }
 }
