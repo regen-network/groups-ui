@@ -106,37 +106,42 @@ export function useGroupHistoricalProposals(groupId?: string) {
   return useQuery({
     queryKey: ['historicalProposals', groupId],
     queryFn: async () => {
+      if (!client) {
+        throw Error('graphql client not initialized')
+      }
       const proposals = await Promise.all(
         policyIds.map(async (address) => {
-          const res = await client!.request(ProposalsByGroupPolicyAddressDocument, {
+          const res = await client.request(ProposalsByGroupPolicyAddressDocument, {
             groupPolicyAddress: address,
           })
           return res.allProposals?.nodes.map((p) => {
             const proposal = getFragmentData(ProposalItemFragmentDoc, p)
-            const executorResult =
-              {
-                PROPOSAL_EXECUTOR_RESULT_UNSPECIFIED: 0,
-                PROPOSAL_EXECUTOR_RESULT_NOT_RUN: 1,
-                PROPOSAL_EXECUTOR_RESULT_SUCCESS: 2,
-                PROPOSAL_EXECUTOR_RESULT_FAILURE: 3,
-                UNRECOGNIZED: -1,
-              }[proposal!.executorResult] || -1
-            const uiProposal: UIProposal = {
-              metadata: JSON.parse(proposal!.metadata) as UIProposalMetadata,
-              executorResult,
-              id: proposal!.id,
-              groupPolicyAddress: proposal!.groupPolicyAddress,
-              proposers: proposal!.proposers as string[],
-              groupVersion: proposal!.groupVersion,
-              groupPolicyVersion: proposal!.groupPolicyVersion,
-              status: ProposalStatus[proposal!.status as keyof typeof ProposalStatus],
-              finalTallyResult: proposal!.finalTallyResult,
-              messages: proposal!.messages,
-              submitTime: proposal!.submitTime,
-              votingPeriodEnd: proposal!.votingPeriodEnd,
-              historical: true,
+            if (proposal) {
+              const executorResult =
+                {
+                  PROPOSAL_EXECUTOR_RESULT_UNSPECIFIED: 0,
+                  PROPOSAL_EXECUTOR_RESULT_NOT_RUN: 1,
+                  PROPOSAL_EXECUTOR_RESULT_SUCCESS: 2,
+                  PROPOSAL_EXECUTOR_RESULT_FAILURE: 3,
+                  UNRECOGNIZED: -1,
+                }[proposal.executorResult] || -1
+              const uiProposal: UIProposal = {
+                metadata: JSON.parse(proposal.metadata) as UIProposalMetadata,
+                executorResult,
+                id: proposal.id,
+                groupPolicyAddress: proposal.groupPolicyAddress,
+                proposers: proposal.proposers as string[],
+                groupVersion: proposal.groupVersion,
+                groupPolicyVersion: proposal.groupPolicyVersion,
+                status: ProposalStatus[proposal.status as keyof typeof ProposalStatus],
+                finalTallyResult: proposal.finalTallyResult,
+                messages: proposal.messages,
+                submitTime: proposal.submitTime,
+                votingPeriodEnd: proposal.votingPeriodEnd,
+                historical: true,
+              }
+              return uiProposal
             }
-            return uiProposal
           })
         }),
       )
