@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { GraphqlRequestContext } from 'graphqlRequestContext'
 import { GraphQLClient } from 'graphql-request'
+import { GraphqlRequestContext } from 'graphqlRequestContext'
 
 const { VITE_INDEXER_GRAPHQL_API } = import.meta.env
 
