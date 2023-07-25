@@ -35,10 +35,7 @@ export default function GroupPage() {
     isRefetching: isRefetchingBalances,
   } = useBalances(groupPolicy?.address)
 
-  const derivedProposals = useDerivedProposals(
-    proposals,
-    historicalProposals as UIProposal[],
-  )
+  const derivedProposals = useDerivedProposals(proposals, historicalProposals)
 
   if (
     isLoadingGroup ||

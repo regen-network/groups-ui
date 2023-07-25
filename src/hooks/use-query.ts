@@ -109,13 +109,15 @@ export function useGroupHistoricalProposals(groupId?: string) {
       if (!client) {
         throw Error('graphql client not initialized')
       }
-      const proposals = await Promise.all(
-        policyIds.map(async (address) => {
-          const res = await client.request(ProposalsByGroupPolicyAddressDocument, {
-            groupPolicyAddress: address,
-          })
-          return res.allProposals?.nodes.map((p) => {
-            const proposal = getFragmentData(ProposalItemFragmentDoc, p)
+      const result = []
+      for (const address of policyIds) {
+        const res = await client.request(ProposalsByGroupPolicyAddressDocument, {
+          groupPolicyAddress: address,
+        })
+        if (!!res.allProposals && !!res.allProposals.nodes) {
+          const { nodes } = res.allProposals
+          for (const node of nodes) {
+            const proposal = getFragmentData(ProposalItemFragmentDoc, node)
             if (proposal) {
               const executorResult =
                 {
@@ -140,12 +142,12 @@ export function useGroupHistoricalProposals(groupId?: string) {
                 votingPeriodEnd: proposal.votingPeriodEnd,
                 historical: true,
               }
-              return uiProposal
+              result.push(uiProposal)
             }
-          })
-        }),
-      )
-      return proposals.flat()
+          }
+        }
+      }
+      return result
     },
     enabled: !isLoading,
   })
