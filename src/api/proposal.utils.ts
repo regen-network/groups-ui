@@ -1,5 +1,6 @@
 import type {
   Any,
+  MemberFormValues,
   ProposalAction,
   ProposalSDKType,
   ProposalSendFormValues,
@@ -200,7 +201,7 @@ function groupUpdateValuesToMsg(
     return msgUpdateGroupMembersProposal({
       admin: data.groupPolicyAddress,
       groupId: data.groupId,
-      members: values.members,
+      members: values.members as MemberFormValues[],
     })
   }
   if (isMetadataValues(values)) {
