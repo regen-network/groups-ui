@@ -34,7 +34,7 @@ export default function GroupCreate() {
       newGroupId={newGroupId}
       initialGroupFormValues={{
         ...defaultGroupFormValues,
-        admin: Wallet.account?.address,
+        admin: Wallet.account.address,
       }}
       initialPolicyFormValues={{
         ...defaultGroupPolicyFormValues,

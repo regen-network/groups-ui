@@ -3971,10 +3971,10 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
-"@regen-network/api@^1.0.0-alpha3":
-  version "1.0.0-alpha3"
-  resolved "https://registry.yarnpkg.com/@regen-network/api/-/api-1.0.0-alpha3.tgz#beb6ac6baf5711383bf9efd59aa3f4b551df0692"
-  integrity sha512-RxvC6sOYfF+bYf/7A+t0DgaZPFZI9NkxlCabUTS0eehpVmt3TuHqvU+6aN7+XcpslFx25ILlOFdt7dFFBODsjA==
+"@regen-network/api@^1.0.0-alpha5":
+  version "1.0.0-alpha5"
+  resolved "https://registry.yarnpkg.com/@regen-network/api/-/api-1.0.0-alpha5.tgz#49cc3e927bb1a9c7e27e00b8c5a64064ed385b72"
+  integrity sha512-UM+hF5yWhrN6RUsfoNQbhW8AvGIrw91u0tw7WnWZroT0Eiqf27YZKeW6CwGhJNwdFquhVjJz5dQW56vn5oQ3ug==
   dependencies:
     "@babel/runtime" "^7.22.5"
     "@cosmjs/amino" "^0.31.0"

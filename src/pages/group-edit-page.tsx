@@ -1,6 +1,6 @@
 import { redirect, useParams } from 'react-router-dom'
 
-import type { GroupWithPolicyFormValues } from 'types'
+import type { GroupWithPolicyFormValues, MemberFormValues } from 'types'
 import { logError, throwError } from 'util/errors'
 import { clearEmptyStr } from 'util/helpers'
 import { getGroupPolicyValues, getGroupValues } from 'util/initialValues'
@@ -80,7 +80,7 @@ export default function GroupEdit() {
             msgUpdateGroupMembers({
               groupId,
               admin: group.admin,
-              members: values.members,
+              members: values.members as MemberFormValues[],
             }),
           )
         }
