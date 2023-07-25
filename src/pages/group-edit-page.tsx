@@ -65,7 +65,6 @@ export default function GroupEdit() {
                 forumLink: values.forumLink,
                 name: values.name,
                 other: values.otherMetadata,
-                updatedAt: Date.now().toString(),
               },
             }),
           )

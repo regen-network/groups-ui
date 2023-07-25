@@ -11,7 +11,6 @@ import { valid } from './zod'
 const groupMetadataSchema = z.object({
   name: valid.name,
   description: valid.description.optional().or(z.literal('')),
-  updatedAt: z.string().optional(),
   forumLink: valid.url.optional().or(z.literal('')),
   other: z.string().optional(),
 })
@@ -55,7 +54,6 @@ export async function getGroupMetadata(
   }
   return {
     name: '',
-    updatedAt: '',
     ...defaults,
   }
 }

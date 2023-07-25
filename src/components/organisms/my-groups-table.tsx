@@ -56,7 +56,6 @@ export const MyGroupsTable = ({
           <Tr>
             <Th>Name</Th>
             <Th>Created</Th>
-            <Th>Last Edited</Th>
             <Th>Number of Members</Th>
             <Th>Membership Type</Th>
           </Tr>
@@ -70,7 +69,6 @@ export const MyGroupsTable = ({
                 </Link>
               </Td>
               <Td>{formatDate(group.createdAt)}</Td>
-              <Td>{formatDate(group.metadata.updatedAt)}</Td>
               <Td>{group.members.length}</Td>
               <Td>
                 <HStack spacing={3}>
