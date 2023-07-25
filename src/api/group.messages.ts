@@ -38,7 +38,6 @@ export function msgCreateGroupWithPolicy(values: GroupWithPolicyFormValues) {
       name,
       description,
       forumLink,
-      updatedAt: new Date().toString(),
       other: otherMetadata,
     }),
     members: members.map((m) => ({

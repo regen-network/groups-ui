@@ -7,12 +7,10 @@ import { toUIGroup } from 'api/group.utils'
 
 // TODO: move these to reusable stubs
 const date = new Date(2022, 1, 1)
-const dateStr = date.toISOString()
 const dateTime = date.getTime()
 
 const metadata: UIGroupMetadata = {
   name: 'bob',
-  updatedAt: dateStr,
   description: 'bob is a good guy',
   forumLink: 'https://forum.com',
 }

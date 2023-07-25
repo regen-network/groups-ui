@@ -18,7 +18,6 @@ export async function toUIGroup(group: GroupInfoSDKType): Promise<UIGroup> {
   return {
     metadata: await getGroupMetadata(group.metadata, {
       name: `Group #${group.id}`,
-      updatedAt: '',
     }),
     admin: group.admin,
     createdAt: group.created_at ? toDate(group.created_at) : undefined,
