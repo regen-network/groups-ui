@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
-import { useFragment } from 'gql'
+import { getFragmentData } from 'gql'
 import {
   ProposalItemFragmentDoc,
   ProposalsByGroupPolicyAddressDocument,
 } from 'gql/graphql'
 import { useGraphQLClient } from 'graphqlRequestContext'
+
 import { UIProposal, UIProposalMetadata } from 'types'
 import { ProposalStatus } from 'util/enums'
 
@@ -111,7 +112,7 @@ export function useGroupHistoricalProposals(groupId?: string) {
             groupPolicyAddress: address,
           })
           return res.allProposals?.nodes.map((p) => {
-            const proposal = useFragment(ProposalItemFragmentDoc, p)
+            const proposal = getFragmentData(ProposalItemFragmentDoc, p)
             const executorResult =
               {
                 PROPOSAL_EXECUTOR_RESULT_UNSPECIFIED: 0,
