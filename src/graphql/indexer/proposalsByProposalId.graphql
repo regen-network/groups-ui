@@ -1,0 +1,7 @@
+query ProposalsByProposalId($proposalId: BigInt!) {
+  allProposals(condition: { proposalId: $proposalId }) {
+    nodes {
+      ...ProposalItem
+    }
+  }
+}

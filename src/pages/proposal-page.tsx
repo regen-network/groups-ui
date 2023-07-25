@@ -8,6 +8,7 @@ import { voteOnProposal } from 'api/proposal.actions'
 import {
   useGroup,
   useGroupMembers,
+  useHistoricalProposal,
   useProposal,
   useProposalVotes,
   useUserVotes,
@@ -27,7 +28,14 @@ export default function ProposalPage() {
   const { proposalId, groupId } = useParams()
   const { data: group, isLoading: isLoadingGroup } = useGroup(groupId)
   const { data: groupMembers } = useGroupMembers(groupId)
-  const { data: proposal, isLoading: isLoadingProposal } = useProposal(proposalId)
+  const { data: historicalProposal, isLoading: isLoadingHistoricalProposal } =
+    useHistoricalProposal(proposalId)
+
+  const { data: proposal, isLoading: isLoadingProposal } = useProposal(
+    proposalId,
+    !isLoadingHistoricalProposal && !historicalProposal?.historical,
+  )
+
   const {
     data: votes,
     isLoading: isLoadingVotes,
@@ -40,12 +48,43 @@ export default function ProposalPage() {
     isLoading: isLoadingUserVotes,
   } = useUserVotes()
 
-  if (isLoadingProposal || isLoadingGroup || isLoadingVotes || isLoadingUserVotes)
-    return <Loading />
-  if (!groupId || !proposal || !group) {
+  if (!groupId) {
     redirect(groupId ? ROUTE_PATH.group(groupId) : ROUTE_PATH.groups)
     return null
   }
+
+  if (
+    !!historicalProposal &&
+    !!group &&
+    !isLoadingGroup &&
+    !isLoadingHistoricalProposal
+  ) {
+    return (
+      <PageContainer>
+        <Stack w="full" spacing={6}>
+          <div>
+            <Button
+              variant="ghost"
+              leftIcon={<BackIcon />}
+              as={RouteLink}
+              to={ROUTE_PATH.group(groupId)}
+            >
+              {group?.metadata.name}
+            </Button>
+          </div>
+          <ProposalSummary
+            onVote={() => undefined}
+            proposal={historicalProposal}
+            group={group}
+          />
+          <ProposalDetails proposal={historicalProposal} />
+        </Stack>
+      </PageContainer>
+    )
+  }
+
+  if (isLoadingGroup || isLoadingProposal || isLoadingVotes || isLoadingUserVotes)
+    return <Loading />
 
   async function handleVote(option: VoteOptionType) {
     if (!proposalId) throwError('Proposal ID is required to cast vote')
@@ -63,6 +102,12 @@ export default function ProposalPage() {
     ? userVotes.find((v) => v.proposalId.toString() === proposalId)
     : undefined
 
+  if (!proposal) {
+    throwError('Proposal not found')
+  }
+  if (!group) {
+    throwError('Group not found')
+  }
   return (
     <PageContainer>
       <Stack w="full" spacing={6}>
