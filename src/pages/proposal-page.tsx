@@ -99,11 +99,7 @@ export default function ProposalPage() {
         </div>
         {isHistorical ? (
           <>
-            <ProposalSummary
-              onVote={() => undefined}
-              proposal={historicalProposal}
-              group={group}
-            />
+            <ProposalSummary proposal={historicalProposal} group={group} />
             <ProposalDetails proposal={historicalProposal} />
             <ProposalDetails proposal={historicalProposal} />
             <ProposalFinalTallyTable

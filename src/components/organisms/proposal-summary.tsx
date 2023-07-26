@@ -38,7 +38,7 @@ export const ProposalSummary = ({
   votes,
 }: {
   group: UIGroup
-  onVote: (option: VoteOptionType) => void
+  onVote?: (option: VoteOptionType) => void
   proposal: UIProposal
   userVote?: Vote
   votes?: Vote[]
