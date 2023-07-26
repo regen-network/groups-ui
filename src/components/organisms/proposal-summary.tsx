@@ -136,6 +136,7 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
               stakeType: 'delegate',
               amount: msg.value['amount']['amount'],
               denom: msg.value['amount']['denom'],
+              validator: msg.value['validator_address'],
             } as unknown as ProposalStakeFormValues
           }
         />
@@ -150,6 +151,8 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
               stakeType: 'redelegate',
               amount: msg.value['amount']['amount'],
               denom: msg.value['amount']['denom'],
+              toValidator: msg.value['validator_dst_address'],
+              fromValidator: msg.value['validator_src_address'],
             } as unknown as ProposalStakeFormValues
           }
         />
@@ -164,6 +167,7 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
               stakeType: 'undelegate',
               amount: msg.value['amount']['amount'],
               denom: msg.value['amount']['denom'],
+              validator: msg.value['validator_address'],
             } as unknown as ProposalStakeFormValues
           }
         />
