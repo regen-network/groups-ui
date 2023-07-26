@@ -1,7 +1,0 @@
-query AllProposals {
-  allProposals {
-    nodes {
-      ...ProposalItem
-    }
-  }
-}
