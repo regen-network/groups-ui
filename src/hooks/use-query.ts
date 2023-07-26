@@ -1,14 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
-import { getFragmentData } from 'gql'
 import {
-  ProposalItemFragmentDoc,
   ProposalsByGroupPolicyAddressDocument,
   ProposalsByProposalIdDocument,
 } from 'gql/graphql'
+import { nodeToUIProposal } from 'graphql/historicalProposal.utils'
 import { useGraphQLClient } from 'graphql-request-context'
-
-import { UIProposal, UIProposalMetadata } from 'types'
-import { ProposalStatus } from 'util/enums'
 
 import { fetchAllBalances } from 'api/bank.actions'
 import {
@@ -94,38 +90,7 @@ export function useHistoricalProposal(proposalId?: string) {
         proposalId: proposalId,
       })
       const node = res?.allProposals?.nodes[0]
-      const proposal = getFragmentData(ProposalItemFragmentDoc, node)
-      if (!proposal) {
-        return null
-      }
-      const executorResult =
-        {
-          PROPOSAL_EXECUTOR_RESULT_UNSPECIFIED: 0,
-          PROPOSAL_EXECUTOR_RESULT_NOT_RUN: 1,
-          PROPOSAL_EXECUTOR_RESULT_SUCCESS: 2,
-          PROPOSAL_EXECUTOR_RESULT_FAILURE: 3,
-          UNRECOGNIZED: -1,
-        }[proposal.executorResult] || -1
-      const uiProposal: UIProposal = {
-        metadata: JSON.parse(proposal.metadata) as UIProposalMetadata,
-        executorResult,
-        id: proposal.id,
-        groupPolicyAddress: proposal.groupPolicyAddress,
-        proposers: proposal.proposers as string[],
-        groupVersion: proposal.groupVersion,
-        groupPolicyVersion: proposal.groupPolicyVersion,
-        status: ProposalStatus[proposal.status as keyof typeof ProposalStatus],
-        finalTallyResult: {
-          yesCount: proposal.finalTallyResult.yes_count,
-          noCount: proposal.finalTallyResult.no_count,
-          abstainCount: proposal.finalTallyResult.abstain_count,
-          noWithVetoCount: proposal.finalTallyResult.no_with_veto_count,
-        },
-        messages: proposal.messages,
-        submitTime: proposal.submitTime,
-        votingPeriodEnd: proposal.votingPeriodEnd,
-        historical: true,
-      }
+      const uiProposal = nodeToUIProposal(node)
       return uiProposal
     },
     enabled: !!proposalId,
@@ -165,33 +130,8 @@ export function useGroupHistoricalProposals(groupId?: string) {
         if (!!res.allProposals && !!res.allProposals.nodes) {
           const { nodes } = res.allProposals
           for (const node of nodes) {
-            const proposal = getFragmentData(ProposalItemFragmentDoc, node)
-            if (proposal) {
-              const executorResult =
-                {
-                  PROPOSAL_EXECUTOR_RESULT_UNSPECIFIED: 0,
-                  PROPOSAL_EXECUTOR_RESULT_NOT_RUN: 1,
-                  PROPOSAL_EXECUTOR_RESULT_SUCCESS: 2,
-                  PROPOSAL_EXECUTOR_RESULT_FAILURE: 3,
-                  UNRECOGNIZED: -1,
-                }[proposal.executorResult] || -1
-              const uiProposal: UIProposal = {
-                metadata: JSON.parse(proposal.metadata) as UIProposalMetadata,
-                executorResult,
-                id: proposal.id,
-                groupPolicyAddress: proposal.groupPolicyAddress,
-                proposers: proposal.proposers as string[],
-                groupVersion: proposal.groupVersion,
-                groupPolicyVersion: proposal.groupPolicyVersion,
-                status: ProposalStatus[proposal.status as keyof typeof ProposalStatus],
-                finalTallyResult: proposal.finalTallyResult,
-                messages: proposal.messages,
-                submitTime: proposal.submitTime,
-                votingPeriodEnd: proposal.votingPeriodEnd,
-                historical: true,
-              }
-              result.push(uiProposal)
-            }
+            const uiProposal = nodeToUIProposal(node)
+            result.push(uiProposal)
           }
         }
       }
