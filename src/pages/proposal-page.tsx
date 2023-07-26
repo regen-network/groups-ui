@@ -54,39 +54,11 @@ export default function ProposalPage() {
     return null
   }
 
-  if (
-    !!historicalProposal &&
-    !!group &&
-    !isLoadingGroup &&
-    !isLoadingHistoricalProposal
-  ) {
-    const { finalTallyResult } = historicalProposal
-    return (
-      <PageContainer>
-        <Stack w="full" spacing={6}>
-          <div>
-            <Button
-              variant="ghost"
-              leftIcon={<BackIcon />}
-              as={RouteLink}
-              to={ROUTE_PATH.group(groupId)}
-            >
-              {group?.metadata.name}
-            </Button>
-          </div>
-          <ProposalSummary
-            onVote={() => undefined}
-            proposal={historicalProposal}
-            group={group}
-          />
-          <ProposalDetails proposal={historicalProposal} />
-          <ProposalFinalTallyTable finalTallyResult={finalTallyResult} />
-        </Stack>
-      </PageContainer>
-    )
-  }
+  if (isLoadingGroup && isLoadingHistoricalProposal) return <Loading />
 
-  if (isLoadingGroup || isLoadingProposal || isLoadingVotes || isLoadingUserVotes)
+  const isHistorical = !!historicalProposal && !!group
+
+  if (!isHistorical && (isLoadingProposal || isLoadingVotes || isLoadingUserVotes))
     return <Loading />
 
   async function handleVote(option: VoteOptionType) {
@@ -105,12 +77,13 @@ export default function ProposalPage() {
     ? userVotes.find((v) => v.proposalId.toString() === proposalId)
     : undefined
 
-  if (!proposal) {
+  if (!proposal && !isHistorical) {
     throwError('Proposal not found')
   }
   if (!group) {
     throwError('Group not found')
   }
+
   return (
     <PageContainer>
       <Stack w="full" spacing={6}>
@@ -124,15 +97,32 @@ export default function ProposalPage() {
             {group?.metadata.name}
           </Button>
         </div>
-        <ProposalSummary
-          proposal={proposal}
-          group={group}
-          onVote={handleVote}
-          userVote={userVote}
-          votes={votes}
-        />
-        <ProposalDetails proposal={proposal} />
-        <ProposalVotesTable votes={votes || []} groupMembers={groupMembers || []} />
+        {isHistorical ? (
+          <>
+            <ProposalSummary
+              onVote={() => undefined}
+              proposal={historicalProposal}
+              group={group}
+            />
+            <ProposalDetails proposal={historicalProposal} />
+            <ProposalDetails proposal={historicalProposal} />
+            <ProposalFinalTallyTable
+              finalTallyResult={historicalProposal.finalTallyResult}
+            />
+          </>
+        ) : (
+          <>
+            <ProposalSummary
+              proposal={proposal}
+              group={group}
+              onVote={handleVote}
+              userVote={userVote}
+              votes={votes}
+            />
+            <ProposalDetails proposal={proposal} />
+            <ProposalVotesTable votes={votes || []} groupMembers={groupMembers || []} />
+          </>
+        )}
       </Stack>
     </PageContainer>
   )
