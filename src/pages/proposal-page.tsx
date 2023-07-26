@@ -61,7 +61,6 @@ export default function ProposalPage() {
     !isLoadingHistoricalProposal
   ) {
     const { finalTallyResult } = historicalProposal
-    console.log({ finalTallyResult })
     return (
       <PageContainer>
         <Stack w="full" spacing={6}>
