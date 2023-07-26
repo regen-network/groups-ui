@@ -5,7 +5,7 @@ import {
   ProposalsByGroupPolicyAddressDocument,
   ProposalsByProposalIdDocument,
 } from 'gql/graphql'
-import { useGraphQLClient } from 'graphqlRequestContext'
+import { useGraphQLClient } from 'graphql-request-context'
 
 import { UIProposal, UIProposalMetadata } from 'types'
 import { ProposalStatus } from 'util/enums'
