@@ -10,7 +10,7 @@ export const ProposalFinalTallyTable = ({
 }) => {
   return (
     <TableContainer>
-      <TableTitlebar title="Finally Tally Results" />
+      <TableTitlebar title="Final Tally Results" />
       <Table variant="striped" size="lg">
         <Thead>
           <Tr>
