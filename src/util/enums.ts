@@ -61,3 +61,21 @@ export const ProposalStatus: typeof ProposalStatusType = Object.keys(
   acc[key] = key
   return acc
 }, {} as typeof ProposalStatusType)
+
+export const getExecutorResultCode = (executorResult: string) => {
+  const code = (function () {
+    switch (executorResult) {
+      case 'PROPOSAL_EXECUTOR_RESULT_UNSPECIFIED':
+        return 0
+      case 'PROPOSAL_EXECUTOR_RESULT_NOT_RUN':
+        return 1
+      case 'PROPOSAL_EXECUTOR_RESULT_SUCCESS':
+        return 2
+      case 'PROPOSAL_EXECUTOR_RESULT_FAILURE':
+        return 3
+      default:
+        return -1
+    }
+  })()
+  return code
+}
