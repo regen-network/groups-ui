@@ -1,7 +1,7 @@
 import type { ProposalStatusType, VoteOptionType } from 'types'
 
 /**
- * TODO: the generated `ProposalStatus` enum returns number values, but the
+ * TODO(#124): the generated `ProposalStatus` enum returns number values, but the
  * actual API response is the keys of those values. We also can't import that
  * enum directly because of a combo of vite and the generated code - this is a
  * copy-pasted version of the enum from the SDK, converted to a normal object,
@@ -35,7 +35,7 @@ const GeneratedProposalStatus: typeof ProposalStatusType = {
   UNRECOGNIZED: -1,
 }
 
-/** TODO: VoteOption won't properly import into vite as an export directly from
+/** TODO(#124): VoteOption won't properly import into vite as an export directly from
  * the generated lib - this is copy-pasted */
 export const VoteOption: typeof VoteOptionType = {
   /**

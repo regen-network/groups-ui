@@ -6,7 +6,7 @@ const bech32Address = z.string().refine(isBech32Address, 'Must be a  Bech32 addr
 const member = z.object({
   address: bech32Address,
   weight: z.number().min(0, 'Must be 0 or a positive number'),
-  // metadata: z.string().optional() // TODO: ?
+  // metadata: z.string().optional() // TODO(#97): support for group member metadata
 })
 const members = member.array().min(1, 'Must have at least one member')
 const json = z.string().refine(isJson, 'Must be a valid JSON string')
@@ -17,7 +17,7 @@ const name = z
 const description = z
   .string()
   .min(4, 'Description is too short')
-  .max(320, 'Description is too long') // TODO is this too short?
+  .max(320, 'Description is too long')
 const percent = z
   .number()
   .min(1, 'Must be greater than zero')

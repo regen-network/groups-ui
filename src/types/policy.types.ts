@@ -28,8 +28,6 @@ export type UIGroupPolicyInfo = Omit<GroupPolicyInfo, 'decisionPolicy'> & {
 }
 
 type UIDecisionPolicyWindows = {
-  // TODO: should this be a string? number seems better for UI, but conversion
-  // might have more side-effects
   [K in keyof DecisionPolicyWindows]: string
 }
 

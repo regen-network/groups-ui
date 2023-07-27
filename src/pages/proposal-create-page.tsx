@@ -109,7 +109,6 @@ export default function ProposalCreate() {
       if (!account?.address) {
         throwError('Error submitting proposal: No group policy found')
       }
-      // TODO: should this be a react-query mutation?
       const data = await createProposal({
         actions,
         title,

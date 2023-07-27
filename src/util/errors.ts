@@ -12,7 +12,7 @@ export function isErrorWithMessage(error: unknown): error is ErrorWithMessage {
 }
 
 function reportError({ message }: { message: string }): void {
-  // TODO - set up logging?
+  // TODO(#125): set up logging
   console.error(message)
 }
 

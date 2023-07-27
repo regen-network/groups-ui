@@ -80,7 +80,7 @@ export const GroupMembersFields = () => {
         directly add to it */}
         <FieldControl
           required
-          error={errors.members as FieldError} // TODO fix type cast
+          error={errors.members as FieldError}
           name="memberAddr"
           label="Add member accounts"
           helperText="Input the addresses of the members of this group."
