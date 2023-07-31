@@ -52,7 +52,7 @@ export const ProposalSendForm = ({
   return (
     <FormCard title="Send">
       <Stack spacing={SPACING.formStack}>
-        {/*TODO(##47): add "multi" send to send action create flow*/}
+        {/*TODO(#47): add "multi" send to send action create flow*/}
         {/*<FormControl>*/}
         {/*  <FormLabel>Type</FormLabel>*/}
         {/*  <RadioGroup*/}
