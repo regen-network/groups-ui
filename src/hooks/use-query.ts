@@ -3,7 +3,7 @@ import {
   ProposalsByGroupPolicyAddressDocument,
   ProposalsByProposalIdDocument,
 } from 'gql/graphql'
-import { nodeToUIProposal } from 'graphql/historicalProposal.utils'
+import { nodeToUIProposal } from 'graphql/historical-proposal.utils'
 import { useGraphQLClient } from 'graphql-request-context'
 
 import { fetchAllBalances } from 'api/bank.actions'
