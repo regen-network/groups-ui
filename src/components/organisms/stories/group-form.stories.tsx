@@ -4,7 +4,7 @@ import { defaultGroupFormValues } from 'util/form.defaults'
 
 import { GroupForm } from '../group-form'
 
-// TODO: need to mock Wallet store for this to render
+// TODO(#7): need to mock Wallet store for this to render
 export default {
   title: 'Organisms/Group Form',
   component: GroupForm,

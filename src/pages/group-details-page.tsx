@@ -31,7 +31,7 @@ export default function GroupDetailsPage() {
 
   const handleUpdateMembers: GroupMembersTableProps['onSave'] = async (values) => {
     const msg = msgUpdateGroupMembers({
-      groupId: group.id, // TODO: change to groupId?
+      groupId: group.id,
       admin: group.admin,
       members: values,
     })

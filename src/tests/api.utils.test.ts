@@ -5,7 +5,7 @@ import { GroupInfoSDKType, UIGroup, UIGroupMetadata } from 'types'
 
 import { toUIGroup } from 'api/group.utils'
 
-// TODO: move these to reusable stubs
+// TODO(#128): move these to reusable stubs
 const date = new Date(2022, 1, 1)
 const dateTime = date.getTime()
 
@@ -33,7 +33,7 @@ const stubUIGroup: UIGroup = {
   version: Long.fromString('1'),
 }
 
-// TODO - valtio messes this up
+// TODO(#128): valtio messes this up
 describe.skip('Group Transforms', () => {
   it.skip('works on normal chain group', () => {
     expect(toUIGroup(stubGroup)).toEqual(stubUIGroup)

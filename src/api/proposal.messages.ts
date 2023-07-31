@@ -1,4 +1,8 @@
-// import { Exec } from '@regen-network/api/types/codegen/cosmos/group/v1/tx'
+// NOTE: importing from src rather than types resolves an import issue
+// with types most likely related to typescript errors upstream.
+// TODO: https://github.com/regen-network/regen-js/issues/84
+import { Exec } from '@regen-network/api/src/codegen/cosmos/group/v1/tx'
+
 import type { Any } from 'types'
 
 import { GroupMsgWithTypeUrl } from './cosmosgroups'
@@ -8,7 +12,7 @@ export function msgSubmitProposal({
   messages,
   metadata,
   proposers,
-  exec = 0, // Exec.EXEC_UNSPECIFIED, TODO - TS doesn't import `Exec` correctly
+  exec = Exec.EXEC_UNSPECIFIED,
 }: {
   exec?: number // Exec
   groupPolicyAddress: string

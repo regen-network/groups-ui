@@ -71,7 +71,7 @@ export default function GroupEdit() {
         }
         if (prop === 'admin') {
           // disabled for now
-          // TODO: check if current admin, block in UI otherwise? maybe give disclosure
+          // TODO(#115): check if current admin, block in UI otherwise? maybe give disclosure
           // msg/updateGroupAdmin
         }
         if (prop === 'members') {

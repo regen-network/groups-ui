@@ -44,7 +44,7 @@ export async function getGroupMetadata(
   if (isIpfsProtocol(metadata)) {
     try {
       const ipfsData = await fetchIpfsData(getIpfsCID(metadata))
-      // TODO: we aren't handling IPFS metadata that's outside the shape of our
+      // TODO(#126): we aren't handling IPFS metadata that's outside the shape of our
       // expected data - could possibly add to the `other` field, or something
       // similar if we want to support in the future (add else block here)
       if (isGroupMetadata(ipfsData)) return ipfsData

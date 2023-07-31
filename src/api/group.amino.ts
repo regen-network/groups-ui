@@ -36,7 +36,7 @@ import { MemberRequestAmino } from '@regen-network/api/types/codegen/cosmos/grou
 import { AnyAmino } from '@regen-network/api/types/codegen/google/protobuf/any'
 import Long from 'long'
 
-// TODO: remove amino converter workaround #105
+// TODO(#105): remove amino converter workaround
 export const MemberRequestToAmino = (message: MemberRequest): MemberRequestAmino => {
   const output = {
     address: message.address,
@@ -46,7 +46,7 @@ export const MemberRequestToAmino = (message: MemberRequest): MemberRequestAmino
   return output
 }
 
-// TODO: remove amino converter workaround #105
+// TODO(#105): remove amino converter workaround
 export const groupAminoConverters = {
   '/cosmos.group.v1.MsgCreateGroupPolicy': {
     aminoType: 'cosmos-sdk/MsgCreateGroupPolicy',
