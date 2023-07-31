@@ -84,6 +84,12 @@ export default function ProposalPage() {
     throwError('Group not found')
   }
 
+  const now = new Date()
+  const votingClosed =
+    new Date(
+      isHistorical ? historicalProposal.votingPeriodEnd : proposal.votingPeriodEnd,
+    ).getTime() < now.getTime()
+
   return (
     <PageContainer>
       <Stack w="full" spacing={6}>
@@ -99,8 +105,11 @@ export default function ProposalPage() {
         </div>
         {isHistorical ? (
           <>
-            <ProposalSummary proposal={historicalProposal} group={group} />
-            <ProposalDetails proposal={historicalProposal} />
+            <ProposalSummary
+              proposal={historicalProposal}
+              group={group}
+              votingClosed={votingClosed}
+            />
             <ProposalDetails proposal={historicalProposal} />
             <ProposalFinalTallyTable
               finalTallyResult={historicalProposal.finalTallyResult}
@@ -114,9 +123,14 @@ export default function ProposalPage() {
               onVote={handleVote}
               userVote={userVote}
               votes={votes}
+              votingClosed={votingClosed}
             />
             <ProposalDetails proposal={proposal} />
-            <ProposalVotesTable votes={votes || []} groupMembers={groupMembers || []} />
+            {votingClosed ? (
+              <ProposalFinalTallyTable finalTallyResult={proposal.finalTallyResult} />
+            ) : (
+              <ProposalVotesTable votes={votes || []} groupMembers={groupMembers || []} />
+            )}
           </>
         )}
       </Stack>

@@ -36,16 +36,16 @@ export const ProposalSummary = ({
   proposal,
   userVote,
   votes,
+  votingClosed,
 }: {
   group: UIGroup
   onVote?: (option: VoteOptionType) => void
   proposal: UIProposal
   userVote?: Vote
   votes?: Vote[]
+  votingClosed?: boolean
 }) => {
   const cardBgDark = useColorModeValue('gray.100', 'gray.700')
-  const now = new Date()
-  const votingClosed = new Date(proposal.votingPeriodEnd || now).getTime() < now.getTime()
   const proposalFinalized =
     proposal.status.toString() === 'PROPOSAL_STATUS_ACCEPTED' ||
     proposal.status.toString() === 'PROPOSAL_STATUS_REJECTED'
