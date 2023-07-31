@@ -10,7 +10,7 @@ import { FormCard } from '@/molecules/form-card'
 // import { RadioGroupOptions } from '@/molecules/radio-group-options'
 import { SingleForm, type SingleFormValues } from './send-single-form'
 
-// TODO(##47): add "multi" send to send action create flow
+// TODO(#47): add "multi" send to send action create flow
 // const sendOptions: { label: string; value: ProposalSendType }[] = [
 //   { label: 'Single', value: 'single' },
 //   // { label: 'Multiple', value: 'multi' },
