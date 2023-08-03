@@ -1,6 +1,7 @@
 import { UIGroupMember, UIGroupPolicyInfo } from 'types'
 
 import { ROUTE_PATH } from 'routes'
+import { Wallet } from 'store/wallet.store'
 
 import {
   Button,
@@ -39,6 +40,8 @@ export const GroupDetailsTemplate = ({
   policies: UIGroupPolicyInfo[]
   policyAsGroupAdmin?: boolean
 }) => {
+  const userAddress = Wallet.account.address
+  const isAdmin = userAddress === admin
   return (
     <PageContainer>
       <Stack w="full" spacing={6}>
@@ -54,9 +57,11 @@ export const GroupDetailsTemplate = ({
         </div>
         <Flex justify="space-between">
           <Heading>Group Details</Heading>
-          <Button as={RouteLink} to={ROUTE_PATH.groupEdit(id)}>
-            Edit Group
-          </Button>
+          {(isAdmin || policyAsGroupAdmin) && (
+            <Button as={RouteLink} to={ROUTE_PATH.groupEdit(id)}>
+              Edit Group
+            </Button>
+          )}
         </Flex>
         {description && <Text fontSize="larger">{description}</Text>}
         <HStack spacing={3}>
