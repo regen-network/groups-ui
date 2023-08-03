@@ -36,16 +36,16 @@ export const ProposalSummary = ({
   proposal,
   userVote,
   votes,
+  votingClosed,
 }: {
   group: UIGroup
-  onVote: (option: VoteOptionType) => void
+  onVote?: (option: VoteOptionType) => void
   proposal: UIProposal
   userVote?: Vote
   votes?: Vote[]
+  votingClosed?: boolean
 }) => {
   const cardBgDark = useColorModeValue('gray.100', 'gray.700')
-  const now = new Date()
-  const votingClosed = new Date(proposal.votingPeriodEnd || now).getTime() < now.getTime()
   const proposalFinalized =
     proposal.status.toString() === 'PROPOSAL_STATUS_ACCEPTED' ||
     proposal.status.toString() === 'PROPOSAL_STATUS_REJECTED'
@@ -65,8 +65,8 @@ export const ProposalSummary = ({
             </Stack>
             <Heading>{proposal.metadata.title}</Heading>
             <Text>{proposal.metadata.summary}</Text>
-            {proposal.messages.map((msg) =>
-              renderMessage(msg, proposal.groupPolicyAddress),
+            {proposal.messages.map((msg, index) =>
+              renderMessage(msg, proposal.groupPolicyAddress, index),
             )}
           </Stack>
         </CardBody>
@@ -108,12 +108,13 @@ export const ProposalSummary = ({
 
 // TODO: https://github.com/regen-network/regen-js/issues/71
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function renderMessage(msg: any, groupPolicyAddress: string) {
+function renderMessage(msg: any, groupPolicyAddress: string, index: number) {
   if (!msg) return null
   switch (msg.typeUrl) {
     case '/cosmos.bank.v1beta1.MsgSend':
       return (
         <SendReview
+          key={index}
           groupPolicyAddress={groupPolicyAddress}
           values={
             {
@@ -129,6 +130,7 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
     case '/cosmos.staking.v1beta1.MsgDelegate':
       return (
         <StakeReview
+          key={index}
           groupPolicyAddress={groupPolicyAddress}
           values={
             {
@@ -144,6 +146,7 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
     case '/cosmos.staking.v1beta1.MsgBeginRedelegate':
       return (
         <StakeReview
+          key={index}
           groupPolicyAddress={groupPolicyAddress}
           values={
             {
@@ -160,6 +163,7 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
     case '/cosmos.staking.v1beta1.MsgUndelegate':
       return (
         <StakeReview
+          key={index}
           groupPolicyAddress={groupPolicyAddress}
           values={
             {
@@ -175,6 +179,7 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
     case '/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward':
       return (
         <StakeReview
+          key={index}
           groupPolicyAddress={groupPolicyAddress}
           values={
             {
@@ -186,6 +191,6 @@ function renderMessage(msg: any, groupPolicyAddress: string) {
         />
       )
     default:
-      return <JSONDisplay data={msg} />
+      return <JSONDisplay key={index} data={msg} />
   }
 }
