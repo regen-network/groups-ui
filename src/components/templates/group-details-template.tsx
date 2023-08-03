@@ -42,6 +42,7 @@ export const GroupDetailsTemplate = ({
 }) => {
   const userAddress = Wallet.account.address
   const isAdmin = userAddress === admin
+  const hasEditPrivileges = isAdmin || policyAsGroupAdmin
   return (
     <PageContainer>
       <Stack w="full" spacing={6}>
@@ -57,7 +58,7 @@ export const GroupDetailsTemplate = ({
         </div>
         <Flex justify="space-between">
           <Heading>Group Details</Heading>
-          {(isAdmin || policyAsGroupAdmin) && (
+          {hasEditPrivileges && (
             <Button as={RouteLink} to={ROUTE_PATH.groupEdit(id)}>
               Edit Group
             </Button>
@@ -76,6 +77,7 @@ export const GroupDetailsTemplate = ({
           onSave={onMembersSave}
           policyAsGroupAdmin={policyAsGroupAdmin}
           groupId={id}
+          hasEditPrivileges={hasEditPrivileges}
         />
       </Stack>
     </PageContainer>

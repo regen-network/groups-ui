@@ -41,6 +41,7 @@ export type GroupMembersTableProps = {
   onSave: (vals: MemberFormValues[]) => Promise<boolean>
   policyAsGroupAdmin?: boolean
   groupId: string
+  hasEditPrivileges: boolean
 }
 
 export const GroupMembersTable = ({
@@ -48,6 +49,7 @@ export const GroupMembersTable = ({
   onSave,
   policyAsGroupAdmin,
   groupId,
+  hasEditPrivileges,
 }: GroupMembersTableProps) => {
   const navigate = useNavigate()
   const [isEdit, setEdit] = useBoolean(false)
@@ -192,7 +194,7 @@ export const GroupMembersTable = ({
             </Flex>
           )}
         </AnimatePresence>
-        {hasMembers && (
+        {hasMembers && hasEditPrivileges && (
           <>
             <Button
               variant={isEdit ? 'solid' : 'outline'}
