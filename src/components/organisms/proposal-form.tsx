@@ -103,7 +103,6 @@ export const ProposalForm = (props: {
           },
         ])
         break
-      // TODO add other actions here
       default:
         break
     }
@@ -188,7 +187,6 @@ export const ProposalForm = (props: {
             />
           )
         return null
-      // TODO add other message types
       default:
         return null
     }

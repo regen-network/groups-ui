@@ -65,14 +65,14 @@ export const RedelegateForm = (props: {
             required
             name="amount"
             label="Amount"
-            balances={[]} // TODO: use amount staked on validator
+            balances={[]} // TODO(#127): use amount staked on validator
           />
         </GridItem>
         <GridItem>
           <DenomField
             required
             name="denom"
-            balances={[]} // TODO: use amount staked on validator
+            balances={[]} // TODO(#127): use amount staked on validator
           />
         </GridItem>
       </Grid>

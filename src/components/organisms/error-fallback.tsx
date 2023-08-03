@@ -22,7 +22,7 @@ function getErrorText(error: unknown): { text: string; message?: string } {
 
 export const ErrorFallback = () => {
   const error = useRouteError()
-  // TODO: `toErrorWithMessage` was added before react-router 6.4 upgrade -
+  // TODO(#125): `toErrorWithMessage` was added before react-router 6.4 upgrade -
   // there's probably a more graceful solution. See:
   // https://reactrouter.com/en/main/route/error-element
   // const error = toErrorWithMessage(routeErr)

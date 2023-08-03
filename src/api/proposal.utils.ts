@@ -51,13 +51,13 @@ export function proposalActionsToMsgs(
 ): Any[] {
   return actions.map(({ values }) => {
     if (isSendProposal(values)) {
-      return sendValuesToMsg(values, data) as unknown as Any // TODO
+      return sendValuesToMsg(values, data)
     }
     if (isStakeProposal(values)) {
-      return stakeValuesToMsg(values, data) as unknown as Any // TODO
+      return stakeValuesToMsg(values, data)
     }
     if (isGroupUpdateProposal(values)) {
-      return groupUpdateValuesToMsg(values, data) as unknown as Any // TODO
+      return groupUpdateValuesToMsg(values, data)
     }
     throwError(`Unknown proposal action: ${JSON.stringify(values, null, 2)}`)
   })

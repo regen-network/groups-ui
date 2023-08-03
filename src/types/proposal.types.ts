@@ -30,13 +30,13 @@ export interface UIProposal
 export type ProposalAction = {
   /** for handling add / remove behavior + passing to nested forms for submit handler */
   id: string
-  type: 'send' | 'stake' | 'text' | 'update-group' // TODO: add other event types
-  values: ProposalSendFormValues | ProposalStakeFormValues | ProposalUpdateGroupFormValues // TODO: types for other form actions
+  type: 'send' | 'stake' | 'text' | 'update-group'
+  values: ProposalSendFormValues | ProposalStakeFormValues | ProposalUpdateGroupFormValues
 }
 
-export type ProposalSendType = 'single' // TODO: "multi" send
+export type ProposalSendType = 'single'
 
-export type ProposalSendFormValues = SingleFormValues // TODO: "multi" send
+export type ProposalSendFormValues = SingleFormValues
 
 export type ProposalStakeType = 'delegate' | 'redelegate' | 'undelegate' | 'claim'
 
@@ -61,6 +61,6 @@ export type {
   UndelegateFormValues,
 }
 
-/** TODO: in v0.47, this data will live directly on a proposal */
+/** TODO(#72): in v0.47, this data will live directly on a proposal */
 export type { UIProposalMetadata }
 export type { ProposalFormValues } from '@/organisms/proposal-form'

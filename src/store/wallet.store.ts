@@ -8,7 +8,7 @@ import { logError, throwError } from 'util/errors'
 
 import { fetchValidators } from 'api/staking.actions'
 
-// TODO: remove amino converter workaround #105
+// TODO(#105): remove amino converter workaround
 import { groupAminoConverters } from '../api/group.amino'
 
 import { Chain } from './chain.store'
@@ -46,7 +46,7 @@ export async function bootstrapKeplr() {
 
     const [account] = await offlineSigner.getAccounts()
 
-    // TODO: remove amino converter workaround #105
+    // TODO(#105): remove amino converter workaround
     // NOTE: We use the cosmos signing client that includes protobuf and amino
     // encoding for all cosmos modules included within @regen-network/api
     // const signingClient = await getSigningCosmosClient({
@@ -54,10 +54,10 @@ export async function bootstrapKeplr() {
     //   signer: offlineSigner,
     // })
 
-    // TODO: remove amino converter workaround #105
+    // TODO(#105): remove amino converter workaround
     const aminoConverters = { ...cosmosAminoConverters, ...groupAminoConverters }
 
-    // TODO: remove amino converter workaround #105
+    // TODO(#105): remove amino converter workaround
     // NOTE: We use signing stargate client so that we can set amino types
     const registry = new Registry(cosmosProtoRegistry)
     const signingClient = await SigningStargateClient.connectWithSigner(
@@ -81,7 +81,7 @@ export async function bootstrapKeplr() {
     Chain.stakeDenom = Chain.active.stakeCurrency.coinMinimalDenom
     Chain.fee = {
       amount: coins(10, Chain.active.feeCurrencies[0].coinDenom),
-      gas: '2000000', // TODO how do I calculate this?
+      gas: '2000000',
     }
     Wallet.keplrStatus = 'ready'
     fetchValidators()
