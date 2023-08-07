@@ -10,6 +10,7 @@ import { executeProposal, voteOnProposal } from 'api/proposal.actions'
 import {
   useGroup,
   useGroupMembers,
+  useHistoricalProposal,
   useProposal,
   useProposalVotes,
   useUserVotes,
@@ -24,6 +25,7 @@ import {
 } from '@/molecules/form-footer'
 import { Loading } from '@/molecules/loading'
 import { ProposalDetails } from '@/organisms/proposal-details'
+import { ProposalFinalTallyTable } from '@/organisms/proposal-final-tally-table'
 import { ProposalSummary } from '@/organisms/proposal-summary'
 import { ProposalVotesTable } from '@/organisms/proposal-votes-table'
 
@@ -36,11 +38,18 @@ export default function ProposalPage() {
   const { proposalId, groupId } = useParams()
   const { data: group, isLoading: isLoadingGroup } = useGroup(groupId)
   const { data: groupMembers } = useGroupMembers(groupId)
+  const { data: historicalProposal, isLoading: isLoadingHistoricalProposal } =
+    useHistoricalProposal(proposalId)
+
   const {
     data: proposal,
     isLoading: isLoadingProposal,
     refetch: refetchProposal,
-  } = useProposal(proposalId)
+  } = useProposal(
+    proposalId,
+    !isLoadingHistoricalProposal && !historicalProposal?.historical,
+  )
+
   const {
     data: votes,
     isLoading: isLoadingVotes,
@@ -60,12 +69,17 @@ export default function ProposalPage() {
     isLoading: isLoadingUserVotes,
   } = useUserVotes()
 
-  if (isLoadingProposal || isLoadingGroup || isLoadingVotes || isLoadingUserVotes)
-    return <Loading />
-  if (!groupId || !proposal || !group) {
+  if (!groupId) {
     redirect(groupId ? ROUTE_PATH.group(groupId) : ROUTE_PATH.groups)
     return null
   }
+
+  if (isLoadingGroup && isLoadingHistoricalProposal) return <Loading />
+
+  const isHistorical = !!historicalProposal && !!group
+
+  if (!isHistorical && (isLoadingProposal || isLoadingVotes || isLoadingUserVotes))
+    return <Loading />
 
   async function handleVote(option: VoteOptionType) {
     if (!proposalId) throwError('Proposal ID is required to cast vote')
@@ -99,6 +113,19 @@ export default function ProposalPage() {
     ? userVotes.find((v) => v.proposalId.toString() === proposalId)
     : undefined
 
+  if (!proposal && !isHistorical) {
+    throwError('Proposal not found')
+  }
+  if (!group) {
+    throwError('Group not found')
+  }
+
+  const now = new Date()
+  const votingClosed =
+    new Date(
+      isHistorical ? historicalProposal.votingPeriodEnd : proposal.votingPeriodEnd,
+    ).getTime() < now.getTime()
+
   const isExecutable = proposal.status === ProposalStatus.PROPOSAL_STATUS_ACCEPTED
 
   return (
@@ -115,15 +142,39 @@ export default function ProposalPage() {
               {group?.metadata.name}
             </Button>
           </div>
-          <ProposalSummary
-            proposal={proposal}
-            group={group}
-            onVote={handleVote}
-            userVote={userVote}
-            votes={votes}
-          />
-          <ProposalDetails proposal={proposal} />
-          <ProposalVotesTable votes={votes || []} groupMembers={groupMembers || []} />
+          {isHistorical ? (
+            <>
+              <ProposalSummary
+                proposal={historicalProposal}
+                group={group}
+                votingClosed={votingClosed}
+              />
+              <ProposalDetails proposal={historicalProposal} />
+              <ProposalFinalTallyTable
+                finalTallyResult={historicalProposal.finalTallyResult}
+              />
+            </>
+          ) : (
+            <>
+              <ProposalSummary
+                proposal={proposal}
+                group={group}
+                onVote={handleVote}
+                userVote={userVote}
+                votes={votes}
+                votingClosed={votingClosed}
+              />
+              <ProposalDetails proposal={proposal} />
+              {votingClosed ? (
+                <ProposalFinalTallyTable finalTallyResult={proposal.finalTallyResult} />
+              ) : (
+                <ProposalVotesTable
+                  votes={votes || []}
+                  groupMembers={groupMembers || []}
+                />
+              )}
+            </>
+          )}
         </Stack>
       </PageContainer>
       {isExecutable && (

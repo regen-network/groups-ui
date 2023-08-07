@@ -3,7 +3,10 @@ import { useEffect, useState } from 'react'
 import { UIProposal } from 'types'
 import { ProposalStatus } from 'util/enums'
 
-export function useDerivedProposals(proposals?: UIProposal[]) {
+export function useDerivedProposals(
+  proposals?: UIProposal[],
+  historicalProposals?: UIProposal[],
+) {
   const [accepted, setAccepted] = useState<UIProposal[]>([])
   const [submitted, setSubmitted] = useState<UIProposal[]>([])
   // const [rejected, setRejected] = useState<UIProposal[]>([])
@@ -30,10 +33,13 @@ export function useDerivedProposals(proposals?: UIProposal[]) {
           break
       }
     })
+    historicalProposals?.forEach((proposal) => {
+      other.push(proposal)
+    })
     setAccepted(accepted)
     // setRejected(rejected)
     setSubmitted(submitted)
     setOther(other)
-  }, [proposals])
+  }, [proposals, historicalProposals])
   return { accepted, /* rejected, */ submitted, other }
 }

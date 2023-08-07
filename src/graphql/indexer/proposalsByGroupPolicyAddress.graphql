@@ -1,0 +1,7 @@
+query ProposalsByGroupPolicyAddress($groupPolicyAddress: String!) {
+  allProposals(condition: { groupPolicyAddress: $groupPolicyAddress }) {
+    nodes {
+      ...ProposalItem
+    }
+  }
+}
