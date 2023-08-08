@@ -126,7 +126,8 @@ export default function ProposalPage() {
       isHistorical ? historicalProposal.votingPeriodEnd : proposal.votingPeriodEnd,
     ).getTime() < now.getTime()
 
-  const isExecutable = proposal.status === ProposalStatus.PROPOSAL_STATUS_ACCEPTED
+  const isExecutable =
+    proposal && proposal.status === ProposalStatus.PROPOSAL_STATUS_ACCEPTED
 
   return (
     <>
