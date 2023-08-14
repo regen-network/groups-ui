@@ -29,9 +29,10 @@ const currencies: AppCurrency[] = [REGEN]
 
 export const regenLocal: ChainInfoExtended = {
   // hardcoded port values based on makefile
-  rpc: `${VITE_LOCAL_HOSTNAME}:26657`,
-  rest: `${VITE_LOCAL_HOSTNAME}:1317`,
-  indexer: VITE_INDEXER_GRAPHQL_API_REGEN_LOCAL,
+  rpc: VITE_LOCAL_HOSTNAME ? `${VITE_LOCAL_HOSTNAME}:26657` : 'http://127.0.0.1:26657',
+  rest: VITE_LOCAL_HOSTNAME ? `${VITE_LOCAL_HOSTNAME}:1317` : 'http://127.0.0.1:1317',
+  indexer:
+    VITE_INDEXER_GRAPHQL_API_REGEN_LOCAL || 'http://localhost:5000/indexer/graphql',
   chainId: 'regen-local',
   chainName: 'Regen Local',
   stakeCurrency: REGEN,
@@ -47,9 +48,15 @@ export const regenLocal: ChainInfoExtended = {
  * @see https://github.com/cosmos/chain-registry/blob/master/regen/chain.json
  */
 export const regenMainnet: ChainInfoExtended = {
-  rpc: `${VITE_PROXY_URL_REGEN_MAINNET}/ledger`,
-  rest: `${VITE_PROXY_URL_REGEN_MAINNET}/ledger-rest`,
-  indexer: VITE_INDEXER_GRAPHQL_API_REGEN_MAINNET,
+  rpc: VITE_PROXY_URL_REGEN_MAINNET
+    ? `${VITE_PROXY_URL_REGEN_MAINNET}/ledger`
+    : 'https://api.registry.regen.network/ledger',
+  rest: VITE_PROXY_URL_REGEN_MAINNET
+    ? `${VITE_PROXY_URL_REGEN_MAINNET}/ledger-rest`
+    : 'https://api.registry.regen.network/ledger-rest',
+  indexer:
+    VITE_INDEXER_GRAPHQL_API_REGEN_MAINNET ||
+    'https://api.regen.network/indexer/v1/graphql',
   chainId: 'regen-1',
   chainName: 'Regen',
   stakeCurrency: REGEN,
@@ -62,9 +69,15 @@ export const regenMainnet: ChainInfoExtended = {
 }
 
 export const regenTestnet: ChainInfoExtended = {
-  rpc: `${VITE_PROXY_URL_REGEN_TESTNET}/ledger`,
-  rest: `${VITE_PROXY_URL_REGEN_TESTNET}/ledger-rest`,
-  indexer: VITE_INDEXER_GRAPHQL_API_REGEN_TESTNET,
+  rpc: VITE_PROXY_URL_REGEN_TESTNET
+    ? `${VITE_PROXY_URL_REGEN_TESTNET}/ledger`
+    : 'https://api-staging.registry.regen.network/ledger',
+  rest: VITE_PROXY_URL_REGEN_TESTNET
+    ? `${VITE_PROXY_URL_REGEN_TESTNET}/ledger-rest`
+    : 'https://api.registry.regen.network/ledger-rest',
+  indexer:
+    VITE_INDEXER_GRAPHQL_API_REGEN_TESTNET ||
+    'https://api-staging.regen.network/indexer/v1/graphql',
   chainId: 'regen-redwood-1',
   chainName: 'Regen Redwood',
   stakeCurrency: REGEN,
