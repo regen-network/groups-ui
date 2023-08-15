@@ -17,13 +17,20 @@ const {
 
 import { regenLocal, regenMainnet, regenTestnet } from './regen'
 
-export const mainnetChainsArray: ChainInfo[] = [
+export interface ChainInfoExtended extends ChainInfo {
+  indexer: string
+}
+
+export const mainnetChainsArray: ChainInfoExtended[] = [
   ...(VITE_PROXY_URL_REGEN_MAINNET ? [regenMainnet] : []),
 ]
 
-export const testnetChainsArray: ChainInfo[] = [
+export const testnetChainsArray: ChainInfoExtended[] = [
   ...(VITE_PROXY_URL_REGEN_TESTNET ? [regenTestnet] : []),
   ...(VITE_LOCAL_HOSTNAME ? [regenLocal] : []),
 ]
 
-export const allChainsArray: ChainInfo[] = [...mainnetChainsArray, ...testnetChainsArray]
+export const allChainsArray: ChainInfoExtended[] = [
+  ...mainnetChainsArray,
+  ...testnetChainsArray,
+]

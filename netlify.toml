@@ -1,9 +1,3 @@
-[context.production.environment]
-  VITE_INDEXER_GRAPHQL_API="https://api.regen.network/indexer/v1/graphql"
-
-[context.deploy-preview.environment]
-  VITE_INDEXER_GRAPHQL_API="https://api-staging.regen.network/indexer/v1/graphql"
-
 [[redirects]]
   from = "/*"
   to = "/index.html"
