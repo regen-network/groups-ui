@@ -13,7 +13,7 @@
     "type-check": "tsc",
     "storybook": "storybook dev -p 6006",
     "storybook-clean": "rm -rf ./node_modules/.cache/storybook",
-    "build-storybook": "storybook build"
+    "build-storybook": "NODE_OPTIONS=--max_old_space_size=4096 storybook build"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.19",
