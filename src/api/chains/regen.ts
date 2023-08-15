@@ -32,7 +32,7 @@ export const regenLocal: ChainInfoExtended = {
   rpc: VITE_LOCAL_HOSTNAME ? `${VITE_LOCAL_HOSTNAME}:26657` : 'http://127.0.0.1:26657',
   rest: VITE_LOCAL_HOSTNAME ? `${VITE_LOCAL_HOSTNAME}:1317` : 'http://127.0.0.1:1317',
   indexer:
-    VITE_INDEXER_GRAPHQL_API_REGEN_LOCAL || 'http://localhost:5000/indexer/graphql',
+    VITE_INDEXER_GRAPHQL_API_REGEN_LOCAL || 'http://127.0.0.1:5000/indexer/v1/graphql',
   chainId: 'regen-local',
   chainName: 'Regen Local',
   stakeCurrency: REGEN,

@@ -10,7 +10,7 @@ export const GraphqlProvider = ({ children }: { children?: React.ReactNode }) =>
   const [client, setClient] = useState<GraphQLClient | undefined>(undefined)
   if (!client) {
     setClient(
-      new GraphQLClient(active.indexer || 'http://localhost:5000/indexer/graphql'),
+      new GraphQLClient(active.indexer || 'http://127.0.0.1:5000/indexer/v1/graphql'),
     )
   }
   return (
