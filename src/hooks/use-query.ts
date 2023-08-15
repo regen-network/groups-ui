@@ -124,15 +124,21 @@ export function useGroupHistoricalProposals(groupId?: string) {
       }
       const result = []
       for (const address of policyIds) {
-        const res = await client.request(ProposalsByGroupPolicyAddressDocument, {
-          groupPolicyAddress: address,
-        })
-        if (!!res.allProposals && !!res.allProposals.nodes) {
-          const { nodes } = res.allProposals
-          for (const node of nodes) {
-            const uiProposal = nodeToUIProposal(node)
-            result.push(uiProposal)
+        // NOTE: We use a try-catch statement to prevent the application from being dependent on
+        // indexed proposals being available (i.e. a successful request to the graphql endpoint).
+        try {
+          const res = await client.request(ProposalsByGroupPolicyAddressDocument, {
+            groupPolicyAddress: address,
+          })
+          if (!!res.allProposals && !!res.allProposals.nodes) {
+            const { nodes } = res.allProposals
+            for (const node of nodes) {
+              const uiProposal = nodeToUIProposal(node)
+              result.push(uiProposal)
+            }
           }
+        } catch (e) {
+          console.error(e)
         }
       }
       return result
