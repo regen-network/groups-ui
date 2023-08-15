@@ -50,10 +50,10 @@ export const regenLocal: ChainInfoExtended = {
 export const regenMainnet: ChainInfoExtended = {
   rpc: VITE_PROXY_URL_REGEN_MAINNET
     ? `${VITE_PROXY_URL_REGEN_MAINNET}/ledger`
-    : 'https://api.registry.regen.network/ledger',
+    : 'https://api.regen.network/ledger',
   rest: VITE_PROXY_URL_REGEN_MAINNET
     ? `${VITE_PROXY_URL_REGEN_MAINNET}/ledger-rest`
-    : 'https://api.registry.regen.network/ledger-rest',
+    : 'https://api.regen.network/ledger-rest',
   indexer:
     VITE_INDEXER_GRAPHQL_API_REGEN_MAINNET ||
     'https://api.regen.network/indexer/v1/graphql',
@@ -71,10 +71,10 @@ export const regenMainnet: ChainInfoExtended = {
 export const regenTestnet: ChainInfoExtended = {
   rpc: VITE_PROXY_URL_REGEN_TESTNET
     ? `${VITE_PROXY_URL_REGEN_TESTNET}/ledger`
-    : 'https://api-staging.registry.regen.network/ledger',
+    : 'https://api-staging.regen.network/ledger',
   rest: VITE_PROXY_URL_REGEN_TESTNET
     ? `${VITE_PROXY_URL_REGEN_TESTNET}/ledger-rest`
-    : 'https://api.registry.regen.network/ledger-rest',
+    : 'https://api.regen.network/ledger-rest',
   indexer:
     VITE_INDEXER_GRAPHQL_API_REGEN_TESTNET ||
     'https://api-staging.regen.network/indexer/v1/graphql',
