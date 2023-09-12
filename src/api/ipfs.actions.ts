@@ -1,6 +1,5 @@
 import { create as createIpfsClient } from 'ipfs-http-client'
 
-import { throwError } from 'util/errors'
 import { isJson } from 'util/validation'
 
 const client = createIpfsClient({
@@ -20,6 +19,6 @@ export async function fetchIpfsData(cid: string) {
     const dataStr = data.toString()
     return isJson(dataStr) ? JSON.parse(dataStr) : dataStr
   } catch (error) {
-    throwError(error)
+    console.log({ error, cid, message: 'unable to fetch ipfs data' })
   }
 }
