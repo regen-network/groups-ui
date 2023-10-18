@@ -11,23 +11,23 @@ import type { ChainInfo } from '@keplr-wallet/types'
 
 const {
   VITE_LOCAL_HOSTNAME,
-  VITE_PROXY_URL_REGEN_MAINNET,
-  VITE_PROXY_URL_REGEN_TESTNET,
+  VITE_PROXY_URL_QWOYN_MAINNET,
+  VITE_PROXY_URL_QWOYN_TESTNET,
 } = import.meta.env
 
-import { regenLocal, regenMainnet, regenTestnet } from './regen'
+import { qwoynLocal, qwoynMainnet, qwoynTestnet } from './regen'
 
 export interface ChainInfoExtended extends ChainInfo {
   indexer: string
 }
 
 export const mainnetChainsArray: ChainInfoExtended[] = [
-  ...(VITE_PROXY_URL_REGEN_MAINNET ? [regenMainnet] : []),
+  ...(VITE_PROXY_URL_QWOYN_MAINNET ? [qwoynMainnet] : []),
 ]
 
 export const testnetChainsArray: ChainInfoExtended[] = [
-  ...(VITE_PROXY_URL_REGEN_TESTNET ? [regenTestnet] : []),
-  ...(VITE_LOCAL_HOSTNAME ? [regenLocal] : []),
+  ...(VITE_PROXY_URL_QWOYN_TESTNET ? [qwoynTestnet] : []),
+  ...(VITE_LOCAL_HOSTNAME ? [qwoynLocal] : []),
 ]
 
 export const allChainsArray: ChainInfoExtended[] = [

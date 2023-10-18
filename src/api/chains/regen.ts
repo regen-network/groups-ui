@@ -6,85 +6,85 @@ import { ChainInfoExtended } from './index'
 
 const {
   VITE_LOCAL_HOSTNAME,
-  VITE_PROXY_URL_REGEN_MAINNET,
-  VITE_PROXY_URL_REGEN_TESTNET,
-  VITE_INDEXER_GRAPHQL_API_REGEN_LOCAL,
-  VITE_INDEXER_GRAPHQL_API_REGEN_MAINNET,
-  VITE_INDEXER_GRAPHQL_API_REGEN_TESTNET,
+  VITE_PROXY_URL_QWOYN_MAINNET,
+  VITE_PROXY_URL_QWOYN_TESTNET,
+  VITE_INDEXER_GRAPHQL_API_QWOYN_LOCAL,
+  VITE_INDEXER_GRAPHQL_API_QWOYN_MAINNET,
+  VITE_INDEXER_GRAPHQL_API_QWOYN_TESTNET,
 } = import.meta.env
 
-const REGEN: AppCurrency = {
-  coinDenom: 'regen',
-  coinMinimalDenom: 'uregen',
+const QWOYN: AppCurrency = {
+  coinDenom: 'qwoyn',
+  coinMinimalDenom: 'uqwoyn',
   coinDecimals: 6,
-  coinGeckoId: 'regen',
+  coinGeckoId: 'qwoyn',
   coinImageUrl:
-    'https://raw.githubusercontent.com/cosmos/chain-registry/master/regen/images/regen.png',
+    'https://raw.githubusercontent.com/cosmos/chain-registry/master/qwoyn/images/qwoyn.png',
 }
 
 /**
- *  @see https://github.com/cosmos/chain-registry/blob/master/regen/assetlist.json
+ *  @see https://github.com/cosmos/chain-registry/blob/master/qwoyn/assetlist.json
  */
-const currencies: AppCurrency[] = [REGEN]
+const currencies: AppCurrency[] = [QWOYN]
 
-export const regenLocal: ChainInfoExtended = {
+export const qwoynLocal: ChainInfoExtended = {
   // hardcoded port values based on makefile
   rpc: VITE_LOCAL_HOSTNAME ? `${VITE_LOCAL_HOSTNAME}:26657` : 'http://127.0.0.1:26657',
   rest: VITE_LOCAL_HOSTNAME ? `${VITE_LOCAL_HOSTNAME}:1317` : 'http://127.0.0.1:1317',
   indexer:
-    VITE_INDEXER_GRAPHQL_API_REGEN_LOCAL || 'http://127.0.0.1:5000/indexer/v1/graphql',
-  chainId: 'regen-local',
-  chainName: 'Regen Local',
-  stakeCurrency: REGEN,
+    VITE_INDEXER_GRAPHQL_API_QWOYN_LOCAL || 'http://127.0.0.1:5000/indexer/v1/graphql',
+  chainId: 'qwoyn-local',
+  chainName: 'Qwoyn Local',
+  stakeCurrency: QWOYN,
   bip44: {
     coinType: 118,
   },
-  bech32Config: Bech32Address.defaultBech32Config('regen'),
+  bech32Config: Bech32Address.defaultBech32Config('qwoyn'),
   currencies,
   feeCurrencies: currencies,
 }
 
 /**
- * @see https://github.com/cosmos/chain-registry/blob/master/regen/chain.json
+ * @see https://github.com/cosmos/chain-registry/blob/master/qwoyn/chain.json
  */
-export const regenMainnet: ChainInfoExtended = {
-  rpc: VITE_PROXY_URL_REGEN_MAINNET
-    ? `${VITE_PROXY_URL_REGEN_MAINNET}/ledger`
-    : 'https://api.regen.network/ledger',
-  rest: VITE_PROXY_URL_REGEN_MAINNET
-    ? `${VITE_PROXY_URL_REGEN_MAINNET}/ledger-rest`
-    : 'https://api.regen.network/ledger-rest',
+export const qwoynMainnet: ChainInfoExtended = {
+  rpc: VITE_PROXY_URL_QWOYN_MAINNET
+    ? `${VITE_PROXY_URL_QWOYN_MAINNET}/ledger`
+    : 'https://api.qwoyn.studio/ledger',
+  rest: VITE_PROXY_URL_QWOYN_MAINNET
+    ? `${VITE_PROXY_URL_QWOYN_MAINNET}/ledger-rest`
+    : 'https://api.qwoyn.studio/ledger-rest',
   indexer:
-    VITE_INDEXER_GRAPHQL_API_REGEN_MAINNET ||
-    'https://api.regen.network/indexer/v1/graphql',
-  chainId: 'regen-1',
-  chainName: 'Regen',
-  stakeCurrency: REGEN,
+    VITE_INDEXER_GRAPHQL_API_QWOYN_MAINNET ||
+    'https://api.qwoyn.studio/indexer/v1/graphql',
+  chainId: 'qwoyn-1',
+  chainName: 'Qwoyn',
+  stakeCurrency: QWOYN,
   bip44: {
     coinType: 118,
   },
-  bech32Config: Bech32Address.defaultBech32Config('regen'),
+  bech32Config: Bech32Address.defaultBech32Config('qwoyn'),
   currencies,
   feeCurrencies: currencies,
 }
 
-export const regenTestnet: ChainInfoExtended = {
-  rpc: VITE_PROXY_URL_REGEN_TESTNET
-    ? `${VITE_PROXY_URL_REGEN_TESTNET}/ledger`
-    : 'https://api-staging.regen.network/ledger',
-  rest: VITE_PROXY_URL_REGEN_TESTNET
-    ? `${VITE_PROXY_URL_REGEN_TESTNET}/ledger-rest`
-    : 'https://api.regen.network/ledger-rest',
+export const qwoynTestnet: ChainInfoExtended = {
+  rpc: VITE_PROXY_URL_QWOYN_TESTNET
+    ? `${VITE_PROXY_URL_QWOYN_TESTNET}/ledger`
+    : 'https://66.42.74.12:26657/ledger',
+  rest: VITE_PROXY_URL_QWOYN_TESTNET
+    ? `${VITE_PROXY_URL_QWOYN_TESTNET}/ledger-rest`
+    : 'https://api.qwoyn.studio/ledger-rest',
   indexer:
-    VITE_INDEXER_GRAPHQL_API_REGEN_TESTNET ||
-    'https://api-staging.regen.network/indexer/v1/graphql',
-  chainId: 'regen-redwood-1',
-  chainName: 'Regen Redwood',
-  stakeCurrency: REGEN,
+    VITE_INDEXER_GRAPHQL_API_QWOYN_TESTNET ||
+    'https://66.42.74.12:1317/indexer/v1/graphql',
+  chainId: 'earendel-1',
+  chainName: 'Qwoyn Testnet',
+  stakeCurrency: QWOYN,
   bip44: {
     coinType: 118,
   },
-  bech32Config: Bech32Address.defaultBech32Config('regen'),
+  bech32Config: Bech32Address.defaultBech32Config('qwoyn'),
   currencies,
   feeCurrencies: currencies,
 }
