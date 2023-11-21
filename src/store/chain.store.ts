@@ -1,11 +1,10 @@
 import type { StdFee } from '@cosmjs/stargate'
-import type { ChainInfo } from '@keplr-wallet/types'
 import { proxy } from 'valtio'
 
 import type { ValidatorSDKType } from 'types'
 import { isJson } from 'util/validation'
 
-import { allChainsArray } from 'api/chains'
+import { allChainsArray, ChainInfoExtended } from 'api/chains'
 
 import { bootstrapKeplr } from './wallet.store'
 
@@ -15,8 +14,8 @@ const savedChain = localStorage.getItem(LOCALSTORAGE_CHAIN_KEY)
 const defaultChain = allChainsArray[0]
 
 type ChainStore = {
-  active: ChainInfo
-  all: ChainInfo[]
+  active: ChainInfoExtended
+  all: ChainInfoExtended[]
   fee?: StdFee // | 'auto' | number
   stakeDenom: string
   validators: ValidatorSDKType[]
